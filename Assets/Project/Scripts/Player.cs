@@ -1,13 +1,25 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
+    [SerializeField] private PlayerInputController _inputController;
+    
     private StateMashine _stateMashine;
 
-    public void Initialize(StateMashine stateMashine)
+    protected override void Initialize(Collider squadZone)
     {
-        _stateMashine = stateMashine;
+        base.Initialize(squadZone);
+
+        List<IState> playerStates = new List<IState>
+        {
+            new PlayerIdleState(this),
+            new PlayerMoveState(this, CollisionHandler, SquadZone,CompositeDisposable, BallHolder),
+            new PlayerDodgeState(this),
+            new PlayerAttackState(this, TargetScanner, TargetProvider, Teamates, _inputController, SquadZone, BallThrower)
+        };
+        
+        _stateMashine = new StateMashine(playerStates);
     }
     
     private void Update()
