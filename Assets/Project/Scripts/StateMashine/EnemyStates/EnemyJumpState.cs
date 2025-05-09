@@ -1,0 +1,58 @@
+using UnityEngine;
+
+public class EnemyJumpState : IState
+{
+    private readonly EnemyStats _enemyStats;
+    private readonly Rigidbody _rigidbody;
+    private readonly GroundChecker _groundChecker;
+
+    private IStateSwitcher _stateSwitcher;
+    
+    private bool _hasLanded = false;
+    private float _stunTimer = 0f;
+
+    public EnemyJumpState(EnemyStats enemyStats, Rigidbody rigidbody, GroundChecker groundChecker)
+    {
+        _enemyStats = enemyStats;
+        _rigidbody = rigidbody;
+        _groundChecker = groundChecker;
+    }
+
+    public void Initialize(IStateSwitcher stateSwitcher)
+    {
+        _stateSwitcher = stateSwitcher;
+    }
+
+    public void Enter()
+    {
+        if (_rigidbody != null)
+            _rigidbody.velocity = Vector3.zero;
+
+        _rigidbody.AddForce(Vector3.up * _enemyStats.JumpForce, ForceMode.Force);
+        _hasLanded = false;
+        _stunTimer = 0f;
+    }
+
+    public void Exit()
+    {
+    }
+
+    public void Update()
+    {
+        if (!_hasLanded)
+        {
+            if (_groundChecker.IsGrounded && Mathf.Abs(_rigidbody.velocity.y) < 0.1f)
+            {
+                _hasLanded = true;
+                _stunTimer = _enemyStats.JumpStunTime;
+            }
+        }
+        else
+        {
+            _stunTimer -= Time.deltaTime;
+
+            if (_stunTimer <= 0f)
+                _stateSwitcher.SwitchState<EnemyDodgeState>();
+        }
+    }
+}

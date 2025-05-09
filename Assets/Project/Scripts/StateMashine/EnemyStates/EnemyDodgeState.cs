@@ -3,29 +3,28 @@ using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PlayerDodgeState : IState
+public class EnemyDodgeState : IState
 {
-    private readonly Player _player;
+    private readonly Enemy _enemy;
     private readonly Ball _ball;
     private readonly Mover _mover;
-    private readonly PlayerInputController _playerInputController;
     private readonly Collider _squadZone;
-    private readonly PlayerStats _playerStats;
+    private readonly EnemyStats _enemyStats;
     private readonly CompositeDisposable _disposable;
 
     private IStateSwitcher _stateSwitcher;
 
     private IDisposable _movementLoopDisposable;
+    private IDisposable _jumpLoopDisposable;
 
-    public PlayerDodgeState(Player player, Ball ball, Mover mover, PlayerInputController playerInputController,
-        Collider squadZone, PlayerStats playerStats, CompositeDisposable disposable)
+    public EnemyDodgeState(Enemy enemy, Ball ball, Mover mover,
+        Collider squadZone, EnemyStats enemyStats, CompositeDisposable disposable)
     {
-        _player = player;
+        _enemy = enemy;
         _ball = ball;
         _mover = mover;
-        _playerInputController = playerInputController;
         _squadZone = squadZone;
-        _playerStats = playerStats;
+        _enemyStats = enemyStats;
         _disposable = disposable;
 
         MessageBrokerHolder.GameActions
@@ -41,15 +40,15 @@ public class PlayerDodgeState : IState
 
     public void Enter()
     {
-        _playerInputController.ActionButtonStarted += Jump;
         StartIdleMovementLoop();
+        StartJumpLoop(); // запускаем прыжки
     }
 
     public void Exit()
     {
-        _playerInputController.ActionButtonStarted -= Jump;
         _mover.Stop();
         _movementLoopDisposable?.Dispose();
+        _jumpLoopDisposable?.Dispose();
     }
 
     private void StartIdleMovementLoop()
@@ -63,28 +62,46 @@ public class PlayerDodgeState : IState
     {
         while (true)
         {
-            float standTime = Random.Range(_playerStats.DodgeDirectionChangeMinTime,
-                _playerStats.DodgeDirectionChangeMaxTime);
+            float standTime = Random.Range(
+                _enemyStats.DodgeDirectionChangeMinTime,
+                _enemyStats.DodgeDirectionChangeMaxTime);
 
             Vector3 target = GetRandomPointInZone();
             
-            yield return _mover.MoveTo(target, _playerStats.DodgeSpeed);
+            yield return _mover.MoveTo(target, _enemyStats.DodgeSpeed);
             yield return new WaitForSeconds(standTime);
+        }
+    }
+
+    private void StartJumpLoop()
+    {
+        _jumpLoopDisposable = Observable.FromCoroutine(JumpLoop)
+            .Subscribe()
+            .AddTo(_disposable);
+    }
+
+    private System.Collections.IEnumerator JumpLoop()
+    {
+        while (true)
+        {
+            float waitTime = Random.Range(_enemyStats.DodgeJumpDelayMinTime, _enemyStats.DodgeJumpDelayMaxTime);
+            yield return new WaitForSeconds(waitTime);
+            Jump();
         }
     }
 
     public void Update()
     {
-        Vector3 direction = (_ball.transform.position - _player.transform.position);
+        Vector3 direction = (_ball.transform.position - _enemy.transform.position);
         direction.y = 0;
 
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
-            _player.transform.rotation = Quaternion.RotateTowards(
-                _player.transform.rotation,
+            _enemy.transform.rotation = Quaternion.RotateTowards(
+                _enemy.transform.rotation,
                 targetRotation,
-                _playerStats.RotationSpeed * Time.deltaTime
+                _enemyStats.RotationSpeed * Time.deltaTime
             );
         }
     }
@@ -93,11 +110,11 @@ public class PlayerDodgeState : IState
     {
         if (zone == _squadZone)
         {
-            _stateSwitcher.SwitchState<PlayerMoveState>();
+            _stateSwitcher.SwitchState<EnemyMoveState>();
         }
         else
         {
-            _stateSwitcher.SwitchState<PlayerDodgeState>();
+            _stateSwitcher.SwitchState<EnemyDodgeState>();
         }
     }
 
@@ -106,13 +123,13 @@ public class PlayerDodgeState : IState
         Bounds bounds = _squadZone.bounds;
         float x = Random.Range(bounds.min.x, bounds.max.x);
         float z = Random.Range(bounds.min.z, bounds.max.z);
-        float y = _player.transform.position.y;
+        float y = _enemy.transform.position.y;
 
         return new Vector3(x, y, z);
     }
 
     private void Jump()
     {
-        _stateSwitcher.SwitchState<PlayerJumpState>();
+        _stateSwitcher.SwitchState<EnemyJumpState>();
     }
 }

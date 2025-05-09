@@ -8,14 +8,20 @@ public class Enemy : Entity
     {
         base.Initialize(squadZone, teamates, ball);
         BallThrower.Initialize(_enemyStats);
-        List<IState> enemyStats = new List<IState>
+        
+        List<IState> enemyStates = new List<IState>
         {
-            new EnemyIdleState(this, CollisionHandler, SquadZone, BallHolder, CompositeDisposable)
+            new EnemyIdleState(this, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats,
+                CompositeDisposable),
+            new EnemyMoveState(this, _enemyStats, CollisionHandler, SquadZone, CompositeDisposable, BallHolder,
+                ball),
+            new EnemyDodgeState(this, ball, Mover, SquadZone, _enemyStats, CompositeDisposable),
+            new EnemyAttackState(this, BallHolder, TargetScanner, TargetProvider, Teamates, BallThrower, _enemyStats),
+            new EnemyJumpState(_enemyStats, Rigidbody, GroundChecker)
         };
+        StateMashine = new StateMashine(enemyStates);
 
-        StateMashine = new StateMashine(enemyStats);
-
-        foreach (var state in enemyStats)
+        foreach (var state in enemyStates)
             state.Initialize(StateMashine);
     }
 

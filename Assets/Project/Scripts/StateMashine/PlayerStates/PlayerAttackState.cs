@@ -14,7 +14,7 @@ public class PlayerAttackState : IState
     private IStateSwitcher _stateSwitcher;
 
     public PlayerAttackState(Player player, BallHolder ballHolder, TargetScanner targetScanner, TargetProvider targetProvider,
-        List<Entity> teamates, PlayerInputController inputController, Collider collider, BallThrower ballThrower)
+        List<Entity> teamates, PlayerInputController inputController, BallThrower ballThrower)
     {
         _player = player;
         _ballHolder = ballHolder;

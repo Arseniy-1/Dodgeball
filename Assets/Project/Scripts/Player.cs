@@ -17,12 +17,9 @@ public class Player : Entity
                 CompositeDisposable),
             new PlayerMoveState(this, _playerStats, Mover, CollisionHandler, SquadZone, CompositeDisposable, BallHolder,
                 ball),
-            new PlayerDodgeState(this, ball, Mover, CollisionHandler, _inputController, SquadZone, Collider, Rigidbody,
-                _playerStats,
-                CompositeDisposable),
-            new PlayerAttackState(this, BallHolder, TargetScanner, TargetProvider, Teamates, _inputController,
-                SquadZone, BallThrower),
-            new PlayerJumpState(this, _playerStats, Rigidbody, GroundChecker)
+            new PlayerDodgeState(this, ball, Mover, _inputController, SquadZone, _playerStats, CompositeDisposable),
+            new PlayerAttackState(this, BallHolder, TargetScanner, TargetProvider, Teamates, _inputController, BallThrower),
+            new PlayerJumpState(_playerStats, Rigidbody, GroundChecker)
         };
 
         StateMashine = new StateMashine(playerStates);
@@ -30,9 +27,4 @@ public class Player : Entity
         foreach (var state in playerStates)
             state.Initialize(StateMashine);
     }
-
-    // protected override void Update()
-    // {
-    //     StateMashine.Update();
-    // }
 }

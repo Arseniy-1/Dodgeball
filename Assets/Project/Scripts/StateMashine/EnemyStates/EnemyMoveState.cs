@@ -1,11 +1,10 @@
-﻿using UniRx;
+using UniRx;
 using UnityEngine;
-using System.Collections;
 
-public class PlayerMoveState : IState
+public class EnemyMoveState : IState
 {
-    private readonly Player _player;
-    private readonly PlayerStats _playerStats;
+    private readonly Enemy _enemy;
+    private readonly EnemyStats _enemyEnemyStats;
     private readonly CollisionHandler _collisionHandler;
     private readonly Collider _squadZone;
     private readonly CompositeDisposable _disposable;
@@ -13,15 +12,14 @@ public class PlayerMoveState : IState
     private readonly Ball _ball;
 
     private IStateSwitcher _stateSwitcher;
-    
+
     private Coroutine _moveRoutine;
 
-    public PlayerMoveState(Player player, PlayerStats stats, Mover mover, CollisionHandler collisionHandler,
-        Collider squadZone,
-        CompositeDisposable compositeDisposable, BallHolder ballHolder, Ball ball)
+    public EnemyMoveState(Enemy enemy, EnemyStats enemyStats, CollisionHandler collisionHandler,
+        Collider squadZone, CompositeDisposable compositeDisposable, BallHolder ballHolder, Ball ball)
     {
-        _player = player;
-        _playerStats = stats;
+        _enemy = enemy;
+        _enemyEnemyStats = enemyStats;
         _collisionHandler = collisionHandler;
         _squadZone = squadZone;
         _disposable = compositeDisposable;
@@ -30,10 +28,12 @@ public class PlayerMoveState : IState
 
         _collisionHandler.BallDetected += OnBallDetected;
 
-        MessageBrokerHolder.GameActions.Receive<M_BallTaken>().Subscribe(message => HandleBallPositionChanged(message.Position))
+        MessageBrokerHolder.GameActions.Receive<M_BallTaken>()
+            .Subscribe(message => HandleBallPositionChanged(message.Position))
             .AddTo(_disposable);
 
-        MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>().Subscribe(message => HandleBallZoneChanged(message.Zone))
+        MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>()
+            .Subscribe(message => HandleBallZoneChanged(message.Zone))
             .AddTo(_disposable);
     }
 
@@ -47,45 +47,45 @@ public class PlayerMoveState : IState
     }
 
     public void Exit()
-    { 
+    {
     }
 
     public void Update()
     {
-        Vector3 direction = (_ball.transform.position - _player.transform.position);
+        Vector3 direction = (_ball.transform.position - _enemy.transform.position);
         direction.y = 0;
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
-            _player.transform.rotation = Quaternion.RotateTowards(
-                _player.transform.rotation,
+            _enemy.transform.rotation = Quaternion.RotateTowards(
+                _enemy.transform.rotation,
                 targetRotation,
-                _playerStats.RotationSpeed * Time.deltaTime
+                _enemyEnemyStats.RotationSpeed * Time.deltaTime
             );
         }
-        
-        _player.transform.position = Vector3.MoveTowards(
-            _player.transform.position,
+
+        _enemy.transform.position = Vector3.MoveTowards(
+            _enemy.transform.position,
             _ball.transform.position,
-            _playerStats.RunSpeed * Time.deltaTime
+            _enemyEnemyStats.RunSpeed * Time.deltaTime
         );
     }
-    
+
     private void OnBallDetected(Ball ball)
     {
         _ballHolder.EquipBall(ball);
-        _stateSwitcher.SwitchState<PlayerAttackState>();
+        _stateSwitcher.SwitchState<EnemyAttackState>();
     }
 
     private void HandleBallZoneChanged(Collider zone)
     {
         if (zone == _squadZone)
         {
-            _stateSwitcher.SwitchState<PlayerMoveState>();
+            _stateSwitcher.SwitchState<EnemyMoveState>();
         }
         else
         {
-            _stateSwitcher.SwitchState<PlayerDodgeState>();
+            _stateSwitcher.SwitchState<EnemyDodgeState>();
         }
     }
 
@@ -95,11 +95,11 @@ public class PlayerMoveState : IState
 
         if (closestPoint == ballPosition)
         {
-            _stateSwitcher.SwitchState<PlayerIdleState>();
+            _stateSwitcher.SwitchState<EnemyIdleState>();
         }
         else
         {
-            _stateSwitcher.SwitchState<PlayerDodgeState>();
+            _stateSwitcher.SwitchState<EnemyDodgeState>();
         }
     }
 }

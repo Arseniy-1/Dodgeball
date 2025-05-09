@@ -112,7 +112,7 @@ MonoBehaviour:
   CollisionHandler: {fileID: 3391302764135224282}
   TargetScanner: {fileID: 2664629391832099120}
   Mover: {fileID: 6683560358471743441}
-  GroundChecker: {fileID: 0}
+  GroundChecker: {fileID: 3487756448671357097}
   Teamates: []
   CurrentState: 
   _enemyStats: {fileID: 11400000, guid: 96f3e3c964ebed34b807e82e4a621b4e, type: 2}
