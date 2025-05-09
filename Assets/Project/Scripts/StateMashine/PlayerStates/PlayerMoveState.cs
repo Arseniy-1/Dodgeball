@@ -1,30 +1,38 @@
 ﻿using UniRx;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerMoveState : IState
 {
-    private IStateSwitcher _stateSwitcher;
-    private Player _player;
-    private Collider _squadZone;
-    private CompositeDisposable _disposable;
-    private CollisionHandler _collisionHandler;
-    private BallHolder _ballHolder;
+    private readonly Player _player;
+    private readonly PlayerStats _playerStats;
+    private readonly CollisionHandler _collisionHandler;
+    private readonly Collider _squadZone;
+    private readonly CompositeDisposable _disposable;
+    private readonly BallHolder _ballHolder;
+    private readonly Ball _ball;
 
-    public PlayerMoveState(Player player, CollisionHandler collisionHandler, Collider squadZone,
-        CompositeDisposable compositeDisposable, BallHolder ballHolder)
+    private IStateSwitcher _stateSwitcher;
+    
+    private Coroutine _moveRoutine;
+
+    public PlayerMoveState(Player player, PlayerStats stats, CollisionHandler collisionHandler, Collider squadZone,
+        CompositeDisposable compositeDisposable, BallHolder ballHolder, Ball ball)
     {
         _player = player;
+        _playerStats = stats;
+        _collisionHandler = collisionHandler;
         _squadZone = squadZone;
         _disposable = compositeDisposable;
-        _collisionHandler = collisionHandler;
         _ballHolder = ballHolder;
+        _ball = ball;
 
         _collisionHandler.BallDetected += OnBallDetected;
 
-        MessageBrokerHolder.GameActions.Receive<M_BallTaken>().Subscribe((message) => HandleBallPositionChanged(message.Position))
+        MessageBrokerHolder.GameActions.Receive<M_BallTaken>().Subscribe(message => HandleBallPositionChanged(message.Position))
             .AddTo(_disposable);
-        
-        MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>().Subscribe((message) => HandleBallPositionChanged(message.Position))
+
+        MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>().Subscribe(message => HandleBallZoneChanged(message.Zone))
             .AddTo(_disposable);
     }
 
@@ -33,30 +41,58 @@ public class PlayerMoveState : IState
         _stateSwitcher = stateSwitcher;
     }
 
-    public virtual void Enter()
+    public void Enter()
     {
     }
 
-    public virtual void Exit()
+    public void Exit()
+    { 
+    }
+
+    public void Update()
     {
+        Vector3 direction = (_ball.transform.position - _player.transform.position);
+        direction.y = 0;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
+            _player.transform.rotation = Quaternion.RotateTowards(
+                _player.transform.rotation,
+                targetRotation,
+                _playerStats.RotationSpeed * Time.deltaTime
+            );
+        }
         
+        _player.transform.position = Vector3.MoveTowards(
+            _player.transform.position,
+            _ball.transform.position,
+            _playerStats.RunSpeed * Time.deltaTime
+        );
     }
-
-    public virtual void Update()
-    {
-        
-    }
-
+    
     private void OnBallDetected(Ball ball)
     {
         _ballHolder.EquipBall(ball);
         _stateSwitcher.SwitchState<PlayerAttackState>();
-        
+    }
+
+    private void HandleBallZoneChanged(Collider zone)
+    {
+        if (zone == _squadZone)
+        {
+            _stateSwitcher.SwitchState<PlayerMoveState>();
+        }
+        else
+        {
+            _stateSwitcher.SwitchState<PlayerDodgeState>();
+        }
     }
 
     private void HandleBallPositionChanged(Vector3 ballPosition)
     {
-        if (_squadZone.bounds.Contains(ballPosition))
+        Vector3 closestPoint = _squadZone.ClosestPoint(ballPosition);
+
+        if (closestPoint == ballPosition)
         {
             _stateSwitcher.SwitchState<PlayerIdleState>();
         }

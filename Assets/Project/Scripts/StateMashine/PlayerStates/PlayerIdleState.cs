@@ -1,82 +1,121 @@
+using System;
+using UniRx;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerIdleState : IState
 {
     private readonly Player _player;
+    private readonly Ball _ball;
+    private readonly Mover _mover;
+    private readonly CollisionHandler _collisionHandler;
+    private readonly Collider _squadZone;
+    private readonly Collider _collider;
+    private readonly Rigidbody _rigidbody;
+    private readonly PlayerStats _playerStats;
+    private readonly CompositeDisposable _disposable;
+    
     private IStateSwitcher _stateSwitcher;
+    
+    private IDisposable _movementLoopDisposable;
 
-
-    private Vector3 _targetPosition;
-    private bool _canMove;
-
-    // private CancellationTokenSource _source;
-
-    public PlayerIdleState(Player player)
+    public PlayerIdleState(Player player, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
+        Collider collider, Rigidbody rigidbody, PlayerStats playerStats, CompositeDisposable disposable)
     {
         _player = player;
+        _ball = ball;
+        _mover = mover;
+        _collisionHandler = collisionHandler;
+        _squadZone = squadZone;
+        _collider = collider;
+        _rigidbody = rigidbody;
+        _playerStats = playerStats;
+        _disposable = disposable;
+
+        MessageBrokerHolder.GameActions
+            .Receive<M_BallChangedZone>()
+            .Subscribe(message => HandleBallZoneChanged(message.Zone))
+            .AddTo(_disposable);
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
     {
-        // _source = new CancellationTokenSource();
-        // _stateSwitcher = stateSwitcher;
+        _stateSwitcher = stateSwitcher;
     }
 
-    public virtual void Enter()
+    public void Enter()
     {
-        // WaitingAfterMove().Forget();
-        // _player.Rigidbody.isKinematic = true;
-        // _player.Collider.isTrigger = true;
-        // _player.CollisionHandler.enabled = false;
+        _rigidbody.isKinematic = true;
+        _collisionHandler.enabled = false;
+        _collider.enabled = false;
+
+        StartIdleMovementLoop();
     }
 
-    public virtual void Exit()
+    public void Exit()
     {
-        // _canMove = false;
-        // _player.Rigidbody.isKinematic = false;
-        // _player.Collider.isTrigger = false;
-        // _player.CollisionHandler.enabled = true;
+        _rigidbody.isKinematic = false;
+        _collisionHandler.enabled = true;
+        _collider.enabled = true;
+
+        _mover.Stop();
+        _movementLoopDisposable?.Dispose();
     }
 
-    public virtual void Update()
+    private void StartIdleMovementLoop()
     {
-        // if (_canMove)
-        // {
-        //     _player.Mover.Move(_targetPosition, _player.PlayerStats.Speed, _player.PlayerStats.RotationSpeed);
-        // }
-        //
-        // if (Vector3.Distance(_player.transform.position, _targetPosition) <= 0.5f && _canMove)
-        // {
-        //     WaitingAfterMove().Forget();
-        // }
-        //     
-        // if (_player.TargetProvider.Ball != null)
-        //     _stateSwitcher.SwitchState<PlayerMoveState>();
+        _movementLoopDisposable = Observable.FromCoroutine(IdleMovementLoop)
+            .Subscribe()
+            .AddTo(_disposable);
     }
 
-    // private async UniTaskVoid WaitingAfterMove()
-    // {
-    //     if (_source.IsCancellationRequested)
-    //         return;
-    //
-    //     _canMove = false;
-    //
-    //     float waitTime = Random.Range(_player.PlayerStats.IdleMinStandTime, _player.PlayerStats.IdleMinStandTime);
-    //     await UniTask.Delay(TimeSpan.FromSeconds(waitTime), cancellationToken: _source.Token);
-    //
-    //     if (_source.Token.IsCancellationRequested)
-    //         return;
-    //
-    //     _canMove = true;
-    //
-    //     GetTargetPosition();
-    // }
-    //
-    // private void GetTargetPosition()
-    // {
-    //     Bounds bounds = _player.PlayZone.bounds;
-    //     float randomX = Random.Range(bounds.min.x, bounds.max.x);
-    //     float randomZ = Random.Range(bounds.min.z, bounds.max.z);
-    //     _targetPosition = new Vector3(randomX, _player.transform.position.y, randomZ);
-    // }
+    private System.Collections.IEnumerator IdleMovementLoop()
+    {
+        while (true)
+        {
+            float standTime = Random.Range(_playerStats.IdleMinStandTime, _playerStats.IdleMaxStandTime);
+            
+            Vector3 target = GetRandomPointInZone();
+            yield return _mover.MoveTo(target, _playerStats.WalkSpeed);
+            yield return new WaitForSeconds(standTime);
+        }
+    }
+   
+    public void Update()
+    {            
+        Vector3 direction = (_ball.transform.position - _player.transform.position);
+        direction.y = 0;
+        
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
+            _player.transform.rotation = Quaternion.RotateTowards(
+                _player.transform.rotation,
+                targetRotation,
+                _playerStats.RotationSpeed * Time.deltaTime
+            );
+        }
+    }
+    
+    private void HandleBallZoneChanged(Collider zone)
+    {
+        if (zone == _squadZone)
+        {
+            _stateSwitcher.SwitchState<PlayerMoveState>();
+        }
+        else
+        {
+            _stateSwitcher.SwitchState<PlayerDodgeState>();
+        }
+    }
+
+    private Vector3 GetRandomPointInZone()
+    {
+        Bounds bounds = _squadZone.bounds;
+        float x = Random.Range(bounds.min.x, bounds.max.x);
+        float z = Random.Range(bounds.min.z, bounds.max.z);
+        float y = _player.transform.position.y;
+
+        return new Vector3(x, y, z);
+    }
 }

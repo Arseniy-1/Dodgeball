@@ -19,10 +19,14 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.TryGetComponent(out Ball interactable))
+        Debug.Log(gameObject.name + " collided with " + collision.gameObject.name);
+        if (enabled == false)
         {
-            Interact(interactable);
+            return;
         }
+
+        if (collision.collider.TryGetComponent(out Ball interactable))
+            Interact(interactable);
     }
 
     private void Interact(Ball ball)

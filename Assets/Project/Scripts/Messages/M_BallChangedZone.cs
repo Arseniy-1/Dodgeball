@@ -2,10 +2,10 @@ using UnityEngine;
 
 public struct M_BallChangedZone
 {
-    public M_BallChangedZone(Vector3 position)
+    public M_BallChangedZone(Collider collider)
     {
-        Position = position;
+        Zone = collider;
     }
     
-    public Vector3 Position { get; private set; }
+    public Collider Zone { get; private set; }
 }

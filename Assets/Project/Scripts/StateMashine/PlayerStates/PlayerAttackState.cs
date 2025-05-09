@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class PlayerAttackState : IState
 {
-    private Player _player;
-    private Ball _ball;
+    private readonly Player _player;
+    private BallHolder _ballHolder;
     private TargetScanner _targetScanner;
     private TargetProvider _targetProvider;
     private List<Entity> _teamates;
@@ -13,10 +13,11 @@ public class PlayerAttackState : IState
 
     private IStateSwitcher _stateSwitcher;
 
-    public PlayerAttackState(Player player, TargetScanner targetScanner, TargetProvider targetProvider,
+    public PlayerAttackState(Player player, BallHolder ballHolder, TargetScanner targetScanner, TargetProvider targetProvider,
         List<Entity> teamates, PlayerInputController inputController, Collider collider, BallThrower ballThrower)
     {
         _player = player;
+        _ballHolder = ballHolder;
         _targetScanner = targetScanner;
         _targetProvider = targetProvider;
         _teamates = teamates;
@@ -67,14 +68,9 @@ public class PlayerAttackState : IState
 
     private void OnButtonReleased()
     {
-        if (_ball != null)
-        {
-            _ballThrower.StopCharging();
-            _ball.transform.parent = null;
-            _ballThrower.Throw(_ball);
-        }
-
-        _ball = null;
+        Ball ball = _ballHolder.LostBall();
+        _ballThrower.StopCharging();
+        _ballThrower.Throw(ball);
 
         _stateSwitcher.SwitchState<PlayerIdleState>();
     }

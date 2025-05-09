@@ -4,26 +4,35 @@ using UnityEngine;
 public class Player : Entity
 {
     [SerializeField] private PlayerInputController _inputController;
-    
-    private StateMashine _stateMashine;
+    [SerializeField] private PlayerStats _playerStats;
 
-    protected override void Initialize(Collider squadZone)
+    public override void Initialize(Collider squadZone, List<Entity> teamates, Ball ball)
     {
-        base.Initialize(squadZone);
+        base.Initialize(squadZone, teamates, ball);
+        BallThrower.Initialize(_playerStats);
 
         List<IState> playerStates = new List<IState>
         {
-            new PlayerIdleState(this),
-            new PlayerMoveState(this, CollisionHandler, SquadZone,CompositeDisposable, BallHolder),
-            new PlayerDodgeState(this),
-            new PlayerAttackState(this, TargetScanner, TargetProvider, Teamates, _inputController, SquadZone, BallThrower)
+            new PlayerIdleState(this, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats,
+                CompositeDisposable),
+            new PlayerMoveState(this, _playerStats, Mover, CollisionHandler, SquadZone, CompositeDisposable, BallHolder,
+                ball),
+            new PlayerDodgeState(this, ball, Mover, CollisionHandler, _inputController, SquadZone, Collider, Rigidbody,
+                _playerStats,
+                CompositeDisposable),
+            new PlayerAttackState(this, BallHolder, TargetScanner, TargetProvider, Teamates, _inputController,
+                SquadZone, BallThrower),
+            new PlayerJumpState(this, _playerStats, Rigidbody, GroundChecker)
         };
-        
-        _stateMashine = new StateMashine(playerStates);
+
+        StateMashine = new StateMashine(playerStates);
+
+        foreach (var state in playerStates)
+            state.Initialize(StateMashine);
     }
-    
-    private void Update()
-    {
-        _stateMashine.Update();
-    }
+
+    // protected override void Update()
+    // {
+    //     StateMashine.Update();
+    // }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 public class StateMashine : IStateSwitcher
 {
     private List<IState> _states;
-    private IState _currentState;
+    public IState _currentState;
 
     public StateMashine(List<IState> states)
     {

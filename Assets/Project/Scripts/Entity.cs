@@ -1,30 +1,49 @@
+using System;
 using UniRx;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
+using UnityEngine.Video;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeField] private EntityStats _entityStats;
     [SerializeField] protected BallThrower BallThrower;
     [SerializeField] protected BallHolder BallHolder;
     [SerializeField] protected CollisionHandler CollisionHandler;
     [SerializeField] protected TargetScanner TargetScanner;
+    [SerializeField] protected Mover Mover;
+    [SerializeField] protected GroundChecker GroundChecker;
     [SerializeField] protected List<Entity> Teamates;
-    
-    protected CompositeDisposable CompositeDisposable = new CompositeDisposable();
-    protected TargetProvider TargetProvider;
-    protected Collider SquadZone;
-    
-    private StateMashine _stateMashine;
 
-    protected virtual void Initialize(Collider squadZone)
+    public string CurrentState;
+
+    protected CompositeDisposable CompositeDisposable = new CompositeDisposable();
+    protected TargetProvider TargetProvider = new TargetProvider();
+    protected Collider SquadZone;
+    protected Collider Collider;
+    protected Rigidbody Rigidbody;
+
+    protected StateMashine StateMashine;
+
+    private Ball _ball;
+
+    // private void Awake()
+    // {
+    // }
+
+    public virtual void Initialize(Collider squadZone, List<Entity> teamates, Ball ball)
     {
-        BallThrower.Initialize(_entityStats);
+        Collider = GetComponent<Collider>();
+        Rigidbody = GetComponent<Rigidbody>();
+        
         SquadZone = squadZone;
+        Teamates = teamates;
+        _ball = ball;
     }
-    
-    private void Update()
+
+    protected virtual void Update()
     {
-        _stateMashine.Update();
+        CurrentState = StateMashine._currentState.ToString();
+        StateMashine.Update();
     }
 }

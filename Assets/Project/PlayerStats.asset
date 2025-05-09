@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 965b0c4a24f547edbc44436d989a1c68, type: 3}
+  m_Name: PlayerStats
+  m_EditorClassIdentifier: 
+  <WalkSpeed>k__BackingField: 2
+  <RunSpeed>k__BackingField: 3
+  <RotationSpeed>k__BackingField: 150
+  <DodgeSpeed>k__BackingField: 9
+  <MinThrowForce>k__BackingField: 1000
+  <MaxThrowForce>k__BackingField: 2000
+  <ThrowChargeTime>k__BackingField: 2
+  <JumpForce>k__BackingField: 75000
+  <JumpStunTime>k__BackingField: 1.2
+  <DodgeDirectionChangeMinTime>k__BackingField: 0.2
+  <DodgeDirectionChangeMaxTime>k__BackingField: 0.5
+  <IdleMinStandTime>k__BackingField: 1
+  <IdleMaxStandTime>k__BackingField: 3
