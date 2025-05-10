@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6664657141285800426}
   - component: {fileID: 3199689226720569013}
   - component: {fileID: 2664629391832099120}
+  - component: {fileID: 6687391573693435775}
   - component: {fileID: 6683560358471743441}
   - component: {fileID: 4174414052918594265}
   - component: {fileID: 6597752411959666578}
@@ -113,6 +114,7 @@ MonoBehaviour:
   TargetScanner: {fileID: 2664629391832099120}
   Mover: {fileID: 6683560358471743441}
   GroundChecker: {fileID: 3487756448671357097}
+  Health: {fileID: 6687391573693435775}
   Teamates: []
   CurrentState: 
   _enemyStats: {fileID: 11400000, guid: 96f3e3c964ebed34b807e82e4a621b4e, type: 2}
@@ -167,6 +169,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22538fa8602240c3bc5c8a1254371854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6687391573693435775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2533586550101711437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28638ad7b930409c8039927ec6cff8c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _currentHealthPoint: 100
 --- !u!114 &6683560358471743441
 MonoBehaviour:
   m_ObjectHideFlags: 0

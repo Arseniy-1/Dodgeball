@@ -229,6 +229,7 @@ MonoBehaviour:
   TargetScanner: {fileID: 4306654029361397190}
   Mover: {fileID: 5468690074577085294}
   GroundChecker: {fileID: 593330227908128239}
+  Health: {fileID: 7310517636313457379}
   Teamates: []
   CurrentState: 
   _inputController: {fileID: 8889113337239641775}
@@ -320,8 +321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28638ad7b930409c8039927ec6cff8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 0
-  _currentHealthPoint: 0
+  _maxHealth: 100
+  _currentHealthPoint: 100
 --- !u!136 &198792628837928328
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dangerousSpeed: 15
+  _rigidbody: {fileID: 0}
 --- !u!114 &2351550198311815855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,4 +174,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09aabe7881f40168949c0a05f904282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageMultiplier: 1.5
+  _damageMultiplier: 5
