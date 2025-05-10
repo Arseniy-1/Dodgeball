@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5777707389414660998}
   - component: {fileID: 7181411256706620194}
   - component: {fileID: 5921492481527234488}
+  - component: {fileID: 1366566022279596971}
+  - component: {fileID: 2351550198311815855}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -93,7 +95,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7625006622734140184}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 207c9348dbffe604fac16f61dd7bd459, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -146,3 +148,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aea00b4e4984c8ba64d3971b25cd98e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1366566022279596971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7625006622734140184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 584b0ae3cf994e8eb3b16b4f4919e0bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dangerousSpeed: 15
+--- !u!114 &2351550198311815855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7625006622734140184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e09aabe7881f40168949c0a05f904282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageMultiplier: 1.5

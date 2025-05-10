@@ -4,32 +4,38 @@ using UnityEngine;
 public class CollisionHandler : MonoBehaviour
 {
     public event Action<Ball> BallDetected;
+    public event Action<int> DamageTaken;
 
     private void Start()
     {
+        // Метод нужен, чтобы была возможность выключать компонент
     }
-
-    // private void OnTriggerEnter(Collider collision)
-    // {
-    //     if (collision.TryGetComponent(out Ball interactable))
-    //     {
-    //         Interact(interactable);
-    //     }
-    // }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(gameObject.name + " collided with " + collision.gameObject.name);
+        // Debug.Log(gameObject.name + " collided with " + collision.gameObject.name);
+
         if (enabled == false)
-        {
             return;
+
+        if (collision.collider.TryGetComponent(out Chargeable chargeable))
+        {
+            if (chargeable.IsCharged)
+            {
+                if (chargeable.TryGetComponent(out Damageable damageable))
+                {
+                    DamageTaken?.Invoke(damageable.Damage);
+                    
+                    return;
+                }
+            }
         }
 
         if (collision.collider.TryGetComponent(out Ball interactable))
-            Interact(interactable);
+            InteractWithBall(interactable);
     }
 
-    private void Interact(Ball ball)
+    private void InteractWithBall(Ball ball)
     {
         MessageBrokerHolder.GameActions.Publish(new M_BallTaken(transform.position));
         BallDetected?.Invoke(ball);

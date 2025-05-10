@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8061949312178348757}
   - component: {fileID: 5788073546011939865}
   - component: {fileID: 6664657141285800426}
-  - component: {fileID: 3391302764135224282}
+  - component: {fileID: 3199689226720569013}
   - component: {fileID: 2664629391832099120}
   - component: {fileID: 6683560358471743441}
   - component: {fileID: 4174414052918594265}
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BallThrower: {fileID: 5788073546011939865}
   BallHolder: {fileID: 6664657141285800426}
-  CollisionHandler: {fileID: 3391302764135224282}
+  CollisionHandler: {fileID: 3199689226720569013}
   TargetScanner: {fileID: 2664629391832099120}
   Mover: {fileID: 6683560358471743441}
   GroundChecker: {fileID: 3487756448671357097}
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ball: {fileID: 0}
   _hand: {fileID: 2718172703749791477}
---- !u!114 &3391302764135224282
+--- !u!114 &3199689226720569013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -349,7 +349,7 @@ Transform:
   m_GameObject: {fileID: 7946935266186330170}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.297, z: 0.994}
+  m_LocalPosition: {x: 0, y: 0.297, z: 1.379}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

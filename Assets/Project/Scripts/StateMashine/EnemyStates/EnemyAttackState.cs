@@ -39,7 +39,7 @@ public class EnemyAttackState : IState
         Entity target = _targetScanner.Scan(_teammates);
         _targetProvider.SelectTarget(target);
 
-        OnButtonClicked();
+        StartAttack();
 
         _shootDelay = Random.Range(_enemyStats.MinThrowWait, _enemyStats.MaxThrowWait);
         _releaseTimer = 0f;
@@ -70,18 +70,18 @@ public class EnemyAttackState : IState
             _releaseTimer += Time.deltaTime;
             if (_releaseTimer >= _shootDelay)
             {
-                OnButtonReleased();
+                ThrowBall();
                 _hasReleased = true;
             }
         }
     }
 
-    private void OnButtonClicked()
+    private void StartAttack()
     {
         _ballThrower.StartCharging();
     }
 
-    private void OnButtonReleased()
+    private void ThrowBall()
     {
         Ball ball = _ballHolder.LostBall();
         _ballThrower.StopCharging();

@@ -128,10 +128,11 @@ GameObject:
   - component: {fileID: 3171347185708913807}
   - component: {fileID: 2582647386321648426}
   - component: {fileID: 8941228650716961420}
-  - component: {fileID: 8125644108752745788}
+  - component: {fileID: 6019179773792884996}
   - component: {fileID: 4306654029361397190}
   - component: {fileID: 8889113337239641775}
   - component: {fileID: 5468690074577085294}
+  - component: {fileID: 7310517636313457379}
   - component: {fileID: 198792628837928328}
   - component: {fileID: 1983059860525644134}
   - component: {fileID: -8415351102678486944}
@@ -224,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BallThrower: {fileID: 2582647386321648426}
   BallHolder: {fileID: 8941228650716961420}
-  CollisionHandler: {fileID: 8125644108752745788}
+  CollisionHandler: {fileID: 6019179773792884996}
   TargetScanner: {fileID: 4306654029361397190}
   Mover: {fileID: 5468690074577085294}
   GroundChecker: {fileID: 593330227908128239}
@@ -259,7 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ball: {fileID: 0}
   _hand: {fileID: 1833047170735208148}
---- !u!114 &8125644108752745788
+--- !u!114 &6019179773792884996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -307,6 +308,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f970895fd7074093a560686303621a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7310517636313457379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5236973198934309912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28638ad7b930409c8039927ec6cff8c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 0
+  _currentHealthPoint: 0
 --- !u!136 &198792628837928328
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -5,7 +5,9 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _currentHealthPoint;
-
+    
+    private CollisionHandler _collisionHandler;
+    
     public event Action<float, float> HealthChanged;
     public event Action LostHealth;
 
@@ -14,7 +16,18 @@ public class Health : MonoBehaviour
         HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
     }
 
-    public void Heal(float amount)
+    private void OnDestroy()
+    {
+        _collisionHandler.DamageTaken -= TakeDamage;
+    }
+
+    public void Initialize(CollisionHandler collisionHandler)
+    {
+        _collisionHandler = collisionHandler;
+        _collisionHandler.DamageTaken += TakeDamage;
+    }
+
+    public void Heal(int amount)
     {
         if (amount <= 0)
             return;
@@ -24,10 +37,10 @@ public class Health : MonoBehaviour
         HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
     }
 
-    public float TakeDamage(float amount)
+    public void TakeDamage(int amount)
     {
         if (amount <= 0)
-            return 0;
+            return;
 
         _currentHealthPoint = Mathf.Clamp(_currentHealthPoint - amount, 0, _maxHealth);
 
@@ -35,10 +48,5 @@ public class Health : MonoBehaviour
             LostHealth?.Invoke();
 
         HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
-
-        if (_currentHealthPoint < amount)
-            return _currentHealthPoint;
-          
-        return amount;
     }
 }
