@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-public class Enemy : Entity
+public class Enemy : Entity, IDestoyable<Enemy>
 {
     [SerializeField] private EnemyStats _enemyStats;
+    
+    public event Action<Enemy> OnDestroyed;
 
     public override void Initialize(Collider squadZone, List<Entity> teamates, Ball ball)
     {
@@ -25,4 +28,8 @@ public class Enemy : Entity
             state.Initialize(StateMashine);
     }
 
+    protected override void Die()
+    {
+        OnDestroyed?.Invoke(this);
+    }
 }

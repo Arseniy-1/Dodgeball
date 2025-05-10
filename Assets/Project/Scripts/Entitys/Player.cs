@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Entity
+public class Player : Entity, IDestoyable<Player>
 {
     [SerializeField] private PlayerInputController _inputController;
     [SerializeField] private PlayerStats _playerStats;
+    
+    public event Action<Player> OnDestroyed;
 
     public override void Initialize(Collider squadZone, List<Entity> teamates, Ball ball)
     {
@@ -26,5 +29,10 @@ public class Player : Entity
 
         foreach (var state in playerStates)
             state.Initialize(StateMashine);
+    }
+
+    protected override void Die()
+    {
+        OnDestroyed?.Invoke(this);
     }
 }

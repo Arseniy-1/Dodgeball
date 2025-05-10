@@ -5,9 +5,12 @@ using UniRx;
 
 public class Squad : MonoBehaviour
 {
+    [SerializeField] private List<Transform> _spawnPoints;
     [SerializeField] private List<Entity> _entities;
     [SerializeField] private Ball _ball;
 
+    public List<Transform> SpawnPoints => _spawnPoints;
+    
     private Collider _squadZone;
     private CompositeDisposable _disposable = new CompositeDisposable();
 
@@ -18,8 +21,10 @@ public class Squad : MonoBehaviour
         _squadZone = GetComponent<Collider>();
     }
 
-    public void Initialize()
+    public void Initialize(List<Entity> entities)
     {
+        _entities = entities;
+        
         MessageBrokerHolder.GameActions.Receive<M_EntityDeath>()
             .Subscribe(message => HandleEntityDeath(message.Entity))
             .AddTo(_disposable);

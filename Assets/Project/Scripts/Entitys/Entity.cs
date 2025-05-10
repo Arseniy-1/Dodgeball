@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.Serialization;
 using UnityEngine.Video;
 
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
     [SerializeField] protected BallThrower BallThrower;
     [SerializeField] protected BallHolder BallHolder;
@@ -59,9 +59,5 @@ public class Entity : MonoBehaviour
         StateMashine.Update();
     }
 
-    protected virtual void Die()
-    {
-        MessageBrokerHolder.GameActions.Publish(new M_EntityDeath(this));
-        gameObject.SetActive(false);
-    }
+    protected abstract void Die();
 }
