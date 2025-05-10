@@ -15,11 +15,11 @@ MonoBehaviour:
   <WalkSpeed>k__BackingField: 2
   <RunSpeed>k__BackingField: 3
   <RotationSpeed>k__BackingField: 150
-  <DodgeSpeed>k__BackingField: 9
+  <DodgeSpeed>k__BackingField: 5
   <MinThrowForce>k__BackingField: 1000
   <MaxThrowForce>k__BackingField: 2000
   <ThrowChargeTime>k__BackingField: 2
-  <JumpForce>k__BackingField: 7500
+  <JumpForce>k__BackingField: 75000
   <JumpStunTime>k__BackingField: 1.2
   <DodgeDirectionChangeMinTime>k__BackingField: 0.4
   <DodgeDirectionChangeMaxTime>k__BackingField: 1

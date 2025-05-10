@@ -4,18 +4,19 @@ using UnityEngine;
 public class Squad : MonoBehaviour
 {
     [SerializeField] private List<Entity> _entities;
-    [SerializeField]private Ball _ball;
+    [SerializeField] private Ball _ball;
 
     private Collider _squadZone;
-    
+
     private void Awake()
     {
         _squadZone = GetComponent<Collider>();
+    }
 
+    public void Initialize()
+    {
         foreach (var entity in _entities)
-        {
             entity.Initialize(_squadZone, _entities, _ball);
-        }
     }
 
     private void OnTriggerEnter(Collider other)
