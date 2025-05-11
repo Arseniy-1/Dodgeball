@@ -1,10 +1,8 @@
-using System;
 using UniRx;
 using UnityEngine;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine.Serialization;
-using UnityEngine.Video;
 
 public abstract class Entity : MonoBehaviour
 {
@@ -27,7 +25,7 @@ public abstract class Entity : MonoBehaviour
 
     protected StateMashine StateMashine;
 
-    [SerializeField] private Ball _ball;
+    [SerializeField] protected Ball Ball;
     private bool _isEnabled = true;
 
     private void OnEnable()
@@ -47,7 +45,7 @@ public abstract class Entity : MonoBehaviour
         Teammates = teammates;
         SquadZone = squadZone;
         Health.Initialize(CollisionHandler);
-        _ball = ball;
+        Ball = ball;
     }
 
     public virtual void Reset()

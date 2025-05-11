@@ -76,7 +76,7 @@ public class PlayerDodgeState : IState
 
     private System.Collections.IEnumerator IdleMovementLoop()
     {
-        while (true)
+        while (_player.enabled)
         {
             float standTime = Random.Range(_playerStats.DodgeDirectionChangeMinTime,
                 _playerStats.DodgeDirectionChangeMaxTime);
@@ -118,8 +118,6 @@ public class PlayerDodgeState : IState
 
     private Vector3 GetRandomPointInZone()
     {
-        Debug.Log(_squadZone== null);
-        
         Bounds bounds = _squadZone.bounds;
         float x = Random.Range(bounds.min.x, bounds.max.x);
         float z = Random.Range(bounds.min.z, bounds.max.z);
