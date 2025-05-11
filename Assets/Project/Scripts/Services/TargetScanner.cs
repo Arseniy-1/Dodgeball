@@ -5,7 +5,7 @@ public class TargetScanner : MonoBehaviour
 {
     public Entity Scan(List<Entity> teammates)
     {
-        float scanRadius = 50f;
+        float scanRadius = 500f;
         float closestDistance = float.MaxValue;
         Entity closestEnemy = null;
 
@@ -13,14 +13,18 @@ public class TargetScanner : MonoBehaviour
 
         foreach (Collider col in colliders)
         {
-            Entity entity = col.GetComponent<Entity>();
-            if (entity == null || teammates.Contains(entity)) continue;
-
-            float distance = Vector3.Distance(transform.position, entity.transform.position);
-            if (distance < closestDistance)
+            Debug.Log(col.gameObject.name);
+            if (col.TryGetComponent(out Entity entity))
             {
-                closestDistance = distance;
-                closestEnemy = entity;
+                Debug.Log("enemy" + col.gameObject.name);
+                if (entity == null || teammates.Contains(entity)) continue;
+
+                float distance = Vector3.Distance(transform.position, entity.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = entity;
+                }
             }
         }
 

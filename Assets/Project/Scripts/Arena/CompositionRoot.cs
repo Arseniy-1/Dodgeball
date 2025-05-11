@@ -59,7 +59,7 @@ public class CompositionRoot : MonoBehaviour
     {
         List<Entity> entities = new List<Entity>();
         
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < squad.SpawnPoints.Count; i++)
         {
             Player player = playerSpawner.Spawn();
             player.transform.position = squad.SpawnPoints[i].position;

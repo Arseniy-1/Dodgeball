@@ -18,9 +18,10 @@ public class Enemy : Entity, IDestoyable<Enemy>
                 CompositeDisposable),
             new EnemyMoveState(this, _enemyStats, CollisionHandler, SquadZone, CompositeDisposable, BallHolder,
                 ball),
-            new EnemyDodgeState(this, ball, Mover, SquadZone, _enemyStats, CompositeDisposable),
+            new EnemyDodgeState(this, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats,
+                CompositeDisposable),
             new EnemyAttackState(this, BallHolder, TargetScanner, TargetProvider, Teamates, BallThrower, _enemyStats),
-            new EnemyJumpState(_enemyStats, Rigidbody, GroundChecker)
+            new EnemyJumpState(_enemyStats, Rigidbody, GroundChecker, CollisionHandler, Collider)
         };
         StateMashine = new StateMashine(enemyStates);
 

@@ -5,17 +5,22 @@ public class PlayerJumpState : IState
     private readonly PlayerStats _playerStats;
     private readonly Rigidbody _rigidbody;
     private readonly GroundChecker _groundChecker;
-
-    private IStateSwitcher _stateSwitcher;
+    private readonly CollisionHandler _collisionHandler;
+    private readonly Collider _collider;
     
+    private IStateSwitcher _stateSwitcher;
+
     private bool _hasLanded = false;
     private float _stunTimer = 0f;
 
-    public PlayerJumpState(PlayerStats playerStats, Rigidbody rigidbody, GroundChecker groundChecker)
+    public PlayerJumpState(PlayerStats playerStats, Rigidbody rigidbody, GroundChecker groundChecker,
+        CollisionHandler collisionHandler, Collider collider)
     {
         _playerStats = playerStats;
         _rigidbody = rigidbody;
         _groundChecker = groundChecker;
+        _collisionHandler = collisionHandler;
+        _collider = collider;
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -25,6 +30,9 @@ public class PlayerJumpState : IState
 
     public void Enter()
     {
+        _collisionHandler.enabled = false;
+        _collider.enabled = false;
+
         if (_rigidbody != null)
             _rigidbody.velocity = Vector3.zero;
 

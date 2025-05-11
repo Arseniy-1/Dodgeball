@@ -10,6 +10,9 @@ public class PlayerDodgeState : IState
     private readonly Mover _mover;
     private readonly PlayerInputController _playerInputController;
     private readonly Collider _squadZone;
+    private readonly CollisionHandler _collisionHandler;
+    private readonly Collider _collider;
+    private readonly Rigidbody _rigidbody;
     private readonly PlayerStats _playerStats;
     private readonly CompositeDisposable _disposable;
 
@@ -17,16 +20,20 @@ public class PlayerDodgeState : IState
 
     private IDisposable _movementLoopDisposable;
 
-    public PlayerDodgeState(Player player, Ball ball, Mover mover, PlayerInputController playerInputController,
-        Collider squadZone, PlayerStats playerStats, CompositeDisposable disposable)
+    public PlayerDodgeState(Player player, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
+        Collider collider, Rigidbody rigidbody, PlayerStats playerStats, PlayerInputController playerInputController, CompositeDisposable disposable)
     {
         _player = player;
         _ball = ball;
         _mover = mover;
         _playerInputController = playerInputController;
         _squadZone = squadZone;
+        _collisionHandler = collisionHandler;
+        _collider = collider;
+        _rigidbody = rigidbody;
         _playerStats = playerStats;
         _disposable = disposable;
+        
 
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
@@ -41,12 +48,20 @@ public class PlayerDodgeState : IState
 
     public void Enter()
     {
+        _rigidbody.isKinematic = true;
+        _collisionHandler.enabled = false;
+
+        
         _playerInputController.ActionButtonStarted += Jump;
         StartIdleMovementLoop();
     }
 
     public void Exit()
     {
+        _rigidbody.isKinematic = false;
+        _collisionHandler.enabled = true;
+
+        
         _playerInputController.ActionButtonStarted -= Jump;
         _mover.Stop();
         _movementLoopDisposable?.Dispose();

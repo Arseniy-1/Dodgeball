@@ -36,7 +36,12 @@ public class Squad : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Ball ball))
+        {
+            if(ball.Rigidbody.isKinematic)
+                return;
+        
             MessageBrokerHolder.GameActions.Publish(new M_BallChangedZone(_squadZone));
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

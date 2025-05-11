@@ -10,6 +10,9 @@ public class EnemyDodgeState : IState
     private readonly Mover _mover;
     private readonly Collider _squadZone;
     private readonly EnemyStats _enemyStats;
+    private readonly CollisionHandler _collisionHandler;
+    private readonly Collider _collider;
+    private readonly Rigidbody _rigidbody;
     private readonly CompositeDisposable _disposable;
 
     private IStateSwitcher _stateSwitcher;
@@ -17,14 +20,17 @@ public class EnemyDodgeState : IState
     private IDisposable _movementLoopDisposable;
     private IDisposable _jumpLoopDisposable;
 
-    public EnemyDodgeState(Enemy enemy, Ball ball, Mover mover,
-        Collider squadZone, EnemyStats enemyStats, CompositeDisposable disposable)
+    public EnemyDodgeState(Enemy enemy, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
+        Collider collider, Rigidbody rigidbody, EnemyStats enemyStats, CompositeDisposable disposable)
     {
         _enemy = enemy;
         _ball = ball;
         _mover = mover;
         _squadZone = squadZone;
         _enemyStats = enemyStats;
+        _collisionHandler = collisionHandler;
+        _collider = collider;
+        _rigidbody = rigidbody;
         _disposable = disposable;
 
         MessageBrokerHolder.GameActions
@@ -40,12 +46,18 @@ public class EnemyDodgeState : IState
 
     public void Enter()
     {
+        _rigidbody.isKinematic = true;
+        _collisionHandler.enabled = false;
+        
         StartIdleMovementLoop();
-        StartJumpLoop(); // запускаем прыжки
+        StartJumpLoop();
     }
 
     public void Exit()
     {
+        _rigidbody.isKinematic = false;
+        _collisionHandler.enabled = true;
+        
         _mover.Stop();
         _movementLoopDisposable?.Dispose();
         _jumpLoopDisposable?.Dispose();

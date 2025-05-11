@@ -5,17 +5,22 @@ public class EnemyJumpState : IState
     private readonly EnemyStats _enemyStats;
     private readonly Rigidbody _rigidbody;
     private readonly GroundChecker _groundChecker;
+    private readonly CollisionHandler _collisionHandler;
+    private readonly Collider _collider;
 
     private IStateSwitcher _stateSwitcher;
-    
+
     private bool _hasLanded = false;
     private float _stunTimer = 0f;
 
-    public EnemyJumpState(EnemyStats enemyStats, Rigidbody rigidbody, GroundChecker groundChecker)
+    public EnemyJumpState(EnemyStats enemyStats, Rigidbody rigidbody, GroundChecker groundChecker,
+        CollisionHandler collisionHandler, Collider collider)
     {
         _enemyStats = enemyStats;
         _rigidbody = rigidbody;
         _groundChecker = groundChecker;
+        _collisionHandler = collisionHandler;
+        _collider = collider;
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -25,6 +30,9 @@ public class EnemyJumpState : IState
 
     public void Enter()
     {
+        _collisionHandler.enabled = false;
+        _collider.enabled = false;
+
         if (_rigidbody != null)
             _rigidbody.velocity = Vector3.zero;
 
@@ -35,6 +43,8 @@ public class EnemyJumpState : IState
 
     public void Exit()
     {
+        _collider.enabled = true;
+        // _collisionHandler.enabled = true;
     }
 
     public void Update()
