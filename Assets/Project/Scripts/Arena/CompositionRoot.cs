@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
 public class CompositionRoot : MonoBehaviour
@@ -8,7 +9,9 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private List<Arena> _arenaPrefabs;
     [SerializeField] private List<Enemy> _enemyPrefabs;
     [SerializeField] private Player _playerPrefab;
-    [SerializeField] private Ball _ballInstance;
+    [SerializeField] private Ball _ballPrefab;
+    
+    private Ball _ballInstance;
 
     private PlayerSpawner _playerSpawner;
     private List<EnemySpawner> _enemySpawners = new();
@@ -33,6 +36,11 @@ public class CompositionRoot : MonoBehaviour
 
     private void StartGame()
     {
+        if(_ballInstance != null)
+            Destroy(_ballInstance.gameObject);
+        
+        _ballInstance = Instantiate(_ballPrefab, transform.position, Quaternion.identity);
+        
         if (_arenaInstance != null)
         {
             _arenaInstance.GameOver -= StartGame;
@@ -49,6 +57,8 @@ public class CompositionRoot : MonoBehaviour
 
         _arenaInstance = Instantiate(arenaPrefab, transform.position, Quaternion.identity);
 
+        Debug.Log(_arenaInstance.Squads.Count);
+        
         for (int i = 0; i < _arenaInstance.Squads.Count; i++)
         {
             if (i == 0)
@@ -59,36 +69,40 @@ public class CompositionRoot : MonoBehaviour
 
         _arenaInstance.GameOver += StartGame;
 
-        _arenaInstance.StartGame();
+        _arenaInstance.StartGame(_ballInstance);
     }
 
     private void FillPlayerSquad(PlayerSpawner playerSpawner, Squad squad)
     {
-        List<Entity> entities = new List<Entity>();
-
+        List<Entity> players = new List<Entity>();
+        
         for (int i = 0; i < squad.SpawnPoints.Count; i++)
         {
             Player player = playerSpawner.Spawn();
+            player.Initialize(squad.SquadZone, players, _ballInstance);
             player.transform.position = squad.SpawnPoints[i].position;
 
-            entities.Add(player);
+            players.Add(player);
         }
+        
+        Debug.Log(squad.SquadZone == null);
 
-        squad.Initialize(entities, _ballInstance);
+        squad.Initialize(players);
     }
 
     private void FillEnemySquad(EnemySpawner enemySpawner, Squad squad)
     {
-        List<Entity> entities = new List<Entity>();
+        List<Entity> enemys = new List<Entity>();
 
         for (int i = 0; i < squad.SpawnPoints.Count; i++)
         {
             Enemy enemy = enemySpawner.Spawn();
+            enemy.Initialize(squad.SquadZone, enemys, _ballInstance);
             enemy.transform.position = squad.SpawnPoints[i].position;
 
-            entities.Add(enemy);
+            enemys.Add(enemy);
         }
 
-        squad.Initialize(entities, _ballInstance);
+        squad.Initialize(enemys);
     }
 }

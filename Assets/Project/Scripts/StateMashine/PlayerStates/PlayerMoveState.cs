@@ -11,6 +11,7 @@ public class PlayerMoveState : IState
     private readonly CompositeDisposable _disposable;
     private readonly BallHolder _ballHolder;
     private readonly Ball _ball;
+    private readonly Collider _collider;
 
     private IStateSwitcher _stateSwitcher;
     
@@ -18,7 +19,7 @@ public class PlayerMoveState : IState
 
     public PlayerMoveState(Player player, PlayerStats stats, Mover mover, CollisionHandler collisionHandler,
         Collider squadZone,
-        CompositeDisposable compositeDisposable, BallHolder ballHolder, Ball ball)
+        CompositeDisposable compositeDisposable, BallHolder ballHolder, Ball ball, Collider collider)
     {
         _player = player;
         _playerStats = stats;
@@ -27,6 +28,7 @@ public class PlayerMoveState : IState
         _disposable = compositeDisposable;
         _ballHolder = ballHolder;
         _ball = ball;
+        _collider = collider;
 
         _collisionHandler.BallDetected += OnBallDetected;
 
@@ -44,6 +46,8 @@ public class PlayerMoveState : IState
 
     public void Enter()
     {
+        _collisionHandler.enabled = true;
+        _collider.enabled = true;
     }
 
     public void Exit()
@@ -91,6 +95,8 @@ public class PlayerMoveState : IState
 
     private void HandleBallPositionChanged(Vector3 ballPosition)
     {
+        Debug.Log(_squadZone==null);
+        
         Vector3 closestPoint = _squadZone.ClosestPoint(ballPosition);
 
         if (closestPoint == ballPosition)

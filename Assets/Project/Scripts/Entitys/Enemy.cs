@@ -8,9 +8,9 @@ public class Enemy : Entity, IDestoyable<Enemy>
     
     public event Action<Enemy> OnDestroyed;
 
-    public override void Initialize(Collider squadZone, List<Entity> teamates, Ball ball)
+    public override void Initialize(Collider squadZone, List<Entity> teammates, Ball ball)
     {
-        base.Initialize(squadZone, teamates, ball);
+        base.Initialize(squadZone, teammates, ball);
         BallThrower.Initialize(_enemyStats);
         
         List<IState> enemyStates = new List<IState>
@@ -18,21 +18,23 @@ public class Enemy : Entity, IDestoyable<Enemy>
             new EnemyIdleState(this, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats,
                 CompositeDisposable),
             new EnemyMoveState(this, _enemyStats, CollisionHandler, SquadZone, CompositeDisposable, BallHolder,
-                ball),
+                ball, Collider),
             new EnemyDodgeState(this, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats,
                 CompositeDisposable),
-            new EnemyAttackState(this, BallHolder, TargetScanner, TargetProvider, Teamates, BallThrower, _enemyStats),
+            new EnemyAttackState(this, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyStats),
             new EnemyJumpState(_enemyStats, Rigidbody, GroundChecker, CollisionHandler, Collider)
         };
         StateMashine = new StateMashine(enemyStates);
 
         foreach (var state in enemyStates)
             state.Initialize(StateMashine);
+        
+        Reset();
     }
     
     public override void Reset()
     {
-        Health.Reset();
+        base.Reset();
         StateMashine.SwitchState<EnemyIdleState>();
     }
 

@@ -99,6 +99,9 @@ public class EnemyIdleState : IState
     
     private void HandleBallZoneChanged(Collider zone)
     {
+        if(_squadZone == null)
+            return;
+     
         if (zone == _squadZone)
         {
             _stateSwitcher.SwitchState<EnemyMoveState>();

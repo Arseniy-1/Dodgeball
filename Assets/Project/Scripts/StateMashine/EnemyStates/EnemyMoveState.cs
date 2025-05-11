@@ -10,13 +10,14 @@ public class EnemyMoveState : IState
     private readonly CompositeDisposable _disposable;
     private readonly BallHolder _ballHolder;
     private readonly Ball _ball;
+    private readonly Collider _collider;
 
     private IStateSwitcher _stateSwitcher;
 
     private Coroutine _moveRoutine;
 
     public EnemyMoveState(Enemy enemy, EnemyStats enemyStats, CollisionHandler collisionHandler,
-        Collider squadZone, CompositeDisposable compositeDisposable, BallHolder ballHolder, Ball ball)
+        Collider squadZone, CompositeDisposable compositeDisposable, BallHolder ballHolder, Ball ball, Collider collider)
     {
         _enemy = enemy;
         _enemyEnemyStats = enemyStats;
@@ -25,6 +26,7 @@ public class EnemyMoveState : IState
         _disposable = compositeDisposable;
         _ballHolder = ballHolder;
         _ball = ball;
+        _collider = collider;
 
         _collisionHandler.BallDetected += OnBallDetected;
 
@@ -44,6 +46,8 @@ public class EnemyMoveState : IState
 
     public void Enter()
     {
+        _collisionHandler.enabled = true;
+        _collider.enabled = true;
     }
 
     public void Exit()
@@ -91,6 +95,9 @@ public class EnemyMoveState : IState
 
     private void HandleBallPositionChanged(Vector3 ballPosition)
     {
+        if (_squadZone == null)
+            return;
+
         Vector3 closestPoint = _squadZone.ClosestPoint(ballPosition);
 
         if (closestPoint == ballPosition)

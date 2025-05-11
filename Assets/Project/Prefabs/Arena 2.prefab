@@ -113,7 +113,7 @@ MonoBehaviour:
   - {fileID: 8944831925873403454}
   - {fileID: 1347908768491080343}
   _entities: []
-  _ball: {fileID: 0}
+  _squadZone: {fileID: 9052543242233828858}
 --- !u!65 &9052543242233828858
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -434,7 +434,7 @@ Transform:
   m_GameObject: {fileID: 3295592936821615883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.09, z: -3.25}
+  m_LocalPosition: {x: -2.36, y: 3.09, z: -3.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -524,7 +524,7 @@ MonoBehaviour:
   - {fileID: 8032118861109727765}
   - {fileID: 2041441697932752973}
   _entities: []
-  _ball: {fileID: 0}
+  _squadZone: {fileID: 5541628009696389484}
 --- !u!65 &5541628009696389484
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -778,6 +778,7 @@ MonoBehaviour:
   _squads:
   - {fileID: 7776089702786795460}
   - {fileID: 504271007349173559}
+  _ballPosition: {fileID: 2418734096176336072}
 --- !u!1 &7046453145173335530
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,7 +50,6 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 8944831925873403454}
   _entities: []
-  _ball: {fileID: 0}
 --- !u!65 &9052543242233828858
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -290,7 +289,6 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 1571675133128464750}
   _entities: []
-  _ball: {fileID: 0}
 --- !u!65 &5515363941756676506
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -505,7 +503,7 @@ Transform:
   m_GameObject: {fileID: 3295592936821615883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.09, z: -3.25}
+  m_LocalPosition: {x: -1.55, y: 5.01, z: -2.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -908,7 +906,6 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 8032118861109727765}
   _entities: []
-  _ball: {fileID: 0}
 --- !u!65 &5541628009696389484
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1167,6 +1164,7 @@ MonoBehaviour:
   - {fileID: 504271007349173559}
   - {fileID: 5748747163292277875}
   - {fileID: 3124503749858403781}
+  _ballPosition: {fileID: 2418734096176336072}
 --- !u!1 &7046453145173335530
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,7 +1365,6 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 6561961589478630457}
   _entities: []
-  _ball: {fileID: 0}
 --- !u!65 &8430684385277265154
 BoxCollider:
   m_ObjectHideFlags: 0

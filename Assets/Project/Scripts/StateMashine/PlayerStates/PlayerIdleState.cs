@@ -111,6 +111,8 @@ public class PlayerIdleState : IState
 
     private Vector3 GetRandomPointInZone()
     {
+        Debug.Log(_squadZone==null);
+        
         Bounds bounds = _squadZone.bounds;
         float x = Random.Range(bounds.min.x, bounds.max.x);
         float z = Random.Range(bounds.min.z, bounds.max.z);

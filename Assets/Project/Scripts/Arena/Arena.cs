@@ -5,15 +5,18 @@ using UnityEngine;
 public class Arena : MonoBehaviour
 {
     [SerializeField] private List<Squad> _squads;
-
+    [SerializeField] private Transform _ballPosition;
+    
     private int _deathCount = 0;
 
     public List<Squad> Squads => _squads;
 
     public event Action GameOver;
 
-    public void StartGame()
+    public void StartGame(Ball ball)
     {
+        ball.transform.position = _ballPosition.position;
+        
         foreach (var squad in _squads)
         {
             if (squad.SquadType == typeof(Player))

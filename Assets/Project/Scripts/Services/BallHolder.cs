@@ -7,9 +7,12 @@ public class BallHolder : MonoBehaviour
 
     public Ball LostBall()
     {
-        _ball.transform.parent = null;
-        _ball.Rigidbody.useGravity = true;
-        _ball.Rigidbody.isKinematic = false;
+        if (_ball != null)
+        {
+            _ball.transform.parent = null;
+            _ball.Rigidbody.useGravity = true;
+            _ball.Rigidbody.isKinematic = false;
+        }
 
         Ball returnedBall = _ball;
         _ball = null;
@@ -27,7 +30,7 @@ public class BallHolder : MonoBehaviour
         ball.Rigidbody.angularVelocity = Vector3.zero;
         ball.Rigidbody.useGravity = false;
         ball.Rigidbody.isKinematic = true;
-        
+
         _ball = ball;
     }
 }

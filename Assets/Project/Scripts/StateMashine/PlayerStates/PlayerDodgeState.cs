@@ -19,7 +19,7 @@ public class PlayerDodgeState : IState
     private IStateSwitcher _stateSwitcher;
 
     private IDisposable _movementLoopDisposable;
-
+    
     public PlayerDodgeState(Player player, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
         Collider collider, Rigidbody rigidbody, PlayerStats playerStats, PlayerInputController playerInputController, CompositeDisposable disposable)
     {
@@ -118,6 +118,8 @@ public class PlayerDodgeState : IState
 
     private Vector3 GetRandomPointInZone()
     {
+        Debug.Log(_squadZone== null);
+        
         Bounds bounds = _squadZone.bounds;
         float x = Random.Range(bounds.min.x, bounds.max.x);
         float z = Random.Range(bounds.min.z, bounds.max.z);

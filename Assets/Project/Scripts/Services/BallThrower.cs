@@ -31,9 +31,13 @@ public class BallThrower : MonoBehaviour
 
     public void Throw(Ball ball)
     {
+        if(ball == null) 
+            return;
+        
         ball.Rigidbody.AddForce(transform.forward * _currentForce, ForceMode.Force);
         
         _currentForce = _throwerStats.MinThrowForce;
+        
         OnCharging?.Invoke(_currentForce, _throwerStats.MinThrowForce, _throwerStats.MaxThrowForce);
         OnThrown?.Invoke();
     }
