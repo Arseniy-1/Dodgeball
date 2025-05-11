@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Player : Entity, IDestoyable<Player>
@@ -33,6 +34,13 @@ public class Player : Entity, IDestoyable<Player>
             state.Initialize(StateMashine);
     }
 
+    public override void Reset()
+    {
+        Health.Reset();
+        StateMashine.SwitchState<PlayerIdleState>();
+    }
+
+    [Button]
     protected override void Die()
     {
         OnDestroyed?.Invoke(this);

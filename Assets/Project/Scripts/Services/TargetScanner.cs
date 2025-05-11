@@ -13,10 +13,8 @@ public class TargetScanner : MonoBehaviour
 
         foreach (Collider col in colliders)
         {
-            Debug.Log(col.gameObject.name);
             if (col.TryGetComponent(out Entity entity))
             {
-                Debug.Log("enemy" + col.gameObject.name);
                 if (entity == null || teammates.Contains(entity)) continue;
 
                 float distance = Vector3.Distance(transform.position, entity.transform.position);

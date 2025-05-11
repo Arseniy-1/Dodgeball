@@ -49,4 +49,9 @@ public class Health : MonoBehaviour
 
         HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
     }
+
+    public void Reset()
+    {
+        _currentHealthPoint = _maxHealth;
+    }
 }

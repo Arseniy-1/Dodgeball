@@ -2,6 +2,7 @@ using System;
 using UniRx;
 using UnityEngine;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine.Serialization;
 using UnityEngine.Video;
 
@@ -20,14 +21,14 @@ public abstract class Entity : MonoBehaviour
 
     protected CompositeDisposable CompositeDisposable = new CompositeDisposable();
     protected TargetProvider TargetProvider = new TargetProvider();
-    protected Collider SquadZone;
+    [SerializeField] protected Collider SquadZone;
     protected Collider Collider;
     protected Rigidbody Rigidbody;
 
     protected StateMashine StateMashine;
 
     private Ball _ball;
-    
+
     // private void Awake()
     // {
     // }
@@ -46,18 +47,23 @@ public abstract class Entity : MonoBehaviour
     {
         Collider = GetComponent<Collider>();
         Rigidbody = GetComponent<Rigidbody>();
-        
+
         SquadZone = squadZone;
         Teamates = teamates;
         Health.Initialize(CollisionHandler);
         _ball = ball;
     }
 
+    public abstract void Reset();
+
     protected virtual void Update()
     {
+        if (enabled)
+            StateMashine.Update();
+
         CurrentState = StateMashine._currentState.ToString();
-        StateMashine.Update();
     }
 
+    [Button]
     protected abstract void Die();
 }

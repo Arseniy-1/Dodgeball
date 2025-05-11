@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 public class Enemy : Entity, IDestoyable<Enemy>
 {
@@ -28,7 +29,14 @@ public class Enemy : Entity, IDestoyable<Enemy>
         foreach (var state in enemyStates)
             state.Initialize(StateMashine);
     }
+    
+    public override void Reset()
+    {
+        Health.Reset();
+        StateMashine.SwitchState<EnemyIdleState>();
+    }
 
+    [Button]
     protected override void Die()
     {
         OnDestroyed?.Invoke(this);

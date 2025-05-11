@@ -6,26 +6,37 @@ public class Arena : MonoBehaviour
 {
     [SerializeField] private List<Squad> _squads;
 
+    private int _deathCount = 0;
+
     public List<Squad> Squads => _squads;
-    
+
     public event Action GameOver;
 
-    private void OnDestroy()
-    {
-        foreach (var squad in _squads)
-            squad.LostPlayers -= HandleLostPlayers;
-    }
-    
     public void StartGame()
     {
         foreach (var squad in _squads)
         {
-            squad.LostPlayers += HandleLostPlayers;
+            if (squad.SquadType == typeof(Player))
+                squad.LostPlayers += HandlePlayerSquadDeath;
+            else
+                squad.LostPlayers += HandleEnemySquadDeath;
         }
     }
 
-    private void HandleLostPlayers()
+    private void HandleEnemySquadDeath(Squad squad)
     {
+        squad.LostPlayers -= HandleEnemySquadDeath;
+        
+        _deathCount++;
+
+        if (_deathCount == _squads.Count - 1)
+            GameOver?.Invoke();
+    }
+
+    private void HandlePlayerSquadDeath(Squad squad)
+    {
+        squad.LostPlayers -= HandlePlayerSquadDeath;
+        
         GameOver?.Invoke();
     }
 }

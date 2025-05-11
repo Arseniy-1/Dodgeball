@@ -132,6 +132,9 @@ public class EnemyDodgeState : IState
 
     private Vector3 GetRandomPointInZone()
     {
+        if (_squadZone == null)
+            return new Vector3(0,0,0);
+        
         Bounds bounds = _squadZone.bounds;
         float x = Random.Range(bounds.min.x, bounds.max.x);
         float z = Random.Range(bounds.min.z, bounds.max.z);

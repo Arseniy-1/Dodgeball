@@ -50,7 +50,6 @@ public class PlayerAttackState : IState
     {
         if (_targetProvider.Target != null)
         {
-            Debug.Log("2d");
             Vector3 direction = Vector3
                 .ProjectOnPlane(_targetProvider.Target.transform.position - _player.transform.position,
                     Vector3.up).normalized;
