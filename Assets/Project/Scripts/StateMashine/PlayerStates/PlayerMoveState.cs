@@ -8,10 +8,10 @@ public class PlayerMoveState : IState
     private readonly PlayerStats _playerStats;
     private readonly CollisionHandler _collisionHandler;
     private readonly Collider _squadZone;
-    private readonly CompositeDisposable _disposable;
     private readonly BallHolder _ballHolder;
     private readonly Ball _ball;
     private readonly Collider _collider;
+    private readonly CompositeDisposable _disposable;
 
     private IStateSwitcher _stateSwitcher;
     
@@ -25,18 +25,12 @@ public class PlayerMoveState : IState
         _playerStats = stats;
         _collisionHandler = collisionHandler;
         _squadZone = squadZone;
-        _disposable = compositeDisposable;
         _ballHolder = ballHolder;
         _ball = ball;
         _collider = collider;
+        _disposable = new CompositeDisposable();
 
         _collisionHandler.BallDetected += OnBallDetected;
-
-        MessageBrokerHolder.GameActions.Receive<M_BallTaken>().Subscribe(message => HandleBallPositionChanged(message.Position))
-            .AddTo(_disposable);
-
-        MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>().Subscribe(message => HandleBallZoneChanged(message.Zone))
-            .AddTo(_disposable);
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -46,12 +40,19 @@ public class PlayerMoveState : IState
 
     public void Enter()
     {
+        MessageBrokerHolder.GameActions.Receive<M_BallTaken>().Subscribe(message => HandleBallPositionChanged(message.Position))
+            .AddTo(_disposable);
+
+        MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>().Subscribe(message => HandleBallZoneChanged(message.Zone))
+            .AddTo(_disposable);
+        
         _collisionHandler.enabled = true;
         _collider.enabled = true;
     }
 
     public void Exit()
     { 
+        _disposable.Dispose();
     }
 
     public void Update()
@@ -95,8 +96,6 @@ public class PlayerMoveState : IState
 
     private void HandleBallPositionChanged(Vector3 ballPosition)
     {
-        Debug.Log(_squadZone==null);
-        
         Vector3 closestPoint = _squadZone.ClosestPoint(ballPosition);
 
         if (closestPoint == ballPosition)

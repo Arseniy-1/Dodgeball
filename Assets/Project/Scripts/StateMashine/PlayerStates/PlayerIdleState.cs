@@ -30,12 +30,7 @@ public class PlayerIdleState : IState
         _collider = collider;
         _rigidbody = rigidbody;
         _playerStats = playerStats;
-        _disposable = disposable;
-
-        MessageBrokerHolder.GameActions
-            .Receive<M_BallChangedZone>()
-            .Subscribe(message => HandleBallZoneChanged(message.Zone))
-            .AddTo(_disposable);
+        _disposable = new CompositeDisposable();
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -45,6 +40,12 @@ public class PlayerIdleState : IState
 
     public void Enter()
     {
+        Debug.Log("Enter");
+        MessageBrokerHolder.GameActions
+            .Receive<M_BallChangedZone>()
+            .Subscribe(message => HandleBallZoneChanged(message.Zone))
+            .AddTo(_disposable);
+        
         _rigidbody.isKinematic = true;
         _collisionHandler.enabled = false;
         _collider.enabled = false;
@@ -54,6 +55,8 @@ public class PlayerIdleState : IState
 
     public void Exit()
     {
+        _disposable.Dispose();
+        
         _rigidbody.isKinematic = false;
         _collisionHandler.enabled = true;
         _collider.enabled = true;
@@ -99,6 +102,7 @@ public class PlayerIdleState : IState
     
     private void HandleBallZoneChanged(Collider zone)
     {
+        Debug.Log("HandleBallZoneChanged");
         if (zone == _squadZone)
         {
             _stateSwitcher.SwitchState<PlayerMoveState>();

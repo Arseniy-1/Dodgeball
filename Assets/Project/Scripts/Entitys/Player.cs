@@ -42,7 +42,7 @@ public class Player : Entity, IDestoyable<Player>
         };
 
         // Пересоздание StateMashine
-        // StateMashine?.Dispose(); // если реализовано IDisposable — освободить ресурсы
+        StateMashine?.Dispose(); // если реализовано IDisposable — освободить ресурсы
         StateMashine = new StateMashine(_playerStates);
 
         // Инициализация состояний
@@ -55,7 +55,6 @@ public class Player : Entity, IDestoyable<Player>
     public override void Reset()
     {
         base.Reset();
-        StateMashine?.SwitchState<PlayerIdleState>();
     }
 
     [Button]

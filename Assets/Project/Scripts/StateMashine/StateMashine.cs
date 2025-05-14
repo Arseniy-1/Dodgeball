@@ -10,7 +10,7 @@ public class StateMashine : IStateSwitcher
     public StateMashine(List<IState> states)
     {
         _states = states;
-        
+
         _currentState = _states[0];
         _currentState.Enter();
     }
@@ -28,4 +28,20 @@ public class StateMashine : IStateSwitcher
     }
 
     public void Update() => _currentState.Update();
+
+    public void Dispose()
+    {
+        foreach (var state in _states)
+        {
+            _currentState.Exit();
+            
+            if (state is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+        }
+
+        _states.Clear();
+        _currentState = null;
+    }
 }
