@@ -7,36 +7,26 @@ public class EnemyMoveState : IState
     private readonly EnemyStats _enemyEnemyStats;
     private readonly CollisionHandler _collisionHandler;
     private readonly Collider _squadZone;
-    private readonly CompositeDisposable _disposable;
     private readonly BallHolder _ballHolder;
     private readonly Ball _ball;
     private readonly Collider _collider;
+    private readonly CompositeDisposable _disposable;
 
     private IStateSwitcher _stateSwitcher;
 
     private Coroutine _moveRoutine;
 
     public EnemyMoveState(Enemy enemy, EnemyStats enemyStats, CollisionHandler collisionHandler,
-        Collider squadZone, CompositeDisposable compositeDisposable, BallHolder ballHolder, Ball ball, Collider collider)
+        Collider squadZone, BallHolder ballHolder, Ball ball, Collider collider)
     {
         _enemy = enemy;
         _enemyEnemyStats = enemyStats;
         _collisionHandler = collisionHandler;
         _squadZone = squadZone;
-        _disposable = compositeDisposable;
         _ballHolder = ballHolder;
         _ball = ball;
         _collider = collider;
-
-        _collisionHandler.BallDetected += OnBallDetected;
-
-        MessageBrokerHolder.GameActions.Receive<M_BallTaken>()
-            .Subscribe(message => HandleBallPositionChanged(message.Position))
-            .AddTo(_disposable);
-
-        MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>()
-            .Subscribe(message => HandleBallZoneChanged(message.Zone))
-            .AddTo(_disposable);
+        _disposable = new CompositeDisposable();
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -46,12 +36,24 @@ public class EnemyMoveState : IState
 
     public void Enter()
     {
+        _collisionHandler.BallDetected += OnBallDetected;
+
+        MessageBrokerHolder.GameActions.Receive<M_BallTaken>()
+            .Subscribe(message => HandleBallPositionChanged(message.Position))
+            .AddTo(_disposable);
+
+        MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>()
+            .Subscribe(message => HandleBallZoneChanged(message.Zone))
+            .AddTo(_disposable);
+        
         _collisionHandler.enabled = true;
         _collider.enabled = true;
     }
 
     public void Exit()
     {
+        _collisionHandler.BallDetected -= OnBallDetected;
+        _disposable.Dispose();
     }
 
     public void Update()
@@ -83,11 +85,7 @@ public class EnemyMoveState : IState
 
     private void HandleBallZoneChanged(Collider zone)
     {
-        if (zone == _squadZone)
-        {
-            _stateSwitcher.SwitchState<EnemyMoveState>();
-        }
-        else
+        if (zone != _squadZone)
         {
             _stateSwitcher.SwitchState<EnemyDodgeState>();
         }
@@ -95,9 +93,6 @@ public class EnemyMoveState : IState
 
     private void HandleBallPositionChanged(Vector3 ballPosition)
     {
-        if (_squadZone == null)
-            return;
-
         Vector3 closestPoint = _squadZone.ClosestPoint(ballPosition);
 
         if (closestPoint == ballPosition)

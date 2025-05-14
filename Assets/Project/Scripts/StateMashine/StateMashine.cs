@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class StateMashine : IStateSwitcher
 {
@@ -34,7 +35,7 @@ public class StateMashine : IStateSwitcher
         foreach (var state in _states)
         {
             _currentState.Exit();
-            
+
             if (state is IDisposable disposable)
             {
                 disposable.Dispose();

@@ -21,7 +21,7 @@ public class EnemyDodgeState : IState
     private IDisposable _jumpLoopDisposable;
 
     public EnemyDodgeState(Enemy enemy, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
-        Collider collider, Rigidbody rigidbody, EnemyStats enemyStats, CompositeDisposable disposable)
+        Collider collider, Rigidbody rigidbody, EnemyStats enemyStats)
     {
         _enemy = enemy;
         _ball = ball;
@@ -31,12 +31,7 @@ public class EnemyDodgeState : IState
         _collisionHandler = collisionHandler;
         _collider = collider;
         _rigidbody = rigidbody;
-        _disposable = disposable;
-
-        MessageBrokerHolder.GameActions
-            .Receive<M_BallChangedZone>()
-            .Subscribe(message => HandleBallZoneChanged(message.Zone))
-            .AddTo(_disposable);
+        _disposable = new CompositeDisposable();
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -46,8 +41,12 @@ public class EnemyDodgeState : IState
 
     public void Enter()
     {
+        MessageBrokerHolder.GameActions
+            .Receive<M_BallChangedZone>()
+            .Subscribe(message => HandleBallZoneChanged(message.Zone))
+            .AddTo(_disposable);
+        
         _rigidbody.isKinematic = true;
-        _collisionHandler.enabled = false;
         
         StartIdleMovementLoop();
         StartJumpLoop();
@@ -55,8 +54,9 @@ public class EnemyDodgeState : IState
 
     public void Exit()
     {
+        _disposable.Dispose();
+        
         _rigidbody.isKinematic = false;
-        _collisionHandler.enabled = true;
         
         _mover.Stop();
         _movementLoopDisposable?.Dispose();

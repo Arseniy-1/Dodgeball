@@ -4,24 +4,24 @@ using System.Collections.Generic;
 public class PlayerAttackState : IState
 {
     private readonly Player _player;
-    private BallHolder _ballHolder;
-    private TargetScanner _targetScanner;
-    private TargetProvider _targetProvider;
-    private List<Entity> _teamates;
-    private PlayerInputController _inputController;
-    private BallThrower _ballThrower;
+    private readonly BallHolder _ballHolder;
+    private readonly TargetScanner _targetScanner;
+    private readonly TargetProvider _targetProvider;
+    private readonly List<Entity> _teammates;
+    private readonly PlayerInputController _inputController;
+    private readonly BallThrower _ballThrower;
 
     private IStateSwitcher _stateSwitcher;
 
     public PlayerAttackState(Player player, BallHolder ballHolder, TargetScanner targetScanner,
         TargetProvider targetProvider,
-        List<Entity> teamates, PlayerInputController inputController, BallThrower ballThrower)
+        List<Entity> teammates, PlayerInputController inputController, BallThrower ballThrower)
     {
         _player = player;
         _ballHolder = ballHolder;
         _targetScanner = targetScanner;
         _targetProvider = targetProvider;
-        _teamates = teamates;
+        _teammates = teammates;
         _inputController = inputController;
         _ballThrower = ballThrower;
     }
@@ -33,7 +33,7 @@ public class PlayerAttackState : IState
 
     public void Enter()
     {
-        Entity target = _targetScanner.Scan(_teamates);
+        Entity target = _targetScanner.Scan(_teammates);
         _targetProvider.SelectTarget(target);
 
         _inputController.ActionButtonStarted += OnButtonClicked;

@@ -28,17 +28,11 @@ public class Player : Entity, IDestoyable<Player>
         // Создание и сохранение новых состояний
         _playerStates = new List<IState>
         {
-            new PlayerIdleState(this, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats,
-                CompositeDisposable),
-            new PlayerMoveState(this, _playerStats, Mover, CollisionHandler, SquadZone, CompositeDisposable,
-                BallHolder, Ball, Collider),
-            new PlayerDodgeState(this, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats,
-                _inputController, CompositeDisposable),
-            new PlayerAttackState(this, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController,
-                BallThrower),
+            new PlayerIdleState(this, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats),
+            new PlayerMoveState(this, _playerStats, CollisionHandler, SquadZone, BallHolder, Ball, Collider),
+            new PlayerDodgeState(this, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats, _inputController),
+            new PlayerAttackState(this, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController, BallThrower),
             new PlayerJumpState(_playerStats, Rigidbody, GroundChecker, CollisionHandler, Collider),
-            new PlayerDeathState(this, _playerStats, Mover, CollisionHandler, SquadZone, CompositeDisposable,
-                BallHolder, Ball, Collider)
         };
 
         // Пересоздание StateMashine

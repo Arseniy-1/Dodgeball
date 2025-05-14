@@ -20,7 +20,7 @@ public class PlayerIdleState : IState
     private IDisposable _movementLoopDisposable;
 
     public PlayerIdleState(Player player, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
-        Collider collider, Rigidbody rigidbody, PlayerStats playerStats, CompositeDisposable disposable)
+        Collider collider, Rigidbody rigidbody, PlayerStats playerStats)
     {
         _player = player;
         _ball = ball;
@@ -40,7 +40,6 @@ public class PlayerIdleState : IState
 
     public void Enter()
     {
-        Debug.Log("Enter");
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))
@@ -102,7 +101,6 @@ public class PlayerIdleState : IState
     
     private void HandleBallZoneChanged(Collider zone)
     {
-        Debug.Log("HandleBallZoneChanged");
         if (zone == _squadZone)
         {
             _stateSwitcher.SwitchState<PlayerMoveState>();

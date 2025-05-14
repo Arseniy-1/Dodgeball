@@ -57,8 +57,6 @@ public class CompositionRoot : MonoBehaviour
 
         _arenaInstance = Instantiate(arenaPrefab, transform.position, Quaternion.identity);
 
-        Debug.Log(_arenaInstance.Squads.Count);
-        
         for (int i = 0; i < _arenaInstance.Squads.Count; i++)
         {
             if (i == 0)
@@ -85,8 +83,6 @@ public class CompositionRoot : MonoBehaviour
             players.Add(player);
         }
         
-        Debug.Log(squad.SquadZone == null);
-
         squad.Initialize(players);
     }
 

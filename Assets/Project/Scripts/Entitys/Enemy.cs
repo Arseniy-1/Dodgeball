@@ -6,6 +6,8 @@ public class Enemy : Entity, IDestoyable<Enemy>
 {
     [SerializeField] private EnemyStats _enemyStats;
     
+    private List<IState> _enemyStates = new();
+    
     public event Action<Enemy> OnDestroyed;
 
     public override void Initialize(Collider squadZone, List<Entity> teammates, Ball ball)
@@ -13,29 +15,36 @@ public class Enemy : Entity, IDestoyable<Enemy>
         base.Initialize(squadZone, teammates, ball);
         BallThrower.Initialize(_enemyStats);
         
-        List<IState> enemyStates = new List<IState>
+        foreach (var state in _enemyStates)
         {
-            new EnemyIdleState(this, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats,
-                CompositeDisposable),
-            new EnemyMoveState(this, _enemyStats, CollisionHandler, SquadZone, CompositeDisposable, BallHolder,
-                ball, Collider),
-            new EnemyDodgeState(this, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats,
-                CompositeDisposable),
+            if (state is IDisposable disposable)
+                disposable.Dispose();
+        }
+        _enemyStates.Clear();
+        
+        _enemyStates = new List<IState>
+        {
+            new EnemyIdleState(this, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats),
+            new EnemyMoveState(this, _enemyStats, CollisionHandler, SquadZone, BallHolder, ball, Collider),
+            new EnemyDodgeState(this, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats),
             new EnemyAttackState(this, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyStats),
             new EnemyJumpState(_enemyStats, Rigidbody, GroundChecker, CollisionHandler, Collider)
         };
-        StateMashine = new StateMashine(enemyStates);
-
-        foreach (var state in enemyStates)
-            state.Initialize(StateMashine);
         
+        // Пересоздание StateMashine
+        StateMashine?.Dispose(); // если реализовано IDisposable — освободить ресурсы
+        StateMashine = new StateMashine(_enemyStates);
+
+        // Инициализация состояний
+        foreach (var state in _enemyStates)
+            state.Initialize(StateMashine);
+
         Reset();
     }
     
     public override void Reset()
     {
         base.Reset();
-        StateMashine.SwitchState<EnemyIdleState>();
     }
 
     [Button]

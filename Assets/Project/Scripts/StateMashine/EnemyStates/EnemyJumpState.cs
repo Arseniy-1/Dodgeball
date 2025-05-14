@@ -31,7 +31,7 @@ public class EnemyJumpState : IState
     public void Enter()
     {
         _collisionHandler.enabled = false;
-        _collider.enabled = false;
+        _collider.isTrigger = true;
 
         if (_rigidbody != null)
             _rigidbody.velocity = Vector3.zero;
@@ -43,8 +43,8 @@ public class EnemyJumpState : IState
 
     public void Exit()
     {
-        _collider.enabled = true;
-        // _collisionHandler.enabled = true;
+        _collisionHandler.enabled = true;
+        _collider.isTrigger = false;
     }
 
     public void Update()

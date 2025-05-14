@@ -17,9 +17,7 @@ public class PlayerMoveState : IState
     
     private Coroutine _moveRoutine;
 
-    public PlayerMoveState(Player player, PlayerStats stats, Mover mover, CollisionHandler collisionHandler,
-        Collider squadZone,
-        CompositeDisposable compositeDisposable, BallHolder ballHolder, Ball ball, Collider collider)
+    public PlayerMoveState(Player player, PlayerStats stats, CollisionHandler collisionHandler, Collider squadZone, BallHolder ballHolder, Ball ball, Collider collider)
     {
         _player = player;
         _playerStats = stats;
@@ -29,8 +27,6 @@ public class PlayerMoveState : IState
         _ball = ball;
         _collider = collider;
         _disposable = new CompositeDisposable();
-
-        _collisionHandler.BallDetected += OnBallDetected;
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -40,6 +36,8 @@ public class PlayerMoveState : IState
 
     public void Enter()
     {
+        _collisionHandler.BallDetected += OnBallDetected;
+        
         MessageBrokerHolder.GameActions.Receive<M_BallTaken>().Subscribe(message => HandleBallPositionChanged(message.Position))
             .AddTo(_disposable);
 
@@ -52,6 +50,7 @@ public class PlayerMoveState : IState
 
     public void Exit()
     { 
+        _collisionHandler.BallDetected -= OnBallDetected;
         _disposable.Dispose();
     }
 
@@ -84,11 +83,7 @@ public class PlayerMoveState : IState
 
     private void HandleBallZoneChanged(Collider zone)
     {
-        if (zone == _squadZone)
-        {
-            _stateSwitcher.SwitchState<PlayerMoveState>();
-        }
-        else
+        if (zone != _squadZone)
         {
             _stateSwitcher.SwitchState<PlayerDodgeState>();
         }

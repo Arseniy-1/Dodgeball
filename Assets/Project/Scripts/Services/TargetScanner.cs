@@ -18,6 +18,7 @@ public class TargetScanner : MonoBehaviour
                 if (entity == null || teammates.Contains(entity)) continue;
 
                 float distance = Vector3.Distance(transform.position, entity.transform.position);
+                
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
