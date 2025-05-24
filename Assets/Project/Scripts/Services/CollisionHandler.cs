@@ -3,9 +3,16 @@ using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
 {
+    private Entity _owner; 
+    
     public event Action<Ball> BallDetected;
     public event Action<int> DamageTaken;
 
+    private void Awake()
+    {
+        _owner = GetComponent<Entity>();
+    }
+    
     private void Start()
     {
         // Метод нужен, чтобы была возможность выключать компонент
@@ -13,8 +20,6 @@ public class CollisionHandler : MonoBehaviour
     
     private void OnCollisionEnter(Collision collision)
     {
-        // Debug.Log(gameObject.name + " collided with " + collision.gameObject.name);
-
         if (enabled == false)
             return;
 
@@ -37,7 +42,7 @@ public class CollisionHandler : MonoBehaviour
 
     private void InteractWithBall(Ball ball)
     {
-        MessageBrokerHolder.GameActions.Publish(new M_BallTaken(transform.position));
+        MessageBrokerHolder.GameActions.Publish(new M_BallTaken(_owner));
         BallDetected?.Invoke(ball);
     }
 }

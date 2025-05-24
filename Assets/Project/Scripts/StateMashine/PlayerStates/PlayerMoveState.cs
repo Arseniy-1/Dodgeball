@@ -38,7 +38,7 @@ public class PlayerMoveState : IState
     {
         _collisionHandler.BallDetected += OnBallDetected;
         
-        MessageBrokerHolder.GameActions.Receive<M_BallTaken>().Subscribe(message => HandleBallPositionChanged(message.Position))
+        MessageBrokerHolder.GameActions.Receive<M_BallTaken>().Subscribe(message => HandleBallPositionChanged(message.Entity))
             .AddTo(_disposable);
 
         MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>().Subscribe(message => HandleBallZoneChanged(message.Zone))
@@ -89,11 +89,14 @@ public class PlayerMoveState : IState
         }
     }
 
-    private void HandleBallPositionChanged(Vector3 ballPosition)
+    private void HandleBallPositionChanged(Entity entity)
     {
-        Vector3 closestPoint = _squadZone.ClosestPoint(ballPosition);
+        if(entity == _player)
+            return;
+        
+        Vector3 closestPoint = _squadZone.ClosestPoint(entity.transform.position);
 
-        if (closestPoint == ballPosition)
+        if (closestPoint == entity.transform.position)
         {
             _stateSwitcher.SwitchState<PlayerIdleState>();
         }

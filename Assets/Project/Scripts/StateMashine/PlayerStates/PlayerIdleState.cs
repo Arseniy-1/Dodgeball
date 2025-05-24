@@ -101,8 +101,11 @@ public class PlayerIdleState : IState
     
     private void HandleBallZoneChanged(Collider zone)
     {
+        Debug.Log("Player | HandleBallZoneChanged");
+        
         if (zone == _squadZone)
         {
+            Debug.Log("_stateSwitcher.SwitchState<PlayerMoveState>();");
             _stateSwitcher.SwitchState<PlayerMoveState>();
         }
         else

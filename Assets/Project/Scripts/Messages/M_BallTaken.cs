@@ -2,10 +2,10 @@
 
 public struct M_BallTaken
 {
-    public M_BallTaken(Vector3 position)
+    public M_BallTaken(Entity entity)
     {
-        Position = position;
+        Entity = entity;
     }
     
-    public Vector3 Position { get; private set; }
+    public Entity Entity { get; private set; }
 }
