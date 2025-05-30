@@ -62,6 +62,18 @@ public class Squad : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.TryGetComponent(out Ball ball))
+        {
+            if (ball.Rigidbody.isKinematic)
+                return;
+            
+            Debug.Log("M_BallChangedZone");
+            MessageBrokerHolder.GameActions.Publish(new M_BallChangedZone(_squadZone));
+        }
+    }
+
     private void HandleEntityDeath(Entity entity)
     {
         if (_entities.Contains(entity))

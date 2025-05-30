@@ -50,6 +50,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
     [Button]
     protected override void Die()
     {
+        base.Die();
         OnDestroyed?.Invoke(this);
     }
 }

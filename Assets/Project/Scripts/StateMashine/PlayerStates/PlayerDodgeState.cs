@@ -19,8 +19,9 @@ public class PlayerDodgeState : IState
     private IStateSwitcher _stateSwitcher;
 
     private IDisposable _movementLoopDisposable;
-    
-    public PlayerDodgeState(Player player, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
+
+    public PlayerDodgeState(Player player, Ball ball, Mover mover, CollisionHandler collisionHandler,
+        Collider squadZone,
         Collider collider, Rigidbody rigidbody, PlayerStats playerStats, PlayerInputController playerInputController)
     {
         _player = player;
@@ -42,12 +43,12 @@ public class PlayerDodgeState : IState
     public void Enter()
     {
         _disposable = new CompositeDisposable();
-        
+
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))
             .AddTo(_disposable);
-        
+
         _rigidbody.isKinematic = true;
 
         _playerInputController.ActionButtonStarted += Jump;
@@ -57,9 +58,9 @@ public class PlayerDodgeState : IState
     public void Exit()
     {
         _disposable.Dispose();
-        
+
         _rigidbody.isKinematic = false;
-        
+
         _playerInputController.ActionButtonStarted -= Jump;
         _mover.Stop();
         _movementLoopDisposable?.Dispose();
@@ -80,7 +81,7 @@ public class PlayerDodgeState : IState
                 _playerStats.DodgeDirectionChangeMaxTime);
 
             Vector3 target = GetRandomPointInZone();
-            
+
             yield return _mover.MoveTo(target, _playerStats.DodgeSpeed);
             yield return new WaitForSeconds(standTime);
         }

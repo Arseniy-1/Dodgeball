@@ -62,12 +62,14 @@ public abstract class Entity : MonoBehaviour
         if (_isEnabled)
             StateMaсhine.Update();
 
-        CurrentState = StateMaсhine._currentState.ToString();
+        if (StateMaсhine != null && StateMaсhine._currentState != null)
+            CurrentState = StateMaсhine._currentState.ToString();
     }
 
     [Button]
     protected virtual void Die()
     {
+        StateMaсhine.Dispose();
         _isEnabled = false;
     }
 }

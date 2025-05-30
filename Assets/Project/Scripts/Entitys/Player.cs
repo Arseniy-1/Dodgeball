@@ -51,6 +51,7 @@ public class Player : Entity, IDestoyable<Player>
     [Button]
     protected override void Die()
     {
+        base.Die();
         OnDestroyed?.Invoke(this);
     }
 }
