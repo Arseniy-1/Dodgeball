@@ -13,7 +13,7 @@ public class EnemyIdleState : IState
     private readonly Collider _collider;
     private readonly Rigidbody _rigidbody;
     private readonly EnemyStats _enemyStats;
-    private readonly CompositeDisposable _disposable;
+    private CompositeDisposable _disposable;
     
     private IStateSwitcher _stateSwitcher;
     
@@ -30,7 +30,6 @@ public class EnemyIdleState : IState
         _collider = collider;
         _rigidbody = rigidbody;
         _enemyStats = enemyStats;
-        _disposable = new CompositeDisposable();
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -40,6 +39,8 @@ public class EnemyIdleState : IState
 
     public void Enter()
     {
+        _disposable = new CompositeDisposable();
+        
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))

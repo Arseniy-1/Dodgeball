@@ -7,6 +7,7 @@ public class EnemyJumpState : IState
     private readonly GroundChecker _groundChecker;
     private readonly CollisionHandler _collisionHandler;
     private readonly Collider _collider;
+    private Ball _ball;
 
     private IStateSwitcher _stateSwitcher;
 
@@ -61,7 +62,7 @@ public class EnemyJumpState : IState
         {
             _stunTimer -= Time.deltaTime;
 
-            if (_stunTimer <= 0f)
+            if (_stunTimer <= 0f){}
                 _stateSwitcher.SwitchState<EnemyDodgeState>();
         }
     }

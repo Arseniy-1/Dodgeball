@@ -23,7 +23,7 @@ public abstract class Entity : MonoBehaviour
     protected Collider Collider;
     protected Rigidbody Rigidbody;
 
-    protected StateMashine StateMashine;
+    protected StateMaсhine StateMaсhine;
 
     [SerializeField] protected Ball Ball;
     private bool _isEnabled = true;
@@ -60,9 +60,9 @@ public abstract class Entity : MonoBehaviour
     protected virtual void Update()
     {
         if (_isEnabled)
-            StateMashine.Update();
+            StateMaсhine.Update();
 
-        CurrentState = StateMashine._currentState.ToString();
+        CurrentState = StateMaсhine._currentState.ToString();
     }
 
     [Button]

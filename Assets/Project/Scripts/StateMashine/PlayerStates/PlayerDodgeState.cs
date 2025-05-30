@@ -14,7 +14,7 @@ public class PlayerDodgeState : IState
     private readonly Collider _collider;
     private readonly Rigidbody _rigidbody;
     private readonly PlayerStats _playerStats;
-    private readonly CompositeDisposable _disposable;
+    private CompositeDisposable _disposable;
 
     private IStateSwitcher _stateSwitcher;
 
@@ -32,7 +32,6 @@ public class PlayerDodgeState : IState
         _collider = collider;
         _rigidbody = rigidbody;
         _playerStats = playerStats;
-        _disposable = new CompositeDisposable();
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -42,6 +41,8 @@ public class PlayerDodgeState : IState
 
     public void Enter()
     {
+        _disposable = new CompositeDisposable();
+        
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))
@@ -106,10 +107,6 @@ public class PlayerDodgeState : IState
         if (zone == _squadZone)
         {
             _stateSwitcher.SwitchState<PlayerMoveState>();
-        }
-        else
-        {
-            _stateSwitcher.SwitchState<PlayerDodgeState>();
         }
     }
 

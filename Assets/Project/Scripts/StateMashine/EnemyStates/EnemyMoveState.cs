@@ -10,7 +10,7 @@ public class EnemyMoveState : IState
     private readonly BallHolder _ballHolder;
     private readonly Ball _ball;
     private readonly Collider _collider;
-    private readonly CompositeDisposable _disposable;
+    private CompositeDisposable _disposable;
 
     private IStateSwitcher _stateSwitcher;
 
@@ -26,7 +26,6 @@ public class EnemyMoveState : IState
         _ballHolder = ballHolder;
         _ball = ball;
         _collider = collider;
-        _disposable = new CompositeDisposable();
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -36,16 +35,18 @@ public class EnemyMoveState : IState
 
     public void Enter()
     {
+        _disposable = new CompositeDisposable();
+        
         _collisionHandler.BallDetected += OnBallDetected;
 
         MessageBrokerHolder.GameActions.Receive<M_BallTaken>()
-            .Subscribe(message => HandleBallPositionChanged(message.Entity))
+            .Subscribe(message => HandleBallTaken(message.Entity))
             .AddTo(_disposable);
 
         MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))
             .AddTo(_disposable);
-        
+
         _collisionHandler.enabled = true;
         _collider.enabled = true;
     }
@@ -91,11 +92,11 @@ public class EnemyMoveState : IState
         }
     }
 
-    private void HandleBallPositionChanged(Entity entity)
+    private void HandleBallTaken(Entity entity)
     {
-        if(entity == _enemy)
+        if (entity == _enemy)
             return;
-        
+
         Vector3 closestPoint = _squadZone.ClosestPoint(entity.transform.position);
 
         if (closestPoint == entity.transform.position)

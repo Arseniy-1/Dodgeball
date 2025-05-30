@@ -13,7 +13,7 @@ public class EnemyDodgeState : IState
     private readonly CollisionHandler _collisionHandler;
     private readonly Collider _collider;
     private readonly Rigidbody _rigidbody;
-    private readonly CompositeDisposable _disposable;
+    private CompositeDisposable _disposable;
 
     private IStateSwitcher _stateSwitcher;
 
@@ -31,7 +31,6 @@ public class EnemyDodgeState : IState
         _collisionHandler = collisionHandler;
         _collider = collider;
         _rigidbody = rigidbody;
-        _disposable = new CompositeDisposable();
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -41,6 +40,8 @@ public class EnemyDodgeState : IState
 
     public void Enter()
     {
+        _disposable = new CompositeDisposable();
+        
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))
@@ -104,6 +105,11 @@ public class EnemyDodgeState : IState
 
     public void Update()
     {
+        if (_collider.bounds.Contains(_ball.transform.position))
+        {  
+            _stateSwitcher.SwitchState<EnemyDodgeState>();
+        }
+        
         Vector3 direction = (_ball.transform.position - _enemy.transform.position);
         direction.y = 0;
 

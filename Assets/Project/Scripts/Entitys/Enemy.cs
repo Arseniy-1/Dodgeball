@@ -32,12 +32,12 @@ public class Enemy : Entity, IDestoyable<Enemy>
         };
         
         // Пересоздание StateMashine
-        StateMashine?.Dispose(); // если реализовано IDisposable — освободить ресурсы
-        StateMashine = new StateMashine(_enemyStates);
+        StateMaсhine?.Dispose(); // если реализовано IDisposable — освободить ресурсы
+        StateMaсhine = new StateMaсhine(_enemyStates);
 
         // Инициализация состояний
         foreach (var state in _enemyStates)
-            state.Initialize(StateMashine);
+            state.Initialize(StateMaсhine);
 
         Reset();
     }

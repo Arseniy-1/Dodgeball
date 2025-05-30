@@ -62,7 +62,10 @@ public class CompositionRoot : MonoBehaviour
             if (i == 0)
                 FillPlayerSquad(_playerSpawner, _arenaInstance.Squads[i]);
             else
+            {
                 FillEnemySquad(_enemySpawners[Random.Range(0, _enemySpawners.Count)], _arenaInstance.Squads[i]);
+                Debug.Log("EnemySquad");   
+            }
         }
 
         _arenaInstance.GameOver += StartGame;

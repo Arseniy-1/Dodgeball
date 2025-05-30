@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class StateMashine : IStateSwitcher
+public class StateMaсhine : IStateSwitcher
 {
     private List<IState> _states;
     public IState _currentState;
 
-    public StateMashine(List<IState> states)
+    public StateMaсhine(List<IState> states)
     {
         _states = states;
 
@@ -32,10 +32,10 @@ public class StateMashine : IStateSwitcher
 
     public void Dispose()
     {
+        _currentState.Exit();
+     
         foreach (var state in _states)
         {
-            _currentState.Exit();
-
             if (state is IDisposable disposable)
             {
                 disposable.Dispose();

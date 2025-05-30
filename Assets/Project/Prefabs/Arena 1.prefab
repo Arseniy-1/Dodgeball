@@ -50,6 +50,7 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 8944831925873403454}
   _entities: []
+  _squadZone: {fileID: 9052543242233828858}
 --- !u!65 &9052543242233828858
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -289,6 +290,7 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 1571675133128464750}
   _entities: []
+  _squadZone: {fileID: 5515363941756676506}
 --- !u!65 &5515363941756676506
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -906,6 +908,7 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 8032118861109727765}
   _entities: []
+  _squadZone: {fileID: 5541628009696389484}
 --- !u!65 &5541628009696389484
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1365,6 +1368,7 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 6561961589478630457}
   _entities: []
+  _squadZone: {fileID: 8430684385277265154}
 --- !u!65 &8430684385277265154
 BoxCollider:
   m_ObjectHideFlags: 0

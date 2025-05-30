@@ -17,31 +17,28 @@ public class Player : Entity, IDestoyable<Player>
         base.Initialize(squadZone, teammates, ball);
         BallThrower.Initialize(_playerStats);
 
-        // Очистка старых состояний
         foreach (var state in _playerStates)
         {
             if (state is IDisposable disposable)
                 disposable.Dispose();
         }
+        
         _playerStates.Clear();
 
-        // Создание и сохранение новых состояний
         _playerStates = new List<IState>
         {
             new PlayerIdleState(this, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats),
-            new PlayerMoveState(this, _playerStats, CollisionHandler, SquadZone, BallHolder, Ball, Collider),
+            new PlayerMoveState(this, Teammates, _playerStats, CollisionHandler, SquadZone, BallHolder, Ball, Collider),
             new PlayerDodgeState(this, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats, _inputController),
             new PlayerAttackState(this, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController, BallThrower),
             new PlayerJumpState(_playerStats, Rigidbody, GroundChecker, CollisionHandler, Collider),
         };
 
-        // Пересоздание StateMashine
-        StateMashine?.Dispose(); // если реализовано IDisposable — освободить ресурсы
-        StateMashine = new StateMashine(_playerStates);
+        StateMaсhine?.Dispose();
+        StateMaсhine = new StateMaсhine(_playerStates);
 
-        // Инициализация состояний
         foreach (var state in _playerStates)
-            state.Initialize(StateMashine);
+            state.Initialize(StateMaсhine);
 
         Reset();
     }
@@ -55,6 +52,5 @@ public class Player : Entity, IDestoyable<Player>
     protected override void Die()
     {
         OnDestroyed?.Invoke(this);
-        // StateMashine?.SwitchState<PlayerDeathState>();
     }
 }
