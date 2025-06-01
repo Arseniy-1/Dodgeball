@@ -2,6 +2,7 @@ using UniRx;
 using UnityEngine;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine.Serialization;
 
 public abstract class Entity : MonoBehaviour
@@ -16,6 +17,7 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected List<Entity> Teammates;
 
     public string CurrentState;
+    public List<string> CurrentStates = new List<string>();
 
     protected CompositeDisposable CompositeDisposable = new CompositeDisposable();
     protected TargetProvider TargetProvider = new TargetProvider();
@@ -26,7 +28,6 @@ public abstract class Entity : MonoBehaviour
     protected StateMaсhine StateMaсhine;
 
     [SerializeField] protected Ball Ball;
-    private bool _isEnabled = true;
 
     private void OnEnable()
     {
@@ -54,22 +55,22 @@ public abstract class Entity : MonoBehaviour
         Collider.enabled = true;
         Health.Reset();
         BallHolder.LostBall();
-        _isEnabled = true;
     }
 
     protected virtual void Update()
     {
-        if (_isEnabled)
-            StateMaсhine.Update();
+        StateMaсhine.Update();
 
-        if (StateMaсhine != null && StateMaсhine._currentState != null)
-            CurrentState = StateMaсhine._currentState.ToString();
+        CurrentState = StateMaсhine._currentState.ToString();
+
+        CurrentStates.Clear();
+        for (int i = 0; i < StateMaсhine._states.Count; i++)
+            CurrentStates.Add(StateMaсhine._states[i].ToString());
     }
 
     [Button]
-    protected virtual void Die()
+    public virtual void Die()
     {
         StateMaсhine.Dispose();
-        _isEnabled = false;
     }
 }

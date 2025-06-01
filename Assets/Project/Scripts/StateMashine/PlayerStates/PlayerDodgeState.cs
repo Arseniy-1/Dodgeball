@@ -53,6 +53,8 @@ public class PlayerDodgeState : IState
 
         _playerInputController.ActionButtonStarted += Jump;
         StartIdleMovementLoop();
+        
+        Debug.Log("&&&");
     }
 
     public void Exit()
@@ -64,6 +66,8 @@ public class PlayerDodgeState : IState
         _playerInputController.ActionButtonStarted -= Jump;
         _mover.Stop();
         _movementLoopDisposable?.Dispose();
+        
+        Debug.Log("###");
     }
 
     private void StartIdleMovementLoop()
@@ -75,16 +79,13 @@ public class PlayerDodgeState : IState
 
     private System.Collections.IEnumerator IdleMovementLoop()
     {
-        while (_player.enabled)
-        {
-            float standTime = Random.Range(_playerStats.DodgeDirectionChangeMinTime,
-                _playerStats.DodgeDirectionChangeMaxTime);
+        float standTime = Random.Range(_playerStats.DodgeDirectionChangeMinTime,
+            _playerStats.DodgeDirectionChangeMaxTime);
 
-            Vector3 target = GetRandomPointInZone();
+        Vector3 target = GetRandomPointInZone();
 
-            yield return _mover.MoveTo(target, _playerStats.DodgeSpeed);
-            yield return new WaitForSeconds(standTime);
-        }
+        yield return _mover.MoveTo(target, _playerStats.DodgeSpeed);
+        yield return new WaitForSeconds(standTime);
     }
 
     public void Update()
@@ -123,6 +124,7 @@ public class PlayerDodgeState : IState
 
     private void Jump()
     {
+        Debug.Log(_player.GetInstanceID());
         _stateSwitcher.SwitchState<PlayerJumpState>();
     }
 }

@@ -31,11 +31,8 @@ public class Enemy : Entity, IDestoyable<Enemy>
             new EnemyJumpState(_enemyStats, Rigidbody, GroundChecker, CollisionHandler, Collider)
         };
         
-        // Пересоздание StateMashine
-        StateMaсhine?.Dispose(); // если реализовано IDisposable — освободить ресурсы
         StateMaсhine = new StateMaсhine(_enemyStates);
 
-        // Инициализация состояний
         foreach (var state in _enemyStates)
             state.Initialize(StateMaсhine);
 
@@ -48,7 +45,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
     }
 
     [Button]
-    protected override void Die()
+    public  override void Die()
     {
         base.Die();
         OnDestroyed?.Invoke(this);

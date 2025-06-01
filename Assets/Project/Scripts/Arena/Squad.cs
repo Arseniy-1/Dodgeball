@@ -48,16 +48,6 @@ public class Squad : MonoBehaviour
             if (ball.Rigidbody.isKinematic)
                 return;
             
-            Debug.Log("M_BallChangedZone");
-            MessageBrokerHolder.GameActions.Publish(new M_BallChangedZone(_squadZone));
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.TryGetComponent(out Ball ball))
-        {
-            Debug.Log("M_BallChangedZone");   
             MessageBrokerHolder.GameActions.Publish(new M_BallChangedZone(_squadZone));
         }
     }
@@ -69,7 +59,6 @@ public class Squad : MonoBehaviour
             if (ball.Rigidbody.isKinematic)
                 return;
             
-            Debug.Log("M_BallChangedZone");
             MessageBrokerHolder.GameActions.Publish(new M_BallChangedZone(_squadZone));
         }
     }

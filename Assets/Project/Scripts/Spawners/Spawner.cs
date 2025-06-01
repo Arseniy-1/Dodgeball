@@ -16,13 +16,10 @@ public class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
 
     public void DisableSpawned()
     {
-        foreach (var spawned in _spawned)
+        for (int i = _spawned.Count - 1; i >= 0; i--)
         {
-            spawned.OnDestroyed -= OnSpawnedDestroyed;
-            Pool.Release(spawned);
+            _spawned[i].Die();
         }
-        
-        _spawned.Clear();
     }
     
     public T Spawn()

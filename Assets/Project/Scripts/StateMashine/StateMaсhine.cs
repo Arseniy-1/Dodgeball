@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class StateMaсhine : IStateSwitcher
 {
-    private List<IState> _states;
+    public List<IState> _states;
     public IState _currentState;
 
     public StateMaсhine(List<IState> states)
@@ -20,6 +20,9 @@ public class StateMaсhine : IStateSwitcher
     {
         IState state = _states.FirstOrDefault(state => state is T);
 
+        if (_states.Count == 0)
+            Debug.Log("Zero States count");
+
         if (state == null)
             throw new ArgumentNullException(nameof(T));
 
@@ -33,7 +36,7 @@ public class StateMaсhine : IStateSwitcher
     public void Dispose()
     {
         _currentState.Exit();
-     
+
         foreach (var state in _states)
         {
             if (state is IDisposable disposable)

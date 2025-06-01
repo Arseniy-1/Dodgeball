@@ -105,11 +105,6 @@ public class EnemyDodgeState : IState
 
     public void Update()
     {
-        if (_collider.bounds.Contains(_ball.transform.position))
-        {  
-            _stateSwitcher.SwitchState<EnemyMoveState>();
-        }
-        
         Vector3 direction = (_ball.transform.position - _enemy.transform.position);
         direction.y = 0;
 

@@ -34,7 +34,6 @@ public class Player : Entity, IDestoyable<Player>
             new PlayerJumpState(_playerStats, Rigidbody, GroundChecker, CollisionHandler, Collider),
         };
 
-        StateMaсhine?.Dispose();
         StateMaсhine = new StateMaсhine(_playerStates);
 
         foreach (var state in _playerStates)
@@ -49,7 +48,7 @@ public class Player : Entity, IDestoyable<Player>
     }
 
     [Button]
-    protected override void Die()
+    public  override void Die()
     {
         base.Die();
         OnDestroyed?.Invoke(this);

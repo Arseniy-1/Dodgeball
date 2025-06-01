@@ -43,12 +43,7 @@ public class CompositionRoot : MonoBehaviour
         
         if (_arenaInstance != null)
         {
-            _arenaInstance.GameOver -= StartGame;
-
-            foreach (var enemySpawner in _enemySpawners)
-                enemySpawner.DisableSpawned();
-
-            _playerSpawner.DisableSpawned();
+            ClearEntities();
 
             Destroy(_arenaInstance.gameObject);
         }
@@ -62,15 +57,29 @@ public class CompositionRoot : MonoBehaviour
             if (i == 0)
                 FillPlayerSquad(_playerSpawner, _arenaInstance.Squads[i]);
             else
-            {
                 FillEnemySquad(_enemySpawners[Random.Range(0, _enemySpawners.Count)], _arenaInstance.Squads[i]);
-                Debug.Log("EnemySquad");   
-            }
         }
 
-        _arenaInstance.GameOver += StartGame;
+        _arenaInstance.GameOver += HandleGameOver;
 
         _arenaInstance.StartGame(_ballInstance);
+    }
+
+    private void HandleGameOver()
+    {
+        _arenaInstance.GameOver -= HandleGameOver;
+
+        ClearEntities();
+        
+        StartGame();
+    }
+
+    private void ClearEntities()
+    {
+        foreach (var enemySpawner in _enemySpawners)
+            enemySpawner.DisableSpawned();
+
+        _playerSpawner.DisableSpawned();
     }
 
     private void FillPlayerSquad(PlayerSpawner playerSpawner, Squad squad)
