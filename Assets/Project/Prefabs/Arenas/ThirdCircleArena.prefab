@@ -2001,7 +2001,6 @@ Transform:
   - {fileID: 636769353830101108}
   - {fileID: 2418734096176336072}
   - {fileID: 2512677333161927341}
-  - {fileID: 8934692125248086182}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2671004699659490241
@@ -3074,68 +3073,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2534964839176971238, guid: 85d38710a3d644f439ef623281e34b13, type: 3}
---- !u!1001 &5391100205914233784
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 3544172604282239774}
-    m_Modifications:
-    - target: {fileID: 3544172604282239774, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.13534522
-      objectReference: {fileID: 0}
-    - target: {fileID: 3544172604282239774, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.92
-      objectReference: {fileID: 0}
-    - target: {fileID: 3544172604282239774, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -12.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3544172604282239774, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3544172604282239774, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3544172604282239774, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3544172604282239774, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3544172604282239774, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3544172604282239774, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3544172604282239774, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6290358059016330665, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-      propertyPath: m_Name
-      value: HalfCircleArena
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
---- !u!4 &8934692125248086182 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3544172604282239774, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
-  m_PrefabInstance: {fileID: 5391100205914233784}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5446434364470617833
 PrefabInstance:
   m_ObjectHideFlags: 0

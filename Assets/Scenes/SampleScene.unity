@@ -339,8 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _arenaPrefabs:
-  - {fileID: 321840916095219561, guid: 88a1ccdfc6aa53f4989d337bb9e4f1a0, type: 3}
-  - {fileID: 321840916095219561, guid: a92950b23d5462846bfa86aaa76a3793, type: 3}
+  - {fileID: 321840916095219561, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
   _enemyPrefabs:
   - {fileID: 8061949312178348757, guid: 014896c1c5c5a254086dffca614a3d36, type: 3}
   - {fileID: 8061949312178348757, guid: 2d8d3481f78586d4fb61df14d2b6a37b, type: 3}
