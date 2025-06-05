@@ -7,6 +7,8 @@ public class Arena : MonoBehaviour
     [SerializeField] private List<Squad> _squads;
     [SerializeField] private Transform _ballPosition;
     
+    [SerializeField] private List<Frame> _frames;
+    
     private int _deathCount = 0;
 
     public List<Squad> Squads => _squads;
@@ -42,4 +44,6 @@ public class Arena : MonoBehaviour
         
         GameOver?.Invoke();
     }
+    
+    
 }
