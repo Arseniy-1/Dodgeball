@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
+using Sirenix.OdinInspector;
 
 public class Frame : MonoBehaviour
 {
@@ -13,10 +15,15 @@ public class Frame : MonoBehaviour
     
     private int _currentWaypoint = 0;
 
+    public event Action<Frame> OnFrameHitted;
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Ball ball))
-            _ballUpgrader.UpgradeBall(ball);                        
+        {
+             // _ballUpgrader.UpgradeBall(ball);                        
+             HandleBallHit();
+        }
     }
     
     private void Update()
@@ -27,17 +34,20 @@ public class Frame : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, _waypoints[_currentWaypoint].position, _speed * Time.deltaTime);
     }
     
-    public void Activate(BallUpgrader ballUpgrader)
+    public void Activate()
     {
         _collider.enabled = true;
-        _frameView.enabled = true;
+        _frameView.gameObject.SetActive(transform);
         
-        _frameView.Initialize(ballUpgrader.BallUpgradeInfo);
+        // _frameView.Initialize(ballUpgrader.BallUpgradeInfo);
     }
 
+    [Button]
     private void HandleBallHit()
     {
         _collider.enabled = false;
-        _frameView.enabled = false;
+        _frameView.gameObject.SetActive(false);
+        
+        OnFrameHitted?.Invoke(this);
     }
 }

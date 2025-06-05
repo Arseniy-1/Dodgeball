@@ -13,6 +13,7 @@ public class PlayerIdleState : IState
     private readonly Collider _collider;
     private readonly Rigidbody _rigidbody;
     private readonly PlayerStats _playerStats;
+    private readonly AreaPointSelector _areaPointSelector;
     private CompositeDisposable _disposable;
     
     private IStateSwitcher _stateSwitcher;
@@ -30,6 +31,7 @@ public class PlayerIdleState : IState
         _collider = collider;
         _rigidbody = rigidbody;
         _playerStats = playerStats;
+        _areaPointSelector = new AreaPointSelector();
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -78,7 +80,7 @@ public class PlayerIdleState : IState
         {
             float standTime = Random.Range(_playerStats.IdleMinStandTime, _playerStats.IdleMaxStandTime);
             
-            Vector3 target = GetRandomPointInZone();
+            Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _player.transform.position);
             yield return _mover.MoveTo(target, _playerStats.WalkSpeed);
             yield return new WaitForSeconds(standTime);
         }
@@ -102,8 +104,6 @@ public class PlayerIdleState : IState
     
     private void HandleBallZoneChanged(Collider zone)
     {
-        Debug.Log("Player | HandleBallZoneChanged");
-        
         if (zone == _squadZone)
         {
             _stateSwitcher.SwitchState<PlayerMoveState>();
@@ -112,15 +112,5 @@ public class PlayerIdleState : IState
         {
             _stateSwitcher.SwitchState<PlayerDodgeState>();
         }
-    }
-
-    private Vector3 GetRandomPointInZone()
-    {
-        Bounds bounds = _squadZone.bounds;
-        float x = Random.Range(bounds.min.x, bounds.max.x);
-        float z = Random.Range(bounds.min.z, bounds.max.z);
-        float y = _player.transform.position.y;
-
-        return new Vector3(x, y, z);
     }
 }

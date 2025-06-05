@@ -13,6 +13,7 @@ public class EnemyIdleState : IState
     private readonly Collider _collider;
     private readonly Rigidbody _rigidbody;
     private readonly EnemyStats _enemyStats;
+    private readonly AreaPointSelector _areaPointSelector;
     private CompositeDisposable _disposable;
     
     private IStateSwitcher _stateSwitcher;
@@ -30,6 +31,7 @@ public class EnemyIdleState : IState
         _collider = collider;
         _rigidbody = rigidbody;
         _enemyStats = enemyStats;
+        _areaPointSelector = new AreaPointSelector();
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -77,8 +79,8 @@ public class EnemyIdleState : IState
         while (true)
         {
             float standTime = Random.Range(_enemyStats.IdleMinStandTime, _enemyStats.IdleMaxStandTime);
-            
-            Vector3 target = GetRandomPointInZone();
+
+            Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _enemy.transform.position);
             yield return _mover.MoveTo(target, _enemyStats.WalkSpeed);
             yield return new WaitForSeconds(standTime);
         }
@@ -110,15 +112,5 @@ public class EnemyIdleState : IState
         {
             _stateSwitcher.SwitchState<EnemyDodgeState>();
         }
-    }
-
-    private Vector3 GetRandomPointInZone()
-    {
-        Bounds bounds = _squadZone.bounds;
-        float x = Random.Range(bounds.min.x, bounds.max.x);
-        float z = Random.Range(bounds.min.z, bounds.max.z);
-        float y = _enemy.transform.position.y;
-
-        return new Vector3(x, y, z);
     }
 }

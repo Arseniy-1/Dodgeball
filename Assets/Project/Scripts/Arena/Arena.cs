@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Arena : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class Arena : MonoBehaviour
     [SerializeField] private Transform _ballPosition;
     
     [SerializeField] private List<Frame> _frames;
+    
+    [SerializeField] private float _minInactiveInterval;
+    [SerializeField] private float _maxInactiveInterval;
     
     private int _deathCount = 0;
 
@@ -26,6 +31,8 @@ public class Arena : MonoBehaviour
             else
                 squad.LostPlayers += HandleEnemySquadDeath;
         }
+
+        EnableFrame();
     }
 
     private void HandleEnemySquadDeath(Squad squad)
@@ -45,5 +52,32 @@ public class Arena : MonoBehaviour
         GameOver?.Invoke();
     }
     
-    
+    private async void EnableFrame()
+    {
+        while (enabled)
+        {
+            await WaitForHitAsync();
+            float delay = Random.Range(_minInactiveInterval, _maxInactiveInterval);
+            await Task.Delay((int)(delay * 1000));
+        }
+    }
+
+    private async Task WaitForHitAsync()
+    {
+        int randomFrameIndex = Random.Range(0, _frames.Count);
+        Frame selectedFrame = _frames[randomFrameIndex];
+
+        var tcs = new TaskCompletionSource<bool>();
+
+        void Handler(Frame frame)
+        {
+            selectedFrame.OnFrameHitted -= Handler;
+            tcs.SetResult(true);
+        }
+
+        selectedFrame.OnFrameHitted += Handler;
+        selectedFrame.Activate();
+
+        await tcs.Task;
+    }
 }

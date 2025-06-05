@@ -14,6 +14,7 @@ public class PlayerDodgeState : IState
     private readonly Collider _collider;
     private readonly Rigidbody _rigidbody;
     private readonly PlayerStats _playerStats;
+    private readonly AreaPointSelector _areaPointSelector;
     private CompositeDisposable _disposable;
 
     private IStateSwitcher _stateSwitcher;
@@ -33,6 +34,7 @@ public class PlayerDodgeState : IState
         _collider = collider;
         _rigidbody = rigidbody;
         _playerStats = playerStats;
+        _areaPointSelector = new AreaPointSelector();
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -82,7 +84,7 @@ public class PlayerDodgeState : IState
         float standTime = Random.Range(_playerStats.DodgeDirectionChangeMinTime,
             _playerStats.DodgeDirectionChangeMaxTime);
 
-        Vector3 target = GetRandomPointInZone();
+        Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _player.transform.position);
 
         yield return _mover.MoveTo(target, _playerStats.DodgeSpeed);
         yield return new WaitForSeconds(standTime);
@@ -110,16 +112,6 @@ public class PlayerDodgeState : IState
         {
             _stateSwitcher.SwitchState<PlayerMoveState>();
         }
-    }
-
-    private Vector3 GetRandomPointInZone()
-    {
-        Bounds bounds = _squadZone.bounds;
-        float x = Random.Range(bounds.min.x, bounds.max.x);
-        float z = Random.Range(bounds.min.z, bounds.max.z);
-        float y = _player.transform.position.y;
-
-        return new Vector3(x, y, z);
     }
 
     private void Jump()

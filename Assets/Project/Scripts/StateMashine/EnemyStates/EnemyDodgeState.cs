@@ -13,6 +13,7 @@ public class EnemyDodgeState : IState
     private readonly CollisionHandler _collisionHandler;
     private readonly Collider _collider;
     private readonly Rigidbody _rigidbody;
+    private readonly AreaPointSelector _areaPointSelector;
     private CompositeDisposable _disposable;
 
     private IStateSwitcher _stateSwitcher;
@@ -31,6 +32,7 @@ public class EnemyDodgeState : IState
         _collisionHandler = collisionHandler;
         _collider = collider;
         _rigidbody = rigidbody;
+        _areaPointSelector = new AreaPointSelector();
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -79,7 +81,7 @@ public class EnemyDodgeState : IState
                 _enemyStats.DodgeDirectionChangeMinTime,
                 _enemyStats.DodgeDirectionChangeMaxTime);
 
-            Vector3 target = GetRandomPointInZone();
+            Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _enemy.transform.position);
             
             yield return _mover.MoveTo(target, _enemyStats.DodgeSpeed);
             yield return new WaitForSeconds(standTime);
@@ -129,19 +131,6 @@ public class EnemyDodgeState : IState
         {
             _stateSwitcher.SwitchState<EnemyDodgeState>();
         }
-    }
-
-    private Vector3 GetRandomPointInZone()
-    {
-        if (_squadZone == null)
-            return new Vector3(0,0,0);
-        
-        Bounds bounds = _squadZone.bounds;
-        float x = Random.Range(bounds.min.x, bounds.max.x);
-        float z = Random.Range(bounds.min.z, bounds.max.z);
-        float y = _enemy.transform.position.y;
-
-        return new Vector3(x, y, z);
     }
 
     private void Jump()
