@@ -8,7 +8,9 @@ public class Arena : MonoBehaviour
 {
     [SerializeField] private List<Squad> _squads;
     [SerializeField] private Transform _ballPosition;
+    [SerializeField] private BallUpgraderFabric _ballUpgraderFabric;
     
+    [SerializeField] private List<BallUpgrader> _ballUpgraders;
     [SerializeField] private List<Frame> _frames;
     
     [SerializeField] private float _minInactiveInterval;
@@ -22,6 +24,8 @@ public class Arena : MonoBehaviour
 
     public void StartGame(Ball ball)
     {
+        _ballUpgraders = _ballUpgraderFabric.Create();
+        
         ball.transform.position = _ballPosition.position;
         
         foreach (var squad in _squads)
@@ -54,7 +58,7 @@ public class Arena : MonoBehaviour
     
     private async void EnableFrame()
     {
-        while (enabled)
+        while (isActiveAndEnabled)
         {
             await WaitForHitAsync();
             float delay = Random.Range(_minInactiveInterval, _maxInactiveInterval);
@@ -76,7 +80,7 @@ public class Arena : MonoBehaviour
         }
 
         selectedFrame.OnFrameHitted += Handler;
-        selectedFrame.Activate();
+        selectedFrame.Activate(_ballUpgraders[Random.Range(0, _ballUpgraders.Count)]);
 
         await tcs.Task;
     }

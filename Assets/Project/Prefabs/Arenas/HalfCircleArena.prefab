@@ -656,6 +656,117 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0, z: -5.35}
+--- !u!1 &2359430173484023510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4598884245235742955}
+  - component: {fileID: 4255509474837757483}
+  m_Layer: 0
+  m_Name: BallUpgraderFabric
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4598884245235742955
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359430173484023510}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3544172604282239774}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4255509474837757483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359430173484023510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3272f711bcd547c49844ac650925e53d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 8604a5cd095b0ab4685261cd9e4c324a, type: 2}
+    - {fileID: 11400000, guid: 3db2221a96a543046bb7e7ebcc46c138, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _ballUpgradeInfo
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.Type, mscorlib],[BallUpgradeInfo,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[System.Type, mscorlib]],
+        mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 2|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: ChargeBallUpgrader, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 3|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: MultipleBallUpgrader, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &2411486570657608145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1757,6 +1868,7 @@ Transform:
   - {fileID: 4880097078620345771}
   - {fileID: 2418734096176336072}
   - {fileID: 2512677333161927341}
+  - {fileID: 4598884245235742955}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2671004699659490241
@@ -1825,6 +1937,7 @@ MonoBehaviour:
   - {fileID: 5677860096020734345}
   - {fileID: 1092857406522612040}
   _ballPosition: {fileID: 2418734096176336072}
+  _ballUpgraderFabric: {fileID: 4255509474837757483}
   _frames:
   - {fileID: 6027190835173568754}
   _minInactiveInterval: 1
@@ -2835,16 +2948,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6015768380351132543, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}
+      propertyPath: _upgradeIcon
+      value: 
+      objectReference: {fileID: 696092054799040853}
+    - target: {fileID: 6015768380351132543, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}
+      propertyPath: _backgroundView
+      value: 
+      objectReference: {fileID: 4698361617708797964}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}
+--- !u!114 &696092054799040853 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6243541897024693716, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}
+  m_PrefabInstance: {fileID: 6848990213220869249}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1144735709138423447 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5831716491217512982, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}
   m_PrefabInstance: {fileID: 6848990213220869249}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4698361617708797964 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2179582447551050893, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}
+  m_PrefabInstance: {fileID: 6848990213220869249}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6027190835173568754 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 912087149886215283, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}

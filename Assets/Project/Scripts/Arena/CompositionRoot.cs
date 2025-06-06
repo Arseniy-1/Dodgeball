@@ -31,7 +31,7 @@ public class CompositionRoot : MonoBehaviour
 
     private void Start()
     {
-        StartGame();
+        // StartGame();
     }
 
     private void StartGame()

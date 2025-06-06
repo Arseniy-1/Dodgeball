@@ -21,7 +21,7 @@ public class Frame : MonoBehaviour
     {
         if (other.TryGetComponent(out Ball ball))
         {
-             // _ballUpgrader.UpgradeBall(ball);                        
+             _ballUpgrader.UpgradeBall(ball);                        
              HandleBallHit();
         }
     }
@@ -34,12 +34,13 @@ public class Frame : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, _waypoints[_currentWaypoint].position, _speed * Time.deltaTime);
     }
     
-    public void Activate()
+    public void Activate(BallUpgrader ballUpgrader)
     {
         _collider.enabled = true;
         _frameView.gameObject.SetActive(transform);
-        
-        // _frameView.Initialize(ballUpgrader.BallUpgradeInfo);
+
+        _ballUpgrader = ballUpgrader;
+        _frameView.Initialize(_ballUpgrader.BallUpgradeInfo);
     }
 
     [Button]

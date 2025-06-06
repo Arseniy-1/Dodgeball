@@ -116,7 +116,6 @@ public class PlayerDodgeState : IState
 
     private void Jump()
     {
-        Debug.Log(_player.GetInstanceID());
         _stateSwitcher.SwitchState<PlayerJumpState>();
     }
 }

@@ -1,105 +1,293 @@
 fileFormatVersion: 2
 guid: 33beedc61968a85479f32ae8618b5933
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: calf_l
-    100002: calf_r
-    100004: clavicle_l
-    100006: clavicle_r
-    100008: foot_l
-    100010: foot_r
-    100012: Glasses
-    100014: hand_l
-    100016: hand_r
-    100018: head
-    100020: Helment.001
-    100022: index_01_l
-    100024: index_01_r
-    100026: index_02_l
-    100028: index_02_r
-    100030: lowerarm_l
-    100032: lowerarm_r
-    100034: neck_01
-    100036: pelvis
-    100038: root
-    100040: //RootNode
-    100042: Skelet.c
-    100044: spine_01
-    100046: spine_02
-    100048: spine_03
-    100050: Stickman_heads_sphere_02
-    100052: thigh_l
-    100054: thigh_r
-    100056: thumb_01_l
-    100058: thumb_01_r
-    100060: thumb_02_l
-    100062: thumb_02_r
-    100064: Tie_02
-    100066: Trousers.001
-    100068: upperarm_l
-    100070: upperarm_r
-    100072: Vest
-    400000: calf_l
-    400002: calf_r
-    400004: clavicle_l
-    400006: clavicle_r
-    400008: foot_l
-    400010: foot_r
-    400012: Glasses
-    400014: hand_l
-    400016: hand_r
-    400018: head
-    400020: Helment.001
-    400022: index_01_l
-    400024: index_01_r
-    400026: index_02_l
-    400028: index_02_r
-    400030: lowerarm_l
-    400032: lowerarm_r
-    400034: neck_01
-    400036: pelvis
-    400038: root
-    400040: //RootNode
-    400042: Skelet.c
-    400044: spine_01
-    400046: spine_02
-    400048: spine_03
-    400050: Stickman_heads_sphere_02
-    400052: thigh_l
-    400054: thigh_r
-    400056: thumb_01_l
-    400058: thumb_01_r
-    400060: thumb_02_l
-    400062: thumb_02_r
-    400064: Tie_02
-    400066: Trousers.001
-    400068: upperarm_l
-    400070: upperarm_r
-    400072: Vest
-    2100000: Material.003
-    2100002: Material.007
-    2100004: Material.004
-    2100006: Material.005
-    2100008: Material.006
-    2100010: Material.009
-    2100012: No Name
-    4300000: Helment.001
-    4300002: Trousers.001
-    4300004: Vest
-    4300006: Tie_02
-    4300008: Glasses
-    4300010: Stickman_heads_sphere_02
-    9500000: //RootNode
-    13700000: Glasses
-    13700002: Helment.001
-    13700004: Stickman_heads_sphere_02
-    13700006: Tie_02
-    13700008: Trousers.001
-    13700010: Vest
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: calf_l
+  - first:
+      1: 100002
+    second: calf_r
+  - first:
+      1: 100004
+    second: clavicle_l
+  - first:
+      1: 100006
+    second: clavicle_r
+  - first:
+      1: 100008
+    second: foot_l
+  - first:
+      1: 100010
+    second: foot_r
+  - first:
+      1: 100012
+    second: Glasses
+  - first:
+      1: 100014
+    second: hand_l
+  - first:
+      1: 100016
+    second: hand_r
+  - first:
+      1: 100018
+    second: head
+  - first:
+      1: 100020
+    second: Helment.001
+  - first:
+      1: 100022
+    second: index_01_l
+  - first:
+      1: 100024
+    second: index_01_r
+  - first:
+      1: 100026
+    second: index_02_l
+  - first:
+      1: 100028
+    second: index_02_r
+  - first:
+      1: 100030
+    second: lowerarm_l
+  - first:
+      1: 100032
+    second: lowerarm_r
+  - first:
+      1: 100034
+    second: neck_01
+  - first:
+      1: 100036
+    second: pelvis
+  - first:
+      1: 100038
+    second: root
+  - first:
+      1: 100040
+    second: //RootNode
+  - first:
+      1: 100042
+    second: Skelet.c
+  - first:
+      1: 100044
+    second: spine_01
+  - first:
+      1: 100046
+    second: spine_02
+  - first:
+      1: 100048
+    second: spine_03
+  - first:
+      1: 100050
+    second: Stickman_heads_sphere_02
+  - first:
+      1: 100052
+    second: thigh_l
+  - first:
+      1: 100054
+    second: thigh_r
+  - first:
+      1: 100056
+    second: thumb_01_l
+  - first:
+      1: 100058
+    second: thumb_01_r
+  - first:
+      1: 100060
+    second: thumb_02_l
+  - first:
+      1: 100062
+    second: thumb_02_r
+  - first:
+      1: 100064
+    second: Tie_02
+  - first:
+      1: 100066
+    second: Trousers.001
+  - first:
+      1: 100068
+    second: upperarm_l
+  - first:
+      1: 100070
+    second: upperarm_r
+  - first:
+      1: 100072
+    second: Vest
+  - first:
+      4: 400000
+    second: calf_l
+  - first:
+      4: 400002
+    second: calf_r
+  - first:
+      4: 400004
+    second: clavicle_l
+  - first:
+      4: 400006
+    second: clavicle_r
+  - first:
+      4: 400008
+    second: foot_l
+  - first:
+      4: 400010
+    second: foot_r
+  - first:
+      4: 400012
+    second: Glasses
+  - first:
+      4: 400014
+    second: hand_l
+  - first:
+      4: 400016
+    second: hand_r
+  - first:
+      4: 400018
+    second: head
+  - first:
+      4: 400020
+    second: Helment.001
+  - first:
+      4: 400022
+    second: index_01_l
+  - first:
+      4: 400024
+    second: index_01_r
+  - first:
+      4: 400026
+    second: index_02_l
+  - first:
+      4: 400028
+    second: index_02_r
+  - first:
+      4: 400030
+    second: lowerarm_l
+  - first:
+      4: 400032
+    second: lowerarm_r
+  - first:
+      4: 400034
+    second: neck_01
+  - first:
+      4: 400036
+    second: pelvis
+  - first:
+      4: 400038
+    second: root
+  - first:
+      4: 400040
+    second: //RootNode
+  - first:
+      4: 400042
+    second: Skelet.c
+  - first:
+      4: 400044
+    second: spine_01
+  - first:
+      4: 400046
+    second: spine_02
+  - first:
+      4: 400048
+    second: spine_03
+  - first:
+      4: 400050
+    second: Stickman_heads_sphere_02
+  - first:
+      4: 400052
+    second: thigh_l
+  - first:
+      4: 400054
+    second: thigh_r
+  - first:
+      4: 400056
+    second: thumb_01_l
+  - first:
+      4: 400058
+    second: thumb_01_r
+  - first:
+      4: 400060
+    second: thumb_02_l
+  - first:
+      4: 400062
+    second: thumb_02_r
+  - first:
+      4: 400064
+    second: Tie_02
+  - first:
+      4: 400066
+    second: Trousers.001
+  - first:
+      4: 400068
+    second: upperarm_l
+  - first:
+      4: 400070
+    second: upperarm_r
+  - first:
+      4: 400072
+    second: Vest
+  - first:
+      21: 2100000
+    second: Material.003
+  - first:
+      21: 2100002
+    second: Material.007
+  - first:
+      21: 2100004
+    second: Material.004
+  - first:
+      21: 2100006
+    second: Material.005
+  - first:
+      21: 2100008
+    second: Material.006
+  - first:
+      21: 2100010
+    second: Material.009
+  - first:
+      21: 2100012
+    second: No Name
+  - first:
+      43: 4300000
+    second: Helment.001
+  - first:
+      43: 4300002
+    second: Trousers.001
+  - first:
+      43: 4300004
+    second: Vest
+  - first:
+      43: 4300006
+    second: Tie_02
+  - first:
+      43: 4300008
+    second: Glasses
+  - first:
+      43: 4300010
+    second: Stickman_heads_sphere_02
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Glasses
+  - first:
+      137: 13700002
+    second: Helment.001
+  - first:
+      137: 13700004
+    second: Stickman_heads_sphere_02
+  - first:
+      137: 13700006
+    second: Tie_02
+  - first:
+      137: 13700008
+    second: Trousers.001
+  - first:
+      137: 13700010
+    second: Vest
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -108,8 +296,10 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Invalid copied Avatar Rig Configuration:\n\tNo human bone found.
+      Ensure both rig type match\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -132,25 +322,36 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -159,10 +360,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -172,13 +373,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

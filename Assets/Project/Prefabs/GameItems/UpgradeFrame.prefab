@@ -511,6 +511,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _frameView: {fileID: 1674586384326301467}
   _collider: {fileID: 7233371520435393650}
+  _waypoints: []
+  _speed: 3
 --- !u!65 &7233371520435393650
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -579,5 +581,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9dc103a64c4624b1dbdcbf6b198a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _backgroundView: {fileID: 0}
-  _upgradeIcon: {fileID: 0}
+  _backgroundView: {fileID: 6520773252738339049}
+  _upgradeIcon: {fileID: 1361382652385313200}
