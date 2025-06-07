@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class PlayerDodgeState : IState
 {
     private readonly Player _player;
+    private readonly AnimatorController _animatorController;
     private readonly Ball _ball;
     private readonly Mover _mover;
     private readonly PlayerInputController _playerInputController;
@@ -21,11 +22,11 @@ public class PlayerDodgeState : IState
 
     private IDisposable _movementLoopDisposable;
 
-    public PlayerDodgeState(Player player, Ball ball, Mover mover, CollisionHandler collisionHandler,
-        Collider squadZone,
+    public PlayerDodgeState(Player player, AnimatorController animatorController, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
         Collider collider, Rigidbody rigidbody, PlayerStats playerStats, PlayerInputController playerInputController)
     {
         _player = player;
+        _animatorController = animatorController;
         _ball = ball;
         _mover = mover;
         _playerInputController = playerInputController;
@@ -56,7 +57,7 @@ public class PlayerDodgeState : IState
         _playerInputController.ActionButtonStarted += Jump;
         StartIdleMovementLoop();
         
-        Debug.Log("&&&");
+        _animatorController.DodgeIdle();
     }
 
     public void Exit()
@@ -68,8 +69,6 @@ public class PlayerDodgeState : IState
         _playerInputController.ActionButtonStarted -= Jump;
         _mover.Stop();
         _movementLoopDisposable?.Dispose();
-        
-        Debug.Log("###");
     }
 
     private void StartIdleMovementLoop()

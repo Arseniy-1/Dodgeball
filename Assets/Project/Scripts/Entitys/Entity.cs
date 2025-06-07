@@ -15,6 +15,7 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected GroundChecker GroundChecker;
     [SerializeField] protected Health Health;
     [SerializeField] protected List<Entity> Teammates;
+    [SerializeField] protected Animator Animator;
 
     public string CurrentState;
     public List<string> CurrentStates = new List<string>();
@@ -24,6 +25,7 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected Collider SquadZone;
     protected Collider Collider;
     protected Rigidbody Rigidbody;
+    protected AnimatorController AnimatorController;
 
     protected StateMaсhine StateMaсhine;
 
@@ -47,6 +49,9 @@ public abstract class Entity : MonoBehaviour
         SquadZone = squadZone;
         Health.Initialize(CollisionHandler);
         Ball = ball;
+        
+        if(Animator != null)
+            AnimatorController = new AnimatorController(Animator);
     }
 
     public virtual void Reset()

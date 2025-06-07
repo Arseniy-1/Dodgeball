@@ -6,6 +6,7 @@ using System.Linq;
 public class PlayerMoveState : IState
 {
     private readonly Player _player;
+    private readonly AnimatorController _animatorController;
     private readonly List<Entity> _teammates;
     private readonly PlayerStats _playerStats;
     private readonly CollisionHandler _collisionHandler;
@@ -19,11 +20,12 @@ public class PlayerMoveState : IState
 
     private Coroutine _moveRoutine;
 
-    public PlayerMoveState(Player player, List<Entity> teammates, PlayerStats stats, CollisionHandler collisionHandler,
+    public PlayerMoveState(Player player, AnimatorController animatorController, List<Entity> teammates, PlayerStats stats, CollisionHandler collisionHandler,
         Collider squadZone,
         BallHolder ballHolder, Ball ball, Collider collider)
     {
         _player = player;
+        _animatorController = animatorController;
         _teammates = teammates;
         _playerStats = stats;
         _collisionHandler = collisionHandler;
@@ -52,6 +54,8 @@ public class PlayerMoveState : IState
 
         _collisionHandler.enabled = true;
         _collider.enabled = true;
+        
+        _animatorController.Run();
     }
 
     public void Exit()

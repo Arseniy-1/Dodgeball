@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class PlayerAttackState : IState
 {
     private readonly Player _player;
+    private readonly AnimatorController _animatorController;
     private readonly BallHolder _ballHolder;
     private readonly TargetScanner _targetScanner;
     private readonly TargetProvider _targetProvider;
@@ -13,11 +14,12 @@ public class PlayerAttackState : IState
 
     private IStateSwitcher _stateSwitcher;
 
-    public PlayerAttackState(Player player, BallHolder ballHolder, TargetScanner targetScanner,
+    public PlayerAttackState(Player player, AnimatorController animatorController, BallHolder ballHolder, TargetScanner targetScanner,
         TargetProvider targetProvider,
         List<Entity> teammates, PlayerInputController inputController, BallThrower ballThrower)
     {
         _player = player;
+        _animatorController = animatorController;
         _ballHolder = ballHolder;
         _targetScanner = targetScanner;
         _targetProvider = targetProvider;
@@ -36,6 +38,8 @@ public class PlayerAttackState : IState
         Entity target = _targetScanner.Scan(_teammates);
         _targetProvider.SelectTarget(target);
 
+        _animatorController.PrepareAttack();
+        
         _inputController.ActionButtonStarted += OnButtonClicked;
         _inputController.ActionButtonCanceled += OnButtonReleased;
     }
@@ -73,6 +77,8 @@ public class PlayerAttackState : IState
         _ballThrower.StopCharging();
         _ballThrower.Throw(ball);
 
+        _animatorController.Attack();
+        
         _stateSwitcher.SwitchState<PlayerIdleState>();
     }
 }

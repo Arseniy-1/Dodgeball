@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b968c854954cbb88a2f417db66afee, type: 3}
   m_Name: MultipleBallUpgrader
   m_EditorClassIdentifier: 
-  <Icon>k__BackingField: {fileID: 0}
-  <BackgroundView>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 21300000, guid: e31752da9ee48b2418badbd825dab82f, type: 3}
+  <BackgroundView>k__BackingField: {fileID: 21300000, guid: e31752da9ee48b2418badbd825dab82f, type: 3}

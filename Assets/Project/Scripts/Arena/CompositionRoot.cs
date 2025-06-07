@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
 public class CompositionRoot : MonoBehaviour
@@ -31,7 +29,7 @@ public class CompositionRoot : MonoBehaviour
 
     private void Start()
     {
-        // StartGame();
+        StartGame();
     }
 
     private void StartGame()
