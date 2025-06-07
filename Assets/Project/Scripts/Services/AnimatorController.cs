@@ -21,11 +21,7 @@ public class AnimatorController
 
     public void Run() => _animator.Play(_run);
 
-    public void Attack()
-    {
-        _animator.Play(_throw);
-        _animator.
-    }
+    public void Attack() => _animator.Play(_throw);
 
     public void PrepareAttack() => _animator.Play(_prepareToThrow);
     public void DodgeIdle() => _animator.Play(_dodgeIdle);
