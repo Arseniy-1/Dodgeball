@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using System.Threading;
 using Random = UnityEngine.Random;
 
 public class Arena : MonoBehaviour
@@ -17,6 +18,7 @@ public class Arena : MonoBehaviour
     [SerializeField] private float _maxInactiveInterval;
     
     private int _deathCount = 0;
+    private CancellationTokenSource _cancellationTokenSource;
 
     public List<Squad> Squads => _squads;
 
@@ -36,7 +38,7 @@ public class Arena : MonoBehaviour
                 squad.LostPlayers += HandleEnemySquadDeath;
         }
 
-        // EnableFrame();
+        EnableFrame();
     }
 
     private void HandleEnemySquadDeath(Squad squad)

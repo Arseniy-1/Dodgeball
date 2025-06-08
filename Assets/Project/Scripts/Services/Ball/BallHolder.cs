@@ -7,6 +7,7 @@ public class BallHolder : MonoBehaviour
 
     public Ball LostBall()
     {
+        
         if (_ball != null)
         {
             _ball.transform.parent = null;
@@ -31,6 +32,7 @@ public class BallHolder : MonoBehaviour
         ball.Rigidbody.useGravity = false;
         ball.Rigidbody.isKinematic = true;
 
+        
         _ball = ball;
     }
 }

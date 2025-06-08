@@ -1,12 +1,10 @@
 using UniRx;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class EnemyMoveState : IState
 {
     private readonly Enemy _enemy;
     private readonly AnimatorController _animatorController;
-    private readonly List<Entity> _teammates;
     private readonly EnemyStats _enemyEnemyStats;
     private readonly CollisionHandler _collisionHandler;
     private readonly Collider _squadZone;
@@ -19,12 +17,11 @@ public class EnemyMoveState : IState
 
     private Coroutine _moveRoutine;
 
-    public EnemyMoveState(Enemy enemy,AnimatorController animatorController, List<Entity> teammates, EnemyStats enemyStats, CollisionHandler collisionHandler,
+    public EnemyMoveState(Enemy enemy,AnimatorController animatorController, EnemyStats enemyStats, CollisionHandler collisionHandler,
         Collider squadZone, BallHolder ballHolder, Ball ball, Collider collider)
     {
         _enemy = enemy;
         _animatorController = animatorController;
-        _teammates = teammates;
         _enemyEnemyStats = enemyStats;
         _collisionHandler = collisionHandler;
         _squadZone = squadZone;
@@ -101,16 +98,18 @@ public class EnemyMoveState : IState
 
     private void HandleBallTaken(Entity entity)
     {
-        if (_teammates.Contains(entity) == false)
+        if (entity == _enemy)
+            return;
+
+        Vector3 closestPoint = _squadZone.ClosestPoint(entity.transform.position);
+
+        if (closestPoint == entity.transform.position)
         {
-            _stateSwitcher.SwitchState<PlayerDodgeState>();
+            _stateSwitcher.SwitchState<EnemyIdleState>();
         }
         else
         {
-            if (entity != _enemy)
-            {
-                _stateSwitcher.SwitchState<PlayerIdleState>();
-            }
+            _stateSwitcher.SwitchState<EnemyDodgeState>();
         }
     }
 }
