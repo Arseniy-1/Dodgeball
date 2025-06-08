@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class EnemyIdleState : IState
 {
     private readonly Enemy _enemy;
+    private readonly AnimatorController _animatorController;
     private readonly Ball _ball;
     private readonly Mover _mover;
     private readonly CollisionHandler _collisionHandler;
@@ -15,15 +16,17 @@ public class EnemyIdleState : IState
     private readonly EnemyStats _enemyStats;
     private readonly AreaPointSelector _areaPointSelector;
     private CompositeDisposable _disposable;
-    
+
     private IStateSwitcher _stateSwitcher;
-    
+
     private IDisposable _movementLoopDisposable;
 
-    public EnemyIdleState(Enemy enemy, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
+    public EnemyIdleState(Enemy enemy, AnimatorController animatorController, Ball ball, Mover mover,
+        CollisionHandler collisionHandler, Collider squadZone,
         Collider collider, Rigidbody rigidbody, EnemyStats enemyStats)
     {
         _enemy = enemy;
+        _animatorController = animatorController;
         _ball = ball;
         _mover = mover;
         _collisionHandler = collisionHandler;
@@ -42,23 +45,24 @@ public class EnemyIdleState : IState
     public void Enter()
     {
         _disposable = new CompositeDisposable();
-        
+
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))
             .AddTo(_disposable);
-        
+
         _rigidbody.isKinematic = true;
         _collisionHandler.enabled = false;
         _collider.enabled = false;
 
         StartIdleMovementLoop();
+        _animatorController.DodgeIdle();
     }
 
     public void Exit()
     {
         _disposable.Dispose();
-        
+
         _rigidbody.isKinematic = false;
         _collisionHandler.enabled = true;
         _collider.enabled = true;
@@ -81,16 +85,18 @@ public class EnemyIdleState : IState
             float standTime = Random.Range(_enemyStats.IdleMinStandTime, _enemyStats.IdleMaxStandTime);
 
             Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _enemy.transform.position);
+            _animatorController.DodgeIdle();
             yield return _mover.MoveTo(target, _enemyStats.WalkSpeed);
+            _animatorController.Idle();
             yield return new WaitForSeconds(standTime);
         }
     }
-   
+
     public void Update()
-    {            
+    {
         Vector3 direction = (_ball.transform.position - _enemy.transform.position);
         direction.y = 0;
-        
+
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
@@ -101,7 +107,7 @@ public class EnemyIdleState : IState
             );
         }
     }
-    
+
     private void HandleBallZoneChanged(Collider zone)
     {
         if (zone == _squadZone)

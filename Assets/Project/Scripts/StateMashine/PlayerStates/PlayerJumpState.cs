@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Threading.Tasks;
 
 public class PlayerJumpState : IState
 {
@@ -9,8 +10,6 @@ public class PlayerJumpState : IState
     private readonly Collider _collider;
 
     private IStateSwitcher _stateSwitcher;
-
-    private float _stunTimer = 0f;
 
     public PlayerJumpState(PlayerStats playerStats, AnimatorController animatorController, GroundChecker groundChecker,
         CollisionHandler collisionHandler, Collider collider)
@@ -31,22 +30,24 @@ public class PlayerJumpState : IState
     {
         _collisionHandler.enabled = false;
         _collider.isTrigger = true;
-        _animatorController.Dodge();
-        
-        _stunTimer = 2f;
-    }
 
+        Jump();
+    }
+    
     public void Exit()
     {
         _collisionHandler.enabled = true;
         _collider.isTrigger = false;
     }
 
+    private async Task Jump()
+    {
+        await _animatorController.Dodge();
+        _stateSwitcher.SwitchState<PlayerDodgeState>();
+    }
+    
     public void Update()
     {
-        _stunTimer -= Time.deltaTime;
-
-        if (_stunTimer <= 0f)
-            _stateSwitcher.SwitchState<PlayerDodgeState>();
+        
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class EnemyAttackState : IState
 {
     private readonly Enemy _enemy;
+    private readonly AnimatorController _animatorController;
     private readonly BallHolder _ballHolder;
     private readonly TargetScanner _targetScanner;
     private readonly TargetProvider _targetProvider;
@@ -17,10 +18,11 @@ public class EnemyAttackState : IState
     private float _releaseTimer;
     private bool _hasReleased;
 
-    public EnemyAttackState(Enemy enemy, BallHolder ballHolder, TargetScanner targetScanner, TargetProvider targetProvider,
+    public EnemyAttackState(Enemy enemy,AnimatorController animatorController, BallHolder ballHolder, TargetScanner targetScanner, TargetProvider targetProvider,
         List<Entity> teammates, BallThrower ballThrower, EnemyStats enemyStats)
     {
         _enemy = enemy;
+        _animatorController = animatorController;
         _ballHolder = ballHolder;
         _targetScanner = targetScanner;
         _targetProvider = targetProvider;
@@ -48,6 +50,7 @@ public class EnemyAttackState : IState
 
     public void Exit()
     {
+        
     }
 
     public void Update()
@@ -78,15 +81,18 @@ public class EnemyAttackState : IState
 
     private void StartAttack()
     {
+        _animatorController.PrepareAttack();
         _ballThrower.StartCharging();
     }
 
-    private void ThrowBall()
+    private async void ThrowBall()
     {
         Ball ball = _ballHolder.LostBall();
         _ballThrower.StopCharging();
         _ballThrower.Throw(ball);
 
+        await _animatorController.Attack();
+        
         _stateSwitcher.SwitchState<EnemyIdleState>();
     }
 }

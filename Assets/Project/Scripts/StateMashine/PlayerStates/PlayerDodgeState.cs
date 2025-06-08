@@ -84,8 +84,9 @@ public class PlayerDodgeState : IState
             _playerStats.DodgeDirectionChangeMaxTime);
 
         Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _player.transform.position);
-
+        _animatorController.DodgeIdle();
         yield return _mover.MoveTo(target, _playerStats.DodgeSpeed);
+        _animatorController.Idle();
         yield return new WaitForSeconds(standTime);
     }
 

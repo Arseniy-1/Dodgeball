@@ -2,9 +2,10 @@
 {
     public static class Animation
     {
-        public const string Attack = nameof(Attack);
-        public const string PrepareAttack = nameof(PrepareAttack);
+        public const string Throw = nameof(Throw);
+        public const string PrepareToThrow = nameof(PrepareToThrow);
         
+        public const string Idle = nameof(Idle);
         public const string Run = nameof(Run);
         
         public const string DodgeRight = nameof(DodgeRight);

@@ -36,7 +36,7 @@ public class Arena : MonoBehaviour
                 squad.LostPlayers += HandleEnemySquadDeath;
         }
 
-        EnableFrame();
+        // EnableFrame();
     }
 
     private void HandleEnemySquadDeath(Squad squad)
@@ -58,7 +58,7 @@ public class Arena : MonoBehaviour
     
     private async void EnableFrame()
     {
-        while (isActiveAndEnabled)
+        while (true)
         {
             await WaitForHitAsync();
             float delay = Random.Range(_minInactiveInterval, _maxInactiveInterval);

@@ -2908,6 +2908,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradeFrame
       objectReference: {fileID: 0}
+    - target: {fileID: 1607427405997937646, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5831716491217512982, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

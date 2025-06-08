@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class PlayerAttackState : IState
 {
@@ -13,6 +14,9 @@ public class PlayerAttackState : IState
     private readonly BallThrower _ballThrower;
 
     private IStateSwitcher _stateSwitcher;
+
+    private System.Action _buttonCanceledHandler;
+    private System.Action _buttonStartedHandler;
 
     public PlayerAttackState(Player player, AnimatorController animatorController, BallHolder ballHolder, TargetScanner targetScanner,
         TargetProvider targetProvider,
@@ -38,16 +42,17 @@ public class PlayerAttackState : IState
         Entity target = _targetScanner.Scan(_teammates);
         _targetProvider.SelectTarget(target);
 
-        _animatorController.PrepareAttack();
-        
-        _inputController.ActionButtonStarted += OnButtonClicked;
-        _inputController.ActionButtonCanceled += OnButtonReleased;
+        _animatorController.Idle();
+
+        _buttonStartedHandler = OnButtonClicked;
+        _buttonCanceledHandler = () => _ = OnButtonReleasedAsync();
+
+        _inputController.ActionButtonStarted += _buttonStartedHandler;
+        _inputController.ActionButtonCanceled += _buttonCanceledHandler;
     }
 
     public void Exit()
     {
-        _inputController.ActionButtonStarted -= OnButtonClicked;
-        _inputController.ActionButtonCanceled -= OnButtonReleased;
     }
 
     public void Update()
@@ -69,15 +74,19 @@ public class PlayerAttackState : IState
     private void OnButtonClicked()
     {
         _ballThrower.StartCharging();
+        _animatorController.PrepareAttack();
     }
 
-    private void OnButtonReleased()
+    private async Task OnButtonReleasedAsync()
     {
         Ball ball = _ballHolder.LostBall();
         _ballThrower.StopCharging();
         _ballThrower.Throw(ball);
 
-        _animatorController.Attack();
+        _inputController.ActionButtonStarted -= _buttonStartedHandler;
+        _inputController.ActionButtonCanceled -= _buttonCanceledHandler;
+        
+        await _animatorController.Attack();
         
         _stateSwitcher.SwitchState<PlayerIdleState>();
     }

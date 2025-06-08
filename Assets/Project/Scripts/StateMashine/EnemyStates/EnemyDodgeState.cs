@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class EnemyDodgeState : IState
 {
     private readonly Enemy _enemy;
+    private readonly AnimatorController _animatorController;
     private readonly Ball _ball;
     private readonly Mover _mover;
     private readonly Collider _squadZone;
@@ -21,10 +22,11 @@ public class EnemyDodgeState : IState
     private IDisposable _movementLoopDisposable;
     private IDisposable _jumpLoopDisposable;
 
-    public EnemyDodgeState(Enemy enemy, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
+    public EnemyDodgeState(Enemy enemy, AnimatorController animatorController, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
         Collider collider, Rigidbody rigidbody, EnemyStats enemyStats)
     {
         _enemy = enemy;
+        _animatorController = animatorController;
         _ball = ball;
         _mover = mover;
         _squadZone = squadZone;
@@ -53,6 +55,8 @@ public class EnemyDodgeState : IState
         
         StartIdleMovementLoop();
         StartJumpLoop();
+        
+        _animatorController.DodgeIdle();
     }
 
     public void Exit()
@@ -82,8 +86,9 @@ public class EnemyDodgeState : IState
                 _enemyStats.DodgeDirectionChangeMaxTime);
 
             Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _enemy.transform.position);
-            
+            _animatorController.DodgeIdle();
             yield return _mover.MoveTo(target, _enemyStats.DodgeSpeed);
+            _animatorController.Idle();
             yield return new WaitForSeconds(standTime);
         }
     }

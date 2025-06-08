@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class PlayerIdleState : IState
 {
     private readonly Player _player;
+    private readonly AnimatorController _animatorController;
     private readonly Ball _ball;
     private readonly Mover _mover;
     private readonly CollisionHandler _collisionHandler;
@@ -20,10 +21,11 @@ public class PlayerIdleState : IState
     
     private IDisposable _movementLoopDisposable;
 
-    public PlayerIdleState(Player player, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
+    public PlayerIdleState(Player player, AnimatorController animatorController ,Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
         Collider collider, Rigidbody rigidbody, PlayerStats playerStats)
     {
         _player = player;
+        _animatorController = animatorController;
         _ball = ball;
         _mover = mover;
         _collisionHandler = collisionHandler;
@@ -53,6 +55,7 @@ public class PlayerIdleState : IState
         _collider.enabled = false;
 
         StartIdleMovementLoop();
+        _animatorController.DodgeIdle();
     }
 
     public void Exit()
@@ -81,7 +84,9 @@ public class PlayerIdleState : IState
             float standTime = Random.Range(_playerStats.IdleMinStandTime, _playerStats.IdleMaxStandTime);
             
             Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _player.transform.position);
+            _animatorController.DodgeIdle();
             yield return _mover.MoveTo(target, _playerStats.WalkSpeed);
+            _animatorController.Idle();
             yield return new WaitForSeconds(standTime);
         }
     }

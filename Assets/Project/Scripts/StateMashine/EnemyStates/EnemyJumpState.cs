@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class EnemyJumpState : IState
 {
+    private readonly AnimatorController _animatorController;
     private readonly EnemyStats _enemyStats;
     private readonly Rigidbody _rigidbody;
     private readonly GroundChecker _groundChecker;
@@ -11,12 +13,11 @@ public class EnemyJumpState : IState
 
     private IStateSwitcher _stateSwitcher;
 
-    private bool _hasLanded = false;
-    private float _stunTimer = 0f;
-
-    public EnemyJumpState(EnemyStats enemyStats, Rigidbody rigidbody, GroundChecker groundChecker,
+    public EnemyJumpState(EnemyStats enemyStats, AnimatorController animatorController, Rigidbody rigidbody,
+        GroundChecker groundChecker,
         CollisionHandler collisionHandler, Collider collider)
     {
+        _animatorController = animatorController;
         _enemyStats = enemyStats;
         _rigidbody = rigidbody;
         _groundChecker = groundChecker;
@@ -34,12 +35,7 @@ public class EnemyJumpState : IState
         _collisionHandler.enabled = false;
         _collider.isTrigger = true;
 
-        if (_rigidbody != null)
-            _rigidbody.velocity = Vector3.zero;
-
-        _rigidbody.AddForce(Vector3.up * _enemyStats.JumpForce, ForceMode.Force);
-        _hasLanded = false;
-        _stunTimer = 0f;
+        Jump();
     }
 
     public void Exit()
@@ -47,23 +43,15 @@ public class EnemyJumpState : IState
         _collisionHandler.enabled = true;
         _collider.isTrigger = false;
     }
+    
+    private async Task Jump()
+    {
+        await _animatorController.Dodge();
+        _stateSwitcher.SwitchState<EnemyDodgeState>();
+    }
 
     public void Update()
     {
-        if (!_hasLanded)
-        {
-            if (_groundChecker.IsGrounded && Mathf.Abs(_rigidbody.velocity.y) < 0.1f)
-            {
-                _hasLanded = true;
-                _stunTimer = _enemyStats.JumpStunTime;
-            }
-        }
-        else
-        {
-            _stunTimer -= Time.deltaTime;
-
-            if (_stunTimer <= 0f){}
-                _stateSwitcher.SwitchState<EnemyDodgeState>();
-        }
+        
     }
 }
