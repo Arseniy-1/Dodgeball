@@ -12,7 +12,7 @@ public class Chargeable : MonoBehaviour
     
     private void Update()
     {
-         Debug.Log(_rigidbody.velocity.magnitude + ">=" + _dangerousSpeed);
+         // Debug.Log(_rigidbody.velocity.magnitude + ">=" + _dangerousSpeed);
     }
     
     private void Awake()

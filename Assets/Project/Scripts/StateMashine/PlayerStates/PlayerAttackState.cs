@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 public class PlayerAttackState : IState
 {
     private readonly Player _player;
+    private readonly CollisionHandler _collisionHandler;
+    private readonly Collider _collider;
+    private readonly Rigidbody _rigidbody;
     private readonly AnimatorController _animatorController;
     private readonly BallHolder _ballHolder;
     private readonly TargetScanner _targetScanner;
@@ -18,11 +21,15 @@ public class PlayerAttackState : IState
     private System.Action _buttonCanceledHandler;
     private System.Action _buttonStartedHandler;
 
-    public PlayerAttackState(Player player, AnimatorController animatorController, BallHolder ballHolder, TargetScanner targetScanner,
-        TargetProvider targetProvider,
+    public PlayerAttackState(Player player, CollisionHandler collisionHandler,
+        Collider collider, Rigidbody rigidbody, AnimatorController animatorController, BallHolder ballHolder,
+        TargetScanner targetScanner, TargetProvider targetProvider,
         List<Entity> teammates, PlayerInputController inputController, BallThrower ballThrower)
     {
         _player = player;
+        _rigidbody = rigidbody;
+        _collisionHandler = collisionHandler;
+        _collider = collider;
         _animatorController = animatorController;
         _ballHolder = ballHolder;
         _targetScanner = targetScanner;
@@ -39,6 +46,10 @@ public class PlayerAttackState : IState
 
     public void Enter()
     {
+        _rigidbody.isKinematic = true;
+        _collisionHandler.enabled = false;
+        _collider.enabled = false;
+
         Entity target = _targetScanner.Scan(_teammates);
         _targetProvider.SelectTarget(target);
 
@@ -53,6 +64,9 @@ public class PlayerAttackState : IState
 
     public void Exit()
     {
+        _rigidbody.isKinematic = false;
+        _collisionHandler.enabled = true;
+        _collider.enabled = true;
     }
 
     public void Update()
@@ -85,9 +99,9 @@ public class PlayerAttackState : IState
 
         _inputController.ActionButtonStarted -= _buttonStartedHandler;
         _inputController.ActionButtonCanceled -= _buttonCanceledHandler;
-        
+
         await _animatorController.Attack();
-        
+
         _stateSwitcher.SwitchState<PlayerIdleState>();
     }
 }

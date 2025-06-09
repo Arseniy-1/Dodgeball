@@ -16,8 +16,8 @@ MonoBehaviour:
   <RunSpeed>k__BackingField: 4
   <RotationSpeed>k__BackingField: 250
   <DodgeSpeed>k__BackingField: 5
-  <MinThrowForce>k__BackingField: 1000
-  <MaxThrowForce>k__BackingField: 2000
+  <MinThrowForce>k__BackingField: 500
+  <MaxThrowForce>k__BackingField: 1000
   <ThrowChargeTime>k__BackingField: 2
   <JumpForce>k__BackingField: 75000
   <JumpStunTime>k__BackingField: 0.4
