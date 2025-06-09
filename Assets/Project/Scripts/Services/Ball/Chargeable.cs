@@ -3,7 +3,7 @@
 [RequireComponent(typeof(Rigidbody))]
 public class Chargeable : MonoBehaviour
 {
-    [SerializeField] private float _dangerousSpeed = 15f;
+    [SerializeField] private float _dangerousSpeed = 10f;
     
     public bool IsCharged => _velocity.magnitude >= _dangerousSpeed;
 
@@ -12,7 +12,7 @@ public class Chargeable : MonoBehaviour
     
     private void Update()
     {
-        // Debug.Log(_rigidbody.velocity.magnitude + ">=" + _dangerousSpeed);
+         Debug.Log(_rigidbody.velocity.magnitude + ">=" + _dangerousSpeed);
     }
     
     private void Awake()

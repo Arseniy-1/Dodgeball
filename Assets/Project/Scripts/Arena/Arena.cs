@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using System.Threading;
+using Cysharp.Threading.Tasks;
 using Random = UnityEngine.Random;
 
 public class Arena : MonoBehaviour
@@ -24,8 +25,15 @@ public class Arena : MonoBehaviour
 
     public event Action GameOver;
 
+    private void OnDestroy()
+    {
+        _cancellationTokenSource.Cancel();
+    }
+    
     public void StartGame(Ball ball)
     {
+        _cancellationTokenSource = new CancellationTokenSource();
+        
         _ballUpgraders = _ballUpgraderFabric.Create();
         
         ball.transform.position = _ballPosition.position;
@@ -60,11 +68,11 @@ public class Arena : MonoBehaviour
     
     private async void EnableFrame()
     {
-        while (true)
+        while (_cancellationTokenSource.IsCancellationRequested == false)
         {
             await WaitForHitAsync();
             float delay = Random.Range(_minInactiveInterval, _maxInactiveInterval);
-            await Task.Delay((int)(delay * 1000));
+            await UniTask.Delay((int)(delay * 1000) , cancellationToken: _cancellationTokenSource.Token);
         }
     }
 

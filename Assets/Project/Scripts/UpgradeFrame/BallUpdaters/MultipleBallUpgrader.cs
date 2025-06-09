@@ -9,6 +9,5 @@ public class MultipleBallUpgrader : BallUpgrader
     
     public override void UpgradeBall(Ball ball)
     {
-        Debug.Log("Multiple Ball");
     }
 }
