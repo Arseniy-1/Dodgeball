@@ -22,7 +22,8 @@ public class EnemyDodgeState : IState
     private IDisposable _movementLoopDisposable;
     private IDisposable _jumpLoopDisposable;
 
-    public EnemyDodgeState(Enemy enemy, AnimatorController animatorController, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
+    public EnemyDodgeState(Enemy enemy, AnimatorController animatorController, Ball ball, Mover mover,
+        CollisionHandler collisionHandler, Collider squadZone,
         Collider collider, Rigidbody rigidbody, EnemyStats enemyStats)
     {
         _enemy = enemy;
@@ -45,26 +46,26 @@ public class EnemyDodgeState : IState
     public void Enter()
     {
         _disposable = new CompositeDisposable();
-        
+
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))
             .AddTo(_disposable);
-        
+
         _rigidbody.isKinematic = true;
-        
+
         StartIdleMovementLoop();
         StartJumpLoop();
-        
+
         _animatorController.DodgeIdle();
     }
 
     public void Exit()
     {
         _disposable.Dispose();
-        
+
         _rigidbody.isKinematic = false;
-        
+
         _mover.Stop();
         _movementLoopDisposable?.Dispose();
         _jumpLoopDisposable?.Dispose();
@@ -111,6 +112,12 @@ public class EnemyDodgeState : IState
     }
 
     public void Update()
+    {
+        if (_ball != null)
+            LookToBall();
+    }
+
+    private void LookToBall()
     {
         Vector3 direction = (_ball.transform.position - _enemy.transform.position);
         direction.y = 0;

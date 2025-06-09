@@ -27,6 +27,7 @@ public class Player : Entity, IDestoyable<Player>
 
         _playerStates = new List<IState>
         {
+            new PlayerPrepareState(this, AnimatorController, SquadZone),
             new PlayerIdleState(this,AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats),
             new PlayerMoveState(this, AnimatorController, Teammates, _playerStats, CollisionHandler, SquadZone, BallHolder, Ball, Collider),
             new PlayerDodgeState(this, AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats, _inputController),
@@ -40,11 +41,6 @@ public class Player : Entity, IDestoyable<Player>
             state.Initialize(StateMaсhine);
 
         Reset();
-    }
-
-    public override void Reset()
-    {
-        base.Reset();
     }
 
     [Button]

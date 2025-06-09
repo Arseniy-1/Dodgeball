@@ -22,7 +22,8 @@ public class PlayerDodgeState : IState
 
     private IDisposable _movementLoopDisposable;
 
-    public PlayerDodgeState(Player player, AnimatorController animatorController, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
+    public PlayerDodgeState(Player player, AnimatorController animatorController, Ball ball, Mover mover,
+        CollisionHandler collisionHandler, Collider squadZone,
         Collider collider, Rigidbody rigidbody, PlayerStats playerStats, PlayerInputController playerInputController)
     {
         _player = player;
@@ -56,7 +57,7 @@ public class PlayerDodgeState : IState
 
         _playerInputController.ActionButtonStarted += Jump;
         StartIdleMovementLoop();
-        
+
         _animatorController.DodgeIdle();
     }
 
@@ -91,6 +92,12 @@ public class PlayerDodgeState : IState
     }
 
     public void Update()
+    {
+        if (_ball != null)
+            LookToBall();
+    }
+
+    private void LookToBall()
     {
         Vector3 direction = (_ball.transform.position - _player.transform.position);
         direction.y = 0;

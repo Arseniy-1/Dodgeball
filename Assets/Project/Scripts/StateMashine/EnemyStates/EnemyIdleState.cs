@@ -94,6 +94,12 @@ public class EnemyIdleState : IState
 
     public void Update()
     {
+        if(_ball!=null)
+            LookBall();
+    }
+
+    private void LookBall()
+    {
         Vector3 direction = (_ball.transform.position - _enemy.transform.position);
         direction.y = 0;
 

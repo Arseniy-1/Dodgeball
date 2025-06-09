@@ -63,6 +63,15 @@ public class EnemyMoveState : IState
 
     public void Update()
     {
+        if(_ball == null)
+            return;
+        
+        LookToBall();
+        MoveToBall();
+    }
+
+    private void LookToBall()
+    {
         Vector3 direction = (_ball.transform.position - _enemy.transform.position);
         direction.y = 0;
         if (direction != Vector3.zero)
@@ -74,7 +83,10 @@ public class EnemyMoveState : IState
                 _enemyEnemyStats.RotationSpeed * Time.deltaTime
             );
         }
+    }
 
+    private void MoveToBall()
+    {
         _enemy.transform.position = Vector3.MoveTowards(
             _enemy.transform.position,
             _ball.transform.position,

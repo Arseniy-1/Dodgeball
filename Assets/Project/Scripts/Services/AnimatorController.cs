@@ -20,6 +20,14 @@ public class AnimatorController
         Animator.StringToHash(Constans.Animation.DodgeLeft),
         Animator.StringToHash(Constans.Animation.DodgeBackflip),
     };
+    
+    private List<int> _prepares = new List<int>
+    {
+        Animator.StringToHash(Constans.Animation.PrepareToFightGolf),
+        Animator.StringToHash(Constans.Animation.PrepareToFightActiveStance),
+        Animator.StringToHash(Constans.Animation.PrepareToFightPassiveStance),
+        Animator.StringToHash(Constans.Animation.PrepareToFightWarmingUp),
+    };
 
     public AnimatorController(Animator animator) => _animator = animator;
 
@@ -31,6 +39,13 @@ public class AnimatorController
     public void Idle() => _animator.Play(_idle);
     public void DodgeIdle() => _animator.Play(_dodgeIdle);
 
+    public void PrepareToBattle()
+    {
+        int randomPrepare = _prepares[Random.Range(0, _prepares.Count)];
+
+        _animator.Play(randomPrepare);
+    }
+    
     public Task Dodge()
     {
         int randomDodge = _dodges[Random.Range(0, _dodges.Count)];

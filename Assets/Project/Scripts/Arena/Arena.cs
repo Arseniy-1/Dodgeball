@@ -25,6 +25,11 @@ public class Arena : MonoBehaviour
 
     public event Action GameOver;
 
+    private void Awake()
+    {
+        _cancellationTokenSource = new CancellationTokenSource();
+    }
+    
     private void OnDestroy()
     {
         _cancellationTokenSource.Cancel();
@@ -32,8 +37,6 @@ public class Arena : MonoBehaviour
     
     public void StartGame(Ball ball)
     {
-        _cancellationTokenSource = new CancellationTokenSource();
-        
         _ballUpgraders = _ballUpgraderFabric.Create();
         
         ball.transform.position = _ballPosition.position;

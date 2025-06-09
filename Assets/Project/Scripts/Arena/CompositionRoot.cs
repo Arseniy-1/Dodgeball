@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
 public class CompositionRoot : MonoBehaviour
@@ -38,13 +39,28 @@ public class CompositionRoot : MonoBehaviour
         _startGameCanvas.OnStartGameButtonPressed -= StartGame;
     }
 
+    private void Start()
+    {
+        CreateMap();
+        _startGameCanvas.gameObject.SetActive(true);
+    }
+
     private void StartGame()
     {
+        _startGameCanvas.gameObject.SetActive(false);
+        
         if(_ballInstance != null)
             Destroy(_ballInstance.gameObject);
         
         _ballInstance = Instantiate(_ballPrefab, transform.position, Quaternion.identity);
         
+        _arenaInstance.StartGame(_ballInstance);
+        
+        MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
+    }
+    
+    private void CreateMap()
+    {
         if (_arenaInstance != null)
         {
             ClearEntities();
@@ -65,8 +81,6 @@ public class CompositionRoot : MonoBehaviour
         }
 
         _arenaInstance.GameOver += HandleGameOver;
-
-        _arenaInstance.StartGame(_ballInstance);
     }
 
     private void HandleGameOver()
@@ -75,7 +89,7 @@ public class CompositionRoot : MonoBehaviour
 
         ClearEntities();
         
-        StartGame();
+        CreateMap();
     }
 
     private void ClearEntities()

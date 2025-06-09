@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public struct M_BallTaken
+﻿public struct M_BallTaken
 {
     public M_BallTaken(Entity entity)
     {

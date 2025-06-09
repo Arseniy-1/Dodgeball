@@ -12,5 +12,10 @@
         public const string DodgeLeft = nameof(DodgeLeft);
         public const string DodgeBackflip = nameof(DodgeBackflip);
         public const string DodgeIdle = nameof(DodgeIdle);
+        
+        public const string PrepareToFightGolf = nameof(PrepareToFightGolf);
+        public const string PrepareToFightActiveStance = nameof(PrepareToFightActiveStance);
+        public const string PrepareToFightPassiveStance = nameof(PrepareToFightPassiveStance);
+        public const string PrepareToFightWarmingUp = nameof(PrepareToFightWarmingUp);
     }
 }

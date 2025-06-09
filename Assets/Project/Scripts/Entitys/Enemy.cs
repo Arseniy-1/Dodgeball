@@ -24,6 +24,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
         
         _enemyStates = new List<IState>
         {
+            new EnemyPrepareState(this, AnimatorController, SquadZone),
             new EnemyIdleState(this,AnimatorController, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats),
             new EnemyMoveState(this, AnimatorController, _enemyStats, CollisionHandler, SquadZone, BallHolder, ball, Collider),
             new EnemyDodgeState(this, AnimatorController, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats),
@@ -37,11 +38,6 @@ public class Enemy : Entity, IDestoyable<Enemy>
             state.Initialize(StateMaсhine);
 
         Reset();
-    }
-    
-    public override void Reset()
-    {
-        base.Reset();
     }
 
     [Button]

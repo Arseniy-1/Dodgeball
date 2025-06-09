@@ -16,12 +16,13 @@ public class PlayerIdleState : IState
     private readonly PlayerStats _playerStats;
     private readonly AreaPointSelector _areaPointSelector;
     private CompositeDisposable _disposable;
-    
+
     private IStateSwitcher _stateSwitcher;
-    
+
     private IDisposable _movementLoopDisposable;
 
-    public PlayerIdleState(Player player, AnimatorController animatorController ,Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
+    public PlayerIdleState(Player player, AnimatorController animatorController, Ball ball, Mover mover,
+        CollisionHandler collisionHandler, Collider squadZone,
         Collider collider, Rigidbody rigidbody, PlayerStats playerStats)
     {
         _player = player;
@@ -44,12 +45,12 @@ public class PlayerIdleState : IState
     public void Enter()
     {
         _disposable = new CompositeDisposable();
-        
+
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))
             .AddTo(_disposable);
-        
+
         _rigidbody.isKinematic = true;
         _collisionHandler.enabled = false;
         _collider.enabled = false;
@@ -61,7 +62,7 @@ public class PlayerIdleState : IState
     public void Exit()
     {
         _disposable.Dispose();
-        
+
         _rigidbody.isKinematic = false;
         _collisionHandler.enabled = true;
         _collider.enabled = true;
@@ -82,7 +83,7 @@ public class PlayerIdleState : IState
         while (true)
         {
             float standTime = Random.Range(_playerStats.IdleMinStandTime, _playerStats.IdleMaxStandTime);
-            
+
             Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _player.transform.position);
             _animatorController.DodgeIdle();
             yield return _mover.MoveTo(target, _playerStats.WalkSpeed);
@@ -90,12 +91,20 @@ public class PlayerIdleState : IState
             yield return new WaitForSeconds(standTime);
         }
     }
-   
+
     public void Update()
-    {            
+    {
+        if (_ball != null)
+        {
+            LookBall();
+        }
+    }
+
+    private void LookBall()
+    {
         Vector3 direction = (_ball.transform.position - _player.transform.position);
         direction.y = 0;
-        
+
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
@@ -106,7 +115,7 @@ public class PlayerIdleState : IState
             );
         }
     }
-    
+
     private void HandleBallZoneChanged(Collider zone)
     {
         if (zone == _squadZone)

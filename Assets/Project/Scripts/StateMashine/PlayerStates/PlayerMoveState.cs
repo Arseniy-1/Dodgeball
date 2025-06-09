@@ -65,6 +65,15 @@ public class PlayerMoveState : IState
 
     public void Update()
     {
+        if(_ball == null)
+            return;
+        
+        LookToBall();
+        MoveToBall();
+    }
+
+    private void LookToBall()
+    {
         Vector3 direction = (_ball.transform.position - _player.transform.position);
         direction.y = 0;
         if (direction != Vector3.zero)
@@ -76,7 +85,10 @@ public class PlayerMoveState : IState
                 _playerStats.RotationSpeed * Time.deltaTime
             );
         }
+    }
 
+    private void MoveToBall()
+    {
         _player.transform.position = Vector3.MoveTowards(
             _player.transform.position,
             _ball.transform.position,
