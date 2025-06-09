@@ -8,6 +8,7 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private List<Enemy> _enemyPrefabs;
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private Ball _ballPrefab;
+    [SerializeField] private StartGameCanvas _startGameCanvas;
     
     private Ball _ballInstance;
 
@@ -27,9 +28,14 @@ public class CompositionRoot : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        StartGame();
+        _startGameCanvas.OnStartGameButtonPressed += StartGame;
+    }
+
+    private void OnDisable()
+    {
+        _startGameCanvas.OnStartGameButtonPressed -= StartGame;
     }
 
     private void StartGame()
