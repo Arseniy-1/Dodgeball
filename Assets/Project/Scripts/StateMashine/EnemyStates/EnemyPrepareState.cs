@@ -7,18 +7,22 @@ public class EnemyPrepareState : IState
 {
     private readonly Enemy _enemy;
     private readonly AnimatorController _animatorController;
-    private readonly Collider _squadZone;
+    private readonly TargetScanner _targetScanner;
+    private readonly TargetProvider _targetProvider;
+    private readonly List<Entity> _teammates;
     private CompositeDisposable _disposable;
 
     private IStateSwitcher _stateSwitcher;
 
     private IDisposable _movementLoopDisposable;
 
-    public EnemyPrepareState(Enemy enemy, AnimatorController animatorController, Collider squadZone)
+    public EnemyPrepareState(Enemy enemy, AnimatorController animatorController, TargetScanner targetScanner,
+        List<Entity> teammates)
     {
         _enemy = enemy;
         _animatorController = animatorController;
-        _squadZone = squadZone;
+        _targetScanner = targetScanner;
+        _teammates = teammates;
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -36,7 +40,7 @@ public class EnemyPrepareState : IState
             .AddTo(_disposable);
 
         _animatorController.PrepareToBattle();
-        LookRandom();
+        LookToTarget();
     }
 
     public void Exit()
@@ -48,22 +52,22 @@ public class EnemyPrepareState : IState
     {
     }
 
-    private void LookRandom()
+    private void LookToTarget()
     {
-        Vector3 randomDirection = new Vector3(
-            UnityEngine.Random.Range(-1f, 1f),
-            0f,
-            UnityEngine.Random.Range(-1f, 1f)
-        ).normalized;
+        Entity target = _targetScanner.Scan(_teammates);
 
-        if (randomDirection != Vector3.zero)
+        if (target == null)
+            return;
+
+        Vector3 direction = target.transform.position - _enemy.transform.position;
+        direction.y = 0f;
+
+        if (direction != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(randomDirection);
+            Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
             _enemy.transform.rotation = targetRotation;
         }
     }
-
-
 
     private void HandleStartGame()
     {

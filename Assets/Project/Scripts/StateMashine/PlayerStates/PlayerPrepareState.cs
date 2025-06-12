@@ -7,18 +7,22 @@ public class PlayerPrepareState : IState
 {
     private readonly Player _player;
     private readonly AnimatorController _animatorController;
-    private readonly Collider _squadZone;
+    private readonly TargetScanner _targetScanner;
+    private readonly TargetProvider _targetProvider;
+    private readonly List<Entity> _teammates;
     private CompositeDisposable _disposable;
 
     private IStateSwitcher _stateSwitcher;
 
     private IDisposable _movementLoopDisposable;
 
-    public PlayerPrepareState(Player player, AnimatorController animatorController, Collider squadZone)
+    public PlayerPrepareState(Player player, AnimatorController animatorController, TargetScanner targetScanner,
+        List<Entity> teammates)
     {
         _player = player;
         _animatorController = animatorController;
-        _squadZone = squadZone;
+        _targetScanner = targetScanner;
+        _teammates = teammates;;
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -36,7 +40,7 @@ public class PlayerPrepareState : IState
             .AddTo(_disposable);
 
         _animatorController.PrepareToBattle();
-        LookRandom();
+        LookToTarget();
     }
 
     public void Exit()
@@ -48,17 +52,19 @@ public class PlayerPrepareState : IState
     {
     }
 
-    private void LookRandom()
+    private void LookToTarget()
     {
-        Vector3 randomDirection = new Vector3(
-            UnityEngine.Random.Range(-1f, 1f),
-            0f,
-            UnityEngine.Random.Range(-1f, 1f)
-        ).normalized;
+        Entity target = _targetScanner.Scan(_teammates);
 
-        if (randomDirection != Vector3.zero)
+        if (target == null)
+            return;
+
+        Vector3 direction = target.transform.position - _player.transform.position;
+        direction.y = 0f;
+
+        if (direction != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(randomDirection);
+            Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
             _player.transform.rotation = targetRotation;
         }
     }

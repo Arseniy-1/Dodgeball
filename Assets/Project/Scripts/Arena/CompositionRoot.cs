@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
 public class CompositionRoot : MonoBehaviour
@@ -10,7 +9,7 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private Ball _ballPrefab;
     [SerializeField] private StartGameCanvas _startGameCanvas;
-    
+
     private Ball _ballInstance;
 
     private PlayerSpawner _playerSpawner;
@@ -48,17 +47,12 @@ public class CompositionRoot : MonoBehaviour
     private void StartGame()
     {
         _startGameCanvas.gameObject.SetActive(false);
-        
-        if(_ballInstance != null)
-            Destroy(_ballInstance.gameObject);
-        
-        _ballInstance = Instantiate(_ballPrefab, transform.position, Quaternion.identity);
-        
+
         _arenaInstance.StartGame(_ballInstance);
-        
+
         MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
     }
-    
+
     private void CreateMap()
     {
         if (_arenaInstance != null)
@@ -71,6 +65,16 @@ public class CompositionRoot : MonoBehaviour
         Arena arenaPrefab = _arenaPrefabs[Random.Range(0, _arenaPrefabs.Count)];
 
         _arenaInstance = Instantiate(arenaPrefab, transform.position, Quaternion.identity);
+        
+        if (_ballInstance != null)
+            Destroy(_ballInstance.gameObject);
+        
+        float ballOffsetY = 2f;
+        float ballOffsetX = 2f;
+        float ballOffsetZ = 2f;
+        Vector3 ballPosition = new Vector3(transform.position.x + ballOffsetX, transform.position.y + ballOffsetY,
+            transform.position.z + ballOffsetZ);
+        _ballInstance = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
 
         for (int i = 0; i < _arenaInstance.Squads.Count; i++)
         {
@@ -88,7 +92,7 @@ public class CompositionRoot : MonoBehaviour
         _arenaInstance.GameOver -= HandleGameOver;
 
         ClearEntities();
-        
+
         CreateMap();
     }
 
@@ -103,16 +107,18 @@ public class CompositionRoot : MonoBehaviour
     private void FillPlayerSquad(PlayerSpawner playerSpawner, Squad squad)
     {
         List<Entity> players = new List<Entity>();
-        
+
         for (int i = 0; i < squad.SpawnPoints.Count; i++)
         {
             Player player = playerSpawner.Spawn();
-            player.Initialize(squad.SquadZone, players, _ballInstance);
             player.transform.position = squad.SpawnPoints[i].position;
 
             players.Add(player);
         }
         
+        foreach (var player in players)
+            player.Initialize(squad.SquadZone, players, _ballInstance);
+
         squad.Initialize(players);
     }
 
@@ -123,11 +129,13 @@ public class CompositionRoot : MonoBehaviour
         for (int i = 0; i < squad.SpawnPoints.Count; i++)
         {
             Enemy enemy = enemySpawner.Spawn();
-            enemy.Initialize(squad.SquadZone, enemys, _ballInstance);
             enemy.transform.position = squad.SpawnPoints[i].position;
 
             enemys.Add(enemy);
         }
+
+        foreach (var enemy in enemys)
+            enemy.Initialize(squad.SquadZone, enemys, _ballInstance);
 
         squad.Initialize(enemys);
     }

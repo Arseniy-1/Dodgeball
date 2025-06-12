@@ -20,9 +20,6 @@ public class StateMaсhine : IStateSwitcher
     {
         IState state = _states.FirstOrDefault(state => state is T);
 
-        if (_states.Count == 0)
-            Debug.Log("Zero States count");
-
         if (state == null)
             throw new ArgumentNullException(nameof(T));
 

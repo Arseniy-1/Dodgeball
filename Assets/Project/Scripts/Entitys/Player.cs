@@ -27,7 +27,7 @@ public class Player : Entity, IDestoyable<Player>
 
         _playerStates = new List<IState>
         {
-            new PlayerPrepareState(this, AnimatorController, SquadZone),
+            new PlayerPrepareState(this, AnimatorController, TargetScanner, Teammates),
             new PlayerIdleState(this,AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats),
             new PlayerMoveState(this, AnimatorController, Teammates, _playerStats, CollisionHandler, SquadZone, BallHolder, Ball, Collider),
             new PlayerDodgeState(this, AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats, _inputController),
