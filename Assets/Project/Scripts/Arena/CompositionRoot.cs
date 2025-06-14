@@ -9,6 +9,7 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private Ball _ballPrefab;
     [SerializeField] private StartGameCanvas _startGameCanvas;
+    [SerializeField] private StartGameCanvas _endGameCanvas;
 
     private Ball _ballInstance;
 
@@ -51,6 +52,11 @@ public class CompositionRoot : MonoBehaviour
         _arenaInstance.StartGame(_ballInstance);
 
         MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
+    }
+
+    private void HandleEndGame()
+    {
+        _endGameCanvas.gameObject.SetActive(true);
     }
 
     private void CreateMap()

@@ -12,8 +12,7 @@ public class Squad : MonoBehaviour
     public List<Transform> SpawnPoints => _spawnPoints;
     public Collider SquadZone => _squadZone;
 
-    [SerializeField] private Collider _squadZone;
-    private CompositeDisposable _disposable = new CompositeDisposable();
+    private Collider _squadZone;
 
     public event Action<Squad> LostPlayers;
     

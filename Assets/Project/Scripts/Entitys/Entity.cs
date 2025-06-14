@@ -20,9 +20,8 @@ public abstract class Entity : MonoBehaviour
     public string CurrentState;
     public List<string> CurrentStates = new List<string>();
 
-    protected CompositeDisposable CompositeDisposable = new CompositeDisposable();
     protected TargetProvider TargetProvider = new TargetProvider();
-    [SerializeField] protected Collider SquadZone;
+    protected Collider SquadZone;
     protected Collider Collider;
     protected Rigidbody Rigidbody;
     protected AnimatorController AnimatorController;

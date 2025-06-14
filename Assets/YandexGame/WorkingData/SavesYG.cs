@@ -1,5 +1,4 @@
-﻿
-namespace YG
+﻿namespace YG
 {
     [System.Serializable]
     public class SavesYG
@@ -18,7 +17,8 @@ namespace YG
 
         // Ваши сохранения
 
-        // ...
+        public bool IsSoundsEnabled = true;
+        public bool IsMusicEnabled = true;
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 

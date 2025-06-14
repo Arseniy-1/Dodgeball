@@ -1,12 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class StartGameCanvas : MonoBehaviour
+public abstract class InteractiveCanvas : GameCanvas
 {
     [SerializeField] private Button _startGameButton;
-
-    public event Action OnStartGameButtonPressed;
     
     private void OnEnable()
     {
@@ -18,8 +15,5 @@ public class StartGameCanvas : MonoBehaviour
         _startGameButton.onClick.RemoveListener(HandleButtonClick);
     }
 
-    private void HandleButtonClick()
-    {
-        OnStartGameButtonPressed?.Invoke();       
-    }
+    protected abstract void HandleButtonClick();
 }
