@@ -1,128 +1,42 @@
-﻿using System;
-using UniRx;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
-public class EnemyIdleState : IState
+public class EnemyIdleState : EntityIdleState
 {
     private readonly Enemy _enemy;
-    private readonly AnimatorController _animatorController;
-    private readonly Ball _ball;
-    private readonly Mover _mover;
-    private readonly CollisionHandler _collisionHandler;
-    private readonly Collider _squadZone;
-    private readonly Collider _collider;
-    private readonly Rigidbody _rigidbody;
     private readonly EnemyStats _enemyStats;
-    private readonly AreaPointSelector _areaPointSelector;
-    private CompositeDisposable _disposable;
 
-    private IStateSwitcher _stateSwitcher;
-
-    private IDisposable _movementLoopDisposable;
-
-    public EnemyIdleState(Enemy enemy, AnimatorController animatorController, Ball ball, Mover mover,
-        CollisionHandler collisionHandler, Collider squadZone,
-        Collider collider, Rigidbody rigidbody, EnemyStats enemyStats)
+    public EnemyIdleState(
+        Enemy enemy,
+        AnimatorController animatorController,
+        Ball ball,
+        Mover mover,
+        CollisionHandler collisionHandler,
+        Collider squadZone,
+        Collider collider,
+        Rigidbody rigidbody,
+        EnemyStats enemyStats)
+        : base(animatorController, ball, mover, collisionHandler, squadZone, collider, rigidbody)
     {
         _enemy = enemy;
-        _animatorController = animatorController;
-        _ball = ball;
-        _mover = mover;
-        _collisionHandler = collisionHandler;
-        _squadZone = squadZone;
-        _collider = collider;
-        _rigidbody = rigidbody;
         _enemyStats = enemyStats;
-        _areaPointSelector = new AreaPointSelector();
     }
 
-    public void Initialize(IStateSwitcher stateSwitcher)
+    protected override float IdleMinStandTime => _enemyStats.IdleMinStandTime;
+    protected override float IdleMaxStandTime => _enemyStats.IdleMaxStandTime;
+    protected override float WalkSpeed => _enemyStats.WalkSpeed;
+    protected override float RotationSpeed => _enemyStats.RotationSpeed;
+
+    protected override Transform GetTransform() => _enemy.transform;
+
+    protected override void HandleBallZoneChanged(Collider zone)
     {
-        _stateSwitcher = stateSwitcher;
-    }
-
-    public void Enter()
-    {
-        _disposable = new CompositeDisposable();
-
-        MessageBrokerHolder.GameActions
-            .Receive<M_BallChangedZone>()
-            .Subscribe(message => HandleBallZoneChanged(message.Zone))
-            .AddTo(_disposable);
-
-        _rigidbody.isKinematic = true;
-        _collisionHandler.enabled = false;
-        _collider.enabled = false;
-
-        StartIdleMovementLoop();
-        _animatorController.DodgeIdle();
-    }
-
-    public void Exit()
-    {
-        _disposable.Dispose();
-
-        _rigidbody.isKinematic = false;
-        _collisionHandler.enabled = true;
-        _collider.enabled = true;
-
-        _mover.Stop();
-        _movementLoopDisposable?.Dispose();
-    }
-
-    private void StartIdleMovementLoop()
-    {
-        _movementLoopDisposable = Observable.FromCoroutine(IdleMovementLoop)
-            .Subscribe()
-            .AddTo(_disposable);
-    }
-
-    private System.Collections.IEnumerator IdleMovementLoop()
-    {
-        while (true)
+        if (zone == SquadZone)
         {
-            float standTime = Random.Range(_enemyStats.IdleMinStandTime, _enemyStats.IdleMaxStandTime);
-
-            Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _enemy.transform.position);
-            _animatorController.DodgeIdle();
-            yield return _mover.MoveTo(target, _enemyStats.WalkSpeed);
-            _animatorController.Idle();
-            yield return new WaitForSeconds(standTime);
-        }
-    }
-
-    public void Update()
-    {
-        if(_ball!=null)
-            LookBall();
-    }
-
-    private void LookBall()
-    {
-        Vector3 direction = (_ball.transform.position - _enemy.transform.position);
-        direction.y = 0;
-
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
-            _enemy.transform.rotation = Quaternion.RotateTowards(
-                _enemy.transform.rotation,
-                targetRotation,
-                _enemyStats.RotationSpeed * Time.deltaTime
-            );
-        }
-    }
-
-    private void HandleBallZoneChanged(Collider zone)
-    {
-        if (zone == _squadZone)
-        {
-            _stateSwitcher.SwitchState<EnemyMoveState>();
+            StateSwitcher.SwitchState<EnemyMoveState>();
         }
         else
         {
-            _stateSwitcher.SwitchState<EnemyDodgeState>();
+            StateSwitcher.SwitchState<EnemyDodgeState>();
         }
     }
 }

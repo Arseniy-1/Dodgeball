@@ -1,128 +1,40 @@
-using System;
-using UniRx;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class PlayerDodgeState : IState
+public class PlayerDodgeState : EntityDodgeState<Player>
 {
-    private readonly Player _player;
-    private readonly AnimatorController _animatorController;
-    private readonly Ball _ball;
-    private readonly Mover _mover;
-    private readonly PlayerInputController _playerInputController;
-    private readonly Collider _squadZone;
-    private readonly CollisionHandler _collisionHandler;
-    private readonly Collider _collider;
-    private readonly Rigidbody _rigidbody;
     private readonly PlayerStats _playerStats;
-    private readonly AreaPointSelector _areaPointSelector;
-    private CompositeDisposable _disposable;
+    private readonly PlayerInputController _playerInputController;
 
-    private IStateSwitcher _stateSwitcher;
-
-    private IDisposable _movementLoopDisposable;
-
-    public PlayerDodgeState(Player player, AnimatorController animatorController, Ball ball, Mover mover,
-        CollisionHandler collisionHandler, Collider squadZone,
-        Collider collider, Rigidbody rigidbody, PlayerStats playerStats, PlayerInputController playerInputController)
+    public PlayerDodgeState(Player player, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, 
+        Rigidbody rigidbody, PlayerStats playerStats, PlayerInputController playerInputController)
+        : base(player, animatorController, ball, mover, squadZone, rigidbody)
     {
-        _player = player;
-        _animatorController = animatorController;
-        _ball = ball;
-        _mover = mover;
-        _playerInputController = playerInputController;
-        _squadZone = squadZone;
-        _collisionHandler = collisionHandler;
-        _collider = collider;
-        _rigidbody = rigidbody;
         _playerStats = playerStats;
-        _areaPointSelector = new AreaPointSelector();
+        _playerInputController = playerInputController;
     }
 
-    public void Initialize(IStateSwitcher stateSwitcher)
+    public override void Enter()
     {
-        _stateSwitcher = stateSwitcher;
-    }
-
-    public void Enter()
-    {
-        _disposable = new CompositeDisposable();
-
-        MessageBrokerHolder.GameActions
-            .Receive<M_BallChangedZone>()
-            .Subscribe(message => HandleBallZoneChanged(message.Zone))
-            .AddTo(_disposable);
-
-        _rigidbody.isKinematic = true;
-
+        base.Enter();
         _playerInputController.ActionButtonStarted += Jump;
-        StartIdleMovementLoop();
-
-        _animatorController.DodgeIdle();
     }
 
-    public void Exit()
+    public override void Exit()
     {
-        _disposable.Dispose();
-
-        _rigidbody.isKinematic = false;
-
+        base.Exit();
         _playerInputController.ActionButtonStarted -= Jump;
-        _mover.Stop();
-        _movementLoopDisposable?.Dispose();
     }
 
-    private void StartIdleMovementLoop()
+    private void Jump() => StateSwitcher.SwitchState<PlayerJumpState>();
+
+    protected override void HandleBallZoneChanged(Collider zone)
     {
-        _movementLoopDisposable = Observable.FromCoroutine(IdleMovementLoop)
-            .Subscribe()
-            .AddTo(_disposable);
+        if (zone == SquadZone)
+            StateSwitcher.SwitchState<PlayerMoveState>();
     }
 
-    private System.Collections.IEnumerator IdleMovementLoop()
-    {
-        float standTime = Random.Range(_playerStats.DodgeDirectionChangeMinTime,
-            _playerStats.DodgeDirectionChangeMaxTime);
-
-        Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _player.transform.position);
-        _animatorController.DodgeIdle();
-        yield return _mover.MoveTo(target, _playerStats.DodgeSpeed);
-        _animatorController.Idle();
-        yield return new WaitForSeconds(standTime);
-    }
-
-    public void Update()
-    {
-        if (_ball != null)
-            LookToBall();
-    }
-
-    private void LookToBall()
-    {
-        Vector3 direction = (_ball.transform.position - _player.transform.position);
-        direction.y = 0;
-
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
-            _player.transform.rotation = Quaternion.RotateTowards(
-                _player.transform.rotation,
-                targetRotation,
-                _playerStats.RotationSpeed * Time.deltaTime
-            );
-        }
-    }
-
-    private void HandleBallZoneChanged(Collider zone)
-    {
-        if (zone == _squadZone)
-        {
-            _stateSwitcher.SwitchState<PlayerMoveState>();
-        }
-    }
-
-    private void Jump()
-    {
-        _stateSwitcher.SwitchState<PlayerJumpState>();
-    }
+    protected override float GetRotationSpeed() => _playerStats.RotationSpeed;
+    protected override float GetMinDirectionChangeTime() => _playerStats.DodgeDirectionChangeMinTime;
+    protected override float GetMaxDirectionChangeTime() => _playerStats.DodgeDirectionChangeMaxTime;
+    protected override float GetDodgeSpeed() => _playerStats.DodgeSpeed;
 }

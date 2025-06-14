@@ -1202,7 +1202,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 909983a33c36b18458ba891577106406, type: 2}
     - target: {fileID: 5560732405544888995, guid: a7a1b8156ac4d734189510481a1f4e8b, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5560732405548995681, guid: a7a1b8156ac4d734189510481a1f4e8b, type: 3}
       propertyPath: m_Materials.Array.data[0]

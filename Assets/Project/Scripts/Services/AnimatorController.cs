@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Random = UnityEngine.Random;
-
 
 public class AnimatorController
 {
     private Animator _animator;
+    private CancellationTokenSource _cancellationTokenSource;
 
     private int _idle = Animator.StringToHash(Constans.Animation.Idle);
     private int _run = Animator.StringToHash(Constans.Animation.Run);
@@ -29,11 +30,21 @@ public class AnimatorController
         Animator.StringToHash(Constans.Animation.PrepareToFightWarmingUp),
     };
 
-    public AnimatorController(Animator animator) => _animator = animator;
+    public AnimatorController(Animator animator)
+    {
+        _animator = animator;
+        _cancellationTokenSource = new CancellationTokenSource();
+    }
+    
+    public void Dispose()
+    {
+        _cancellationTokenSource.Cancel();
+        _cancellationTokenSource.Dispose();
+    }
 
     public void Run() => _animator.Play(_run);
 
-    public Task Attack() => PlayAndWait(_throw);
+    public UniTask Attack() => PlayAndWait(_throw);
 
     public void PrepareAttack() => _animator.Play(_prepareToThrow);
     public void Idle() => _animator.Play(_idle);
@@ -46,34 +57,32 @@ public class AnimatorController
         _animator.Play(randomPrepare);
     }
     
-    public Task Dodge()
+    public UniTask Dodge()
     {
         int randomDodge = _dodges[Random.Range(0, _dodges.Count)];
 
         return PlayAndWait(randomDodge);
     }
     
-    private async Task PlayAndWait(int animationHash)
+    private async UniTask PlayAndWait(int animationHash)
     {
         _animator.Play(animationHash);
-        await Task.Yield();
+        await UniTask.Yield();
 
         AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-
         int attempts = 0;
-        
-        while (stateInfo.shortNameHash != animationHash && attempts < 60)
+
+        while (stateInfo.shortNameHash != animationHash && attempts < 60 && _cancellationTokenSource.IsCancellationRequested == false)
         {
-            await Task.Yield();
+            await UniTask.Yield();
             stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             attempts++;
         }
 
-        while (stateInfo.normalizedTime < 1f && !_animator.IsInTransition(0))
+        while (stateInfo.normalizedTime < 1f && !_animator.IsInTransition(0) && _cancellationTokenSource.IsCancellationRequested == false)
         {
-            await Task.Yield();
+            await UniTask.Yield();
             stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         }
     }
-
 }

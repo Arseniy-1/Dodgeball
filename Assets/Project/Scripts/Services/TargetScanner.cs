@@ -5,8 +5,6 @@ public class TargetScanner : MonoBehaviour
 {
     public Entity Scan(List<Entity> teammates)
     {
-        Debug.Log(teammates.Count);
-        
         float scanRadius = 500f;
         float closestDistance = float.MaxValue;
         Entity closestEnemy = null;

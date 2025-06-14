@@ -30,9 +30,9 @@ public class Player : Entity, IDestoyable<Player>
             new PlayerPrepareState(this, AnimatorController, TargetScanner, Teammates),
             new PlayerIdleState(this,AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats),
             new PlayerMoveState(this, AnimatorController, Teammates, _playerStats, CollisionHandler, SquadZone, BallHolder, Ball, Collider),
-            new PlayerDodgeState(this, AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats, _inputController),
+            new PlayerDodgeState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _playerStats, _inputController),
             new PlayerAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController, BallThrower),
-            new PlayerJumpState(_playerStats, AnimatorController, GroundChecker, CollisionHandler, Collider),
+            new PlayerJumpState(AnimatorController, GroundChecker, CollisionHandler, Collider),
         };
 
         StateMaсhine = new StateMaсhine(_playerStates);

@@ -1,30 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class StateMaсhine : IStateSwitcher
 {
-    public List<IState> _states;
+    public Dictionary<Type, IState> _states = new();
     public IState _currentState;
 
     public StateMaсhine(List<IState> states)
     {
-        _states = states;
+        foreach (var state in states)
+            _states[state.GetType()] = state;         
 
-        _currentState = _states[0];
+        _currentState = states.First();
         _currentState.Enter();
     }
 
     public void SwitchState<T>() where T : IState
     {
-        IState state = _states.FirstOrDefault(state => state is T);
+        if (_states.TryGetValue(typeof(T), out var newState) == false)
+            throw new ArgumentException($"State of type {typeof(T)} not found");
 
-        if (state == null)
+        if (newState == null)
             throw new ArgumentNullException(nameof(T));
 
         _currentState.Exit();
-        _currentState = state;
+        _currentState = newState;
         _currentState.Enter();
     }
 
@@ -34,9 +35,9 @@ public class StateMaсhine : IStateSwitcher
     {
         _currentState.Exit();
 
-        foreach (var state in _states)
+        foreach (var pair in _states)
         {
-            if (state is IDisposable disposable)
+            if (pair.Value is IDisposable disposable)
             {
                 disposable.Dispose();
             }

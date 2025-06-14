@@ -27,9 +27,9 @@ public class Enemy : Entity, IDestoyable<Enemy>
             new EnemyPrepareState(this, AnimatorController, TargetScanner, Teammates),
             new EnemyIdleState(this,AnimatorController, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats),
             new EnemyMoveState(this, AnimatorController, _enemyStats, CollisionHandler, SquadZone, BallHolder, ball, Collider),
-            new EnemyDodgeState(this, AnimatorController, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats),
-            new EnemyAttackState(this,AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyStats),
-            new EnemyJumpState(_enemyStats, AnimatorController, Rigidbody, GroundChecker, CollisionHandler, Collider)
+            new EnemyDodgeState(this, AnimatorController, ball, Mover, SquadZone, Rigidbody, _enemyStats),
+            new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyStats),
+            new EnemyJumpState(AnimatorController, GroundChecker, CollisionHandler, Collider)
         };
         
         StateMaсhine = new StateMaсhine(_enemyStates);

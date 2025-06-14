@@ -69,7 +69,7 @@ public class Arena : MonoBehaviour
         GameOver?.Invoke();
     }
     
-    private async void EnableFrame()
+    private async UniTaskVoid EnableFrame()
     {
         while (_cancellationTokenSource.IsCancellationRequested == false)
         {

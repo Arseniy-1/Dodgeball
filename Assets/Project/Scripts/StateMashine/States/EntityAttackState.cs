@@ -1,0 +1,87 @@
+﻿using UnityEngine;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+public class EntityAttackState  : IState
+{
+    private readonly Entity _entity;
+    private readonly AnimatorController _animatorController;
+    private readonly BallHolder _ballHolder;
+    private readonly TargetScanner _targetScanner;
+    private readonly TargetProvider _targetProvider;
+    private readonly List<Entity> _teammates;
+    private readonly BallThrower _ballThrower;
+    private readonly Rotator _rotator;  
+
+    protected readonly CollisionHandler CollisionHandler;
+    protected readonly Collider Collider;
+    protected readonly Rigidbody Rigidbody;
+
+    protected IStateSwitcher StateSwitcher; 
+
+    public EntityAttackState(Entity entity, CollisionHandler collisionHandler,
+        Collider collider, Rigidbody rigidbody, AnimatorController animatorController, BallHolder ballHolder,
+        TargetScanner targetScanner, TargetProvider targetProvider,
+        List<Entity> teammates, BallThrower ballThrower)
+    {
+        _entity = entity;
+        CollisionHandler = collisionHandler;
+        Collider = collider;
+        Rigidbody = rigidbody;
+        _animatorController = animatorController;
+        _ballHolder = ballHolder;
+        _targetScanner = targetScanner;
+        _targetProvider = targetProvider;
+        _teammates = teammates;
+        _ballThrower = ballThrower;
+        
+        _rotator = new Rotator();
+    }
+
+    public void Initialize(IStateSwitcher stateSwitcher)
+    {
+        StateSwitcher = stateSwitcher;
+    }
+
+    public virtual void Enter()
+    {
+        Rigidbody.isKinematic = true;
+        CollisionHandler.enabled = false;
+        Collider.enabled = false;
+
+        Entity target = _targetScanner.Scan(_teammates);
+        _targetProvider.SelectTarget(target);
+
+        _animatorController.Idle();
+    }
+
+    public virtual void Exit()
+    {
+        Rigidbody.isKinematic = false;
+        CollisionHandler.enabled = true;
+        Collider.enabled = true;
+    }
+
+    public virtual void Update()
+    {
+        if (_targetProvider.Target != null)
+        {
+            _rotator.RotateToTarget(_targetProvider.Target.transform, _entity.transform);
+        }
+    }
+    
+    protected void StartAttack()
+    {
+        _animatorController.PrepareAttack();
+        _ballThrower.StartCharging();
+    }
+
+    protected async void ThrowBall()
+    {
+        Ball ball = _ballHolder.LostBall();
+        _ballThrower.StopCharging();
+        _ballThrower.Throw(ball);
+
+        await _animatorController.Attack();
+    }
+}

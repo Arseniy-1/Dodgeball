@@ -1,76 +1,18 @@
-﻿using System;
-using UniRx;
-using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-public class PlayerPrepareState : IState
+public class PlayerPrepareState : EntityPrepareState
 {
-    private readonly Player _player;
-    private readonly AnimatorController _animatorController;
-    private readonly TargetScanner _targetScanner;
-    private readonly TargetProvider _targetProvider;
-    private readonly List<Entity> _teammates;
-    private CompositeDisposable _disposable;
-
-    private IStateSwitcher _stateSwitcher;
-
-    private IDisposable _movementLoopDisposable;
-
-    public PlayerPrepareState(Player player, AnimatorController animatorController, TargetScanner targetScanner,
+    public PlayerPrepareState(
+        Player player,
+        AnimatorController animatorController,
+        TargetScanner targetScanner,
         List<Entity> teammates)
-    {
-        _player = player;
-        _animatorController = animatorController;
-        _targetScanner = targetScanner;
-        _teammates = teammates;;
-    }
-
-    public void Initialize(IStateSwitcher stateSwitcher)
-    {
-        _stateSwitcher = stateSwitcher;
-    }
-
-    public void Enter()
-    {
-        _disposable = new CompositeDisposable();
-
-        MessageBrokerHolder.GameActions
-            .Receive<M_GameStarted>()
-            .Subscribe(message => HandleStartGame())
-            .AddTo(_disposable);
-
-        _animatorController.PrepareToBattle();
-        LookToTarget();
-    }
-
-    public void Exit()
-    {
-        _disposable.Dispose();
-    }
-
-    public void Update()
+        : base(player, animatorController, targetScanner, teammates)
     {
     }
 
-    private void LookToTarget()
+    protected override void HandleStartGame()
     {
-        Entity target = _targetScanner.Scan(_teammates);
-
-        if (target == null)
-            return;
-
-        Vector3 direction = target.transform.position - _player.transform.position;
-        direction.y = 0f;
-
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
-            _player.transform.rotation = targetRotation;
-        }
-    }
-
-    private void HandleStartGame()
-    {
-        _stateSwitcher.SwitchState<PlayerIdleState>();
+        StateSwitcher.SwitchState<PlayerIdleState>();
     }
 }

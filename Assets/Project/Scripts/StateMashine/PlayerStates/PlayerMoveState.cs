@@ -1,127 +1,46 @@
-﻿using UniRx;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
 
-public class PlayerMoveState : IState
+public class PlayerMoveState : EntityMoveState
 {
     private readonly Player _player;
-    private readonly AnimatorController _animatorController;
     private readonly List<Entity> _teammates;
-    private readonly PlayerStats _playerStats;
-    private readonly CollisionHandler _collisionHandler;
-    private readonly Collider _squadZone;
-    private readonly BallHolder _ballHolder;
-    private readonly Ball _ball;
-    private readonly Collider _collider;
-    private CompositeDisposable _disposable;
+    private readonly PlayerStats _stats;
 
-    private IStateSwitcher _stateSwitcher;
-
-    private Coroutine _moveRoutine;
-
-    public PlayerMoveState(Player player, AnimatorController animatorController, List<Entity> teammates, PlayerStats stats, CollisionHandler collisionHandler,
-        Collider squadZone,
+    public PlayerMoveState(Player player, AnimatorController animatorController, List<Entity> teammates,
+        PlayerStats stats, CollisionHandler collisionHandler, Collider squadZone,
         BallHolder ballHolder, Ball ball, Collider collider)
+        : base(player, animatorController, collisionHandler, squadZone, ballHolder, ball, collider)
     {
         _player = player;
-        _animatorController = animatorController;
         _teammates = teammates;
-        _playerStats = stats;
-        _collisionHandler = collisionHandler;
-        _squadZone = squadZone;
-        _ballHolder = ballHolder;
-        _ball = ball;
-        _collider = collider;
+        _stats = stats;
     }
 
-    public void Initialize(IStateSwitcher stateSwitcher)
+    protected override float GetRotationSpeed() => _stats.RotationSpeed;
+    protected override float GetMoveSpeed() => _stats.RunSpeed;
+
+    protected override void OnBallDetected(Ball ball)
     {
-        _stateSwitcher = stateSwitcher;
+        BallHolder.EquipBall(ball);
+        StateSwitcher.SwitchState<PlayerAttackState>();
     }
 
-    public void Enter()
+    protected override void HandleBallZoneChanged(Collider zone)
     {
-        _disposable = new CompositeDisposable();
-        _collisionHandler.BallDetected += OnBallDetected;
-
-        MessageBrokerHolder.GameActions.Receive<M_BallTaken>().Subscribe(message => HandleBallTaken(message.Entity))
-            .AddTo(_disposable);
-
-        MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>()
-            .Subscribe(message => HandleBallZoneChanged(message.Zone))
-            .AddTo(_disposable);
-
-        _collisionHandler.enabled = true;
-        _collider.enabled = true;
-        
-        _animatorController.Run();
+        if (zone != SquadZone)
+            StateSwitcher.SwitchState<PlayerDodgeState>();
     }
 
-    public void Exit()
-    {
-        _collisionHandler.BallDetected -= OnBallDetected; 
-        _disposable.Dispose();
-    }
-
-    public void Update()
-    {
-        if(_ball == null)
-            return;
-        
-        LookToBall();
-        MoveToBall();
-    }
-
-    private void LookToBall()
-    {
-        Vector3 direction = (_ball.transform.position - _player.transform.position);
-        direction.y = 0;
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
-            _player.transform.rotation = Quaternion.RotateTowards(
-                _player.transform.rotation,
-                targetRotation,
-                _playerStats.RotationSpeed * Time.deltaTime
-            );
-        }
-    }
-
-    private void MoveToBall()
-    {
-        _player.transform.position = Vector3.MoveTowards(
-            _player.transform.position,
-            _ball.transform.position,
-            _playerStats.RunSpeed * Time.deltaTime
-        );
-    }
-
-    private void OnBallDetected(Ball ball)
-    {
-        _ballHolder.EquipBall(ball);
-        _stateSwitcher.SwitchState<PlayerAttackState>();
-    }
-
-    private void HandleBallZoneChanged(Collider zone)
-    {
-        if (zone != _squadZone)
-        {
-            _stateSwitcher.SwitchState<PlayerDodgeState>();
-        }
-    }
-
-    private void HandleBallTaken(Entity entity)
+    protected override void HandleBallTaken(Entity entity)
     {
         if (_teammates.Contains(entity) == false)
         {
-            _stateSwitcher.SwitchState<PlayerDodgeState>();
+            StateSwitcher.SwitchState<PlayerDodgeState>();
         }
-        else
+        else if (entity != _player)
         {
-            if (entity != _player)
-            {
-                _stateSwitcher.SwitchState<PlayerIdleState>();
-            }
+            StateSwitcher.SwitchState<PlayerIdleState>();
         }
     }
 }

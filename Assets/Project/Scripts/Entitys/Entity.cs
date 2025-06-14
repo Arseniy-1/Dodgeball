@@ -49,8 +49,8 @@ public abstract class Entity : MonoBehaviour
         SquadZone = squadZone;
         Health.Initialize(CollisionHandler);
         Ball = ball;
-        
-        if(Animator != null)
+
+        if (Animator != null)
             AnimatorController = new AnimatorController(Animator);
     }
 
@@ -69,13 +69,15 @@ public abstract class Entity : MonoBehaviour
         CurrentState = StateMaсhine._currentState.ToString();
 
         CurrentStates.Clear();
-        for (int i = 0; i < StateMaсhine._states.Count; i++)
-            CurrentStates.Add(StateMaсhine._states[i].ToString());
+        
+        foreach (var state in StateMaсhine._states.Values)
+            CurrentStates.Add(state.ToString());
     }
 
     [Button]
     public virtual void Die()
     {
         StateMaсhine.Dispose();
+        AnimatorController.Dispose();
     }
 }
