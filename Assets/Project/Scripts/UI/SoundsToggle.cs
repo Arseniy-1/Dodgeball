@@ -2,17 +2,14 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-
-public class SoundsToggle : SettingToggle
+public class SoundsToggle : AudioToggle
 {
-    [SerializeField] private AudioMixerGroup _audioMixer;
-    
     protected override bool IsEnabled()
     {
         return YandexGame.savesData.IsSoundsEnabled;
     }
 
-    protected override void EnableSetting()
+    protected override void Toggle()
     {
         YandexGame.savesData.IsSoundsEnabled = !YandexGame.savesData.IsSoundsEnabled;
     }

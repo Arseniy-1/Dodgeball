@@ -9,7 +9,7 @@ public abstract class SettingToggle : ButtonHandler
 
     [SerializeField] private Image _view;
 
-    private void Start()
+    public virtual void Initialize()
     {
         UpdateView();
     }
@@ -28,13 +28,15 @@ public abstract class SettingToggle : ButtonHandler
 
     protected override void HandleButtonClick()
     {
-        EnableSetting();
+        Toggle();
         YandexGame.SaveProgress();
+        EnableSetting();
 
         UpdateView();
     }
 
     protected abstract bool IsEnabled();
-    
+    protected abstract void Toggle();
+
     protected abstract void EnableSetting();
 }

@@ -1,37 +1,14 @@
-﻿using UnityEngine;
-using UnityEngine.Audio;
-using YG;
+﻿using YG;
 
-public class MusicToggle : SettingToggle
+public class MusicToggle : AudioToggle
 {
-    [SerializeField] private AudioMixerGroup _audioMixer;
-    
-    private float _minlVolume = -80;
-    private float _maxlVolume = 20;
-    
     protected override bool IsEnabled()
     {
         return YandexGame.savesData.IsMusicEnabled;
     }
 
-    protected override void EnableSetting()
+    protected override void Toggle()
     {
-        float currentVolume;
-
-        if (IsEnabled())
-            currentVolume = _maxlVolume;
-        else
-            currentVolume = _minlVolume;
-        
-        _audioMixer.audioMixer.SetFloat(_audioMixer.name, Mathf.Log10(currentVolume) * 40);
         YandexGame.savesData.IsMusicEnabled = !YandexGame.savesData.IsMusicEnabled;
-    }
-}
-
-public abstract class AudioToggle : SettingToggle
-{
-    protected override void EnableSetting()
-    {
-        
     }
 }
