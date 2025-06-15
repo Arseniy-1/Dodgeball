@@ -1,5 +1,5 @@
 {
-  "idSave": 238,
+  "idSave": 256,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -11,5 +11,6 @@
     false
   ],
   "IsSoundsEnabled": true,
-  "IsMusicEnabled": true
+  "IsMusicEnabled": true,
+  "IsCameraShakeEnabled": true
 }

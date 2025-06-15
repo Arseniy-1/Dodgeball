@@ -11,10 +11,10 @@ public abstract class AudioToggle : SettingToggle
     public override void Initialize()
     {
         base.Initialize();
-        EnableSetting();
+        EnableVolume();
     }
     
-    protected override void EnableSetting()
+    protected void EnableVolume()
     {
         float currentVolume;
 

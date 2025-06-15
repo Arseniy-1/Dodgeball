@@ -30,12 +30,9 @@ public abstract class SettingToggle : ButtonHandler
     {
         Toggle();
         YandexGame.SaveProgress();
-        EnableSetting();
-
         UpdateView();
     }
 
     protected abstract bool IsEnabled();
     protected abstract void Toggle();
-    protected abstract void EnableSetting();
 }

@@ -19,6 +19,7 @@
 
         public bool IsSoundsEnabled = true;
         public bool IsMusicEnabled = true;
+        public bool IsCameraShakeEnabled = true;
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 
