@@ -37,6 +37,5 @@ public abstract class SettingToggle : ButtonHandler
 
     protected abstract bool IsEnabled();
     protected abstract void Toggle();
-
     protected abstract void EnableSetting();
 }

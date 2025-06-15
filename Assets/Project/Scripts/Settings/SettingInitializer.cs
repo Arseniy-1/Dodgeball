@@ -6,7 +6,7 @@ public class SettingsInitializer : MonoBehaviour
 {
     [SerializeField] private List<SettingToggle> _settingToggles;
 
-    private void Start()
+    private void Start() 
     {
         YandexGame.LoadProgress();
         YandexGame.SwitchLanguage(YandexGame.savesData.language);
