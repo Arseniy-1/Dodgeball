@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using System.Threading;
@@ -18,7 +19,7 @@ public class Arena : MonoBehaviour
     [SerializeField] private float _minInactiveInterval;
     [SerializeField] private float _maxInactiveInterval;
     
-    private int _deathCount = 0;
+    private List<Squad> _deathSquads;
     private CancellationTokenSource _cancellationTokenSource;
 
     public List<Squad> Squads => _squads;
@@ -28,6 +29,7 @@ public class Arena : MonoBehaviour
     private void Awake()
     {
         _cancellationTokenSource = new CancellationTokenSource();
+        _deathSquads = new List<Squad>();
     }
     
     private void OnDestroy()
@@ -56,16 +58,20 @@ public class Arena : MonoBehaviour
     {
         squad.LostPlayers -= HandleEnemySquadDeath;
         
-        _deathCount++;
+        _deathSquads.Add(squad);
 
-        if (_deathCount == _squads.Count - 1)
+        if (_deathSquads.Count == _squads.Count - 1)
+        {
+            NotifyWinner();
             GameOver?.Invoke();
+        }
     }
 
     private void HandlePlayerSquadDeath(Squad squad)
     {
         squad.LostPlayers -= HandlePlayerSquadDeath;
-        
+
+        NotifyWinner();
         GameOver?.Invoke();
     }
     
@@ -96,5 +102,15 @@ public class Arena : MonoBehaviour
         selectedFrame.Activate(_ballUpgraders[Random.Range(0, _ballUpgraders.Count)]);
 
         await tcs.Task;
+    }
+    
+    private void NotifyWinner()
+    {
+        var winners = _squads.Except(_deathSquads);
+
+        foreach (var squad in winners)
+        {
+            squad.Selebrate();
+        }
     }
 }

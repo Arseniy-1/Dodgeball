@@ -111,7 +111,7 @@ public class CompositionRoot : MonoBehaviour
     {
         _arenaInstance.GameOver -= HandleGameOverWrapper;
 
-        float waitTime = 2f;
+        float waitTime = 200f;
         await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
 
         _rankHolder.IncreaseRank();

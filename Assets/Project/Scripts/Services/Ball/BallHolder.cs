@@ -7,7 +7,6 @@ public class BallHolder : MonoBehaviour
 
     public Ball LostBall()
     {
-        
         if (_ball != null)
         {
             _ball.transform.parent = null;

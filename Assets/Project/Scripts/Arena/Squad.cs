@@ -40,6 +40,14 @@ public class Squad : MonoBehaviour
         }
     }
 
+    public void Selebrate()
+    {
+        foreach (var entity in _entities)
+        {
+            entity.Selebrate();
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Ball ball))

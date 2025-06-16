@@ -32,7 +32,11 @@ public class AnimatorController
     
     private List<int> _selebrates = new List<int>
     {
-        Animator.StringToHash(Constans.Animation.Selebrate),
+        Animator.StringToHash(Constans.Animation.SelebrateVictory),
+        Animator.StringToHash(Constans.Animation.SelebrateTwistDance),
+        Animator.StringToHash(Constans.Animation.SelebrateSillyDance),
+        Animator.StringToHash(Constans.Animation.SelebrateShufflingDance),
+        Animator.StringToHash(Constans.Animation.SelebrateHipHopDance),
     };
 
     public AnimatorController(Animator animator)

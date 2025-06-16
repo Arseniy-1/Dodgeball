@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : Entity, IDestoyable<Player>
@@ -28,6 +29,7 @@ public class Player : Entity, IDestoyable<Player>
         _playerStates = new List<IState>
         {
             new PlayerPrepareState(this, AnimatorController, TargetScanner, Teammates),
+            new PlayerSelebrateState(this, AnimatorController, Teammates),
             new PlayerIdleState(this,AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats),
             new PlayerMoveState(this, AnimatorController, Teammates, _playerStats, CollisionHandler, SquadZone, BallHolder, Ball, Collider),
             new PlayerDodgeState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _playerStats, _inputController),
@@ -45,7 +47,8 @@ public class Player : Entity, IDestoyable<Player>
 
     public override void Selebrate()
     {
-        
+        StateMaсhine.SwitchState<PlayerSelebrateState>();
+        BallHolder.LostBall();
     }
 
     [Button]

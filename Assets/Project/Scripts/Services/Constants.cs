@@ -18,6 +18,10 @@
         public const string PrepareToFightPassiveStance = nameof(PrepareToFightPassiveStance);
         public const string PrepareToFightWarmingUp = nameof(PrepareToFightWarmingUp);
         
-        public const string Selebrate = nameof(Selebrate);
+        public const string SelebrateVictory = nameof(SelebrateVictory);
+        public const string SelebrateTwistDance = nameof(SelebrateTwistDance);
+        public const string SelebrateSillyDance = nameof(SelebrateSillyDance);
+        public const string SelebrateShufflingDance = nameof(SelebrateShufflingDance);
+        public const string SelebrateHipHopDance = nameof(SelebrateHipHopDance);
     }
 }
