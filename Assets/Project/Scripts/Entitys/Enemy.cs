@@ -40,6 +40,10 @@ public class Enemy : Entity, IDestoyable<Enemy>
         Reset();
     }
 
+    public override void Selebrate()
+    {
+    }
+
     [Button]
     public  override void Die()
     {

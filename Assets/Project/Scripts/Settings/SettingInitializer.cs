@@ -8,9 +8,6 @@ public class SettingsInitializer : MonoBehaviour
 
     private void Start() 
     {
-        YandexGame.LoadProgress();
-        YandexGame.SwitchLanguage(YandexGame.savesData.language);
-        
         foreach (var toggle in _settingToggles)
             toggle.Initialize();
     }

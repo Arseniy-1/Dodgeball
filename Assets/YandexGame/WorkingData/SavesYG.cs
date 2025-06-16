@@ -21,6 +21,10 @@
         public bool IsMusicEnabled = true;
         public bool IsCameraShakeEnabled = true;
 
+        public int CurrentRank = 0;
+        public int CurrentRankAmount = 0;
+        public int PreviousRankAmount = 0;
+
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerDodgeState : EntityDodgeState<Player>
+public class PlayerDodgeState : EntityDodgeState
 {
     private readonly PlayerStats _playerStats;
     private readonly PlayerInputController _playerInputController;

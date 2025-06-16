@@ -17,5 +17,7 @@
         public const string PrepareToFightActiveStance = nameof(PrepareToFightActiveStance);
         public const string PrepareToFightPassiveStance = nameof(PrepareToFightPassiveStance);
         public const string PrepareToFightWarmingUp = nameof(PrepareToFightWarmingUp);
+        
+        public const string Selebrate = nameof(Selebrate);
     }
 }

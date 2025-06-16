@@ -3,9 +3,9 @@ using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public abstract class EntityDodgeState<T> : IState where T : Entity
+public abstract class EntityDodgeState : IState
 {
-    private readonly T _entity;
+    private readonly Entity _entity;
     private readonly AnimatorController _animatorController;
     private readonly Ball _ball;
     private readonly Mover _mover;
@@ -20,7 +20,7 @@ public abstract class EntityDodgeState<T> : IState where T : Entity
     protected IStateSwitcher StateSwitcher;
     protected CompositeDisposable Disposable;
 
-    protected EntityDodgeState(T entity, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, Rigidbody rigidbody)
+    protected EntityDodgeState(Entity entity, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, Rigidbody rigidbody)
     {
         _entity = entity;
         _animatorController = animatorController;
@@ -63,7 +63,6 @@ public abstract class EntityDodgeState<T> : IState where T : Entity
     }
 
     protected abstract float GetRotationSpeed();
-
     protected abstract float GetMinDirectionChangeTime();
     protected abstract float GetMaxDirectionChangeTime();
     protected abstract float GetDodgeSpeed();

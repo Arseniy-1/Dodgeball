@@ -29,6 +29,11 @@ public class AnimatorController
         Animator.StringToHash(Constans.Animation.PrepareToFightPassiveStance),
         Animator.StringToHash(Constans.Animation.PrepareToFightWarmingUp),
     };
+    
+    private List<int> _selebrates = new List<int>
+    {
+        Animator.StringToHash(Constans.Animation.Selebrate),
+    };
 
     public AnimatorController(Animator animator)
     {
@@ -50,6 +55,13 @@ public class AnimatorController
     public void Idle() => _animator.Play(_idle);
     public void DodgeIdle() => _animator.Play(_dodgeIdle);
 
+    public void Selebrate()
+    {
+        int randomSelebrate = _selebrates[Random.Range(0, _selebrates.Count)];
+
+        _animator.Play(randomSelebrate);
+    }
+    
     public void PrepareToBattle()
     {
         int randomPrepare = _prepares[Random.Range(0, _prepares.Count)];

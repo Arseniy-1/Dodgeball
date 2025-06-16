@@ -43,6 +43,11 @@ public class Player : Entity, IDestoyable<Player>
         Reset();
     }
 
+    public override void Selebrate()
+    {
+        
+    }
+
     [Button]
     public  override void Die()
     {

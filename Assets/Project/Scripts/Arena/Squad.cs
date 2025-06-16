@@ -12,7 +12,7 @@ public class Squad : MonoBehaviour
     public List<Transform> SpawnPoints => _spawnPoints;
     public Collider SquadZone => _squadZone;
 
-    private Collider _squadZone;
+    [SerializeField] private Collider _squadZone;
 
     public event Action<Squad> LostPlayers;
     

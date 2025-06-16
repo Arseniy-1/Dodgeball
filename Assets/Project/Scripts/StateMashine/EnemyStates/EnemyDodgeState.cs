@@ -3,7 +3,7 @@ using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemyDodgeState : EntityDodgeState<Enemy>
+public class EnemyDodgeState : EntityDodgeState
 {
     private readonly EnemyStats _enemyStats;
     private IDisposable _jumpLoopDisposable;

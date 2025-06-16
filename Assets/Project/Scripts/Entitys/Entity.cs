@@ -73,6 +73,8 @@ public abstract class Entity : MonoBehaviour
             CurrentStates.Add(state.ToString());
     }
 
+    public abstract void Selebrate();
+    
     [Button]
     public virtual void Die()
     {

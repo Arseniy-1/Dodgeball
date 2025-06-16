@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
+using YG;
+using System;
+using Cysharp.Threading.Tasks;
 
 public class CompositionRoot : MonoBehaviour
 {
@@ -9,8 +12,10 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private Ball _ballPrefab;
     [SerializeField] private StartGameCanvas _startGameCanvas;
-    [SerializeField] private StartGameCanvas _endGameCanvas;
+    [SerializeField] private RankViewCanvas _rankViewCanvas;
 
+    private RankHolder _rankHolder;
+    
     private Ball _ballInstance;
 
     private PlayerSpawner _playerSpawner;
@@ -20,6 +25,13 @@ public class CompositionRoot : MonoBehaviour
 
     private void Awake()
     {
+        YandexGame.LoadProgress();
+        YandexGame.SwitchLanguage(YandexGame.savesData.language);
+        
+        _rankHolder = new RankHolder();
+        _rankHolder.Initialize();
+        _rankViewCanvas.Initialize(_rankHolder);
+
         _playerSpawner = new PlayerSpawner(_playerPrefab);
 
         for (int i = 0; i < _enemyPrefabs.Count; i++)
@@ -32,11 +44,13 @@ public class CompositionRoot : MonoBehaviour
     private void OnEnable()
     {
         _startGameCanvas.OnStartGameButtonPressed += StartGame;
+        _rankViewCanvas.OnRewardViewClosed += HandleRankCanvasClose;
     }
 
     private void OnDisable()
     {
         _startGameCanvas.OnStartGameButtonPressed -= StartGame;
+        _rankViewCanvas.OnRewardViewClosed -= HandleRankCanvasClose;
     }
 
     private void Start()
@@ -53,12 +67,7 @@ public class CompositionRoot : MonoBehaviour
 
         MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
     }
-
-    private void HandleEndGame()
-    {
-        _endGameCanvas.gameObject.SetActive(true);
-    }
-
+    
     private void CreateMap()
     {
         if (_arenaInstance != null)
@@ -90,16 +99,33 @@ public class CompositionRoot : MonoBehaviour
                 FillEnemySquad(_enemySpawners[Random.Range(0, _enemySpawners.Count)], _arenaInstance.Squads[i]);
         }
 
-        _arenaInstance.GameOver += HandleGameOver;
+        _arenaInstance.GameOver += HandleGameOverWrapper;
     }
 
-    private void HandleGameOver()
+    private void HandleGameOverWrapper()
     {
-        _arenaInstance.GameOver -= HandleGameOver;
+        HandleGameOver().Forget();
+    }
+    
+    private async UniTaskVoid HandleGameOver()
+    {
+        _arenaInstance.GameOver -= HandleGameOverWrapper;
 
+        float waitTime = 2f;
+        await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
+
+        _rankHolder.IncreaseRank();
+        _rankViewCanvas.gameObject.SetActive(true);
+        _rankViewCanvas.ShowResults();
+    }
+
+
+    private void HandleRankCanvasClose()
+    {
         ClearEntities();
-
         CreateMap();
+        _rankViewCanvas.gameObject.SetActive(false);
+        _startGameCanvas.gameObject.SetActive(true);
     }
 
     private void ClearEntities()
