@@ -38,6 +38,13 @@ public class AnimatorController
         Animator.StringToHash(Constans.Animation.SelebrateShufflingDance),
         Animator.StringToHash(Constans.Animation.SelebrateHipHopDance),
     };
+    
+    private List<int> _death = new List<int>
+    {
+        Animator.StringToHash(Constans.Animation.DeathFall),
+        Animator.StringToHash(Constans.Animation.DeathFallBack),
+        Animator.StringToHash(Constans.Animation.DeathSlowlyFallBack),
+    };
 
     public AnimatorController(Animator animator)
     {
@@ -71,6 +78,13 @@ public class AnimatorController
         int randomPrepare = _prepares[Random.Range(0, _prepares.Count)];
 
         _animator.Play(randomPrepare);
+    }
+    
+    public UniTask Death()
+    {
+        int randomDeath = _death[Random.Range(0, _death.Count)];
+
+        return PlayAndWait(randomDeath);
     }
     
     public UniTask Dodge()

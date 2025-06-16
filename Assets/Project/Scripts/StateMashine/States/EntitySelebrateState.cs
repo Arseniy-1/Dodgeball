@@ -49,6 +49,6 @@ public abstract class EntitySelebrateState : IState
             return otherTeammates[randomIndex].transform;
         }
 
-        return Camera.current?.transform;
+        return Camera.main?.transform;
     }
 }

@@ -23,5 +23,9 @@
         public const string SelebrateSillyDance = nameof(SelebrateSillyDance);
         public const string SelebrateShufflingDance = nameof(SelebrateShufflingDance);
         public const string SelebrateHipHopDance = nameof(SelebrateHipHopDance);
+        
+        public const string DeathFall = nameof(DeathFall);
+        public const string DeathFallBack = nameof(DeathFallBack);
+        public const string DeathSlowlyFallBack = nameof(DeathSlowlyFallBack);
     }
 }

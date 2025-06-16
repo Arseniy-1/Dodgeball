@@ -2,6 +2,7 @@ using UniRx;
 using UnityEngine;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine.Serialization;
 
@@ -80,5 +81,23 @@ public abstract class Entity : MonoBehaviour
     {
         StateMaсhine.Dispose();
         AnimatorController.Dispose();
+    }
+    
+    protected async UniTask HideEntity()
+    {
+        float duration = 1.5f;
+        float elapsed = 0f;
+        Vector3 start = transform.position;
+        Vector3 target = start + Vector3.down * 2f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            transform.position = Vector3.Lerp(start, target, t);
+            await UniTask.Yield();
+        }
+
+        transform.position = target;
     }
 }

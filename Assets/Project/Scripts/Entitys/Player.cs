@@ -52,8 +52,11 @@ public class Player : Entity, IDestoyable<Player>
     }
 
     [Button]
-    public  override void Die()
+    public override async void Die()
     {
+        await AnimatorController.Death();
+        await HideEntity();
+        
         base.Die();
         OnDestroyed?.Invoke(this);
     }

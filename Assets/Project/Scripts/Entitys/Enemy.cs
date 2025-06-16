@@ -47,8 +47,10 @@ public class Enemy : Entity, IDestoyable<Enemy>
     }
 
     [Button]
-    public  override void Die()
+    public override async void Die()
     {
+        await AnimatorController.Death();
+        
         base.Die();
         OnDestroyed?.Invoke(this);
     }
