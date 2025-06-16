@@ -3,7 +3,6 @@
 public abstract class EntityJumpState : IState
 {
     private readonly AnimatorController _animatorController;
-    private readonly GroundChecker _groundChecker;
     private readonly CollisionHandler _collisionHandler;
     private readonly Collider _collider;
 
@@ -16,7 +15,6 @@ public abstract class EntityJumpState : IState
         Collider collider)
     {
         _animatorController = animatorController;
-        _groundChecker = groundChecker;
         _collisionHandler = collisionHandler;
         _collider = collider;
     }

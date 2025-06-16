@@ -12,6 +12,7 @@ public abstract class EntityDodgeState : IState
     private readonly Rigidbody _rigidbody;
     private readonly AreaPointSelector _areaPointSelector;
     private readonly Rotator _rotator;
+    private readonly EntityStats _entityStats;
 
     protected readonly Collider SquadZone;
 
@@ -20,7 +21,7 @@ public abstract class EntityDodgeState : IState
     protected IStateSwitcher StateSwitcher;
     protected CompositeDisposable Disposable;
 
-    protected EntityDodgeState(Entity entity, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, Rigidbody rigidbody)
+    protected EntityDodgeState(Entity entity, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, Rigidbody rigidbody, EntityStats entityStats)
     {
         _entity = entity;
         _animatorController = animatorController;
@@ -28,6 +29,7 @@ public abstract class EntityDodgeState : IState
         _mover = mover;
         SquadZone = squadZone;
         _rigidbody = rigidbody;
+        _entityStats = entityStats;
         _areaPointSelector = new AreaPointSelector();
         _rotator = new Rotator();
     }
@@ -59,13 +61,8 @@ public abstract class EntityDodgeState : IState
     public virtual void Update()
     {
         if (_ball != null)
-            _rotator.RotateToTarget(_ball.transform, _entity.transform, GetRotationSpeed());
+            _rotator.RotateToTarget(_ball.transform, _entity.transform, _entityStats.RotationSpeed);
     }
-
-    protected abstract float GetRotationSpeed();
-    protected abstract float GetMinDirectionChangeTime();
-    protected abstract float GetMaxDirectionChangeTime();
-    protected abstract float GetDodgeSpeed();
 
     protected abstract void HandleBallZoneChanged(Collider zone);
 
@@ -80,10 +77,10 @@ public abstract class EntityDodgeState : IState
     {
         while (true)
         {
-            float standTime = Random.Range(GetMinDirectionChangeTime(), GetMaxDirectionChangeTime());
+            float standTime = Random.Range(_entityStats.DodgeDirectionChangeMinTime, _entityStats.DodgeDirectionChangeMaxTime);
             Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
             _animatorController.DodgeIdle();
-            yield return _mover.MoveTo(target, GetDodgeSpeed());
+            yield return _mover.MoveTo(target, _entityStats.DodgeSpeed);
             _animatorController.Idle();
             yield return new WaitForSeconds(standTime);
         }

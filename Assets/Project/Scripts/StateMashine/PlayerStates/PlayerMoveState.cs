@@ -5,20 +5,15 @@ public class PlayerMoveState : EntityMoveState
 {
     private readonly Player _player;
     private readonly List<Entity> _teammates;
-    private readonly PlayerStats _stats;
 
     public PlayerMoveState(Player player, AnimatorController animatorController, List<Entity> teammates,
-        PlayerStats stats, CollisionHandler collisionHandler, Collider squadZone,
+        PlayerStats playerStats, CollisionHandler collisionHandler, Collider squadZone,
         BallHolder ballHolder, Ball ball, Collider collider)
-        : base(player, animatorController, collisionHandler, squadZone, ballHolder, ball, collider)
+        : base(player, animatorController, collisionHandler, squadZone, ballHolder, ball, collider, playerStats)
     {
         _player = player;
         _teammates = teammates;
-        _stats = stats;
     }
-
-    protected override float GetRotationSpeed() => _stats.RotationSpeed;
-    protected override float GetMoveSpeed() => _stats.RunSpeed;
 
     protected override void OnBallDetected(Ball ball)
     {

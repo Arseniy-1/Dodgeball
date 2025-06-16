@@ -2,8 +2,6 @@
 
 public class Rotator
 {
-    private const int _instantRotationSpeed = 1000;
-    
     public void RotateToTarget(Transform target, Transform holder, float rotationSpeed)
     {
         Vector3 direction = (target.transform.position - holder.transform.position);

@@ -9,6 +9,8 @@ public abstract class EntityMoveState : IState
     private readonly Ball _ball;
     private readonly Collider _collider;
     private readonly Rotator _rotator;
+    private readonly EntityStats _entityStats;
+    
     private CompositeDisposable _disposable;
     
     protected readonly BallHolder BallHolder;
@@ -17,7 +19,7 @@ public abstract class EntityMoveState : IState
     protected IStateSwitcher StateSwitcher;
 
     protected EntityMoveState(Entity entity, AnimatorController animatorController, CollisionHandler collisionHandler,
-        Collider squadZone, BallHolder ballHolder, Ball ball, Collider collider)
+        Collider squadZone, BallHolder ballHolder, Ball ball, Collider collider, EntityStats entityStats)
     {
         _entity = entity;
         _animatorController = animatorController;
@@ -26,6 +28,7 @@ public abstract class EntityMoveState : IState
         BallHolder = ballHolder;
         _ball = ball;
         _collider = collider;
+        _entityStats = entityStats;
         _rotator = new Rotator();
     }
 
@@ -63,7 +66,7 @@ public abstract class EntityMoveState : IState
         if (_ball == null) 
             return;
 
-        _rotator.RotateToTarget(_ball.transform, _entity.transform, GetRotationSpeed());
+        _rotator.RotateToTarget(_ball.transform, _entity.transform, _entityStats.RotationSpeed);
         MoveToBall();
     }
 
@@ -72,12 +75,10 @@ public abstract class EntityMoveState : IState
         _entity.transform.position = Vector3.MoveTowards(
             _entity.transform.position,
             _ball.transform.position,
-            GetMoveSpeed() * Time.deltaTime
+            _entityStats.RunSpeed * Time.deltaTime
         );
     }
-
-    protected abstract float GetRotationSpeed();
-    protected abstract float GetMoveSpeed();
+    
     protected abstract void OnBallDetected(Ball ball);
     protected abstract void HandleBallZoneChanged(Collider zone);
     protected abstract void HandleBallTaken(Entity entity);

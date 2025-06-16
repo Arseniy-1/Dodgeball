@@ -13,6 +13,7 @@ public abstract class EntityIdleState : IState
     private readonly Rigidbody _rigidbody;
     private readonly AreaPointSelector _areaPointSelector;
     private readonly Rotator _rotator;
+    private readonly EntityStats _entityStats;
 
     private CompositeDisposable _disposable;
     private IDisposable _movementLoopDisposable;
@@ -22,13 +23,9 @@ public abstract class EntityIdleState : IState
     protected IStateSwitcher StateSwitcher;
     
     protected EntityIdleState(
-        AnimatorController animatorController,
-        Ball ball,
-        Mover mover,
-        CollisionHandler collisionHandler,
-        Collider squadZone,
-        Collider collider,
-        Rigidbody rigidbody)
+        AnimatorController animatorController, Ball ball, Mover mover,
+        CollisionHandler collisionHandler, Collider squadZone, 
+        Collider collider, Rigidbody rigidbody, EntityStats entityStats)
     {
         _animatorController = animatorController;
         _ball = ball;
@@ -37,6 +34,7 @@ public abstract class EntityIdleState : IState
         SquadZone = squadZone;
         _collider = collider;
         _rigidbody = rigidbody;
+        _entityStats = entityStats;
         _areaPointSelector = new AreaPointSelector();
         _rotator = new Rotator();
     }
@@ -74,12 +72,7 @@ public abstract class EntityIdleState : IState
         _mover.Stop();
         _movementLoopDisposable?.Dispose();
     }
-
-    protected abstract float IdleMinStandTime { get; }
-    protected abstract float IdleMaxStandTime { get; }
-    protected abstract float WalkSpeed { get; }
-    protected abstract float RotationSpeed { get; }
-
+    
     private void StartIdleMovementLoop()
     {
         _movementLoopDisposable = Observable.FromCoroutine(IdleMovementLoop)
@@ -91,11 +84,11 @@ public abstract class EntityIdleState : IState
     {
         while (true)
         {
-            float standTime = Random.Range(IdleMinStandTime, IdleMaxStandTime);
+            float standTime = Random.Range(_entityStats.IdleMinStandTime, _entityStats.IdleMaxStandTime);
 
             Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, GetTransform().position);
             _animatorController.DodgeIdle();
-            yield return _mover.MoveTo(target, WalkSpeed);
+            yield return _mover.MoveTo(target, _entityStats.WalkSpeed);
             _animatorController.Idle();
             yield return new WaitForSeconds(standTime);
         }

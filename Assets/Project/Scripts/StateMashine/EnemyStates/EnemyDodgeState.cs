@@ -10,7 +10,7 @@ public class EnemyDodgeState : EntityDodgeState
 
     public EnemyDodgeState(Enemy enemy, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, 
         Rigidbody rigidbody, EnemyStats enemyStats)
-        : base(enemy, animatorController, ball, mover, squadZone, rigidbody)
+        : base(enemy, animatorController, ball, mover, squadZone, rigidbody, enemyStats)
     {
         _enemyStats = enemyStats;
     }
@@ -49,9 +49,4 @@ public class EnemyDodgeState : EntityDodgeState
         if (zone == SquadZone)
             StateSwitcher.SwitchState<EnemyMoveState>();
     }
-
-    protected override float GetRotationSpeed() => _enemyStats.RotationSpeed;
-    protected override float GetMinDirectionChangeTime() => _enemyStats.DodgeDirectionChangeMinTime;
-    protected override float GetMaxDirectionChangeTime() => _enemyStats.DodgeDirectionChangeMaxTime;
-    protected override float GetDodgeSpeed() => _enemyStats.DodgeSpeed;
 }

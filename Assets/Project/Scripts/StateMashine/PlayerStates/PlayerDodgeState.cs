@@ -2,14 +2,12 @@ using UnityEngine;
 
 public class PlayerDodgeState : EntityDodgeState
 {
-    private readonly PlayerStats _playerStats;
     private readonly PlayerInputController _playerInputController;
 
     public PlayerDodgeState(Player player, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, 
         Rigidbody rigidbody, PlayerStats playerStats, PlayerInputController playerInputController)
-        : base(player, animatorController, ball, mover, squadZone, rigidbody)
+        : base(player, animatorController, ball, mover, squadZone, rigidbody, playerStats)
     {
-        _playerStats = playerStats;
         _playerInputController = playerInputController;
     }
 
@@ -32,9 +30,4 @@ public class PlayerDodgeState : EntityDodgeState
         if (zone == SquadZone)
             StateSwitcher.SwitchState<PlayerMoveState>();
     }
-
-    protected override float GetRotationSpeed() => _playerStats.RotationSpeed;
-    protected override float GetMinDirectionChangeTime() => _playerStats.DodgeDirectionChangeMinTime;
-    protected override float GetMaxDirectionChangeTime() => _playerStats.DodgeDirectionChangeMaxTime;
-    protected override float GetDodgeSpeed() => _playerStats.DodgeSpeed;
 }

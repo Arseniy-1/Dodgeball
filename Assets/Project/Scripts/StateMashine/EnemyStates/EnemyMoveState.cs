@@ -3,19 +3,14 @@ using UnityEngine;
 public class EnemyMoveState : EntityMoveState
 {
     private readonly Enemy _enemy;
-    private readonly EnemyStats _stats;
 
-    public EnemyMoveState(Enemy enemy, AnimatorController animatorController, EnemyStats stats,
+    public EnemyMoveState(Enemy enemy, AnimatorController animatorController, EnemyStats enemyStats,
         CollisionHandler collisionHandler, Collider squadZone,
         BallHolder ballHolder, Ball ball, Collider collider)
-        : base(enemy, animatorController, collisionHandler, squadZone, ballHolder, ball, collider)
+        : base(enemy, animatorController, collisionHandler, squadZone, ballHolder, ball, collider, enemyStats)
     {
         _enemy = enemy;
-        _stats = stats;
     }
-
-    protected override float GetRotationSpeed() => _stats.RotationSpeed;
-    protected override float GetMoveSpeed() => _stats.RunSpeed;
 
     protected override void OnBallDetected(Ball ball)
     {
