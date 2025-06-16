@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using Sirenix.OdinInspector;
 
 public class Health : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class Health : MonoBehaviour
         _collisionHandler.DamageTaken += TakeDamage;
     }
 
+    [Button]
     public void Heal(int amount)
     {
         if (amount <= 0)
@@ -37,8 +39,11 @@ public class Health : MonoBehaviour
         HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
     }
 
+    [Button]
     public void TakeDamage(int amount)
     {
+        MessageBrokerHolder.GameActions.Publish(new M_EntityHited(transform));
+        
         if (amount <= 0)
             return;
 

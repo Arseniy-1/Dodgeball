@@ -1669,6 +1669,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5698704cf1447958729138ca90fe077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deathEffect: {fileID: 7317254845682095868, guid: 58b24b923bf37fe45834fa1c58a86087, type: 3}
+  _hitEffect: {fileID: 7317254845682095868, guid: d198ed3dd43b0ab4eadf94261274125a, type: 3}
   _arenaPrefabs:
   - {fileID: 321840916095219561, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
   _enemyPrefabs:
@@ -3973,7 +3975,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
   m_LocalPosition: {x: 0, y: 14.5, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3983,7 +3985,7 @@ Transform:
   - {fileID: 1590491954}
   - {fileID: 1355440452}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!1 &1187014260
 GameObject:
   m_ObjectHideFlags: 0

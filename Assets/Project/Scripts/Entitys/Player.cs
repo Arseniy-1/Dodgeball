@@ -35,6 +35,7 @@ public class Player : Entity, IDestoyable<Player>
             new PlayerDodgeState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _playerStats, _inputController),
             new PlayerAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController, BallThrower),
             new PlayerJumpState(AnimatorController, GroundChecker, CollisionHandler, Collider),
+            new PlayerDeathState(AnimatorController, CollisionHandler)
         };
 
         StateMaсhine = new StateMaсhine(_playerStates);
@@ -54,6 +55,9 @@ public class Player : Entity, IDestoyable<Player>
     [Button]
     public override async void Die()
     {
+        StateMaсhine.SwitchState<PlayerDeathState>();
+        MessageBrokerHolder.GameActions.Publish(new M_EntityDeath(this));
+        
         await AnimatorController.Death();
         await HideEntity();
         

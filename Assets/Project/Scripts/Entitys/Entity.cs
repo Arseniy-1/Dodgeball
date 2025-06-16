@@ -17,7 +17,9 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected Health Health;
     [SerializeField] protected List<Entity> Teammates;
     [SerializeField] protected Animator Animator;
-
+    
+    [SerializeField] private HealthCanvas _healthCanvas;
+    
     public string CurrentState;
     public List<string> CurrentStates = new List<string>();
 
@@ -60,6 +62,7 @@ public abstract class Entity : MonoBehaviour
         Collider.enabled = true;
         Health.Reset();
         BallHolder.LostBall();
+        _healthCanvas.gameObject.SetActive(true);
     }
 
     protected virtual void Update()
@@ -85,6 +88,8 @@ public abstract class Entity : MonoBehaviour
     
     protected async UniTask HideEntity()
     {
+        _healthCanvas.gameObject.SetActive(false);
+        
         float duration = 1.5f;
         float elapsed = 0f;
         Vector3 start = transform.position;

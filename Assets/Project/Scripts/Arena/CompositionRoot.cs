@@ -4,9 +4,15 @@ using Random = UnityEngine.Random;
 using YG;
 using System;
 using Cysharp.Threading.Tasks;
+using UnityEngine.Serialization;
 
 public class CompositionRoot : MonoBehaviour
 {
+    [SerializeField] private DeathEffectsSpawner _deathEffectsSpawner;
+    [SerializeField] private HitEffectsSpawner _hitEffectsSpawner;
+    [SerializeField] private Effect _deathEffect;
+    [SerializeField] private Effect _hitEffect;
+    
     [SerializeField] private List<Arena> _arenaPrefabs;
     [SerializeField] private List<Enemy> _enemyPrefabs;
     [SerializeField] private Player _playerPrefab;
@@ -27,6 +33,9 @@ public class CompositionRoot : MonoBehaviour
     {
         YandexGame.LoadProgress();
         YandexGame.SwitchLanguage(YandexGame.savesData.language);
+
+        _deathEffectsSpawner = new DeathEffectsSpawner(_deathEffect);
+        _hitEffectsSpawner = new HitEffectsSpawner(_hitEffect);
         
         _rankHolder = new RankHolder();
         _rankHolder.Initialize();
@@ -111,7 +120,7 @@ public class CompositionRoot : MonoBehaviour
     {
         _arenaInstance.GameOver -= HandleGameOverWrapper;
 
-        float waitTime = 200f;
+        float waitTime = 3f;
         await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
 
         _rankHolder.IncreaseRank();
