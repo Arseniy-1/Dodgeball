@@ -40,7 +40,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530898111853559063}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63b57eabcdbe454aa005b08dc458cbb0, type: 3}
   m_Name: 
@@ -160,7 +160,6 @@ MonoBehaviour:
   CollisionHandler: {fileID: 8945236233113672879}
   TargetScanner: {fileID: 3332207226504361997}
   Mover: {fileID: 3177828869978044251}
-  GroundChecker: {fileID: 0}
   Health: {fileID: 8879239487028305564}
   Teammates: []
   Animator: {fileID: 4560895213388329803}

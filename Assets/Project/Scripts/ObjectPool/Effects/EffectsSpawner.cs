@@ -9,7 +9,7 @@ public class EffectsSpawner : Spawner<Effect>
     public EffectsSpawner(Effect effect)
     {
         Prefab = effect;
-        Pool = new SelebrateEffectsPool(Prefab, StartAmount);
+        Pool = new EffectsPool(Prefab, StartAmount);
         
         CompositeDisposable = new CompositeDisposable();
     }

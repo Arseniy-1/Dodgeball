@@ -9,13 +9,12 @@ using UnityEngine;
      {
          MessageBrokerHolder.GameActions.Receive<M_EntityDeath>()
              .Subscribe((message) => 
-                 HandleEnemyDeath(message.Entity))
+                 HandleEntityDeath(message.Entity))
              .AddTo(CompositeDisposable);
      }
  
-     private void HandleEnemyDeath(Entity entity)
+     private void HandleEntityDeath(Entity entity)
      {
-         Debug.Log("EenemyDeath");
          var effect = Spawn();
          effect.transform.position = entity.transform.position;
      }

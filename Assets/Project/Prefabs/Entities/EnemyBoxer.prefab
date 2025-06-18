@@ -63,7 +63,6 @@ MonoBehaviour:
   CollisionHandler: {fileID: 3199689226720569013}
   TargetScanner: {fileID: 2664629391832099120}
   Mover: {fileID: 6683560358471743441}
-  GroundChecker: {fileID: 0}
   Health: {fileID: 6687391573693435775}
   Teammates: []
   Animator: {fileID: 5971793629326799432}
@@ -273,7 +272,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2973292432524812280}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63b57eabcdbe454aa005b08dc458cbb0, type: 3}
   m_Name: 
