@@ -2,7 +2,7 @@
 
 public class EnemyDeathState : EntityDeathState
 {
-    public EnemyDeathState(AnimatorController animatorController, CollisionHandler collisionHandler, Collider collider) : base(animatorController, collisionHandler, collider)
+    public EnemyDeathState(AnimatorController animatorController, CollisionHandler collisionHandler, Collider collider, BallHolder ballHolder) : base(animatorController, collisionHandler, collider, ballHolder)
     {
     }
 }

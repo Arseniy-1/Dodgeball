@@ -3,23 +3,18 @@ using UniRx;
 using UnityEngine;
 
 [Serializable]
-public class HitEffectsSpawner : Spawner<Effect>
+public class HitEffectsSpawner : EffectsSpawner
 {
-    private CompositeDisposable _compositeDisposable = new CompositeDisposable();
-    
-    public HitEffectsSpawner(Effect effect)
+    public HitEffectsSpawner(Effect effect) : base(effect)
     {
-        Prefab = effect;
-        Pool = new DeathEffectsPool(Prefab, StartAmount);
-        
         MessageBrokerHolder.GameActions
             .Receive<M_EntityHited>()
             .Subscribe((message) => 
-                HandleEnemyDeath(message.EntityTransform))
-            .AddTo(_compositeDisposable);
+                HandleEnemyHit(message.EntityTransform))
+            .AddTo(CompositeDisposable);
     }
 
-    private void HandleEnemyDeath(Transform transform)
+    private void HandleEnemyHit(Transform transform)
     {
         var effect = Spawn();
         effect.transform.position = transform.position;

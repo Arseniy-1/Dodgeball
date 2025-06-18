@@ -30,8 +30,8 @@ public class Enemy : Entity, IDestoyable<Enemy>
             new EnemyMoveState(this, AnimatorController, _enemyStats, CollisionHandler, SquadZone, BallHolder, ball, Collider),
             new EnemyDodgeState(this, AnimatorController, ball, Mover, SquadZone, Rigidbody, _enemyStats),
             new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyStats),
-            new EnemyJumpState(AnimatorController, GroundChecker, CollisionHandler, Collider),
-            new EnemyDeathState(AnimatorController, CollisionHandler, Collider)
+            new EnemyJumpState(AnimatorController, CollisionHandler, HitCheker, Collider),
+            new EnemyDeathState(AnimatorController, CollisionHandler, Collider, BallHolder)
         };
         
         StateMaсhine = new StateMaсhine(_enemyStates);
@@ -41,10 +41,12 @@ public class Enemy : Entity, IDestoyable<Enemy>
 
         Reset();
     }
-
+    
+    [Button]
     protected override async void HandleLostHealth()
     {
         StateMaсhine.SwitchState<EnemyDeathState>();
+        HealthCanvas.gameObject.SetActive(false);
         MessageBrokerHolder.GameActions.Publish(new M_EntityDeath(this));
         
         await AnimatorController.Death();

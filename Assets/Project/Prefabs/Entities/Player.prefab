@@ -1,5 +1,71 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1530898111853559063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8861790728453513720}
+  - component: {fileID: 2493397008812981593}
+  - component: {fileID: 6834348050144776448}
+  m_Layer: 0
+  m_Name: HitChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8861790728453513720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530898111853559063}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2390527178805149507}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2493397008812981593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530898111853559063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63b57eabcdbe454aa005b08dc458cbb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &6834348050144776448
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530898111853559063}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 2, z: 0.3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2664451664656089519
 GameObject:
   m_ObjectHideFlags: 0
@@ -50,7 +116,6 @@ GameObject:
   - component: {fileID: 8879239487028305564}
   - component: {fileID: 603214778402725274}
   - component: {fileID: 3302977070471378557}
-  - component: {fileID: 4215054421690999410}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -73,6 +138,7 @@ Transform:
   m_Children:
   - {fileID: 4560895213381131395}
   - {fileID: 9005000669319317896}
+  - {fileID: 8861790728453513720}
   - {fileID: 1880424697061346449}
   - {fileID: 2377120106818913265}
   m_Father: {fileID: 0}
@@ -98,7 +164,8 @@ MonoBehaviour:
   Health: {fileID: 8879239487028305564}
   Teammates: []
   Animator: {fileID: 4560895213388329803}
-  _healthCanvas: {fileID: 8911252057284938444}
+  HitCheker: {fileID: 2493397008812981593}
+  HealthCanvas: {fileID: 8911252057284938444}
   CurrentState: 
   CurrentStates: []
   Ball: {fileID: 0}
@@ -241,20 +308,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 84
   m_CollisionDetection: 2
---- !u!75 &4215054421690999410
-ConstantForce:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8704959048694567152}
-  m_Enabled: 1
-  m_Force: {x: 0, y: -4000, z: 0}
-  m_RelativeForce: {x: 0, y: 0, z: 0}
-  m_Torque: {x: 0, y: 0, z: 0}
-  m_RelativeTorque: {x: 0, y: 0, z: 0}
 --- !u!1001 &928282048942788865
 PrefabInstance:
   m_ObjectHideFlags: 0

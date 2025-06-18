@@ -5,17 +5,20 @@ public abstract class EntityDeathState : IState
     private readonly AnimatorController _animatorController;
     private readonly CollisionHandler _collisionHandler;
     private readonly Collider _collider;
+    private readonly BallHolder _ballHolder;
 
-    protected EntityDeathState(AnimatorController animatorController, CollisionHandler collisionHandler, Collider collider)
+    protected EntityDeathState(AnimatorController animatorController, CollisionHandler collisionHandler, Collider collider, BallHolder ballHolder)
     {
         _animatorController = animatorController;
         _collisionHandler = collisionHandler;
         _collider = collider;
+        _ballHolder = ballHolder;
     }
 
     public virtual void Enter()
     {
         _animatorController.Death();
+        _ballHolder.LostBall();
         _collisionHandler.enabled = false;
         _collider.enabled = false;
     }

@@ -34,8 +34,8 @@ public class Player : Entity, IDestoyable<Player>
             new PlayerMoveState(this, AnimatorController, Teammates, _playerStats, CollisionHandler, SquadZone, BallHolder, Ball, Collider),
             new PlayerDodgeState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _playerStats, _inputController),
             new PlayerAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController, BallThrower),
-            new PlayerJumpState(AnimatorController, GroundChecker, CollisionHandler, Collider),
-            new PlayerDeathState(AnimatorController, CollisionHandler, Collider)
+            new PlayerJumpState(AnimatorController, CollisionHandler, HitCheker, Collider),
+            new PlayerDeathState(AnimatorController, CollisionHandler, Collider, BallHolder)
         };
 
         StateMaсhine = new StateMaсhine(_playerStates);
@@ -45,10 +45,12 @@ public class Player : Entity, IDestoyable<Player>
 
         Reset();
     }
-
+    
+    [Button]
     protected override async void HandleLostHealth()
     {
         StateMaсhine.SwitchState<PlayerDeathState>();
+        HealthCanvas.gameObject.SetActive(false);
         MessageBrokerHolder.GameActions.Publish(new M_EntityDeath(this));
         
         await AnimatorController.Death();
@@ -64,14 +66,8 @@ public class Player : Entity, IDestoyable<Player>
     }
 
     [Button]
-    public override async void Die()
+    public override void Die()
     {
-        StateMaсhine.SwitchState<PlayerDeathState>();
-        MessageBrokerHolder.GameActions.Publish(new M_EntityDeath(this));
-        
-        await AnimatorController.Death();
-        await HideEntity();
-        
         base.Die();
         OnDestroyed?.Invoke(this);
     }

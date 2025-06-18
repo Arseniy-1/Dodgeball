@@ -44,10 +44,14 @@ public abstract class EntityMoveState : IState
         _collisionHandler.BallDetected += OnBallDetected;
 
         MessageBrokerHolder.GameActions.Receive<M_BallTaken>()
-            .Subscribe(message => HandleBallTaken(message.Entity)).AddTo(_disposable);
+            .Subscribe(message => 
+                HandleBallTaken(message.Entity))
+            .AddTo(_disposable);
 
         MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>()
-            .Subscribe(message => HandleBallZoneChanged(message.Zone)).AddTo(_disposable);
+            .Subscribe(message => 
+                HandleBallZoneChanged(message.Zone))
+            .AddTo(_disposable);
 
         _collisionHandler.enabled = true;
         _collider.enabled = true;
@@ -72,9 +76,14 @@ public abstract class EntityMoveState : IState
 
     private void MoveToBall()
     {
+        Vector3 currentPos = _entity.transform.position;
+        Vector3 targetPos = _ball.transform.position;
+
+        targetPos.y = currentPos.y;
+
         _entity.transform.position = Vector3.MoveTowards(
-            _entity.transform.position,
-            _ball.transform.position,
+            currentPos,
+            targetPos,
             _entityStats.RunSpeed * Time.deltaTime
         );
     }

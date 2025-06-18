@@ -7,8 +7,8 @@ public class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
 {
     private List<T> _spawned = new List<T>();
     
+    [SerializeField] protected int StartAmount = 5;
     protected T Prefab;
-    protected int StartAmount = 5;
 
     protected Pool<T> Pool;
 

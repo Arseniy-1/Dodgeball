@@ -4,18 +4,20 @@ public abstract class EntityJumpState : IState
 {
     private readonly AnimatorController _animatorController;
     private readonly CollisionHandler _collisionHandler;
+    private readonly HitCheker _hitCheker;
     private readonly Collider _collider;
 
     protected IStateSwitcher StateSwitcher;
 
     protected EntityJumpState(
         AnimatorController animatorController,
-        GroundChecker groundChecker,
         CollisionHandler collisionHandler,
+        HitCheker hitCheker,
         Collider collider)
     {
         _animatorController = animatorController;
         _collisionHandler = collisionHandler;
+        _hitCheker = hitCheker;
         _collider = collider;
     }
 
@@ -26,6 +28,9 @@ public abstract class EntityJumpState : IState
 
     public virtual void Enter()
     {
+        _hitCheker.enabled = true;
+        _hitCheker.DetectBallHit += HandleBallDodge;
+            
         _collisionHandler.enabled = false;
         _collider.isTrigger = true;
         Jump();
@@ -33,11 +38,16 @@ public abstract class EntityJumpState : IState
 
     public virtual void Exit()
     {
+        _hitCheker.enabled = true;
+        _hitCheker.DetectBallHit -= HandleBallDodge;
+        
         _collisionHandler.enabled = true;
         _collider.isTrigger = false;
     }
 
     public virtual void Update() { }
+    
+    protected abstract void OnJumpFinished();
 
     private async void Jump()
     {
@@ -45,5 +55,8 @@ public abstract class EntityJumpState : IState
         OnJumpFinished();
     }
 
-    protected abstract void OnJumpFinished();
+    private void HandleBallDodge()
+    {
+        MessageBrokerHolder.GameActions.Publish(new M_EntityDodged(_hitCheker.transform));
+    }
 }

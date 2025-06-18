@@ -4,10 +4,10 @@ public class EnemyJumpState : EntityJumpState
 {
     public EnemyJumpState(
         AnimatorController animatorController,
-        GroundChecker groundChecker,
         CollisionHandler collisionHandler,
+        HitCheker hitCheker,
         Collider collider)
-        : base(animatorController, groundChecker, collisionHandler, collider)
+        : base(animatorController, collisionHandler, hitCheker, collider)
     {
     }
 

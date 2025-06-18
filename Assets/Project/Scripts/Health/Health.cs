@@ -6,9 +6,9 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _currentHealthPoint;
-    
+
     private CollisionHandler _collisionHandler;
-    
+
     public event Action<float, float> HealthChanged;
     public event Action LostHealth;
 
@@ -42,17 +42,21 @@ public class Health : MonoBehaviour
     [Button]
     public void TakeDamage(int amount)
     {
-        MessageBrokerHolder.GameActions.Publish(new M_EntityHited(transform));
-        
         if (amount <= 0)
             return;
 
         _currentHealthPoint = Mathf.Clamp(_currentHealthPoint - amount, 0, _maxHealth);
 
+        HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
+        
         if (_currentHealthPoint == 0)
+        {
             LostHealth?.Invoke();
 
-        HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
+            return;
+        }
+
+        MessageBrokerHolder.GameActions.Publish(new M_EntityHited(transform));
     }
 
     public void Reset()
