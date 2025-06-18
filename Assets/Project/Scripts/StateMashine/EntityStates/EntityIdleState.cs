@@ -57,8 +57,8 @@ public abstract class EntityIdleState : IState
         _collisionHandler.enabled = false;
         _collider.enabled = false;
 
+        _animatorController.Idle();
         StartIdleMovementLoop();
-        _animatorController.DodgeIdle();
     }
 
     public virtual void Exit()

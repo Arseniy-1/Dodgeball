@@ -27,14 +27,15 @@ public class EnemyAttackState : EntityAttackState
     {
         base.Enter();
 
-        StartAttack();
+        if (TargetProvider.Target != null)
+            StartAttack();
 
         _shootDelay = Random.Range(_enemyStats.MinThrowWait, _enemyStats.MaxThrowWait);
         _releaseTimer = 0f;
         _hasReleased = false;
     }
-    
-    public override void Update()
+
+    public override async void Update()
     {
         base.Update();
 
@@ -44,7 +45,7 @@ public class EnemyAttackState : EntityAttackState
 
             if (_releaseTimer >= _shootDelay)
             {
-                ThrowBall();
+                await ThrowBall();
                 StateSwitcher.SwitchState<EnemyIdleState>();
                 _hasReleased = true;
             }

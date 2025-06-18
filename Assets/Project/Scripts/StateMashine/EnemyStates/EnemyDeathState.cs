@@ -1,6 +1,8 @@
-﻿public class EnemyDeathState : EntityDeathState
+﻿using UnityEngine;
+
+public class EnemyDeathState : EntityDeathState
 {
-    public EnemyDeathState(AnimatorController animatorController, CollisionHandler collisionHandler) : base(animatorController, collisionHandler)
+    public EnemyDeathState(AnimatorController animatorController, CollisionHandler collisionHandler, Collider collider) : base(animatorController, collisionHandler, collider)
     {
     }
 }

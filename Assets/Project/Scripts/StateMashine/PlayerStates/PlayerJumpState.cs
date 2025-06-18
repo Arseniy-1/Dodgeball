@@ -13,6 +13,7 @@ public class PlayerJumpState : EntityJumpState
 
     protected override void OnJumpFinished()
     {
+        Debug.Log("DodgeFinished");
         StateSwitcher.SwitchState<PlayerDodgeState>();
     }
 }

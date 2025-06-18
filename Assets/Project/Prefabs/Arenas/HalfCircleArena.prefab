@@ -2960,7 +2960,9 @@ PrefabInstance:
       propertyPath: _backgroundView
       value: 
       objectReference: {fileID: 4698361617708797964}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4045905111336038922, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}
+    - {fileID: 4990418294404903240, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

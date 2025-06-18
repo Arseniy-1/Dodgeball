@@ -32,7 +32,7 @@ public abstract class Entity : MonoBehaviour
     protected StateMaсhine StateMaсhine;
 
     [SerializeField] protected Ball Ball;
-
+    
     private void OnEnable()
     {
         Health.LostHealth += Die;
@@ -76,6 +76,8 @@ public abstract class Entity : MonoBehaviour
         foreach (var state in StateMaсhine._states.Values)
             CurrentStates.Add(state.ToString());
     }
+
+    protected abstract void HandleLostHealth();
 
     public abstract void Selebrate();
     

@@ -35,7 +35,8 @@ public class PlayerAttackState : EntityAttackState
 
     private void OnButtonClicked()
     {
-        StartAttack();
+        if (TargetProvider.Target != null)
+            StartAttack();
     }
 
     private async Task OnButtonReleasedAsync()
@@ -43,7 +44,7 @@ public class PlayerAttackState : EntityAttackState
         _inputController.ActionButtonStarted -= _buttonStartedHandler;
         _inputController.ActionButtonCanceled -= _buttonCanceledHandler;
 
-        ThrowBall();
+        await ThrowBall();
 
         StateSwitcher.SwitchState<PlayerIdleState>();
     }

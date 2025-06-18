@@ -12,7 +12,10 @@ public class HitEffectsSpawner : Spawner<Effect>
         Prefab = effect;
         Pool = new DeathEffectsPool(Prefab, StartAmount);
         
-        MessageBrokerHolder.GameActions.Receive<M_EntityHited>().Subscribe((message) => HandleEnemyDeath(message.EntityTransform))
+        MessageBrokerHolder.GameActions
+            .Receive<M_EntityHited>()
+            .Subscribe((message) => 
+                HandleEnemyDeath(message.EntityTransform))
             .AddTo(_compositeDisposable);
     }
 

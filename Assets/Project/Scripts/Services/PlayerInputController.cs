@@ -1,4 +1,5 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,11 +28,13 @@ public class PlayerInputController : MonoBehaviour
         _payerInput.Player.Action.canceled -= OnActionButtonCanceled;
     }
 
+    [Button]
     private void OnActionButtonStarted(InputAction.CallbackContext callbackContext)
     {
         ActionButtonStarted?.Invoke();
     }
 
+    [Button]
     private void OnActionButtonCanceled(InputAction.CallbackContext callbackContext)
     {
         ActionButtonCanceled?.Invoke();

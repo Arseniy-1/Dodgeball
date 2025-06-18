@@ -60,7 +60,7 @@ public class AnimatorController
 
     public void Run() => _animator.Play(_run);
 
-    public UniTask Attack() => PlayAndWait(_throw);
+    public UniTask Attack() => PlayAndWait(_throw, _cancellationTokenSource.Token);
 
     public void PrepareAttack() => _animator.Play(_prepareToThrow);
     public void Idle() => _animator.Play(_idle);
@@ -84,17 +84,17 @@ public class AnimatorController
     {
         int randomDeath = _death[Random.Range(0, _death.Count)];
 
-        return PlayAndWait(randomDeath);
+        return PlayAndWait(randomDeath, _cancellationTokenSource.Token);
     }
     
     public UniTask Dodge()
     {
         int randomDodge = _dodges[Random.Range(0, _dodges.Count)];
 
-        return PlayAndWait(randomDodge);
+        return PlayAndWait(randomDodge, _cancellationTokenSource.Token);
     }
     
-    private async UniTask PlayAndWait(int animationHash)
+    private async UniTask PlayAndWait(int animationHash, CancellationToken token)
     {
         _animator.Play(animationHash);
         await UniTask.Yield();
@@ -102,16 +102,24 @@ public class AnimatorController
         AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         int attempts = 0;
 
-        while (stateInfo.shortNameHash != animationHash && attempts < 60 && _cancellationTokenSource.IsCancellationRequested == false)
+        while (token.IsCancellationRequested == false && stateInfo.shortNameHash != animationHash && attempts < 60)
         {
             await UniTask.Yield();
+            
+            if(token.IsCancellationRequested)
+                return;
+
             stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             attempts++;
         }
 
-        while (stateInfo.normalizedTime < 1f && !_animator.IsInTransition(0) && _cancellationTokenSource.IsCancellationRequested == false)
+        while (token.IsCancellationRequested == false && stateInfo.normalizedTime < 1f && !_animator.IsInTransition(0))
         {
             await UniTask.Yield();
+            
+            if(token.IsCancellationRequested)
+                return;
+            
             stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         }
     }

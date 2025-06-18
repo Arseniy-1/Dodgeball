@@ -39,6 +39,7 @@ public abstract class EntityDodgeState : IState
     public virtual void Enter()
     {
         Disposable = new CompositeDisposable();
+        _animatorController.DodgeIdle();
 
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
@@ -47,7 +48,6 @@ public abstract class EntityDodgeState : IState
 
         _rigidbody.isKinematic = true;
         StartIdleMovementLoop();
-        _animatorController.DodgeIdle();
     }
 
     public virtual void Exit()

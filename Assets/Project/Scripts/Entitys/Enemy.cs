@@ -31,7 +31,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
             new EnemyDodgeState(this, AnimatorController, ball, Mover, SquadZone, Rigidbody, _enemyStats),
             new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyStats),
             new EnemyJumpState(AnimatorController, GroundChecker, CollisionHandler, Collider),
-            new EnemyDeathState(AnimatorController, CollisionHandler)
+            new EnemyDeathState(AnimatorController, CollisionHandler, Collider)
         };
         
         StateMaсhine = new StateMaсhine(_enemyStates);
@@ -42,20 +42,26 @@ public class Enemy : Entity, IDestoyable<Enemy>
         Reset();
     }
 
-    public override void Selebrate()
-    {
-        StateMaсhine.SwitchState<EnemySelebrateState>();
-    }
-
-    [Button]
-    public override async void Die()
+    protected override async void HandleLostHealth()
     {
         StateMaсhine.SwitchState<EnemyDeathState>();
         MessageBrokerHolder.GameActions.Publish(new M_EntityDeath(this));
         
         await AnimatorController.Death();
         await HideEntity();
-        
+
+        Die();
+    }
+
+    public override void Selebrate()
+    {
+        StateMaсhine.SwitchState<EnemySelebrateState>();
+        BallHolder.LostBall();
+    }
+
+    [Button]
+    public override void Die()
+    {
         base.Die();
         OnDestroyed?.Invoke(this);
     }

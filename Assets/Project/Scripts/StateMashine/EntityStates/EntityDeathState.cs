@@ -1,23 +1,29 @@
-﻿public abstract class EntityDeathState : IState
+﻿using UnityEngine;
+
+public abstract class EntityDeathState : IState
 {
     private readonly AnimatorController _animatorController;
     private readonly CollisionHandler _collisionHandler;
+    private readonly Collider _collider;
 
-    protected EntityDeathState(AnimatorController animatorController, CollisionHandler collisionHandler)
+    protected EntityDeathState(AnimatorController animatorController, CollisionHandler collisionHandler, Collider collider)
     {
         _animatorController = animatorController;
         _collisionHandler = collisionHandler;
+        _collider = collider;
     }
 
     public virtual void Enter()
     {
         _animatorController.Death();
         _collisionHandler.enabled = false;
+        _collider.enabled = false;
     }
 
     public virtual void Exit()
     {
         _collisionHandler.enabled = true;
+        _collider.enabled = true;
     }
     
     public void Initialize(IStateSwitcher stateSwitcher)

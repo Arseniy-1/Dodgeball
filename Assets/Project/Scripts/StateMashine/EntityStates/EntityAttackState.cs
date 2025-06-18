@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 public class EntityAttackState  : IState
 {
@@ -8,11 +9,11 @@ public class EntityAttackState  : IState
     private readonly AnimatorController _animatorController;
     private readonly BallHolder _ballHolder;
     private readonly TargetScanner _targetScanner;
-    private readonly TargetProvider _targetProvider;
     private readonly List<Entity> _teammates;
     private readonly BallThrower _ballThrower;
     private readonly Rotator _rotator;  
 
+    protected readonly TargetProvider TargetProvider;
     protected readonly CollisionHandler CollisionHandler;
     protected readonly Collider Collider;
     protected readonly Rigidbody Rigidbody;
@@ -31,7 +32,7 @@ public class EntityAttackState  : IState
         _animatorController = animatorController;
         _ballHolder = ballHolder;
         _targetScanner = targetScanner;
-        _targetProvider = targetProvider;
+        TargetProvider = targetProvider;
         _teammates = teammates;
         _ballThrower = ballThrower;
         
@@ -50,7 +51,7 @@ public class EntityAttackState  : IState
         Collider.enabled = false;
 
         Entity target = _targetScanner.Scan(_teammates);
-        _targetProvider.SelectTarget(target);
+        TargetProvider.SelectTarget(target);
 
         _animatorController.Idle();
     }
@@ -64,9 +65,9 @@ public class EntityAttackState  : IState
 
     public virtual void Update()
     {
-        if (_targetProvider.Target != null)
+        if (TargetProvider.Target != null)
         {
-            _rotator.RotateToTarget(_targetProvider.Target.transform, _entity.transform);
+            _rotator.RotateToTarget(TargetProvider.Target.transform, _entity.transform);
         }
     }
     
@@ -76,12 +77,12 @@ public class EntityAttackState  : IState
         _ballThrower.StartCharging();
     }
 
-    protected async void ThrowBall()
+    protected UniTask ThrowBall()
     {
         Ball ball = _ballHolder.LostBall();
         _ballThrower.StopCharging();
         _ballThrower.Throw(ball);
 
-        await _animatorController.Attack();
+        return _animatorController.Attack();
     }
 }

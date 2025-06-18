@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerDodgeState : EntityDodgeState
 {
     private readonly PlayerInputController _playerInputController;
-
+    
     public PlayerDodgeState(Player player, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, 
         Rigidbody rigidbody, PlayerStats playerStats, PlayerInputController playerInputController)
         : base(player, animatorController, ball, mover, squadZone, rigidbody, playerStats)
@@ -14,6 +14,7 @@ public class PlayerDodgeState : EntityDodgeState
     public override void Enter()
     {
         base.Enter();
+        Debug.Log("DodgeIdle");
         _playerInputController.ActionButtonStarted += Jump;
     }
 
@@ -23,7 +24,10 @@ public class PlayerDodgeState : EntityDodgeState
         _playerInputController.ActionButtonStarted -= Jump;
     }
 
-    private void Jump() => StateSwitcher.SwitchState<PlayerJumpState>();
+    private void Jump()
+    {
+        StateSwitcher.SwitchState<PlayerJumpState>();
+    }
 
     protected override void HandleBallZoneChanged(Collider zone)
     {

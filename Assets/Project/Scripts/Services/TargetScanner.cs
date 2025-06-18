@@ -15,7 +15,8 @@ public class TargetScanner : MonoBehaviour
         {
             if (col.TryGetComponent(out Entity entity))
             {
-                if (entity == null || teammates.Contains(entity)) continue;
+                if (entity == null || teammates.Contains(entity)) 
+                    continue;
 
                 float distance = Vector3.Distance(transform.position, entity.transform.position);
                 

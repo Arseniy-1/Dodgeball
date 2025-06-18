@@ -13,12 +13,12 @@ public class Arena : MonoBehaviour
     [SerializeField] private Transform _ballPosition;
     [SerializeField] private BallUpgraderFabric _ballUpgraderFabric;
     
-    [SerializeField] private List<BallUpgrader> _ballUpgraders;
     [SerializeField] private List<Frame> _frames;
     
     [SerializeField] private float _minInactiveInterval;
     [SerializeField] private float _maxInactiveInterval;
     
+    private List<BallUpgrader> _ballUpgraders;
     private List<Squad> _deathSquads;
     private CancellationTokenSource _cancellationTokenSource;
 
@@ -62,7 +62,7 @@ public class Arena : MonoBehaviour
 
         if (_deathSquads.Count == _squads.Count - 1)
         {
-            NotifyWinner();
+            NotifyWinners();
             GameOver?.Invoke();
         }
     }
@@ -71,7 +71,7 @@ public class Arena : MonoBehaviour
     {
         squad.LostPlayers -= HandlePlayerSquadDeath;
 
-        NotifyWinner();
+        NotifyWinners();
         GameOver?.Invoke();
     }
     
@@ -104,7 +104,7 @@ public class Arena : MonoBehaviour
         await tcs.Task;
     }
     
-    private void NotifyWinner()
+    private void NotifyWinners()
     {
         var winners = _squads.Except(_deathSquads);
 

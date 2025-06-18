@@ -35,7 +35,7 @@ public class Player : Entity, IDestoyable<Player>
             new PlayerDodgeState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _playerStats, _inputController),
             new PlayerAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController, BallThrower),
             new PlayerJumpState(AnimatorController, GroundChecker, CollisionHandler, Collider),
-            new PlayerDeathState(AnimatorController, CollisionHandler)
+            new PlayerDeathState(AnimatorController, CollisionHandler, Collider)
         };
 
         StateMaсhine = new StateMaсhine(_playerStates);
@@ -46,6 +46,17 @@ public class Player : Entity, IDestoyable<Player>
         Reset();
     }
 
+    protected override async void HandleLostHealth()
+    {
+        StateMaсhine.SwitchState<PlayerDeathState>();
+        MessageBrokerHolder.GameActions.Publish(new M_EntityDeath(this));
+        
+        await AnimatorController.Death();
+        await HideEntity();
+
+        Die();
+    }
+    
     public override void Selebrate()
     {
         StateMaсhine.SwitchState<PlayerSelebrateState>();
