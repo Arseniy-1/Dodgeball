@@ -33,6 +33,7 @@ public abstract class EntityJumpState : IState
             
         _collisionHandler.enabled = false;
         _collider.isTrigger = true;
+        MessageBrokerHolder.GameActions.Publish(new M_EntityJumped(_collider.transform));
         Jump();
     }
 

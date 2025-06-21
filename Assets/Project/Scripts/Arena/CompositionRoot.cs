@@ -12,9 +12,12 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private List<Enemy> _enemyPrefabs;
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private Ball _ballPrefab;
+    
     [SerializeField] private StartGameCanvas _startGameCanvas;
     [SerializeField] private RankViewCanvas _rankViewCanvas;
+    
     [SerializeField] private EffectsHandler _effectsHandler;
+    [SerializeField] private SoundEffectsHandler _soundEffectsHandler;
     
     private RankHolder _rankHolder;
     
@@ -31,6 +34,7 @@ public class CompositionRoot : MonoBehaviour
         YandexGame.SwitchLanguage(YandexGame.savesData.language);
         
         _effectsHandler.Initialize();
+        _soundEffectsHandler.Initialize();
         
         _rankHolder = new RankHolder();
         _rankHolder.Initialize();

@@ -1,5 +1,5 @@
 {
-  "idSave": 309,
+  "idSave": 310,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -14,6 +14,6 @@
   "IsMusicEnabled": true,
   "IsCameraShakeEnabled": false,
   "CurrentRank": 0,
-  "CurrentRankAmount": 0,
-  "PreviousRankAmount": 90
+  "CurrentRankAmount": 15,
+  "PreviousRankAmount": 0
 }
