@@ -52,6 +52,7 @@ public class Player : Entity, IDestoyable<Player>
         StateMaсhine.SwitchState<PlayerDeathState>();
         HealthCanvas.gameObject.SetActive(false);
         MessageBrokerHolder.GameActions.Publish(new M_EntityDeath(this));
+        AudioID.Dead.PlayOneShot();
         
         await AnimatorController.Death();
         await HideEntity();

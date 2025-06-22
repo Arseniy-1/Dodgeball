@@ -33,7 +33,7 @@ public abstract class EntityJumpState : IState
             
         _collisionHandler.enabled = false;
         _collider.isTrigger = true;
-        MessageBrokerHolder.GameActions.Publish(new M_EntityJumped(_collider.transform));
+        AudioID.Jump.PlayOneShot();
         Jump();
     }
 
@@ -59,5 +59,6 @@ public abstract class EntityJumpState : IState
     private void HandleBallDodge()
     {
         MessageBrokerHolder.GameActions.Publish(new M_EntityDodged(_hitCheker.transform));
+        AudioID.Dead.PlayOneShot();
     }
 }

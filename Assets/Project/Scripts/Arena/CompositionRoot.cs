@@ -17,7 +17,7 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private RankViewCanvas _rankViewCanvas;
     
     [SerializeField] private EffectsHandler _effectsHandler;
-    [SerializeField] private SoundEffectsHandler _soundEffectsHandler;
+    [SerializeField] private AudioService _audioService;
     
     private RankHolder _rankHolder;
     
@@ -34,7 +34,7 @@ public class CompositionRoot : MonoBehaviour
         YandexGame.SwitchLanguage(YandexGame.savesData.language);
         
         _effectsHandler.Initialize();
-        _soundEffectsHandler.Initialize();
+        _audioService.Initialize();
         
         _rankHolder = new RankHolder();
         _rankHolder.Initialize();

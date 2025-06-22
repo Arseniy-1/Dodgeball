@@ -57,6 +57,7 @@ public class Health : MonoBehaviour
         }
 
         MessageBrokerHolder.GameActions.Publish(new M_EntityHited(transform));
+        AudioID.DamageTaken.PlayOneShot();
     }
 
     public void Reset()
