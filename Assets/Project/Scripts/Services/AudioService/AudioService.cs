@@ -3,42 +3,54 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Sirenix.Serialization;
 using UnityEngine;
-using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
+using AudioData = AudioSettings.AudioData;
 
-public class AudioService : SerializedMonoBehaviour
+public class AudioService : IDisposable
 {
-    [OdinSerialize] private Dictionary<AudioID, List<AudioClip>> _audioClips;
-    [SerializeField] private AudioSource _audioSource;
-    
+    [OdinSerialize] private Dictionary<AudioID, AudioData> _audioData;
+
     private ObjectPool<AudioSource> _audioPool;
     private CompositeDisposable _compositeDisposable;
-    
-    public void Initialize()
+
+    public AudioService(Dictionary<AudioID, AudioData> audioData)
     {
+        _audioData = audioData;
+
         var poolHolder = new GameObject("AudioPoolHolder");
         Object.DontDestroyOnLoad(poolHolder);
+
+        AudioSource audioSourse = new GameObject("AudioSourse").AddComponent<AudioSource>();
         
-        _audioPool = new ObjectPool<AudioSource>(() => Object.Instantiate(_audioSource, poolHolder.transform));
-        
+        _audioPool = new ObjectPool<AudioSource>(() => Object.Instantiate(audioSourse, poolHolder.transform));
+
         _compositeDisposable = new CompositeDisposable();
-        
+
         MessageBrokerHolder.GameActions
             .Receive<M_PlayClipByType>()
-            .Subscribe((message) => 
+            .Subscribe((message) =>
                 PlaySound(message.AudioID))
             .AddTo(_compositeDisposable);
+    }
+    
+    public void Dispose()
+    {
+        _compositeDisposable.Dispose();   
     }
 
     private void PlaySound(AudioID audioID)
     {
-        List<AudioClip> clips = _audioClips[audioID];
-        AudioClip randomClip = clips[Random.Range(0, clips.Count)];
-        
+        AudioData data = _audioData[audioID];
+        AudioClip randomClip = data.Clips[Random.Range(0, data.Clips.Count)];
+        float pitch = Random.Range(data.MinPitch, data.MaxPitch);
+
         AudioSource audioSource = _audioPool.Get();
+        audioSource.volume = data.Volume;
+        audioSource.pitch = pitch;
+        
         audioSource.PlayOneShot(randomClip);
         ReleaseSourse(audioSource, _audioPool, randomClip.length).Forget();
     }

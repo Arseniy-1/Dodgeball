@@ -16,9 +16,11 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private StartGameCanvas _startGameCanvas;
     [SerializeField] private RankViewCanvas _rankViewCanvas;
     
-    [SerializeField] private EffectsHandler _effectsHandler;
-    [SerializeField] private AudioService _audioService;
+    [SerializeField] private AudioSettings _audioSettings;
+    [SerializeField] private EffectsSetting _effectsSetting;
     
+    private EffectService _effectService;
+    private AudioService _audioService;
     private RankHolder _rankHolder;
     
     private Ball _ballInstance;
@@ -32,9 +34,9 @@ public class CompositionRoot : MonoBehaviour
     {
         YandexGame.LoadProgress();
         YandexGame.SwitchLanguage(YandexGame.savesData.language);
-        
-        _effectsHandler.Initialize();
-        _audioService.Initialize();
+
+        _effectService = new EffectService(_effectsSetting.GetData());
+        _audioService = new AudioService(_audioSettings.GetData());
         
         _rankHolder = new RankHolder();
         _rankHolder.Initialize();

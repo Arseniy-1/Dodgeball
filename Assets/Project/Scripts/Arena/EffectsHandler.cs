@@ -14,6 +14,9 @@ public class EffectsHandler : MonoBehaviour
     [SerializeField] private DodgeEffectsSpawner _dodgeEffectsSpawner;
     [SerializeField] private Effect _dodgeEffect;
 
+    [SerializeField] private EffectService _effectService;
+    
+    
     public void Initialize()
     {
         _deathEffectsSpawner = new DeathEffectsSpawner(_deathEffect);

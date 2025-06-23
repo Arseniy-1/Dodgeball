@@ -56,7 +56,7 @@ public class Health : MonoBehaviour
             return;
         }
 
-        MessageBrokerHolder.GameActions.Publish(new M_EntityHited(transform));
+        EffectID.Cry.PlayEffect(transform);
         AudioID.DamageTaken.PlayOneShot();
     }
 

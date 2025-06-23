@@ -1678,7 +1678,7 @@ MonoBehaviour:
   _startGameCanvas: {fileID: 1237911345}
   _rankViewCanvas: {fileID: 1880922101}
   _effectsHandler: {fileID: 2056052376}
-  _soundEffectsHandler: {fileID: 1075108927}
+  _audioService: {fileID: 1075108929}
 --- !u!4 &389377432
 Transform:
   m_ObjectHideFlags: 0
@@ -3995,8 +3995,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1075108928}
-  - component: {fileID: 1075108927}
   - component: {fileID: 1075108929}
+  - component: {fileID: 1075108930}
   m_Layer: 0
   m_Name: SoundEffectHandler
   m_TagString: Untagged
@@ -4004,48 +4004,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1075108927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1075108926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae60b4c0a278482ea3468022550fd2e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _deathSounds:
-  - {fileID: 8300000, guid: 6b822defcca6b42d09b056e719d49371, type: 3}
-  - {fileID: 8300000, guid: 6a602f228d0e44ac598e838e10e3050e, type: 3}
-  - {fileID: 8300000, guid: 3bd01136cd94d4fc0b06219c54bf436f, type: 3}
-  - {fileID: 8300000, guid: 0c2279698d5e549f4ba7b233963d11bf, type: 3}
-  - {fileID: 8300000, guid: 2a3debae12fa645c7a3fe5f6c4d6dd83, type: 3}
-  - {fileID: 8300000, guid: 62317459fc7c347008ddeb767936d058, type: 3}
-  - {fileID: 8300000, guid: 74528f98bbcd848b6b6c568a6bd391d5, type: 3}
-  _hitSounds:
-  - {fileID: 8300000, guid: 2e0dccecbf4834202833e6a134209a5f, type: 3}
-  - {fileID: 8300000, guid: cb9c4c4378adf4741a64de11d2063209, type: 3}
-  - {fileID: 8300000, guid: 1e29bdedd17844b9d94c3100fdfae86c, type: 3}
-  - {fileID: 8300000, guid: c05934527789e47da92d9e9410a9373e, type: 3}
-  - {fileID: 8300000, guid: 49a343ccf53f94ae09c832cb67f3c4cc, type: 3}
-  - {fileID: 8300000, guid: 365f58a6af99a410f95f9ef88298a15a, type: 3}
-  _dodgeSounds:
-  - {fileID: 8300000, guid: bae6ce2f8eff84348b9a5ebe82616aca, type: 3}
-  - {fileID: 8300000, guid: 0d8fa696f36c04668987aeb6083abea2, type: 3}
-  - {fileID: 8300000, guid: 28a7c200c52094638b9c8c3487df7ee8, type: 3}
-  - {fileID: 8300000, guid: e644cc8f62d45465a987e9830a57eec5, type: 3}
-  - {fileID: 8300000, guid: d08e452e37d624a9a9e0b28e5bbe4d07, type: 3}
-  - {fileID: 8300000, guid: 978dd902d74874e519e4882f8f2458f4, type: 3}
-  _jumpSounds:
-  - {fileID: 8300000, guid: 7215d80e7d69146bf9d71617855e7b4b, type: 3}
-  - {fileID: 8300000, guid: 1e709014bc4cb431a81bb6bdd40842e5, type: 3}
-  - {fileID: 8300000, guid: 43a280bbb27ab44b19a7b31b005a6c6b, type: 3}
-  - {fileID: 8300000, guid: 8220ab39fbc014b3abc77337fce9b7ba, type: 3}
-  - {fileID: 8300000, guid: f41f744abb5314bf08930e984fa57661, type: 3}
-  - {fileID: 8300000, guid: cb930fab096f342ecbd8ee626c39a6a8, type: 3}
-  - {fileID: 8300000, guid: 31d6f4ed1c39244bf80971204743a6e1, type: 3}
 --- !u!4 &1075108928
 Transform:
   m_ObjectHideFlags: 0
@@ -4076,7 +4034,46 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 8300000, guid: 7215d80e7d69146bf9d71617855e7b4b, type: 3}
+    - {fileID: 8300000, guid: 1e709014bc4cb431a81bb6bdd40842e5, type: 3}
+    - {fileID: 8300000, guid: 43a280bbb27ab44b19a7b31b005a6c6b, type: 3}
+    - {fileID: 8300000, guid: 8220ab39fbc014b3abc77337fce9b7ba, type: 3}
+    - {fileID: 8300000, guid: f41f744abb5314bf08930e984fa57661, type: 3}
+    - {fileID: 8300000, guid: cb930fab096f342ecbd8ee626c39a6a8, type: 3}
+    - {fileID: 8300000, guid: 31d6f4ed1c39244bf80971204743a6e1, type: 3}
+    - {fileID: 8300000, guid: 5855c88ba57754f5aa6f5591d0307f7b, type: 3}
+    - {fileID: 8300000, guid: c24129c499f274e3a954dbbe5149fb74, type: 3}
+    - {fileID: 8300000, guid: 1c50c093a8bc145cfbe879d2e3c4c4d2, type: 3}
+    - {fileID: 8300000, guid: e173dfe82d82d4de9a8d6b796200ee6a, type: 3}
+    - {fileID: 8300000, guid: 40587a2bcb50d42ff87cec9ae1131e9e, type: 3}
+    - {fileID: 8300000, guid: 6027eaa6e101c4a5b9dc4e84ec5b9fc9, type: 3}
+    - {fileID: 8300000, guid: f3c6109203fbd4aa5bc942216170ec64, type: 3}
+    - {fileID: 8300000, guid: 3d4d84ac9d65a4d65a0bfb6c8124ec06, type: 3}
+    - {fileID: 8300000, guid: 31daf89919fe74880b955d37c6bc20f7, type: 3}
+    - {fileID: 8300000, guid: f25427b2316fe4827809a80debc341fb, type: 3}
+    - {fileID: 8300000, guid: 49a343ccf53f94ae09c832cb67f3c4cc, type: 3}
+    - {fileID: 8300000, guid: c05934527789e47da92d9e9410a9373e, type: 3}
+    - {fileID: 8300000, guid: 1e29bdedd17844b9d94c3100fdfae86c, type: 3}
+    - {fileID: 8300000, guid: cb9c4c4378adf4741a64de11d2063209, type: 3}
+    - {fileID: 8300000, guid: a62e90c0db7224c6980ba1dcbbd786e8, type: 3}
+    - {fileID: 8300000, guid: 1979a48d79696431aad9906fd8fa58e2, type: 3}
+    - {fileID: 8300000, guid: 2e0dccecbf4834202833e6a134209a5f, type: 3}
+    - {fileID: 8300000, guid: 6b822defcca6b42d09b056e719d49371, type: 3}
+    - {fileID: 8300000, guid: 6a602f228d0e44ac598e838e10e3050e, type: 3}
+    - {fileID: 8300000, guid: 3bd01136cd94d4fc0b06219c54bf436f, type: 3}
+    - {fileID: 8300000, guid: 0c2279698d5e549f4ba7b233963d11bf, type: 3}
+    - {fileID: 8300000, guid: 2a3debae12fa645c7a3fe5f6c4d6dd83, type: 3}
+    - {fileID: 8300000, guid: 62317459fc7c347008ddeb767936d058, type: 3}
+    - {fileID: 8300000, guid: 98a3df39a87044c5cb5419bf2146521d, type: 3}
+    - {fileID: 8300000, guid: 823bae7d972fa42e4b7986654dcb68aa, type: 3}
+    - {fileID: 8300000, guid: acb35e321c246433188565a3095c1aae, type: 3}
+    - {fileID: 8300000, guid: 52a9204603f7c4235a90df432eba8dc0, type: 3}
+    - {fileID: 8300000, guid: 524ec9b7a01ce4e6cbd0b06747254b5c, type: 3}
+    - {fileID: 8300000, guid: 8d6b0832f53674860b4e05d1ccd48cc0, type: 3}
+    - {fileID: 8300000, guid: da3c93b87cd7549cf81c44b6c8648617, type: 3}
+    - {fileID: 8300000, guid: 9824fd7239e2544d9abbf17f4e330760, type: 3}
+    - {fileID: 8300000, guid: 750d856c888f646eabe23c7210104c13, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -4084,8 +4081,8 @@ MonoBehaviour:
     SerializationNodes:
     - Name: _audioClips
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[AudioID, Assembly-CSharp],[UnityEngine.AudioClip,
-        UnityEngine.AudioModule]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[AudioID, Assembly-CSharp],[System.Collections.Generic.List`1[[UnityEngine.AudioClip,
+        UnityEngine.AudioModule]], mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[AudioID, Assembly-CSharp]],
@@ -4101,13 +4098,315 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 15
+    - Name: 
+      Entry: 10
       Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 10
+      Data: 9
+    - Name: 
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 10
+      Data: 14
     - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: 
+      Entry: 10
+      Data: 15
+    - Name: 
+      Entry: 10
+      Data: 16
+    - Name: 
+      Entry: 10
+      Data: 17
+    - Name: 
+      Entry: 10
+      Data: 18
+    - Name: 
+      Entry: 10
+      Data: 19
+    - Name: 
+      Entry: 10
+      Data: 20
+    - Name: 
+      Entry: 10
+      Data: 21
+    - Name: 
+      Entry: 10
+      Data: 22
+    - Name: 
+      Entry: 10
+      Data: 23
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: 4|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 8
+    - Name: 
+      Entry: 10
+      Data: 24
+    - Name: 
+      Entry: 10
+      Data: 25
+    - Name: 
+      Entry: 10
+      Data: 26
+    - Name: 
+      Entry: 10
+      Data: 27
+    - Name: 
+      Entry: 10
+      Data: 28
+    - Name: 
+      Entry: 10
+      Data: 29
+    - Name: 
+      Entry: 10
+      Data: 30
+    - Name: 
+      Entry: 10
+      Data: 31
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 32
+    - Name: 
+      Entry: 10
+      Data: 33
+    - Name: 
+      Entry: 10
+      Data: 34
+    - Name: 
+      Entry: 10
+      Data: 35
+    - Name: 
+      Entry: 10
+      Data: 36
+    - Name: 
+      Entry: 10
+      Data: 37
+    - Name: 
+      Entry: 10
+      Data: 38
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  _audioSource: {fileID: 1075108930}
+--- !u!82 &1075108930
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075108926}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1187014260
 GameObject:
   m_ObjectHideFlags: 0
@@ -6935,6 +7234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2056052377}
   - component: {fileID: 2056052376}
+  - component: {fileID: 2056052378}
   m_Layer: 0
   m_Name: EffectHandler
   m_TagString: Untagged
@@ -6981,6 +7281,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2056052378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056052375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e2facee8cba44bc8fa9c334bf29f11c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: []
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _effects
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[EffectID, Assembly-CSharp],[Effect,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[EffectID, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &2074370772
 GameObject:
   m_ObjectHideFlags: 0

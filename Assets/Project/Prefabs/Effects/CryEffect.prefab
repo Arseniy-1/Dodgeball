@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 715495263619643085}
   - component: {fileID: 7317254845682095868}
   m_Layer: 0
-  m_Name: HitEffect
+  m_Name: CryEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
