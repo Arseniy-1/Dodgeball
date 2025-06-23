@@ -45,7 +45,7 @@ public class AudioService : IDisposable
     {
         AudioData data = _audioData[audioID];
         AudioClip randomClip = data.Clips[Random.Range(0, data.Clips.Count)];
-        float pitch = Random.Range(data.MinPitch, data.MaxPitch);
+        float pitch = Random.Range(data._pitchRange.x, data._pitchRange.y);
 
         AudioSource audioSource = _audioPool.Get();
         audioSource.volume = data.Volume;

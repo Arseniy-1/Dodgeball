@@ -7,4 +7,5 @@
     Dodge = 4,
     ChargeAttack = 5,
     Attack = 6,
+    Walk = 7,
 }

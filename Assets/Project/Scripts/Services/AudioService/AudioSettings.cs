@@ -38,15 +38,11 @@ public class AudioSettings : ScriptableObject
         public List<AudioClip> _clips;
         [Range(0f,1f)]
         public float _volume;
-        [Range(0f,1f)]
-        public float _minPitch;
-        [Range(1f,2f)]
-        public float _maxPitch;
+        [MinMaxSlider(0f, 2f)]
+        public Vector2 _pitchRange;
 
         public AudioID ID => _id;
         public IReadOnlyList<AudioClip> Clips => _clips;
         public float Volume => _volume;
-        public float MinPitch => _minPitch;
-        public float MaxPitch => _maxPitch;
     }
 }

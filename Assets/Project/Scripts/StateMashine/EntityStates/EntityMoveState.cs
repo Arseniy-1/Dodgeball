@@ -13,6 +13,10 @@ public abstract class EntityMoveState : IState
     
     private CompositeDisposable _disposable;
     
+    private Vector3 _lastPosition;
+    private float _distanceSinceLastStep = 0f;
+    private float _stepDistanceThreshold = 1.2f;
+    
     protected readonly BallHolder BallHolder;
     protected readonly Collider SquadZone;
 
