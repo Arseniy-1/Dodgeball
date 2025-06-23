@@ -36,10 +36,10 @@ public class EffectsSetting : ScriptableObject
 
         [HideLabel] 
         [HorizontalGroup] 
-        public Effect _effect;
+        public List<Effect> _effects;
 
         
         public EffectID ID => _id;
-        public Effect Effect => _effect;
+        public List<Effect> Effects => _effects;
     }
 }

@@ -13,22 +13,29 @@ using EffectData = EffectsSetting.EffectData;
 public class EffectService : IDisposable
 {
     [OdinSerialize] private Dictionary<EffectID, EffectData> _effectsData;
-    
-    private Dictionary<EffectID, EffectsSpawner> _spawners;
+
+    private Dictionary<EffectID, List<EffectsSpawner>> _spawners;
     private CompositeDisposable _compositeDisposable;
-    
+
     public EffectService(Dictionary<EffectID, EffectData> effectsData)
     {
         _effectsData = effectsData;
-        
+
         var poolHolder = new GameObject("EffectsPoolHolder");
         Object.DontDestroyOnLoad(poolHolder);
 
-        _spawners = new Dictionary<EffectID, EffectsSpawner>();
-        
+        _spawners = new Dictionary<EffectID, List<EffectsSpawner>>();
+
         foreach (var pair in _effectsData)
-            _spawners[pair.Key] = new EffectsSpawner(pair.Value.Effect, poolHolder.transform);
-        
+        {
+            List<EffectsSpawner> spawners = new List<EffectsSpawner>();
+            
+            foreach (var effect in pair.Value.Effects)
+                spawners.Add(new EffectsSpawner(effect, poolHolder.transform));
+
+            _spawners[pair.Key] = spawners;
+        }
+
         _compositeDisposable = new CompositeDisposable();
 
         MessageBrokerHolder.GameActions
@@ -42,12 +49,13 @@ public class EffectService : IDisposable
     {
         _compositeDisposable.Dispose();
     }
-    
+
     private void ShowEffects(EffectID effectID, Transform parent)
     {
-        if (_spawners.TryGetValue(effectID, out var spawner))
+        if (_spawners.TryGetValue(effectID, out var spawners))
         {
-            var effect = spawner.Spawn();
+            EffectsSpawner randomSpawner = spawners[UnityEngine.Random.Range(0, spawners.Count)];
+            var effect = randomSpawner.Spawn();
             effect.transform.position = parent.position;
         }
         else

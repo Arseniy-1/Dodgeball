@@ -58,7 +58,7 @@ public abstract class EntityJumpState : IState
 
     private void HandleBallDodge()
     {
-        MessageBrokerHolder.GameActions.Publish(new M_EntityDodged(_hitCheker.transform));
-        AudioID.Dead.PlayOneShot();
+        AudioID.Dodge.PlayOneShot();
+        EffectID.Joy.PlayEffect(_collider.transform);
     }
 }

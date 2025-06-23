@@ -47,7 +47,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
     {
         StateMaсhine.SwitchState<EnemyDeathState>();
         HealthCanvas.gameObject.SetActive(false);
-        MessageBrokerHolder.GameActions.Publish(new M_EntityDeath(this));
+        EffectID.Death.PlayEffect(transform);
         AudioID.Dead.PlayOneShot();
         
         await AnimatorController.Death();

@@ -59,6 +59,7 @@ public abstract class EntityMoveState : IState
 
         _collisionHandler.enabled = true;
         _collider.enabled = true;
+        _lastPosition = _entity.transform.position;
 
         _animatorController.Run();
     }
@@ -82,15 +83,23 @@ public abstract class EntityMoveState : IState
     {
         Vector3 currentPos = _entity.transform.position;
         Vector3 targetPos = _ball.transform.position;
-
         targetPos.y = currentPos.y;
 
-        _entity.transform.position = Vector3.MoveTowards(
-            currentPos,
-            targetPos,
-            _entityStats.RunSpeed * Time.deltaTime
-        );
+        float moveSpeed = _entityStats.RunSpeed * Time.deltaTime;
+        _entity.transform.position = Vector3.MoveTowards(currentPos, targetPos, moveSpeed);
+
+        float moved = Vector3.Distance(_entity.transform.position, _lastPosition);
+        _distanceSinceLastStep += moved;
+
+        if (moved > 0.001f && _distanceSinceLastStep >= _stepDistanceThreshold)
+        {
+            AudioID.Walk.PlayOneShot();
+            _distanceSinceLastStep = 0f;
+        }
+
+        _lastPosition = _entity.transform.position;
     }
+
     
     protected abstract void OnBallDetected(Ball ball);
     protected abstract void HandleBallZoneChanged(Collider zone);
