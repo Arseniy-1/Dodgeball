@@ -7,15 +7,7 @@ public class Mover : MonoBehaviour
     private Coroutine _moveRoutine;
     private bool _canMove = false;
 
-    private AreaPointSelector _pointSelector = new AreaPointSelector();
-
-    public void WaypointMove(Collider squadZone, float speed)
-    {
-        Vector3 target = _pointSelector.GetRandomPointInZone(squadZone, transform.position);
-        _moveRoutine = StartCoroutine(MoveTo(target, speed, squadZone));
-    }
-
-    private IEnumerator MoveTo(Vector3 target, float speed, Collider squadZone)
+    public IEnumerator MoveTo(Vector3 target, float speed)
     {
         _canMove = true;
 
@@ -32,15 +24,13 @@ public class Mover : MonoBehaviour
 
             yield return null;
         }
-
-        if (_canMove)
-            WaypointMove(squadZone, speed);
     }
+
 
     public void Stop()
     {
         _canMove = false;
-
+        
         if (_moveRoutine != null)
         {
             StopCoroutine(_moveRoutine);
