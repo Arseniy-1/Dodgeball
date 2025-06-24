@@ -99,6 +99,9 @@ public class AnimatorController
         _animator.Play(animationHash);
         await UniTask.Yield();
 
+        if(token.IsCancellationRequested || _animator == null)
+            return;
+        
         AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         int attempts = 0;
 
@@ -106,7 +109,7 @@ public class AnimatorController
         {
             await UniTask.Yield();
             
-            if(token.IsCancellationRequested)
+            if(token.IsCancellationRequested || _animator == null)
                 return;
 
             stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
@@ -117,7 +120,7 @@ public class AnimatorController
         {
             await UniTask.Yield();
             
-            if(token.IsCancellationRequested)
+            if(token.IsCancellationRequested || _animator == null)
                 return;
             
             stateInfo = _animator.GetCurrentAnimatorStateInfo(0);

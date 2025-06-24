@@ -27,7 +27,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
             new EnemyPrepareState(this, AnimatorController, TargetScanner, Teammates),
             new EnemySelebrateState(this, AnimatorController, Teammates),
             new EnemyIdleState(this,AnimatorController, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats),
-            new EnemyMoveState(this, AnimatorController, _enemyStats, CollisionHandler, SquadZone, BallHolder, ball, Collider),
+            new EnemyMoveState(this, AnimatorController, _enemyStats, CollisionHandler, SquadZone, BallHolder, ball, Collider, Mover),
             new EnemyDodgeState(this, AnimatorController, ball, Mover, SquadZone, Rigidbody, _enemyStats),
             new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyStats),
             new EnemyJumpState(AnimatorController, CollisionHandler, HitCheker, Collider),

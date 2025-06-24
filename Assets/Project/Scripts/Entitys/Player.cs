@@ -31,7 +31,7 @@ public class Player : Entity, IDestoyable<Player>
             new PlayerPrepareState(this, AnimatorController, TargetScanner, Teammates),
             new PlayerSelebrateState(this, AnimatorController, Teammates),
             new PlayerIdleState(this,AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats),
-            new PlayerMoveState(this, AnimatorController, Teammates, _playerStats, CollisionHandler, SquadZone, BallHolder, Ball, Collider),
+            new PlayerMoveState(this, AnimatorController, Teammates, _playerStats, CollisionHandler, SquadZone, BallHolder, Ball, Collider, Mover),
             new PlayerDodgeState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _playerStats, _inputController),
             new PlayerAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController, BallThrower),
             new PlayerJumpState(AnimatorController, CollisionHandler, HitCheker, Collider),

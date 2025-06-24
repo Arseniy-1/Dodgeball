@@ -10,20 +10,17 @@ public abstract class EntityMoveState : IState
     private readonly Collider _collider;
     private readonly Rotator _rotator;
     private readonly EntityStats _entityStats;
-    
+    private readonly Mover _mover;
+
     private CompositeDisposable _disposable;
-    
-    private Vector3 _lastPosition;
-    private float _distanceSinceLastStep = 0f;
-    private float _stepDistanceThreshold = 1.2f;
-    
+
     protected readonly BallHolder BallHolder;
     protected readonly Collider SquadZone;
 
     protected IStateSwitcher StateSwitcher;
 
     protected EntityMoveState(Entity entity, AnimatorController animatorController, CollisionHandler collisionHandler,
-        Collider squadZone, BallHolder ballHolder, Ball ball, Collider collider, EntityStats entityStats)
+        Collider squadZone, BallHolder ballHolder, Ball ball, Collider collider, EntityStats entityStats, Mover mover)
     {
         _entity = entity;
         _animatorController = animatorController;
@@ -34,6 +31,7 @@ public abstract class EntityMoveState : IState
         _collider = collider;
         _entityStats = entityStats;
         _rotator = new Rotator();
+        _mover = mover;
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -48,18 +46,15 @@ public abstract class EntityMoveState : IState
         _collisionHandler.BallDetected += OnBallDetected;
 
         MessageBrokerHolder.GameActions.Receive<M_BallTaken>()
-            .Subscribe(message => 
-                HandleBallTaken(message.Entity))
+            .Subscribe(message => HandleBallTaken(message.Entity))
             .AddTo(_disposable);
 
         MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>()
-            .Subscribe(message => 
-                HandleBallZoneChanged(message.Zone))
+            .Subscribe(message => HandleBallZoneChanged(message.Zone))
             .AddTo(_disposable);
 
         _collisionHandler.enabled = true;
         _collider.enabled = true;
-        _lastPosition = _entity.transform.position;
 
         _animatorController.Run();
     }
@@ -68,40 +63,20 @@ public abstract class EntityMoveState : IState
     {
         _collisionHandler.BallDetected -= OnBallDetected;
         _disposable.Dispose();
+        _mover.Stop();
     }
 
     public virtual void Update()
     {
-        if (_ball == null) 
+        if (_ball == null)
             return;
 
         _rotator.RotateToTarget(_ball.transform, _entity.transform, _entityStats.RotationSpeed);
-        MoveToBall();
+        _mover.FollowTarget(_ball.transform, _entityStats.RunSpeed);
     }
 
-    private void MoveToBall()
-    {
-        Vector3 currentPos = _entity.transform.position;
-        Vector3 targetPos = _ball.transform.position;
-        targetPos.y = currentPos.y;
-
-        float moveSpeed = _entityStats.RunSpeed * Time.deltaTime;
-        _entity.transform.position = Vector3.MoveTowards(currentPos, targetPos, moveSpeed);
-
-        float moved = Vector3.Distance(_entity.transform.position, _lastPosition);
-        _distanceSinceLastStep += moved;
-
-        if (moved > 0.001f && _distanceSinceLastStep >= _stepDistanceThreshold)
-        {
-            AudioID.Walk.PlayOneShot();
-            _distanceSinceLastStep = 0f;
-        }
-
-        _lastPosition = _entity.transform.position;
-    }
-
-    
     protected abstract void OnBallDetected(Ball ball);
     protected abstract void HandleBallZoneChanged(Collider zone);
     protected abstract void HandleBallTaken(Entity entity);
 }
+

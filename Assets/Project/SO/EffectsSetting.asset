@@ -14,4 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _effectsData:
   - _id: 0
-    _effect: {fileID: 7317254845682095868, guid: d198ed3dd43b0ab4eadf94261274125a, type: 3}
+    _effects:
+    - {fileID: 7317254845682095868, guid: d198ed3dd43b0ab4eadf94261274125a, type: 3}
+    - {fileID: 7317254845682095868, guid: ef4114e0964f80349931e7c1adc28af6, type: 3}
+    - {fileID: 7317254845682095868, guid: d88679b13e2aa2e49b9f0438164866be, type: 3}
+  - _id: 2
+    _effects:
+    - {fileID: 7317254845682095868, guid: 58b24b923bf37fe45834fa1c58a86087, type: 3}
+    - {fileID: 7317254845682095868, guid: 04114ac1dec57d94f92ceb6e7c9d9169, type: 3}
+  - _id: 3
+    _effects:
+    - {fileID: 7753008160627204928, guid: 5b24d25451926db4485b5c164323abfd, type: 3}
+    - {fileID: 7753008160627204928, guid: ccfbfc5e6486ac64bad1c4b875ab6876, type: 3}
+    - {fileID: 7753008160627204928, guid: 80b5f409c8dcb064ebcbf1e102f32469, type: 3}
+    - {fileID: 7753008160627204928, guid: 36bf5d2e9218a974d8c288fc332b6749, type: 3}

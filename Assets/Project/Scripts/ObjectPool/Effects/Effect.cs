@@ -22,8 +22,6 @@ public class Effect : MonoBehaviour, IDestoyable<Effect>
 
         foreach (var particle in _particles)
             await WaitForParticleAsync(particle, _cancellationToken.Token);
-
-        Die();
     }
 
     private void OnDisable()
