@@ -1,4 +1,4 @@
-﻿static class Constans
+﻿public static class Constans
 {
     public static class Animation
     {
@@ -27,5 +27,19 @@
         public const string DeathFall = nameof(DeathFall);
         public const string DeathFallBack = nameof(DeathFallBack);
         public const string DeathSlowlyFallBack = nameof(DeathSlowlyFallBack);
+    }
+    
+    public enum Animations
+    {
+        Throw,
+        PrepareToThrow,
+        Idle,
+        Run,
+        DodgeRight,
+        DodgeLeft,
+        DodgeBackflip,
+        DodgeIdle,
+        PrepareToFightGolf,
+        PrepareToFightActiveStance,
     }
 }

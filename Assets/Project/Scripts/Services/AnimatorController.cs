@@ -11,7 +11,7 @@ public class AnimatorController
 
     private int _idle = Animator.StringToHash(Constans.Animation.Idle);
     private int _run = Animator.StringToHash(Constans.Animation.Run);
-    private int _throw = Animator.StringToHash(Constans.Animation.Throw);
+    private int _throw = Animator.StringToHash(Constans.Animations.Throw.ToString());
     private int _prepareToThrow = Animator.StringToHash(Constans.Animation.PrepareToThrow);
     private int _dodgeIdle = Animator.StringToHash(Constans.Animation.DodgeIdle);
 
