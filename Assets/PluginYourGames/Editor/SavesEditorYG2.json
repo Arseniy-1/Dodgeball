@@ -7,17 +7,20 @@
     false,
     false
   ],
-  "idSave": 35,
-  "IsSoundsEnabled": true,
-  "IsMusicEnabled": true,
-  "IsCameraShakeEnabled": true,
-  "CurrentRank": 0,
-  "CurrentRankAmount": 0,
-  "PreviousRankAmount": 0,
-  "AnimationData": {
-    "DodgeAnimationsHash": [
-      111242775,
-      1879438014
-    ]
+  "idSave": 36,
+  "AnimationsHolder": {
+    "DodgeAnimationsHash": [],
+    "DeathAnimationsHash": [],
+    "PrepareAnimationsHash": []
+  },
+  "SettingsData": {
+    "IsSoundsEnabled": true,
+    "IsMusicEnabled": true,
+    "IsCameraShakeEnabled": true
+  },
+  "ProgressData": {
+    "CurrentRank": 0,
+    "CurrentRankAmount": 0,
+    "PreviousRankAmount": 0
   }
 }

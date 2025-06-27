@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88b85d8c6cb4482aa4ca6a6d160f2bc6, type: 3}
+  m_Name: StartAnimations
+  m_EditorClassIdentifier: 
+  <DodgeAnimations>k__BackingField: 
+  <ThrowAnimations>k__BackingField: 
+  <SelebrateAnimations>k__BackingField: 
+  <DeathAnimations>k__BackingField: 
+  <PrepareAnimations>k__BackingField: 
+  <MoveAnimations>k__BackingField: 

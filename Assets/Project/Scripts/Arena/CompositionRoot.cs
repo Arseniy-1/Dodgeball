@@ -48,7 +48,7 @@ public class CompositionRoot : MonoBehaviour
             _enemySpawners.Add(enemySpawner);
         }
         
-        _saves.Initialize();
+        YG2.saves.InitializeSaves();
     }
 
     private void OnEnable()

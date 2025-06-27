@@ -65,21 +65,24 @@ public class AnimatorController
 
     public void Selebrate()
     {
-        int randomSelebrate = _selebrates[Random.Range(0, _selebrates.Count)];
+        var animationHashes = YG2.saves.AnimationsHolder.SelebrateAnimationsHash; 
+        int randomSelebrate = animationHashes[Random.Range(0, animationHashes.Count)];
 
         _animator.Play(randomSelebrate);
     }
 
     public void PrepareToBattle()
     {
-        int randomPrepare = _prepares[Random.Range(0, _prepares.Count)];
+        var animationHashes = YG2.saves.AnimationsHolder.PrepareAnimationsHash; 
+        int randomPrepare = animationHashes[Random.Range(0, animationHashes.Count)];
 
         _animator.Play(randomPrepare);
     }
 
     public UniTask Death()
     {
-        int randomDeath = _death[Random.Range(0, _death.Count)];
+        var animationHashes = YG2.saves.AnimationsHolder.DeathAnimationsHash; 
+        int randomDeath = animationHashes[Random.Range(0, animationHashes.Count)];
 
         return PlayAndWait(randomDeath, _cancellationTokenSource.Token);
     }

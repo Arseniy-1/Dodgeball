@@ -5,10 +5,7 @@ namespace YG
     public partial class SavesYG
     {
         [field: SerializeField] public AnimationsHolder AnimationsHolder { get; private set; } = new AnimationsHolder();
-        
-        [SerializeField] private DodgeAnimationsData _startDodgeAnimations;
-        [SerializeField] private DeathAnimationsData _startDeathAnimations;
-        [SerializeField] private PrepareAnimationsData _startPrepareAnimations;
+        [SerializeField] private StartAnimationsData _startAnimationsData;
         
         [field: SerializeField] public SettingsData SettingsData { get; private set; } = new SettingsData();
         [field: SerializeField] public ProgressData ProgressData { get; private set; } = new ProgressData();
@@ -16,7 +13,8 @@ namespace YG
         
         public void InitializeSaves()
         {
-            AnimationsHolder.Initialize(_startDodgeAnimations, _startDeathAnimations, _startPrepareAnimations);   
+            if(YG2.isFirstGameSession || true)
+                AnimationsHolder.Initialize(_startAnimationsData);   
         }
     }
 }
