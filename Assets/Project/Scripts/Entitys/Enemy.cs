@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 public class Enemy : Entity, IDestoyable<Enemy>
 {
-    [SerializeField] private EnemyStats _enemyStats;
+    [FormerlySerializedAs("_enemyStats")] [SerializeField] private EnemyConfig enemyConfig;
     
     private List<IState> _enemyStates = new();
     
@@ -13,7 +15,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
     public override void Initialize(Collider squadZone, List<Entity> teammates, Ball ball)
     {
         base.Initialize(squadZone, teammates, ball);
-        BallThrower.Initialize(_enemyStats);
+        BallThrower.Initialize(enemyConfig);
         
         foreach (var state in _enemyStates)
         {
@@ -26,10 +28,10 @@ public class Enemy : Entity, IDestoyable<Enemy>
         {
             new EnemyPrepareState(this, AnimatorController, TargetScanner, Teammates),
             new EnemySelebrateState(this, AnimatorController, Teammates),
-            new EnemyIdleState(this,AnimatorController, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyStats),
-            new EnemyMoveState(this, AnimatorController, _enemyStats, CollisionHandler, SquadZone, BallHolder, ball, Collider, Mover),
-            new EnemyDodgeState(this, AnimatorController, ball, Mover, SquadZone, Rigidbody, _enemyStats),
-            new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyStats),
+            new EnemyIdleState(this,AnimatorController, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, enemyConfig),
+            new EnemyMoveState(this, AnimatorController, enemyConfig, CollisionHandler, SquadZone, BallHolder, ball, Collider, Mover),
+            new EnemyDodgeState(this, AnimatorController, ball, Mover, SquadZone, Rigidbody, enemyConfig),
+            new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, enemyConfig),
             new EnemyJumpState(AnimatorController, CollisionHandler, HitCheker, Collider),
             new EnemyDeathState(AnimatorController, CollisionHandler, Collider, BallHolder)
         };

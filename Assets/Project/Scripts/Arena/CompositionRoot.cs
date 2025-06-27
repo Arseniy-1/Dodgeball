@@ -4,7 +4,6 @@ using Random = UnityEngine.Random;
 using YG;
 using System;
 using Cysharp.Threading.Tasks;
-using UnityEngine.Serialization;
 
 public class CompositionRoot : MonoBehaviour
 {
@@ -19,6 +18,8 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private AudioSettings _audioSettings;
     [SerializeField] private EffectsSetting _effectsSetting;
     
+    [SerializeField] private Saves _saves;
+    
     private EffectService _effectService;
     private AudioService _audioService;
     private RankHolder _rankHolder;
@@ -32,9 +33,6 @@ public class CompositionRoot : MonoBehaviour
 
     private void Awake()
     {
-        YandexGame.LoadProgress();
-        YandexGame.SwitchLanguage(YandexGame.savesData.language);
-
         _effectService = new EffectService(_effectsSetting.GetData());
         _audioService = new AudioService(_audioSettings.GetData());
         
@@ -49,6 +47,8 @@ public class CompositionRoot : MonoBehaviour
             EnemySpawner enemySpawner = new EnemySpawner(_enemyPrefabs[i]);
             _enemySpawners.Add(enemySpawner);
         }
+        
+        _saves.Initialize();
     }
 
     private void OnEnable()

@@ -29,7 +29,7 @@ public class LanquageSelectorCanvas : GameCanvas
 
     private void HanldeButtonClick(Lanquages lanquage)
     {
-        YandexGame.savesData.language = lanquage.ToString();
+        // YandexGame.savesData.language = lanquage.ToString();
     }
 
     private void Disable()

@@ -29,7 +29,7 @@ public abstract class SettingToggle : ButtonHandler
     protected override void HandleButtonClick()
     {
         Toggle();
-        YandexGame.SaveProgress();
+        YG2.SaveProgress();
         UpdateView();
     }
 

@@ -6,12 +6,12 @@ public class SoundsToggle : AudioToggle
 {
     protected override bool IsEnabled()
     {
-        return YandexGame.savesData.IsSoundsEnabled;
+        return YG2.saves.SettingsData.IsSoundsEnabled;
     }
 
     protected override void Toggle()
     {
-        YandexGame.savesData.IsSoundsEnabled = !YandexGame.savesData.IsSoundsEnabled;
+        YG2.saves.SettingsData.IsSoundsEnabled = !YG2.saves.SettingsData.IsSoundsEnabled;
         EnableVolume();
     }
 }

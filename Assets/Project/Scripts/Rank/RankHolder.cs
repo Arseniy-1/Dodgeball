@@ -15,8 +15,8 @@ public class RankHolder
 
     public void Initialize()
     {
-        _currentAmount = YandexGame.savesData.CurrentRankAmount;
-        _previousAmount = YandexGame.savesData.PreviousRankAmount;
+        _currentAmount = YG2.saves.ProgressData.CurrentRankAmount;
+        _previousAmount = YG2.saves.ProgressData.PreviousRankAmount;
     }
     
     public void IncreaseRank()
@@ -30,8 +30,8 @@ public class RankHolder
             MessageBrokerHolder.GameActions.Publish(new M_GrantChest());
         }
         
-        YandexGame.savesData.CurrentRankAmount = _currentAmount;
-        YandexGame.savesData.PreviousRankAmount = _previousAmount;
-        YandexGame.SaveProgress();
+        YG2.saves.ProgressData.CurrentRankAmount = _currentAmount;
+        YG2.saves.ProgressData.PreviousRankAmount = _previousAmount;
+        YG2.SaveProgress();
     }
 }

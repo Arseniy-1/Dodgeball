@@ -29,17 +29,47 @@
         public const string DeathSlowlyFallBack = nameof(DeathSlowlyFallBack);
     }
     
-    public enum Animations
+    public enum DodgeAnimations
     {
-        Throw,
-        PrepareToThrow,
-        Idle,
-        Run,
         DodgeRight,
         DodgeLeft,
         DodgeBackflip,
-        DodgeIdle,
+    }
+    
+    public enum ThrowAnimations
+    {
+        Throw,
+        PrepareToThrow,
+    }
+    
+    public enum SelebrateAnimations
+    {
+        SelebrateVictory,
+        SelebrateTwistDance,
+        SelebrateSillyDance,
+        SelebrateShufflingDance,
+        SelebrateHipHopDance,
+    }
+    
+    public enum DeathAnimations
+    {
+        DeathFall,
+        DeathFallBack,
+        DeathSlowlyFallBack
+    }
+    
+    public enum PrepareAnimations
+    {
         PrepareToFightGolf,
         PrepareToFightActiveStance,
+        PrepareToFightPassiveStance,
+        PrepareToFightWarmingUp,
+    }
+    
+    public enum MoveAnimations
+    {
+        Idle,
+        Run,
+        DodgeIdle,
     }
 }

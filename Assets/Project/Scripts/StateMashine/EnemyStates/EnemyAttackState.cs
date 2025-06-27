@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class EnemyAttackState : EntityAttackState
 {
-    private readonly EnemyStats _enemyStats;
+    private readonly EnemyConfig _enemyConfig;
 
     private float _shootDelay;
     private float _releaseTimer;
@@ -14,12 +14,12 @@ public class EnemyAttackState : EntityAttackState
         AnimatorController animatorController,
         BallHolder ballHolder, TargetScanner targetScanner,
         TargetProvider targetProvider, List<Entity> teammates,
-        BallThrower ballThrower, EnemyStats enemyStats) :
+        BallThrower ballThrower, EnemyConfig enemyConfig) :
         base(enemy, collisionHandler, collider, rigidbody,
             animatorController, ballHolder, targetScanner,
             targetProvider, teammates, ballThrower)
     {
-        _enemyStats = enemyStats;
+        _enemyConfig = enemyConfig;
     }
 
 
@@ -30,7 +30,7 @@ public class EnemyAttackState : EntityAttackState
         if (TargetProvider.Target != null)
             StartAttack();
 
-        _shootDelay = Random.Range(_enemyStats.MinThrowWait, _enemyStats.MaxThrowWait);
+        _shootDelay = Random.Range(_enemyConfig.MinThrowWait, _enemyConfig.MaxThrowWait);
         _releaseTimer = 0f;
         _hasReleased = false;
     }

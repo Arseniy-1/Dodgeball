@@ -9,7 +9,7 @@ public abstract class EntityMoveState : IState
     private readonly Ball _ball;
     private readonly Collider _collider;
     private readonly Rotator _rotator;
-    private readonly EntityStats _entityStats;
+    private readonly EntityConfig _entityConfig;
     private readonly Mover _mover;
 
     private CompositeDisposable _disposable;
@@ -20,7 +20,7 @@ public abstract class EntityMoveState : IState
     protected IStateSwitcher StateSwitcher;
 
     protected EntityMoveState(Entity entity, AnimatorController animatorController, CollisionHandler collisionHandler,
-        Collider squadZone, BallHolder ballHolder, Ball ball, Collider collider, EntityStats entityStats, Mover mover)
+        Collider squadZone, BallHolder ballHolder, Ball ball, Collider collider, EntityConfig entityConfig, Mover mover)
     {
         _entity = entity;
         _animatorController = animatorController;
@@ -29,7 +29,7 @@ public abstract class EntityMoveState : IState
         BallHolder = ballHolder;
         _ball = ball;
         _collider = collider;
-        _entityStats = entityStats;
+        _entityConfig = entityConfig;
         _rotator = new Rotator();
         _mover = mover;
     }
@@ -71,8 +71,8 @@ public abstract class EntityMoveState : IState
         if (_ball == null)
             return;
 
-        _rotator.RotateToTarget(_ball.transform, _entity.transform, _entityStats.RotationSpeed);
-        _mover.FollowTarget(_ball.transform, _entityStats.RunSpeed);
+        _rotator.RotateToTarget(_ball.transform, _entity.transform, _entityConfig.RotationSpeed);
+        _mover.FollowTarget(_ball.transform, _entityConfig.RunSpeed);
     }
 
     protected abstract void OnBallDetected(Ball ball);

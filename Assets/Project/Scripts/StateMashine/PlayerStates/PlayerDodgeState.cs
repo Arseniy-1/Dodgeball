@@ -5,8 +5,8 @@ public class PlayerDodgeState : EntityDodgeState
     private readonly PlayerInputController _playerInputController;
     
     public PlayerDodgeState(Player player, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, 
-        Rigidbody rigidbody, PlayerStats playerStats, PlayerInputController playerInputController)
-        : base(player, animatorController, ball, mover, squadZone, rigidbody, playerStats)
+        Rigidbody rigidbody, PlayerConfig playerConfig, PlayerInputController playerInputController)
+        : base(player, animatorController, ball, mover, squadZone, rigidbody, playerConfig)
     {
         _playerInputController = playerInputController;
     }
@@ -14,7 +14,6 @@ public class PlayerDodgeState : EntityDodgeState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("DodgeIdle");
         _playerInputController.ActionButtonStarted += Jump;
     }
 

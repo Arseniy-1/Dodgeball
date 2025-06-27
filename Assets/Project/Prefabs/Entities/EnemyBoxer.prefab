@@ -71,7 +71,7 @@ MonoBehaviour:
   CurrentState: 
   CurrentStates: []
   Ball: {fileID: 0}
-  _enemyStats: {fileID: 11400000, guid: 96f3e3c964ebed34b807e82e4a621b4e, type: 2}
+  enemyConfig: {fileID: 11400000, guid: 163097e900ea5cf489a17cc4150d2f8c, type: 2}
 --- !u!114 &5788073546011939865
 MonoBehaviour:
   m_ObjectHideFlags: 0

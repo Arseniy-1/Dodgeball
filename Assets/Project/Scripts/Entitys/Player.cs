@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : Entity, IDestoyable<Player>
 {
     [SerializeField] private PlayerInputController _inputController;
-    [SerializeField] private PlayerStats _playerStats;
+    [FormerlySerializedAs("_playerStats")] [SerializeField] private PlayerConfig playerConfig;
 
     private List<IState> _playerStates = new();
 
@@ -16,7 +17,7 @@ public class Player : Entity, IDestoyable<Player>
     public override void Initialize(Collider squadZone, List<Entity> teammates, Ball ball)
     {
         base.Initialize(squadZone, teammates, ball);
-        BallThrower.Initialize(_playerStats);
+        BallThrower.Initialize(playerConfig);
 
         foreach (var state in _playerStates)
         {
@@ -30,9 +31,9 @@ public class Player : Entity, IDestoyable<Player>
         {
             new PlayerPrepareState(this, AnimatorController, TargetScanner, Teammates),
             new PlayerSelebrateState(this, AnimatorController, Teammates),
-            new PlayerIdleState(this,AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerStats),
-            new PlayerMoveState(this, AnimatorController, Teammates, _playerStats, CollisionHandler, SquadZone, BallHolder, Ball, Collider, Mover),
-            new PlayerDodgeState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _playerStats, _inputController),
+            new PlayerIdleState(this,AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, playerConfig),
+            new PlayerMoveState(this, AnimatorController, Teammates, playerConfig, CollisionHandler, SquadZone, BallHolder, Ball, Collider, Mover),
+            new PlayerDodgeState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, playerConfig, _inputController),
             new PlayerAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController, BallThrower),
             new PlayerJumpState(AnimatorController, CollisionHandler, HitCheker, Collider),
             new PlayerDeathState(AnimatorController, CollisionHandler, Collider, BallHolder)

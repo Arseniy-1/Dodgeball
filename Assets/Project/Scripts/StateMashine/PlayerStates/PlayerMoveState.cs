@@ -7,9 +7,9 @@ public class PlayerMoveState : EntityMoveState
     private readonly List<Entity> _teammates;
 
     public PlayerMoveState(Player player, AnimatorController animatorController, List<Entity> teammates,
-        PlayerStats playerStats, CollisionHandler collisionHandler, Collider squadZone,
+        PlayerConfig playerConfig, CollisionHandler collisionHandler, Collider squadZone,
         BallHolder ballHolder, Ball ball, Collider collider, Mover mover)
-        : base(player, animatorController, collisionHandler, squadZone, ballHolder, ball, collider, playerStats, mover)
+        : base(player, animatorController, collisionHandler, squadZone, ballHolder, ball, collider, playerConfig, mover)
     {
         _player = player;
         _teammates = teammates;

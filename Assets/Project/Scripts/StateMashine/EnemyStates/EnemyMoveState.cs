@@ -4,10 +4,10 @@ public class EnemyMoveState : EntityMoveState
 {
     private readonly Enemy _enemy;
 
-    public EnemyMoveState(Enemy enemy, AnimatorController animatorController, EnemyStats enemyStats,
+    public EnemyMoveState(Enemy enemy, AnimatorController animatorController, EnemyConfig enemyConfig,
         CollisionHandler collisionHandler, Collider squadZone,
         BallHolder ballHolder, Ball ball, Collider collider, Mover mover)
-        : base(enemy, animatorController, collisionHandler, squadZone, ballHolder, ball, collider, enemyStats, mover)
+        : base(enemy, animatorController, collisionHandler, squadZone, ballHolder, ball, collider, enemyConfig, mover)
     {
         _enemy = enemy;
     }

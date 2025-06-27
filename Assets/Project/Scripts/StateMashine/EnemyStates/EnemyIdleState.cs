@@ -4,8 +4,8 @@ public class EnemyIdleState : EntityIdleState
 {
     public EnemyIdleState(Enemy enemy,
         AnimatorController animatorController, Ball ball, Mover mover, CollisionHandler collisionHandler,
-        Collider squadZone, Collider collider, Rigidbody rigidbody, EnemyStats enemyStats)
-        : base(animatorController, ball, mover, collisionHandler, squadZone, collider, rigidbody, enemy, enemyStats)
+        Collider squadZone, Collider collider, Rigidbody rigidbody, EnemyConfig enemyConfig)
+        : base(animatorController, ball, mover, collisionHandler, squadZone, collider, rigidbody, enemy, enemyConfig)
     {
     }
 

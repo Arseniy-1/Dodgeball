@@ -4,8 +4,8 @@ public class PlayerIdleState : EntityIdleState
 {
     public PlayerIdleState(Player player, AnimatorController animatorController, Ball ball,
         Mover mover, CollisionHandler collisionHandler, Collider squadZone,
-        Collider collider, Rigidbody rigidbody, PlayerStats playerStats)
-        : base(animatorController, ball, mover, collisionHandler, squadZone, collider, rigidbody, player,playerStats)
+        Collider collider, Rigidbody rigidbody, PlayerConfig playerConfig)
+        : base(animatorController, ball, mover, collisionHandler, squadZone, collider, rigidbody, player,playerConfig)
     {
     }
 

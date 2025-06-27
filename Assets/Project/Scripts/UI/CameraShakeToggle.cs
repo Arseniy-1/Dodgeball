@@ -4,11 +4,11 @@ public class CameraShakeToggle : SettingToggle
 {
     protected override bool IsEnabled()
     {
-        return YandexGame.savesData.IsCameraShakeEnabled;
+        return YG2.saves.SettingsData.IsCameraShakeEnabled;
     }
 
     protected override void Toggle()
     {
-        YandexGame.savesData.IsCameraShakeEnabled = !YandexGame.savesData.IsCameraShakeEnabled;
+        YG2.saves.SettingsData.IsCameraShakeEnabled = !YG2.saves.SettingsData.IsCameraShakeEnabled;
     }
 }

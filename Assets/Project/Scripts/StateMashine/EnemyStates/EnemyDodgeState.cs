@@ -5,14 +5,14 @@ using Random = UnityEngine.Random;
 
 public class EnemyDodgeState : EntityDodgeState
 {
-    private readonly EnemyStats _enemyStats;
+    private readonly EnemyConfig _enemyConfig;
     private IDisposable _jumpLoopDisposable;
 
     public EnemyDodgeState(Enemy enemy, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, 
-        Rigidbody rigidbody, EnemyStats enemyStats)
-        : base(enemy, animatorController, ball, mover, squadZone, rigidbody, enemyStats)
+        Rigidbody rigidbody, EnemyConfig enemyConfig)
+        : base(enemy, animatorController, ball, mover, squadZone, rigidbody, enemyConfig)
     {
-        _enemyStats = enemyStats;
+        _enemyConfig = enemyConfig;
     }
 
     public override void Enter()
@@ -38,7 +38,7 @@ public class EnemyDodgeState : EntityDodgeState
     {
         while (true)
         {
-            float waitTime = Random.Range(_enemyStats.DodgeJumpDelayMinTime, _enemyStats.DodgeJumpDelayMaxTime);
+            float waitTime = Random.Range(_enemyConfig.DodgeJumpDelayMinTime, _enemyConfig.DodgeJumpDelayMaxTime);
             yield return new WaitForSeconds(waitTime);
             StateSwitcher.SwitchState<EnemyJumpState>();
         }
