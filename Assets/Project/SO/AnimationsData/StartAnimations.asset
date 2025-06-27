@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b85d8c6cb4482aa4ca6a6d160f2bc6, type: 3}
   m_Name: StartAnimations
   m_EditorClassIdentifier: 
-  <DodgeAnimations>k__BackingField: 
-  <ThrowAnimations>k__BackingField: 
-  <SelebrateAnimations>k__BackingField: 
-  <DeathAnimations>k__BackingField: 
-  <PrepareAnimations>k__BackingField: 
-  <MoveAnimations>k__BackingField: 
+  <DodgeAnimations>k__BackingField: 0100000000000000
+  <SelebrateAnimations>k__BackingField: 00000000
+  <DeathAnimations>k__BackingField: 000000000100000002000000
+  <PrepareAnimations>k__BackingField: 0300000000000000

@@ -48,7 +48,6 @@ public class CompositionRoot : MonoBehaviour
             _enemySpawners.Add(enemySpawner);
         }
         
-        YG2.saves.InitializeSaves();
     }
 
     private void OnEnable()
@@ -65,6 +64,7 @@ public class CompositionRoot : MonoBehaviour
 
     private void Start()
     {
+        _saves.Initialize();
         CreateMap();
         _startGameCanvas.gameObject.SetActive(true);
     }

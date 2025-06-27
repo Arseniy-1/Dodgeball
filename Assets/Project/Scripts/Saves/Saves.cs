@@ -8,5 +8,6 @@ public class Saves : MonoBehaviour
     
     public void Initialize()
     {
+        _saves.InitializeSaves();
     }
 }

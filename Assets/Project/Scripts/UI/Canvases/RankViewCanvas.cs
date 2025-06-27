@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System;
+using System.Threading.Tasks;
 
 public class RankViewCanvas : InteractiveCanvas
 {

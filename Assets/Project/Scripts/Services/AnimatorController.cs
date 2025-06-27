@@ -11,37 +11,14 @@ public class AnimatorController
     private Animator _animator;
     private CancellationTokenSource _cancellationTokenSource;
 
-    private int _idle = Animator.StringToHash(Constans.MoveAnimations.Idle.ToString());
-    private int _run = Animator.StringToHash(Constans.MoveAnimations.Run.ToString());
+    private int _idle = Animator.StringToHash(Constans.ConstantAnimations.Idle.ToString());
+    private int _run = Animator.StringToHash(Constans.ConstantAnimations.Run.ToString());
 
-    private int _throw = Animator.StringToHash(Constans.ThrowAnimations.Throw.ToString());
-    private int _prepareToThrow = Animator.StringToHash(Constans.ThrowAnimations.PrepareToThrow.ToString());
+    private int _throw = Animator.StringToHash(Constans.ConstantAnimations.Throw.ToString());
+    private int _prepareToThrow = Animator.StringToHash(Constans.ConstantAnimations.PrepareToThrow.ToString());
 
-    private int _dodgeIdle = Animator.StringToHash(Constans.MoveAnimations.DodgeIdle.ToString());
-
-    private List<int> _prepares = new List<int>
-    {
-        Animator.StringToHash(Constans.PrepareAnimations.PrepareToFightGolf.ToString()),
-        Animator.StringToHash(Constans.PrepareAnimations.PrepareToFightActiveStance.ToString()),
-        Animator.StringToHash(Constans.PrepareAnimations.PrepareToFightPassiveStance.ToString()),
-        Animator.StringToHash(Constans.PrepareAnimations.PrepareToFightWarmingUp.ToString()),
-    };
-
-    private List<int> _selebrates = new List<int>
-    {
-        Animator.StringToHash(Constans.SelebrateAnimations.SelebrateVictory.ToString()),
-        Animator.StringToHash(Constans.SelebrateAnimations.SelebrateTwistDance.ToString()),
-        Animator.StringToHash(Constans.SelebrateAnimations.SelebrateSillyDance.ToString()),
-        Animator.StringToHash(Constans.SelebrateAnimations.SelebrateShufflingDance.ToString()),
-        Animator.StringToHash(Constans.SelebrateAnimations.SelebrateHipHopDance.ToString()),
-    };
-
-    private List<int> _death = new List<int>
-    {
-        Animator.StringToHash(Constans.DeathAnimations.DeathFall.ToString()),
-        Animator.StringToHash(Constans.DeathAnimations.DeathFallBack.ToString()),
-        Animator.StringToHash(Constans.DeathAnimations.DeathSlowlyFallBack.ToString()),
-    };
+    private int _dodgeIdle = Animator.StringToHash(Constans.ConstantAnimations.DodgeIdle.ToString());
+    
 
     public AnimatorController(Animator animator)
     {
@@ -55,11 +32,10 @@ public class AnimatorController
         _cancellationTokenSource.Dispose();
     }
 
-    public void Run() => _animator.Play(_run);
-
     public UniTask Attack() => PlayAndWait(_throw, _cancellationTokenSource.Token);
-
     public void PrepareAttack() => _animator.Play(_prepareToThrow);
+
+    public void Run() => _animator.Play(_run);
     public void Idle() => _animator.Play(_idle);
     public void DodgeIdle() => _animator.Play(_dodgeIdle);
 
