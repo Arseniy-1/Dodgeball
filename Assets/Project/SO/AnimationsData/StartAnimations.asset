@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DodgeAnimations>k__BackingField: 0100000000000000
   <SelebrateAnimations>k__BackingField: 00000000
-  <DeathAnimations>k__BackingField: 000000000100000002000000
-  <PrepareAnimations>k__BackingField: 0300000000000000
+  <DeathAnimations>k__BackingField: 0000000001000000
+  <PrepareAnimations>k__BackingField: 03000000

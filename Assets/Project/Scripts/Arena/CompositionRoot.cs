@@ -22,7 +22,8 @@ public class CompositionRoot : MonoBehaviour
     
     private EffectService _effectService;
     private AudioService _audioService;
-    private RankHolder _rankHolder;
+    private RewardService _rewardService;
+    private RankHolder _rankHolder; 
     
     private Ball _ballInstance;
 
@@ -35,7 +36,9 @@ public class CompositionRoot : MonoBehaviour
     {
         _effectService = new EffectService(_effectsSetting.GetData());
         _audioService = new AudioService(_audioSettings.GetData());
-        
+        _rewardService = new RewardService();
+     
+        _rewardService.Initialize();
         _rankHolder = new RankHolder();
         _rankHolder.Initialize();
         _rankViewCanvas.Initialize(_rankHolder);
@@ -47,7 +50,6 @@ public class CompositionRoot : MonoBehaviour
             EnemySpawner enemySpawner = new EnemySpawner(_enemyPrefabs[i]);
             _enemySpawners.Add(enemySpawner);
         }
-        
     }
 
     private void OnEnable()

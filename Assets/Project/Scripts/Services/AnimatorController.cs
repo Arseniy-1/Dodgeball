@@ -41,7 +41,7 @@ public class AnimatorController
 
     public void Selebrate()
     {
-        var animationHashes = YG2.saves.AnimationsHolder.SelebrateAnimationsHash; 
+        var animationHashes = YG2.saves.AnimationsHolder.CelebrateAnimationsHash; 
         int randomSelebrate = animationHashes[Random.Range(0, animationHashes.Count)];
 
         _animator.Play(randomSelebrate);

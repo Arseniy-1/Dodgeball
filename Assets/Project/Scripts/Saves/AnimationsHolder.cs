@@ -12,7 +12,7 @@ public class AnimationsHolder
     [SerializeField] private List<Constans.PrepareAnimations> _prepareAnimations = new List<Constans.PrepareAnimations>();
 
     [field: SerializeField] public List<int> DodgeAnimationsHash { get; private set; } = new List<int>();
-    [field: SerializeField] public List<int> SelebrateAnimationsHash { get; private set; } = new List<int>();
+    [field: SerializeField] public List<int> CelebrateAnimationsHash { get; private set; } = new List<int>();
     [field: SerializeField] public List<int> DeathAnimationsHash { get; private set; } = new List<int>();
     [field: SerializeField] public List<int> PrepareAnimationsHash { get; private set; } = new List<int>();
 
@@ -31,7 +31,7 @@ public class AnimationsHolder
             return;
         
         _selebrateAnimations.Add(animation);
-        SelebrateAnimationsHash.Add(Animator.StringToHash(animation.ToString()));
+        CelebrateAnimationsHash.Add(Animator.StringToHash(animation.ToString()));
     }
 
     public void AddDeathAnimation(Constans.DeathAnimations animation)
