@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class RewardService
 {
     [SerializeField] private RewardAnimations _rewardAnimations;
-    private List<AnimationInfo> _animations = new List<AnimationInfo>();
+    private List<AnimatorClipInfo> _animations = new List<AnimatorClipInfo>();
 
     public void Initialize()
     {
@@ -20,7 +20,7 @@ public class RewardService
             
             if (YG2.saves.AnimationsHolder.DodgeAnimationsHash.Contains(animationHash) == false)
             {
-                _animations.Add(new AnimationInfo
+                _animations.Add(new AnimatorClipInfo
                 {
                     Hash = animationHash,
                     Name = animation.Name
@@ -34,7 +34,7 @@ public class RewardService
             
             if (YG2.saves.AnimationsHolder.CelebrateAnimationsHash.Contains(animationHash) == false)
             {
-                _animations.Add(new AnimationInfo
+                _animations.Add(new AnimatorClipInfo
                 {
                     Hash = animationHash,
                     Name = animation.Name
@@ -48,7 +48,7 @@ public class RewardService
             
             if (YG2.saves.AnimationsHolder.DeathAnimationsHash.Contains(animationHash) == false)
             {
-                _animations.Add(new AnimationInfo
+                _animations.Add(new AnimatorClipInfo
                 {
                     Hash = animationHash,
                     Name = animation.Name
@@ -62,7 +62,7 @@ public class RewardService
             
             if (YG2.saves.AnimationsHolder.PrepareAnimationsHash.Contains(animationHash) == false)
             {
-                _animations.Add(new AnimationInfo
+                _animations.Add(new AnimatorClipInfo
                 {
                     Hash = animationHash,
                     Name = animation.Name
@@ -71,8 +71,14 @@ public class RewardService
         }
     }
 
-    public AnimationInfo GetRandomAnimation()
+    public AnimatorClipInfo GetRandomAnimation()
     {
         return _animations[Random.Range(0, _animations.Count)];
     }
+}
+
+public struct AnimationInfo
+{
+    public int Hash;
+    public string Name;
 }

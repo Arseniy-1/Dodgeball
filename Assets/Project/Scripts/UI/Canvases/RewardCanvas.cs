@@ -14,13 +14,12 @@ public class RewardCanvas : InteractiveCanvas
         _rewardService = rewardService;
     }
     
-    protected override void HandleButtonClick()
+    protected override async void HandleButtonClick()
     {
         await _reward.ShowRewardAnimation();
         _modelView.gameObject.SetActive(true);
         
-        YG2.saves.AnimationsHolder.
-        
+        YG2.saves.AnimationsHolder.AddDeathAnimation();
     }
 }
 
