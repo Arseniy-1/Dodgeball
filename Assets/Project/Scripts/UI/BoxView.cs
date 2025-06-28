@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,7 @@ public class BoxView : MonoBehaviour
         _originalScale = Vector3.one;
         SetupStaticAnimation();
     }
-    
+
     public void Disable()
     {
         gameObject.SetActive(false);
@@ -38,18 +39,18 @@ public class BoxView : MonoBehaviour
             .SetEase(Ease.InOutSine);
     }
 
-    public async UniTask ShowBoxAnimation(float duration, CancellationToken cancellationToken)
+    public async UniTask ShowBoxAnimation(float duration, float endScale, float whiteFadeDuration)
     {
         _staticAnimation.Complete();
 
         _burstAnimation = DOTween.Sequence()
             .Append(_rewardBoxImage.transform.DOShakeScale(duration, 0.3f, 10))
             .Join(_rewardBoxImage.transform.DOShakeRotation(duration, 15f, 10))
+            .Append(_rewardBoxImage.transform.DOScale(endScale, whiteFadeDuration))
+            .Join(_rewardBoxImage.DOColor(Color.black, whiteFadeDuration))
             .SetEase(Ease.InOutQuad);
 
-        await UniTask.WaitUntil(() =>
-                _burstAnimation.IsActive() == false || _burstAnimation.IsPlaying() == false,
-            cancellationToken: cancellationToken);
+        await _burstAnimation.AsyncWaitForCompletion();
     }
 
     private void ResetBox()

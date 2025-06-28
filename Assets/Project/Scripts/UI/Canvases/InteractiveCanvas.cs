@@ -7,15 +7,20 @@ public abstract class InteractiveCanvas : GameCanvas
 {
     [SerializeField] private Button _button;
     
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
+        EnableButton();
         _button.onClick.AddListener(HandleButtonClick);
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         _button.onClick.RemoveListener(HandleButtonClick);
     }
+
+    protected void DisableButton() => _button.interactable = false;
+
+    protected void EnableButton() => _button.interactable = true;
 
     protected abstract void HandleButtonClick();
 }
