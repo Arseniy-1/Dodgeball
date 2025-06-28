@@ -1,9 +1,9 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Reward : MonoBehaviour
+public class BoxView : MonoBehaviour
 {
     [SerializeField] private Image _rewardBoxImage;
     

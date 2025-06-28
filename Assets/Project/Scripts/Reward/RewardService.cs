@@ -8,11 +8,23 @@ using Random = UnityEngine.Random;
 public class RewardService
 {
     [SerializeField] private RewardAnimations _rewardAnimations;
-    private List<AnimatorClipInfo> _animations = new List<AnimatorClipInfo>();
+    
+    private List<DodgeAnimationData> _availableDodgeAnimations = new List<DodgeAnimationData>();
+    private List<CelebrateAnimationData> _availableCelebrateAnimations = new List<CelebrateAnimationData>();
+    private List<DeathAnimationData> _availableDeathAnimations = new List<DeathAnimationData>();
+    private List<PrepareAnimationData> _availablePrepareAnimations = new List<PrepareAnimationData>();
+    
+    public int DodgeAnimationCount => _availableDodgeAnimations.Count;
+    public int CelebrateAnimationCount => _availableCelebrateAnimations.Count;
+    public int DeathAnimationCount => _availableDeathAnimations.Count;
+    public int PrepareAnimationCount => _availablePrepareAnimations.Count;
 
     public void Initialize()
     {
-        _animations.Clear();
+        _availableDodgeAnimations.Clear();
+        _availableCelebrateAnimations.Clear();
+        _availableDeathAnimations.Clear();
+        _availablePrepareAnimations.Clear();
 
         foreach (var animation in _rewardAnimations.DodgeAnimations)
         {
@@ -20,9 +32,9 @@ public class RewardService
             
             if (YG2.saves.AnimationsHolder.DodgeAnimationsHash.Contains(animationHash) == false)
             {
-                _animations.Add(new AnimatorClipInfo
+                _availableDodgeAnimations.Add(new DodgeAnimationData
                 {
-                    Hash = animationHash,
+                    AnimationType = animation.AnimationType,
                     Name = animation.Name
                 });
             }
@@ -34,9 +46,9 @@ public class RewardService
             
             if (YG2.saves.AnimationsHolder.CelebrateAnimationsHash.Contains(animationHash) == false)
             {
-                _animations.Add(new AnimatorClipInfo
+                _availableCelebrateAnimations.Add(new CelebrateAnimationData
                 {
-                    Hash = animationHash,
+                    AnimationType = animation.AnimationType,
                     Name = animation.Name
                 });
             }
@@ -48,9 +60,9 @@ public class RewardService
             
             if (YG2.saves.AnimationsHolder.DeathAnimationsHash.Contains(animationHash) == false)
             {
-                _animations.Add(new AnimatorClipInfo
+                _availableDeathAnimations.Add(new DeathAnimationData
                 {
-                    Hash = animationHash,
+                    AnimationType = animation.AnimationType,
                     Name = animation.Name
                 });
             }
@@ -62,23 +74,48 @@ public class RewardService
             
             if (YG2.saves.AnimationsHolder.PrepareAnimationsHash.Contains(animationHash) == false)
             {
-                _animations.Add(new AnimatorClipInfo
+                _availablePrepareAnimations.Add(new PrepareAnimationData
                 {
-                    Hash = animationHash,
+                    AnimationType = animation.AnimationType,
                     Name = animation.Name
                 });
             }
         }
     }
 
-    public AnimatorClipInfo GetRandomAnimation()
+    public DodgeAnimationData GetRandomDodgeAnimation()
     {
-        return _animations[Random.Range(0, _animations.Count)];
-    }
-}
+        int index = Random.Range(0, _availableDodgeAnimations.Count);
+        var animation = _availableDodgeAnimations[index];
+        _availableDodgeAnimations.RemoveAt(index);
 
-public struct AnimationInfo
-{
-    public int Hash;
-    public string Name;
+        return animation;
+    }
+
+    public CelebrateAnimationData GetRandomCelebrateAnimation()
+    {
+        int index = Random.Range(0, _availableCelebrateAnimations.Count);
+        var animation = _availableCelebrateAnimations[index];
+        _availableCelebrateAnimations.RemoveAt(index);
+
+        return animation;
+    }
+
+    public DeathAnimationData GetRandomDeathAnimation()
+    {
+        int index = Random.Range(0, _availableDeathAnimations.Count);
+        var animation = _availableDeathAnimations[index];
+        _availableDeathAnimations.RemoveAt(index);
+
+        return animation;
+    }
+
+    public PrepareAnimationData GetRandomPrepareAnimation()
+    {
+        int index = Random.Range(0, _availablePrepareAnimations.Count);
+        var animation = _availablePrepareAnimations[index];
+        _availablePrepareAnimations.RemoveAt(index);
+
+        return animation;
+    }
 }

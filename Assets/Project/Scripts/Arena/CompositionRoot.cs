@@ -14,6 +14,7 @@ public class CompositionRoot : MonoBehaviour
     
     [SerializeField] private StartGameCanvas _startGameCanvas;
     [SerializeField] private RankViewCanvas _rankViewCanvas;
+    [SerializeField] private RewardCanvas _rewardCanvas;
     
     [SerializeField] private AudioSettings _audioSettings;
     [SerializeField] private EffectsSetting _effectsSetting;
@@ -37,6 +38,7 @@ public class CompositionRoot : MonoBehaviour
         _effectService = new EffectService(_effectsSetting.GetData());
         _audioService = new AudioService(_audioSettings.GetData());
         _rewardService = new RewardService();
+        _rewardCanvas.Initialize(_rewardService);
      
         _rewardService.Initialize();
         _rankHolder = new RankHolder();

@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Serialization;
 using YG;
 
 public class RewardCanvas : InteractiveCanvas
 {
-    [SerializeField] private Reward _reward;
+    [FormerlySerializedAs("_reward")] [SerializeField] private BoxView boxView;
     [SerializeField] private ModelView _modelView;
     
     private RewardService _rewardService;
@@ -16,14 +16,14 @@ public class RewardCanvas : InteractiveCanvas
     
     protected override async void HandleButtonClick()
     {
-        await _reward.ShowRewardAnimation();
-        _modelView.gameObject.SetActive(true);
+        await boxView.ShowRewardAnimation();
         
-        YG2.saves.AnimationsHolder.AddDeathAnimation();
+        DeathAnimationData deathAnimationData = _rewardService.GetRandomDeathAnimation();
+        YG2.saves.AnimationsHolder.AddDeathAnimation(deathAnimationData.AnimationType);
+        
+        _modelView.gameObject.SetActive(true);
+        int animationHash = Animator.StringToHash(deathAnimationData.AnimationType.ToString());
+        
+        _modelView.ShowReward(animationHash, deathAnimationData.Name);
     }
 }
-
-public class ModelView : MonoBehaviour
-{
-    
-} 
