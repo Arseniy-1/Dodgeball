@@ -27,8 +27,8 @@ public class UserInfoView : MonoBehaviour
         _rankAmountBar.Initialize(_rankHolder);
         _rankAmountTextView.Initialize(_rankHolder);
 
-        if (YG2.infoYG.Authorization.authorized)
-            _userName.text = YG2.player.name;
+        // if (YG2.infoYG.Authorization.authorized)
+        _userName.text = YG2.player.name;
     }
 
     private void HandleRankRaised()

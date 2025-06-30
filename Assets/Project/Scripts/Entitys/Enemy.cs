@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Enemy : Entity, IDestoyable<Enemy>
 {
-    [FormerlySerializedAs("_enemyStats")] [SerializeField] private EnemyConfig enemyConfig;
+    [SerializeField] private EnemyConfig enemyConfig;
     
     private List<IState> _enemyStates = new();
     

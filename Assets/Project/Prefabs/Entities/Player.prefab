@@ -169,7 +169,7 @@ MonoBehaviour:
   CurrentStates: []
   Ball: {fileID: 0}
   _inputController: {fileID: 4030301884747883651}
-  playerConfig: {fileID: 11400000, guid: 5dfc860117b55e241b2d86868264e357, type: 2}
+  _playerConfig: {fileID: 11400000, guid: 5dfc860117b55e241b2d86868264e357, type: 2}
 --- !u!114 &2967383579765363493
 MonoBehaviour:
   m_ObjectHideFlags: 0

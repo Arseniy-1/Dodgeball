@@ -26,7 +26,7 @@ public class Arena : MonoBehaviour
     private int _minWinRankAmount = 15;
     
     private int _maxLoseRankAmount = 10;
-    private int _minloseRankAmount = 3;
+    private int _minLoseRankAmount = 3;
     
     public List<Squad> Squads => _squads;
 
@@ -81,7 +81,7 @@ public class Arena : MonoBehaviour
 
         NotifyWinners();
         
-        int rankAmount = Random.Range(_minloseRankAmount, _maxLoseRankAmount);
+        int rankAmount = Random.Range(_minLoseRankAmount, _maxLoseRankAmount);
         GameOver?.Invoke(rankAmount);
     }
     

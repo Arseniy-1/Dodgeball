@@ -14,19 +14,19 @@ public class RewardCanvas : InteractiveCanvas
 
     private CancellationTokenSource _cancellationTokenSource;
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        
+        _boxView.Enable();
+    }
+    
     protected override void OnDisable()
     {
         base.OnDisable();
 
         _cancellationTokenSource.Cancel();
         _boxView.Disable();
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        
-        _boxView.Enable();
     }
 
     public void Initialize(RewardService rewardService)

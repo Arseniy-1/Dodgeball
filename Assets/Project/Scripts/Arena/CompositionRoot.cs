@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
-using YG;
 using System;
 using Cysharp.Threading.Tasks;
+using YG;
 
 public class CompositionRoot : MonoBehaviour
 {
@@ -61,12 +61,14 @@ public class CompositionRoot : MonoBehaviour
     {
         _startGameCanvas.OnStartGameButtonPressed += StartGame;
         _rankViewCanvas.OnRewardViewClosed += HandleRankCanvasClose;
+        _rankHolder.RankRaised += GiveReward;
     }
 
     private void OnDisable()
     {
         _startGameCanvas.OnStartGameButtonPressed -= StartGame;
         _rankViewCanvas.OnRewardViewClosed -= HandleRankCanvasClose;
+        _rankHolder.RankRaised -= GiveReward;
     }
 
     private void Start()
@@ -124,7 +126,6 @@ public class CompositionRoot : MonoBehaviour
             }
         }
 
-        _gameCanvas.Initialize(enemiesCount, playersCount);
         _arenaInstance.GameOver += HandleGameOverWrapper;
     }
 
@@ -184,19 +185,24 @@ public class CompositionRoot : MonoBehaviour
 
     private void FillEnemySquad(EnemySpawner enemySpawner, Squad squad)
     {
-        List<Entity> enemys = new List<Entity>();
+        List<Entity> enemies = new List<Entity>();
 
         for (int i = 0; i < squad.SpawnPoints.Count; i++)
         {
             Enemy enemy = enemySpawner.Spawn();
             enemy.transform.position = squad.SpawnPoints[i].position;
 
-            enemys.Add(enemy);
+            enemies.Add(enemy);
         }
 
-        foreach (var enemy in enemys)
-            enemy.Initialize(squad.SquadZone, enemys, _ballInstance);
+        foreach (var enemy in enemies)
+            enemy.Initialize(squad.SquadZone, enemies, _ballInstance);
 
-        squad.Initialize(enemys);
+        squad.Initialize(enemies);
+    }
+
+    private void GiveReward()
+    {
+        _rewardCanvas.gameObject.SetActive(true);
     }
 }

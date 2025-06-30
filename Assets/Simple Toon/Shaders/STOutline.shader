@@ -48,7 +48,8 @@ Shader "Simple Toon/SToon Outline"
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile_fwdbase
-
+			#pragma multi_compile_instancing
+            
             #include "UnityCG.cginc"
             #include "UnityLightingCommon.cginc"
             #include "AutoLight.cginc"
