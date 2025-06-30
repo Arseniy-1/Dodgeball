@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class InteractiveCanvas : GameCanvas

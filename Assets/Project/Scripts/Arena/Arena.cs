@@ -22,9 +22,15 @@ public class Arena : MonoBehaviour
     private List<Squad> _deathSquads;
     private CancellationTokenSource _cancellationTokenSource;
 
+    private int _maxWinRankAmount = 40;
+    private int _minWinRankAmount = 15;
+    
+    private int _maxLoseRankAmount = 10;
+    private int _minloseRankAmount = 3;
+    
     public List<Squad> Squads => _squads;
 
-    public event Action GameOver;
+    public event Action<int> GameOver;
 
     private void Awake()
     {
@@ -63,7 +69,9 @@ public class Arena : MonoBehaviour
         if (_deathSquads.Count == _squads.Count - 1)
         {
             NotifyWinners();
-            GameOver?.Invoke();
+            
+            int rankAmount = Random.Range(_minWinRankAmount, _maxWinRankAmount);
+            GameOver?.Invoke(rankAmount);
         }
     }
 
@@ -72,7 +80,9 @@ public class Arena : MonoBehaviour
         squad.LostPlayers -= HandlePlayerSquadDeath;
 
         NotifyWinners();
-        GameOver?.Invoke();
+        
+        int rankAmount = Random.Range(_minloseRankAmount, _maxLoseRankAmount);
+        GameOver?.Invoke(rankAmount);
     }
     
     private async UniTaskVoid EnableFrame()
@@ -110,7 +120,7 @@ public class Arena : MonoBehaviour
 
         foreach (var squad in winners)
         {
-            squad.Selebrate();
+            squad.Celebrate();
         }
     }
 }

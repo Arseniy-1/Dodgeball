@@ -40,7 +40,7 @@ public class Squad : MonoBehaviour
         }
     }
 
-    public void Selebrate()
+    public void Celebrate()
     {
         foreach (var entity in _entities)
         {

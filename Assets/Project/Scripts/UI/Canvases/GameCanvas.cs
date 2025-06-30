@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
 
-public class GameCanvas : MonoBehaviour
+public abstract class GameCanvas : MonoBehaviour
 {
 }

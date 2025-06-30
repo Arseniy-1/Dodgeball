@@ -11,21 +11,23 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private List<Enemy> _enemyPrefabs;
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private Ball _ballPrefab;
-    
+
     [SerializeField] private StartGameCanvas _startGameCanvas;
     [SerializeField] private RankViewCanvas _rankViewCanvas;
     [SerializeField] private RewardCanvas _rewardCanvas;
-    
+    [SerializeField] private GameUICanvas _gameCanvas;
+    [SerializeField] private UserInfoView _userInfoView;
+
     [SerializeField] private AudioSettings _audioSettings;
     [SerializeField] private EffectsSetting _effectsSetting;
-    
+
     [SerializeField] private Saves _saves;
-    
+
     [SerializeField] private RewardService _rewardService;
     private EffectService _effectService;
     private AudioService _audioService;
-    private RankHolder _rankHolder; 
-    
+    private RankHolder _rankHolder;
+
     private Ball _ballInstance;
 
     private PlayerSpawner _playerSpawner;
@@ -38,11 +40,13 @@ public class CompositionRoot : MonoBehaviour
         _effectService = new EffectService(_effectsSetting.GetData());
         _audioService = new AudioService(_audioSettings.GetData());
         _rewardCanvas.Initialize(_rewardService);
-     
+
         _rewardService.Initialize();
         _rankHolder = new RankHolder();
         _rankHolder.Initialize();
         _rankViewCanvas.Initialize(_rankHolder);
+
+        _userInfoView.Initialize(_rankHolder);
 
         _playerSpawner = new PlayerSpawner(_playerPrefab);
 
@@ -75,28 +79,27 @@ public class CompositionRoot : MonoBehaviour
     private void StartGame()
     {
         _startGameCanvas.gameObject.SetActive(false);
-
+        _gameCanvas.gameObject.SetActive(true);
         _arenaInstance.StartGame(_ballInstance);
 
         MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
     }
-    
+
     private void CreateMap()
     {
         if (_arenaInstance != null)
         {
             ClearEntities();
-
             Destroy(_arenaInstance.gameObject);
         }
 
         Arena arenaPrefab = _arenaPrefabs[Random.Range(0, _arenaPrefabs.Count)];
 
         _arenaInstance = Instantiate(arenaPrefab, transform.position, Quaternion.identity);
-        
+
         if (_ballInstance != null)
             Destroy(_ballInstance.gameObject);
-        
+
         float ballOffsetY = 2f;
         float ballOffsetX = 2f;
         float ballOffsetZ = 2f;
@@ -104,31 +107,42 @@ public class CompositionRoot : MonoBehaviour
             transform.position.z + ballOffsetZ);
         _ballInstance = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
 
+        int playersCount = 0;
+        int enemiesCount = 0;
+
         for (int i = 0; i < _arenaInstance.Squads.Count; i++)
         {
             if (i == 0)
+            {
                 FillPlayerSquad(_playerSpawner, _arenaInstance.Squads[i]);
+                playersCount += _arenaInstance.Squads[i].SpawnPoints.Count;
+            }
             else
+            {
                 FillEnemySquad(_enemySpawners[Random.Range(0, _enemySpawners.Count)], _arenaInstance.Squads[i]);
+                enemiesCount += _arenaInstance.Squads[i].SpawnPoints.Count;
+            }
         }
 
+        _gameCanvas.Initialize(enemiesCount, playersCount);
         _arenaInstance.GameOver += HandleGameOverWrapper;
     }
 
-    private void HandleGameOverWrapper()
+    private void HandleGameOverWrapper(int rankAmount)
     {
+        _gameCanvas.gameObject.SetActive(false);
+        _rankHolder.IncreaseRank(rankAmount);
         HandleGameOver().Forget();
     }
-    
+
     private async UniTaskVoid HandleGameOver()
     {
         _arenaInstance.GameOver -= HandleGameOverWrapper;
         MessageBrokerHolder.GameActions.Publish(new M_GameOver());
-        
+
         float waitTime = 3f;
         await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
 
-        _rankHolder.IncreaseRank();
         _rankViewCanvas.gameObject.SetActive(true);
         _rankViewCanvas.ShowResults();
     }
@@ -161,7 +175,7 @@ public class CompositionRoot : MonoBehaviour
 
             players.Add(player);
         }
-        
+
         foreach (var player in players)
             player.Initialize(squad.SquadZone, players, _ballInstance);
 

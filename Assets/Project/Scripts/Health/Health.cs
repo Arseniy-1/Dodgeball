@@ -4,12 +4,12 @@ using Sirenix.OdinInspector;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float _maxHealth;
-    [SerializeField] private float _currentHealthPoint;
+    [SerializeField] private int _maxHealth;
+    [SerializeField] private int _currentHealthPoint;
 
     private CollisionHandler _collisionHandler;
 
-    public event Action<float, float> HealthChanged;
+    public event Action<int, int> HealthChanged;
     public event Action LostHealth;
 
     private void OnEnable()

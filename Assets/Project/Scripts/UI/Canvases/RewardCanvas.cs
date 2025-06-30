@@ -43,7 +43,7 @@ public class RewardCanvas : InteractiveCanvas
         await _boxView.ShowBoxAnimation(_boxAnimationDuration, _boxEndScale, _boxWhiteFadeDuration);
         _boxView.Disable();
 
-        DeathAnimationData deathAnimationData = _rewardService.GetRandomDeathAnimation();
+        // DeathAnimationData deathAnimationData = _rewardService.GetRandomDeathAnimation();
         CelebrateAnimationData celebrateAnimationData = _rewardService.GetRandomCelebrateAnimation();
         // YG2.saves.AnimationsHolder.AddDeathAnimation(deathAnimationData.AnimationType);
 
@@ -58,6 +58,7 @@ public class RewardCanvas : InteractiveCanvas
     private void CloseWindow()
     {
         _playerInputController.ActionButtonCanceled -= CloseWindow;
+        _modelView.Disable();
         gameObject.SetActive(false);
     }
 }
