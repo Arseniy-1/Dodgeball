@@ -5,6 +5,7 @@ using Sirenix.Serialization;
 using UnityEngine;
 using UniRx;
 using UnityEngine.Pool;
+using YG;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 using AudioData = AudioSettings.AudioData;
@@ -24,7 +25,7 @@ public class AudioService : IDisposable
         Object.DontDestroyOnLoad(poolHolder);
 
         AudioSource audioSourse = new GameObject("AudioSourse").AddComponent<AudioSource>();
-        
+
         _audioPool = new ObjectPool<AudioSource>(() => Object.Instantiate(audioSourse, poolHolder.transform));
 
         _compositeDisposable = new CompositeDisposable();
@@ -35,14 +36,17 @@ public class AudioService : IDisposable
                 PlaySound(message.AudioID))
             .AddTo(_compositeDisposable);
     }
-    
+
     public void Dispose()
     {
-        _compositeDisposable.Dispose();   
+        _compositeDisposable.Dispose();
     }
 
     private void PlaySound(AudioID audioID)
     {
+        if (YG2.saves.SettingsData.IsSoundsEnabled)
+            return;
+
         AudioData data = _audioData[audioID];
         AudioClip randomClip = data.Clips[Random.Range(0, data.Clips.Count)];
         float pitch = Random.Range(data._pitchRange.x, data._pitchRange.y);
@@ -50,7 +54,7 @@ public class AudioService : IDisposable
         AudioSource audioSource = _audioPool.Get();
         audioSource.volume = data.Volume;
         audioSource.pitch = pitch;
-        
+
         audioSource.PlayOneShot(randomClip);
         ReleaseSourse(audioSource, _audioPool, randomClip.length).Forget();
     }
