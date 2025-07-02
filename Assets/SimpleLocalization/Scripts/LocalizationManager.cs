@@ -33,7 +33,7 @@ namespace Assets.SimpleLocalization.Scripts
 		/// </summary>
         public static void AutoLanguage()
         {
-            Language = "English";
+            Language = "(Not set)English";
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Assets.SimpleLocalization.Scripts
                 }
             }
 
-            AutoLanguage();
+            // AutoLanguage();
         }
 
         /// <summary>

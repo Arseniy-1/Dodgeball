@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Assets.SimpleLocalization.Scripts;
 using TMPro;
 
 public class LanquageButton : ButtonHandler
@@ -12,14 +13,19 @@ public class LanquageButton : ButtonHandler
     
     public event Action<Lanquages> OnClick;
 
-    private void OnEnable()
+    private void Start()
     {
-        _name.text = _languageData.Name;
+        UpdateLanguage();
         _view.sprite = _languageData.View;
+    }
+
+    public void UpdateLanguage()
+    {
+        _name.text = LocalizationManager.Localize(_languageData.Language.ToString());
     }
     
     protected override void HandleButtonClick()
     {
-        OnClick?.Invoke(_languageData.Lanquage);
+        OnClick?.Invoke(_languageData.Language);
     }
 }

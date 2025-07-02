@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -17,10 +18,9 @@ public abstract class EntityIdleState : IState
     private readonly EntityConfig _entityConfig;
 
     private CompositeDisposable _disposable;
-    private IDisposable _movementLoopDisposable;
+    private CancellationTokenSource _cancellationTokenSource;
 
     protected readonly Collider SquadZone;
-
     protected IStateSwitcher StateSwitcher;
     
     protected EntityIdleState(
@@ -48,51 +48,56 @@ public abstract class EntityIdleState : IState
 
     public virtual void Enter()
     {
+        _cancellationTokenSource = new CancellationTokenSource();
+     
         _disposable = new CompositeDisposable();
 
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))
             .AddTo(_disposable);
-
+        
         _rigidbody.isKinematic = true;
         _collisionHandler.enabled = false;
         _collider.enabled = false;
 
         _animatorController.Idle();
-        StartIdleMovementLoop();
+        RunIdleMovementLoop(_cancellationTokenSource.Token).Forget();
     }
 
     public virtual void Exit()
     {
+        _cancellationTokenSource?.Cancel();
+        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource = null;
+        
         _disposable.Dispose();
-
+        
         _rigidbody.isKinematic = false;
         _collisionHandler.enabled = true;
         _collider.enabled = true;
-
-        _mover.Stop();
-        _movementLoopDisposable?.Dispose();
     }
     
-    private void StartIdleMovementLoop()
+    private async UniTaskVoid RunIdleMovementLoop(CancellationToken token)
     {
-        _movementLoopDisposable = Observable.FromCoroutine(IdleMovementLoop)
-            .Subscribe()
-            .AddTo(_disposable);
-    }
-
-    private System.Collections.IEnumerator IdleMovementLoop()
-    {
-        while (true)
+        while (token.IsCancellationRequested == false)
         {
             float standTime = Random.Range(_entityConfig.IdleMinStandTime, _entityConfig.IdleMaxStandTime);
-
             Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
+            
             _animatorController.DodgeIdle();
-            yield return _mover.MoveTo(target, _entityConfig.WalkSpeed);
+            
+            if (token.IsCancellationRequested)
+                return;
+            
+            Debug.Log("Idle movement loop " + _entity.gameObject.name);
+            await _mover.MoveTo(target, _entityConfig.WalkSpeed, token);
+                        
+            if (token.IsCancellationRequested)
+                return;
+            
             _animatorController.Idle();
-            yield return new WaitForSeconds(standTime);
+            await UniTask.Delay((int)(standTime * 1000), cancellationToken: token);
         }
     }
 

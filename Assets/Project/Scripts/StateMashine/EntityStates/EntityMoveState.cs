@@ -1,4 +1,6 @@
-﻿using UniRx;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using UniRx;
 using UnityEngine;
 
 public abstract class EntityMoveState : IState
@@ -12,7 +14,7 @@ public abstract class EntityMoveState : IState
     private readonly EntityConfig _entityConfig;
     private readonly Mover _mover;
 
-    private CompositeDisposable _disposable;
+    private CancellationTokenSource _cancellationTokenSource;
 
     protected readonly BallHolder BallHolder;
     protected readonly Collider SquadZone;
@@ -41,17 +43,17 @@ public abstract class EntityMoveState : IState
 
     public virtual void Enter()
     {
-        _disposable = new CompositeDisposable();
+        _cancellationTokenSource = new CancellationTokenSource();
 
         _collisionHandler.BallDetected += OnBallDetected;
 
         MessageBrokerHolder.GameActions.Receive<M_BallTaken>()
             .Subscribe(message => HandleBallTaken(message.Entity))
-            .AddTo(_disposable);
+            .AddTo(_cancellationTokenSource.Token);
 
         MessageBrokerHolder.GameActions.Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))
-            .AddTo(_disposable);
+            .AddTo(_cancellationTokenSource.Token);
 
         _collisionHandler.enabled = true;
         _collider.enabled = true;
@@ -62,8 +64,8 @@ public abstract class EntityMoveState : IState
     public virtual void Exit()
     {
         _collisionHandler.BallDetected -= OnBallDetected;
-        _disposable.Dispose();
-        _mover.Stop();
+        _cancellationTokenSource?.Cancel();
+        _cancellationTokenSource?.Dispose();
     }
 
     public virtual void Update()
@@ -79,4 +81,3 @@ public abstract class EntityMoveState : IState
     protected abstract void HandleBallZoneChanged(Collider zone);
     protected abstract void HandleBallTaken(Entity entity);
 }
-

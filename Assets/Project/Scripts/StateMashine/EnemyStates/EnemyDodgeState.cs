@@ -1,14 +1,16 @@
-using System;
-using UniRx;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class EnemyDodgeState : EntityDodgeState
 {
     private readonly EnemyConfig _enemyConfig;
-    private IDisposable _jumpLoopDisposable;
+    
+    private CancellationTokenSource _jumpCancellationTokenSource;
 
-    public EnemyDodgeState(Enemy enemy, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, 
+    public EnemyDodgeState(Enemy enemy, AnimatorController animatorController, Ball ball, Mover mover,
+        Collider squadZone,
         Rigidbody rigidbody, EnemyConfig enemyConfig)
         : base(enemy, animatorController, ball, mover, squadZone, rigidbody, enemyConfig)
     {
@@ -18,28 +20,24 @@ public class EnemyDodgeState : EntityDodgeState
     public override void Enter()
     {
         base.Enter();
-        StartJumpLoop();
+        _jumpCancellationTokenSource = new CancellationTokenSource();
+        RunJumpLoop(_jumpCancellationTokenSource.Token).Forget();
     }
 
     public override void Exit()
     {
         base.Exit();
-        _jumpLoopDisposable?.Dispose();
+        _jumpCancellationTokenSource?.Cancel();
+        _jumpCancellationTokenSource?.Dispose();
+        _jumpCancellationTokenSource = null;
     }
 
-    private void StartJumpLoop()
+    private async UniTaskVoid RunJumpLoop(CancellationToken token)
     {
-        _jumpLoopDisposable = Observable.FromCoroutine(JumpLoop)
-            .Subscribe()
-            .AddTo(Disposable);
-    }
-
-    private System.Collections.IEnumerator JumpLoop()
-    {
-        while (true)
+        while (token.IsCancellationRequested == false)
         {
             float waitTime = Random.Range(_enemyConfig.DodgeJumpDelayMinTime, _enemyConfig.DodgeJumpDelayMaxTime);
-            yield return new WaitForSeconds(waitTime);
+            await UniTask.Delay((int)(waitTime * 1000), cancellationToken: _jumpCancellationTokenSource.Token);
             StateSwitcher.SwitchState<EnemyJumpState>();
         }
     }

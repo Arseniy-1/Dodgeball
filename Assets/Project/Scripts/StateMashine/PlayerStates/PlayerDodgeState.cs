@@ -31,6 +31,8 @@ public class PlayerDodgeState : EntityDodgeState
     protected override void HandleBallZoneChanged(Collider zone)
     {
         if (zone == SquadZone)
+        {
             StateSwitcher.SwitchState<PlayerMoveState>();
+        }
     }
 }

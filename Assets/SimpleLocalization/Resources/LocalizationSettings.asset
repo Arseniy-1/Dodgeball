@@ -12,15 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63817d93022759543b57e795c78efe11, type: 3}
   m_Name: LocalizationSettings
   m_EditorClassIdentifier: 
-  TableId: 1RvKY3VE_y5FPhEECCa5dv4F7REJ7rBtGzQg9Z_B_DE4
+  TableId: 1grw-FG3TGl4qRQpZeie6VpYmtZxahJ7gpnepqm7Giso
   Sheets:
-  - Name: Menu
+  - Name: CelebrateAnimations
     Id: 0
-    TextAsset: {fileID: 4900000, guid: cf55c05861a4d264a855e6349bef560e, type: 3}
-  - Name: Settings
-    Id: 331980525
-    TextAsset: {fileID: 4900000, guid: 9e915f09744b99e4eb2d3ded7f443ddc, type: 3}
-  - Name: Tests
-    Id: 1674352817
-    TextAsset: {fileID: 4900000, guid: 78955087f9a816a49851f5f94193f224, type: 3}
+    TextAsset: {fileID: 4900000, guid: 8edfe60f3b19e834e890b971dd50a3c8, type: 3}
+  - Name: DeathAnimations
+    Id: 360409315
+    TextAsset: {fileID: 4900000, guid: caec6fb822e062b4ea281721593b0f22, type: 3}
+  - Name: DodgeAnimations
+    Id: 662045264
+    TextAsset: {fileID: 4900000, guid: cc6468c356c48ac469a0dda12e126012, type: 3}
+  - Name: PrepareAnimations
+    Id: 717959470
+    TextAsset: {fileID: 4900000, guid: f960048d90590574bb24b59a1150a482, type: 3}
+  - Name: Languages
+    Id: 963410908
+    TextAsset: {fileID: 4900000, guid: 5d264d72e09352a4280ec15c340d337c, type: 3}
   SaveFolder: {fileID: 102900000, guid: c392831e85f928548b8494fefd912562, type: 3}

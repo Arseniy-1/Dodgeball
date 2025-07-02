@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 using System;
+using Assets.SimpleLocalization.Scripts;
 using Cysharp.Threading.Tasks;
 using YG;
 
@@ -55,6 +56,9 @@ public class CompositionRoot : MonoBehaviour
             EnemySpawner enemySpawner = new EnemySpawner(_enemyPrefabs[i]);
             _enemySpawners.Add(enemySpawner);
         }
+        
+        YG2.SwitchLanguage(YG2.lang);
+        LocalizationManager.Language = YG2.lang;
     }
 
     private void OnEnable()

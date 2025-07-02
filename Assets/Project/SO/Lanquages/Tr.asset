@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58166c2ff2b744a1bf807db2cf2eb93a, type: 3}
   m_Name: Tr
   m_EditorClassIdentifier: 
-  <Lanquage>k__BackingField: 2
+  <Language>k__BackingField: 2
   <View>k__BackingField: {fileID: 21300000, guid: a3722465a62c44b77bef5f41147ebd54, type: 3}
   <Name>k__BackingField: "\u0422\u0443\u0440\u0435\u0446\u043A\u0438\u0439"

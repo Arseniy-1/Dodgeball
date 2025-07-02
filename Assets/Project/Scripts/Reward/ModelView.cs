@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Assets.SimpleLocalization.Scripts;
 using TMPro;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ public class ModelView : MonoBehaviour
         _cancellationTokenSource = new CancellationTokenSource();
         
         _rewardModel.PlayAnimation(animationHash, _cancellationTokenSource.Token);
-        _rewardName.text = rewardName;
+        _rewardName.text = LocalizationManager.Localize(rewardName);
         _rewardEffect.Play();
     }
 

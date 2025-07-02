@@ -1,19 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Assets.SimpleLocalization.Scripts;
+using Sirenix.OdinInspector;
 using YG;
 
 public class LanquageSelectorCanvas : GameCanvas
 {
     [SerializeField] private List<LanquageButton> _lanquageButtons;
-     [SerializeField] private ExitButton _exitButton;
+    [SerializeField] private ExitButton _exitButton;
     
     private void OnEnable()
     {
         _exitButton.ExitButtonClicked += Disable;
         
-        foreach (var lanquageButton in _lanquageButtons)
+        foreach (var languageButton in _lanquageButtons)
         {
-            lanquageButton.OnClick += HanldeButtonClick;
+            languageButton.OnClick += HandleButtonClick;
         }
     }
 
@@ -21,15 +23,23 @@ public class LanquageSelectorCanvas : GameCanvas
     {
         _exitButton.ExitButtonClicked -= Disable;
         
-        foreach (var lanquageButton in _lanquageButtons)
+        foreach (var languageButton in _lanquageButtons)
         {
-            lanquageButton.OnClick -= HanldeButtonClick;
+            languageButton.OnClick -= HandleButtonClick;
         }
     }
 
-    private void HanldeButtonClick(Lanquages lanquage)
+    [Button]
+    private void HandleButtonClick(Lanquages language)
     {
-        // YandexGame.savesData.language = lanquage.ToString();
+        YG2.lang = language.ToString();
+        YG2.SaveProgress();
+        
+        YG2.SwitchLanguage(YG2.lang);
+        LocalizationManager.Language = YG2.lang;
+        
+        foreach (var languageButton in _lanquageButtons)
+            languageButton.UpdateLanguage();
     }
 
     private void Disable()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -15,13 +16,15 @@ public abstract class EntityDodgeState : IState
     private readonly EntityConfig _entityConfig;
 
     protected readonly Collider SquadZone;
-
-    private IDisposable _movementLoopDisposable;
-
     protected IStateSwitcher StateSwitcher;
-    protected CompositeDisposable Disposable;
 
-    protected EntityDodgeState(Entity entity, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, Rigidbody rigidbody, EntityConfig entityConfig)
+    private CancellationTokenSource _cancellationTokenSource;
+    private CompositeDisposable _disposable;
+
+    protected EntityDodgeState(
+        Entity entity, AnimatorController animatorController, Ball ball,
+        Mover mover, Collider squadZone, Rigidbody rigidbody,
+        EntityConfig entityConfig)
     {
         _entity = entity;
         _animatorController = animatorController;
@@ -34,28 +37,33 @@ public abstract class EntityDodgeState : IState
         _rotator = new Rotator();
     }
 
-    public void Initialize(IStateSwitcher stateSwitcher) => StateSwitcher = stateSwitcher;
+    public void Initialize(IStateSwitcher stateSwitcher)
+    {
+        StateSwitcher = stateSwitcher;
+    }
 
     public virtual void Enter()
     {
-        Disposable = new CompositeDisposable();
+        _cancellationTokenSource = new CancellationTokenSource();
+        _disposable = new CompositeDisposable();
         _animatorController.DodgeIdle();
-
+        _rigidbody.isKinematic = true;
+        
         MessageBrokerHolder.GameActions
             .Receive<M_BallChangedZone>()
             .Subscribe(message => HandleBallZoneChanged(message.Zone))
-            .AddTo(Disposable);
-
-        _rigidbody.isKinematic = true;
-        StartIdleMovementLoop();
+            .AddTo(_disposable);
+        
+        RunDodgeMovementLoop(_cancellationTokenSource.Token).Forget();
     }
 
     public virtual void Exit()
     {
-        Disposable.Dispose();
+        _cancellationTokenSource?.Cancel();
+        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource = null;
+
         _rigidbody.isKinematic = false;
-        _mover.Stop();
-        _movementLoopDisposable?.Dispose();
     }
 
     public virtual void Update()
@@ -66,23 +74,22 @@ public abstract class EntityDodgeState : IState
 
     protected abstract void HandleBallZoneChanged(Collider zone);
 
-    private void StartIdleMovementLoop()
+    private async UniTaskVoid RunDodgeMovementLoop(CancellationToken token)
     {
-        _movementLoopDisposable = Observable.FromCoroutine(IdleMovementLoop)
-            .Subscribe()
-            .AddTo(Disposable);
-    }
-
-    private System.Collections.IEnumerator IdleMovementLoop()
-    {
-        while (true)
+        while (token.IsCancellationRequested == false)
         {
-            float standTime = Random.Range(_entityConfig.DodgeDirectionChangeMinTime, _entityConfig.DodgeDirectionChangeMaxTime);
+            float standTime = Random.Range(
+                _entityConfig.DodgeDirectionChangeMinTime,
+                _entityConfig.DodgeDirectionChangeMaxTime
+            );
+
             Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
             _animatorController.DodgeIdle();
-            yield return _mover.MoveTo(target, _entityConfig.DodgeSpeed);
+            Debug.Log("Dodge movement Wait Move " + _entity.gameObject.name);
+            await _mover.MoveTo(target, _entityConfig.DodgeSpeed, token);
             _animatorController.Idle();
-            yield return new WaitForSeconds(standTime);
+            Debug.Log("Dodge movement Wait StandTime " + _entity.gameObject.name + " Stand Time: " + standTime);
+            await UniTask.Delay((int)(standTime * 1000), cancellationToken: token);
         }
     }
 }

@@ -1,24 +1,24 @@
-﻿using System.Collections;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
     private float _stoppingDistance = 0.1f;
-    private Coroutine _moveRoutine;
-    private bool _canMove = false;
 
     private float _stepDistanceThreshold = 1.2f;
     private float _distanceSinceLastStep = 0f;
     private Vector3 _lastPosition;
 
-    public IEnumerator MoveTo(Vector3 target, float speed)
+    public async UniTask MoveTo(Vector3 target, float speed, CancellationToken cancellationToken)
     {
-        _canMove = true;
         _lastPosition = transform.position;
         _distanceSinceLastStep = 0f;
 
-        while (Vector3.Distance(transform.position, target) > _stoppingDistance && _canMove)
+        while (cancellationToken.IsCancellationRequested == false && Vector3.Distance(transform.position, target) > _stoppingDistance)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             Vector3 direction = (target - transform.position);
             direction.y = 0;
 
@@ -29,7 +29,7 @@ public class Mover : MonoBehaviour
             );
 
             TrackStep();
-            yield return null;
+            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
         }
     }
 
@@ -58,16 +58,5 @@ public class Mover : MonoBehaviour
         }
 
         _lastPosition = transform.position;
-    }
-
-    public void Stop()
-    {
-        _canMove = false;
-
-        if (_moveRoutine != null)
-        {
-            StopCoroutine(_moveRoutine);
-            _moveRoutine = null;
-        }
     }
 }
