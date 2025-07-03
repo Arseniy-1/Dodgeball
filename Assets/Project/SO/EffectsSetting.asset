@@ -28,3 +28,6 @@ MonoBehaviour:
     - {fileID: 7753008160627204928, guid: ccfbfc5e6486ac64bad1c4b875ab6876, type: 3}
     - {fileID: 7753008160627204928, guid: 80b5f409c8dcb064ebcbf1e102f32469, type: 3}
     - {fileID: 7753008160627204928, guid: 36bf5d2e9218a974d8c288fc332b6749, type: 3}
+  - _id: 4
+    _effects:
+    - {fileID: 5824700782308156033, guid: 0fe242fd96f9e0744bd7aabc4980ad18, type: 3}
