@@ -12,6 +12,7 @@ public class EnemyMoveState : EntityMoveState
         : base(enemy, animatorController, collisionHandler, squadZone, ballHolder, collider, enemyConfig, mover)
     {
         _enemy = enemy;
+        _teammates = teammates;
     }
 
     protected override void OnBallDetected(Ball ball)

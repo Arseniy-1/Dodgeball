@@ -40,5 +40,7 @@ public class Effect : MonoBehaviour, IDestoyable<Effect>
         {
             await UniTask.Yield();
         }
+
+        Die();
     }
 }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b968c854954cbb88a2f417db66afee, type: 3}
   m_Name: ChargeBallUpgrader
   m_EditorClassIdentifier: 
-  <Icon>k__BackingField: {fileID: 21300000, guid: 3567fbbf84f9b5040b444c778aecf283, type: 3}
-  <BackgroundView>k__BackingField: {fileID: 21300000, guid: 3567fbbf84f9b5040b444c778aecf283, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 1346376655e6040a7882ec332ba28935, type: 3}
+  <BackgroundView>k__BackingField: {fileID: 21300000, guid: b7ba11948c4b242239d59ab8d59c9e9f, type: 3}

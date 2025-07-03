@@ -15,7 +15,7 @@ public class Mover : MonoBehaviour
         _lastPosition = transform.position;
         _distanceSinceLastStep = 0f;
 
-        while (cancellationToken.IsCancellationRequested == false && Vector3.Distance(transform.position, target) > _stoppingDistance)
+        while (enabled && cancellationToken.IsCancellationRequested == false && Vector3.Distance(transform.position, target) > _stoppingDistance)
         {
             cancellationToken.ThrowIfCancellationRequested();
 

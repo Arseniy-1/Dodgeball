@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using YG;
 
 public class RewardCanvas : InteractiveCanvas
 {
@@ -17,10 +19,10 @@ public class RewardCanvas : InteractiveCanvas
     protected override void OnEnable()
     {
         base.OnEnable();
-        
+
         _boxView.Enable();
     }
-    
+
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -39,18 +41,60 @@ public class RewardCanvas : InteractiveCanvas
     protected override async void HandleButtonClick()
     {
         DisableButton();
-        
+
         await _boxView.ShowBoxAnimation(_boxAnimationDuration, _boxEndScale, _boxWhiteFadeDuration);
         _boxView.Disable();
 
-        // DeathAnimationData deathAnimationData = _rewardService.GetRandomDeathAnimation();
-        CelebrateAnimationData celebrateAnimationData = _rewardService.GetRandomCelebrateAnimation();
-        // YG2.saves.AnimationsHolder.AddDeathAnimation(deathAnimationData.AnimationType);
+        var availableAnimations = new List<System.Func<(string name, string type)>>();
 
-        _modelView.gameObject.SetActive(true);
-        int animationHash = Animator.StringToHash(celebrateAnimationData.AnimationType.ToString());
+        if (_rewardService.DodgeAnimationCount > 0)
+        {
+            availableAnimations.Add(() =>
+            {
+                var anim = _rewardService.GetRandomDodgeAnimation();
+                // YG2.saves.AnimationsHolder.AddDodgeAnimation(anim.AnimationType);
+                return (anim.Name, anim.AnimationType.ToString());
+            });
+        }
 
-        _modelView.ShowReward(animationHash, celebrateAnimationData.Name);
+        if (_rewardService.CelebrateAnimationCount > 0)
+        {
+            availableAnimations.Add(() =>
+            {
+                var anim = _rewardService.GetRandomCelebrateAnimation();
+                // YG2.saves.AnimationsHolder.AddCelebrateAnimation(anim.AnimationType);
+                return (anim.Name, anim.AnimationType.ToString());
+            });
+        }
+
+        if (_rewardService.DeathAnimationCount > 0)
+        {
+            availableAnimations.Add(() =>
+            {
+                var anim = _rewardService.GetRandomDeathAnimation();
+                // YG2.saves.AnimationsHolder.AddDeathAnimation(anim.AnimationType);
+                return (anim.Name, anim.AnimationType.ToString());
+            });
+        }
+
+        if (_rewardService.PrepareAnimationCount > 0)
+        {
+            availableAnimations.Add(() =>
+            {
+                var anim = _rewardService.GetRandomPrepareAnimation();
+                // YG2.saves.AnimationsHolder.AddPrepareAnimation(anim.AnimationType);
+                return (anim.Name, anim.AnimationType.ToString());
+            });
+        }
+
+        if (availableAnimations.Count > 0)
+        {
+            var selectedAnimation = availableAnimations[Random.Range(0, availableAnimations.Count)]();
+
+            _modelView.gameObject.SetActive(true);
+            int animationHash = Animator.StringToHash(selectedAnimation.name);
+            _modelView.ShowReward(animationHash, selectedAnimation.name);
+        }
 
         _playerInputController.ActionButtonCanceled += CloseWindow;
     }

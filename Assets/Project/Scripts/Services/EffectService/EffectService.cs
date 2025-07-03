@@ -56,6 +56,7 @@ public class EffectService : IDisposable
         {
             EffectsSpawner randomSpawner = spawners[UnityEngine.Random.Range(0, spawners.Count)];
             var effect = randomSpawner.Spawn();
+            effect.transform.parent = parent.transform;
             effect.transform.position = parent.position;
         }
         else
