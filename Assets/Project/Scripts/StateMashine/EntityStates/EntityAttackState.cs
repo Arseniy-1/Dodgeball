@@ -46,18 +46,19 @@ public class EntityAttackState  : IState
 
     public virtual void Enter()
     {
+        Entity target = _targetScanner.Scan(_teammates);
+        TargetProvider.SelectTarget(target);
+        
         Rigidbody.isKinematic = true;
         CollisionHandler.enabled = false;
         Collider.enabled = false;
-
-        Entity target = _targetScanner.Scan(_teammates);
-        TargetProvider.SelectTarget(target);
 
         _animatorController.Idle();
     }
 
     public virtual void Exit()
     {
+        Debug.Log("Exit Attack " + _entity.gameObject.name);
         Rigidbody.isKinematic = false;
         CollisionHandler.enabled = true;
         Collider.enabled = true;

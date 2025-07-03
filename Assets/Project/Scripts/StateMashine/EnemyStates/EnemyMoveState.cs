@@ -1,13 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMoveState : EntityMoveState
 {
-    private readonly Enemy _enemy;
+    private readonly Enemy _enemy;   
+    private readonly List<Entity> _teammates;
 
-    public EnemyMoveState(Enemy enemy, AnimatorController animatorController, EnemyConfig enemyConfig,
+    public EnemyMoveState(Enemy enemy, AnimatorController animatorController,List<Entity> teammates, EnemyConfig enemyConfig,
         CollisionHandler collisionHandler, Collider squadZone,
         BallHolder ballHolder, Ball ball, Collider collider, Mover mover)
-        : base(enemy, animatorController, collisionHandler, squadZone, ballHolder, ball, collider, enemyConfig, mover)
+        : base(enemy, animatorController, collisionHandler, squadZone, ballHolder, collider, enemyConfig, mover)
     {
         _enemy = enemy;
     }
@@ -26,13 +28,13 @@ public class EnemyMoveState : EntityMoveState
 
     protected override void HandleBallTaken(Entity entity)
     {
-        if (entity == _enemy) return;
-
-        Vector3 closestPoint = SquadZone.ClosestPoint(entity.transform.position);
-
-        if (closestPoint == entity.transform.position)
-            StateSwitcher.SwitchState<EnemyIdleState>();
-        else
+        if (_teammates.Contains(entity) == false)
+        {
             StateSwitcher.SwitchState<EnemyDodgeState>();
+        }
+        else if (entity != _enemy)
+        {
+            StateSwitcher.SwitchState<EnemyIdleState>();
+        }
     }
 }

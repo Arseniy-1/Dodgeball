@@ -9,7 +9,7 @@ public class PlayerMoveState : EntityMoveState
     public PlayerMoveState(Player player, AnimatorController animatorController, List<Entity> teammates,
         PlayerConfig playerConfig, CollisionHandler collisionHandler, Collider squadZone,
         BallHolder ballHolder, Ball ball, Collider collider, Mover mover)
-        : base(player, animatorController, collisionHandler, squadZone, ballHolder, ball, collider, playerConfig, mover)
+        : base(player, animatorController, collisionHandler, squadZone, ballHolder, collider, playerConfig, mover)
     {
         _player = player;
         _teammates = teammates;

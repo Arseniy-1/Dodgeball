@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-public class EnemySelebrateState : EntitySelebrateState
+public class EnemyCelebrateState : EntityCelebrateState
 {
-    public EnemySelebrateState(
+    public EnemyCelebrateState(
         Enemy enemy,
         AnimatorController animatorController,
         List<Entity> teammates)

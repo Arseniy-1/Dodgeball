@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <WalkSpeed>k__BackingField: 4
   <RunSpeed>k__BackingField: 7
-  <RotationSpeed>k__BackingField: 250
+  <RotationSpeed>k__BackingField: 720
   <DodgeSpeed>k__BackingField: 10
   <MinThrowForce>k__BackingField: 500
   <MaxThrowForce>k__BackingField: 1000

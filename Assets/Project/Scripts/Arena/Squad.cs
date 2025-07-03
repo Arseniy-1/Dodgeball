@@ -54,6 +54,10 @@ public class Squad : MonoBehaviour
             if (ball.Rigidbody.isKinematic)
                 return;
             
+            if(ball.TryGetComponent(out Chargeable chargeable))
+                if(chargeable.IsCharged)
+                    return;
+            
             MessageBrokerHolder.GameActions.Publish(new M_BallChangedZone(_squadZone));
         }
     }
@@ -64,6 +68,10 @@ public class Squad : MonoBehaviour
         {
             if (ball.Rigidbody.isKinematic)
                 return;
+            
+            if(ball.TryGetComponent(out Chargeable chargeable))
+                if(chargeable.IsCharged)
+                    return;
             
             MessageBrokerHolder.GameActions.Publish(new M_BallChangedZone(_squadZone));
         }

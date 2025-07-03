@@ -1,6 +1,8 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,13 +22,14 @@ public abstract class EntityIdleState : IState
     private CompositeDisposable _disposable;
     private CancellationTokenSource _cancellationTokenSource;
 
+    protected readonly List<Entity> Teammates;
     protected readonly Collider SquadZone;
     protected IStateSwitcher StateSwitcher;
-    
+
     protected EntityIdleState(
         AnimatorController animatorController, Ball ball, Mover mover,
-        CollisionHandler collisionHandler, Collider squadZone, 
-        Collider collider, Rigidbody rigidbody, Entity entity, EntityConfig entityConfig)
+        CollisionHandler collisionHandler, Collider squadZone,
+        Collider collider, Rigidbody rigidbody, Entity entity, EntityConfig entityConfig, List<Entity> teammates)
     {
         _animatorController = animatorController;
         _ball = ball;
@@ -37,6 +40,7 @@ public abstract class EntityIdleState : IState
         _rigidbody = rigidbody;
         _entity = entity;
         _entityConfig = entityConfig;
+        Teammates = teammates;
         _areaPointSelector = new AreaPointSelector();
         _rotator = new Rotator();
     }
@@ -49,17 +53,16 @@ public abstract class EntityIdleState : IState
     public virtual void Enter()
     {
         _cancellationTokenSource = new CancellationTokenSource();
-     
         _disposable = new CompositeDisposable();
 
-        MessageBrokerHolder.GameActions
-            .Receive<M_BallChangedZone>()
-            .Subscribe(message => HandleBallZoneChanged(message.Zone))
-            .AddTo(_disposable);
+        BallService.Instance.OnZoneChanged += HandleBallZoneChanged;
+        BallService.Instance.OnHolderChanged += HandleBallTaken;
+
+        HandleBallTaken(BallService.Instance.CurrentHolder);
         
         _rigidbody.isKinematic = true;
         _collisionHandler.enabled = false;
-        _collider.enabled = false;
+        _collider.isTrigger = true;
 
         _animatorController.Idle();
         RunIdleMovementLoop(_cancellationTokenSource.Token).Forget();
@@ -68,34 +71,25 @@ public abstract class EntityIdleState : IState
     public virtual void Exit()
     {
         _cancellationTokenSource?.Cancel();
-        _cancellationTokenSource?.Dispose();
-        _cancellationTokenSource = null;
-        
-        _disposable.Dispose();
-        
+        _disposable?.Dispose();
+
+        BallService.Instance.OnZoneChanged -= HandleBallZoneChanged;
+        BallService.Instance.OnHolderChanged -= HandleBallTaken;
+
         _rigidbody.isKinematic = false;
         _collisionHandler.enabled = true;
-        _collider.enabled = true;
+        _collider.isTrigger = false;
     }
-    
+
     private async UniTaskVoid RunIdleMovementLoop(CancellationToken token)
     {
-        while (token.IsCancellationRequested == false)
+        while (!token.IsCancellationRequested)
         {
             float standTime = Random.Range(_entityConfig.IdleMinStandTime, _entityConfig.IdleMaxStandTime);
             Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
-            
+
             _animatorController.DodgeIdle();
-            
-            if (token.IsCancellationRequested)
-                return;
-            
-            Debug.Log("Idle movement loop " + _entity.gameObject.name);
             await _mover.MoveTo(target, _entityConfig.WalkSpeed, token);
-                        
-            if (token.IsCancellationRequested)
-                return;
-            
             _animatorController.Idle();
             await UniTask.Delay((int)(standTime * 1000), cancellationToken: token);
         }
@@ -108,4 +102,6 @@ public abstract class EntityIdleState : IState
     }
 
     protected abstract void HandleBallZoneChanged(Collider zone);
+
+    protected abstract void HandleBallTaken(Entity entity);
 }

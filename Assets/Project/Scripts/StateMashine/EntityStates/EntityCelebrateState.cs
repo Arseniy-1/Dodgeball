@@ -3,14 +3,14 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 
-public abstract class EntitySelebrateState : IState
+public abstract class EntityCelebrateState : IState
 {
     private readonly AnimatorController _animatorController;
     private readonly Entity _entity;
     private readonly List<Entity> _teammates;
     private readonly Rotator _rotator;
 
-    protected EntitySelebrateState(
+    protected EntityCelebrateState(
         Entity entity,
         AnimatorController animatorController,
         List<Entity> teammates)
@@ -23,7 +23,7 @@ public abstract class EntitySelebrateState : IState
 
     public virtual void Enter()
     {
-        _animatorController.Selebrate();
+        _animatorController.Celebrate();
 
         Transform targetTransform = GetTargetTransform();
         _rotator.RotateToTarget(targetTransform, _entity.transform);

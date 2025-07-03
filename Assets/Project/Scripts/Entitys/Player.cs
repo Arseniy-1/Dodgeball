@@ -28,8 +28,8 @@ public class Player : Entity, IDestoyable<Player>
         _playerStates = new List<IState>
         {
             new PlayerPrepareState(this, AnimatorController, TargetScanner, Teammates),
-            new PlayerSelebrateState(this, AnimatorController, Teammates),
-            new PlayerIdleState(this,AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerConfig),
+            new PlayerCelebrateState(this, AnimatorController, Teammates),
+            new PlayerIdleState(this,AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _playerConfig, Teammates),
             new PlayerMoveState(this, AnimatorController, Teammates, _playerConfig, CollisionHandler, SquadZone, BallHolder, Ball, Collider, Mover),
             new PlayerDodgeState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _playerConfig, _inputController),
             new PlayerAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController, BallThrower),
@@ -61,7 +61,7 @@ public class Player : Entity, IDestoyable<Player>
     
     public override void Selebrate()
     {
-        StateMaсhine.SwitchState<PlayerSelebrateState>();
+        StateMaсhine.SwitchState<PlayerCelebrateState>();
         BallHolder.LostBall();
     }
 

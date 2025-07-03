@@ -26,9 +26,9 @@ public class Enemy : Entity, IDestoyable<Enemy>
         _enemyStates = new List<IState>
         {
             new EnemyPrepareState(this, AnimatorController, TargetScanner, Teammates),
-            new EnemySelebrateState(this, AnimatorController, Teammates),
-            new EnemyIdleState(this,AnimatorController, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, enemyConfig),
-            new EnemyMoveState(this, AnimatorController, enemyConfig, CollisionHandler, SquadZone, BallHolder, ball, Collider, Mover),
+            new EnemyCelebrateState(this, AnimatorController, Teammates),
+            new EnemyIdleState(this,AnimatorController, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, enemyConfig, Teammates),
+            new EnemyMoveState(this, AnimatorController,Teammates, enemyConfig, CollisionHandler, SquadZone, BallHolder, ball, Collider, Mover),
             new EnemyDodgeState(this, AnimatorController, ball, Mover, SquadZone, Rigidbody, enemyConfig),
             new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, enemyConfig),
             new EnemyJumpState(AnimatorController, CollisionHandler, HitCheker, Collider),
@@ -59,7 +59,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
 
     public override void Selebrate()
     {
-        StateMaсhine.SwitchState<EnemySelebrateState>();
+        StateMaсhine.SwitchState<EnemyCelebrateState>();
         BallHolder.LostBall();
     }
 

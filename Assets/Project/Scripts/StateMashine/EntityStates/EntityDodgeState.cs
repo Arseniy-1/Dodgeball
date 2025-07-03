@@ -60,9 +60,8 @@ public abstract class EntityDodgeState : IState
     public virtual void Exit()
     {
         _cancellationTokenSource?.Cancel();
-        _cancellationTokenSource?.Dispose();
-        _cancellationTokenSource = null;
-
+        _disposable.Dispose();
+        
         _rigidbody.isKinematic = false;
     }
 
@@ -76,6 +75,8 @@ public abstract class EntityDodgeState : IState
 
     private async UniTaskVoid RunDodgeMovementLoop(CancellationToken token)
     {
+        Debug.Log("Enter to dodge movement Wait Move " + _entity.gameObject.name);
+        
         while (token.IsCancellationRequested == false)
         {
             float standTime = Random.Range(

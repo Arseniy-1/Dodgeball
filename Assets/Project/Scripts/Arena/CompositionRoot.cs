@@ -87,6 +87,7 @@ public class CompositionRoot : MonoBehaviour
         _startGameCanvas.gameObject.SetActive(false);
         _gameCanvas.gameObject.SetActive(true);
         _arenaInstance.StartGame(_ballInstance);
+        BallService.Instance.Initialize(_ballInstance);
 
         MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
     }

@@ -22,7 +22,6 @@ public class EnemyAttackState : EntityAttackState
         _enemyConfig = enemyConfig;
     }
 
-
     public override void Enter()
     {
         base.Enter();
@@ -39,16 +38,16 @@ public class EnemyAttackState : EntityAttackState
     {
         base.Update();
 
-        if (_hasReleased == false)
-        {
-            _releaseTimer += Time.deltaTime;
+        if (_hasReleased)
+            return;
 
-            if (_releaseTimer >= _shootDelay)
-            {
-                await ThrowBall();
-                StateSwitcher.SwitchState<EnemyIdleState>();
-                _hasReleased = true;
-            }
+        _releaseTimer += Time.deltaTime;
+
+        if (_releaseTimer >= _shootDelay)
+        {
+            _hasReleased = true;
+            await ThrowBall();
+            StateSwitcher.SwitchState<EnemyIdleState>();
         }
     }
 }

@@ -18,7 +18,7 @@ public class AnimatorController
     private int _prepareToThrow = Animator.StringToHash(Constans.ConstantAnimations.PrepareToThrow.ToString());
 
     private int _dodgeIdle = Animator.StringToHash(Constans.ConstantAnimations.DodgeIdle.ToString());
-    
+
 
     public AnimatorController(Animator animator)
     {
@@ -39,17 +39,17 @@ public class AnimatorController
     public void Idle() => _animator.Play(_idle);
     public void DodgeIdle() => _animator.Play(_dodgeIdle);
 
-    public void Selebrate()
+    public void Celebrate()
     {
-        var animationHashes = YG2.saves.AnimationsHolder.CelebrateAnimationsHash; 
-        int randomSelebrate = animationHashes[Random.Range(0, animationHashes.Count)];
+        var animationHashes = YG2.saves.AnimationsHolder.CelebrateAnimationsHash;
+        int randomCelebrate = animationHashes[Random.Range(0, animationHashes.Count)];
 
-        _animator.Play(randomSelebrate);
+        _animator.Play(randomCelebrate);
     }
 
     public void PrepareToBattle()
     {
-        var animationHashes = YG2.saves.AnimationsHolder.PrepareAnimationsHash; 
+        var animationHashes = YG2.saves.AnimationsHolder.PrepareAnimationsHash;
         int randomPrepare = animationHashes[Random.Range(0, animationHashes.Count)];
 
         _animator.Play(randomPrepare);
@@ -57,7 +57,7 @@ public class AnimatorController
 
     public UniTask Death()
     {
-        var animationHashes = YG2.saves.AnimationsHolder.DeathAnimationsHash; 
+        var animationHashes = YG2.saves.AnimationsHolder.DeathAnimationsHash;
         int randomDeath = animationHashes[Random.Range(0, animationHashes.Count)];
 
         return PlayAndWait(randomDeath, _cancellationTokenSource.Token);
@@ -65,7 +65,7 @@ public class AnimatorController
 
     public UniTask Dodge()
     {
-        var animationHashes = YG2.saves.AnimationsHolder.DodgeAnimationsHash; 
+        var animationHashes = YG2.saves.AnimationsHolder.DodgeAnimationsHash;
         int randomDodge = animationHashes[Random.Range(0, animationHashes.Count)];
 
         return PlayAndWait(randomDodge, _cancellationTokenSource.Token);

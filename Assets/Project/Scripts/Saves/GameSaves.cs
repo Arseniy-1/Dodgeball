@@ -18,8 +18,8 @@ namespace YG
                 foreach (var animation in _startAnimationsData.DodgeAnimations)
                     YG2.saves.AnimationsHolder.AddDodgeAnimation(animation);
 
-                foreach (var animation in _startAnimationsData.SelebrateAnimations)
-                    YG2.saves.AnimationsHolder.AddSelebrateAnimation(animation);
+                foreach (var animation in _startAnimationsData.CelebrateAnimations)
+                    YG2.saves.AnimationsHolder.AddCelebrateAnimation(animation);
 
                 foreach (var animation in _startAnimationsData.DeathAnimations)
                     YG2.saves.AnimationsHolder.AddDeathAnimation(animation);

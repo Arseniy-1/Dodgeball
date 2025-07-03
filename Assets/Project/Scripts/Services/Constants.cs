@@ -18,7 +18,7 @@
     
     public enum CelebrateAnimations
     {
-        СelebrateVictory,
+        CelebrateVictory,
         CelebrateTwistDance,
         CelebrateSillyDance,
         CelebrateShufflingDance,

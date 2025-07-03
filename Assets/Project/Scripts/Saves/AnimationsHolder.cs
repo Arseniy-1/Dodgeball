@@ -24,7 +24,7 @@ public class AnimationsHolder
         DodgeAnimationsHash.Add(Animator.StringToHash(animation.ToString()));
     }
 
-    public void AddSelebrateAnimation(Constans.CelebrateAnimations animation)
+    public void AddCelebrateAnimation(Constans.CelebrateAnimations animation)
     {
         if (_selebrateAnimations.Contains(animation))
             return;
