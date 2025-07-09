@@ -42,11 +42,11 @@ public abstract class EntityMoveState : IState
     public virtual void Enter()
     {
         _cts = new CancellationTokenSource();
-        _targetBall = BallService.Instance.CurrentBall;
+        _targetBall = GameStatusService.Instance.CurrentBall;
 
         _collisionHandler.BallDetected += OnBallDetected;
-        BallService.Instance.OnZoneChanged += HandleBallZoneChanged;
-        BallService.Instance.OnHolderChanged += HandleBallTaken;
+        GameStatusService.Instance.OnZoneChanged += HandleBallZoneChanged;
+        GameStatusService.Instance.OnHolderChanged += HandleBallTaken;
 
         _collisionHandler.enabled = true;
         _collider.enabled = true;
@@ -58,8 +58,8 @@ public abstract class EntityMoveState : IState
     public virtual void Exit()
     {
         _collisionHandler.BallDetected -= OnBallDetected;
-        BallService.Instance.OnZoneChanged -= HandleBallZoneChanged;
-        BallService.Instance.OnHolderChanged -= HandleBallTaken;
+        GameStatusService.Instance.OnZoneChanged -= HandleBallZoneChanged;
+        GameStatusService.Instance.OnHolderChanged -= HandleBallTaken;
         
         _cts?.Cancel();
         _cts?.Dispose();
@@ -77,7 +77,7 @@ public abstract class EntityMoveState : IState
 
     protected virtual void OnBallDetected(Ball ball)
     {
-        BallService.Instance.SetHolder(_entity);
+        GameStatusService.Instance.SetHolder(_entity);
     }
 
     protected abstract void HandleBallZoneChanged(Collider zone);

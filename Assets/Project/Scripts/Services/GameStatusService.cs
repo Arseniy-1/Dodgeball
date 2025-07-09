@@ -3,10 +3,10 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
-public class BallService
+public class GameStatusService
 {
-    private static BallService _instance;
-    public static BallService Instance => _instance ??= new BallService();
+    private static GameStatusService _instance;
+    public static GameStatusService Instance => _instance ??= new GameStatusService();
     
     private Ball _ball;
     private Entity _currentHolder;
@@ -43,7 +43,7 @@ public class BallService
         }
     }
 
-    private BallService() { }
+    private GameStatusService() { }
 
     public void Initialize(Ball ball)
     {

@@ -58,7 +58,6 @@ public class EntityAttackState  : IState
 
     public virtual void Exit()
     {
-        Debug.Log("Exit Attack " + _entity.gameObject.name);
         Rigidbody.isKinematic = false;
         CollisionHandler.enabled = true;
         Collider.enabled = true;
@@ -84,6 +83,8 @@ public class EntityAttackState  : IState
         _ballThrower.StopCharging();
         _ballThrower.Throw(ball);
 
+        AudioID.Attack.PlayOneShot();
+        
         return _animatorController.Attack();
     }
 }

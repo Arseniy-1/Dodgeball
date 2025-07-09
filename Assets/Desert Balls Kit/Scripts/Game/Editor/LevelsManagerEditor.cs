@@ -280,12 +280,12 @@ public class LevelsManagerEditor : Editor
                         if (lbe.HasVal(TypeVal.Point1))
                         {
                             Handles.color = Color.green;
-                            var fmh_283_125_638859199222703355 = Quaternion.identity; _P1 = Quaternion.Inverse(_Rot) * ((Vector2)Handles.FreeMoveHandle(_Pos + (Vector2)(_Rot * _P1), HandleUtility.GetHandleSize(_Pos + (Vector2)(_Rot * _P1)) / 5, Vector3.one * 0.1f, Handles.CubeHandleCap) - _Pos);
+                            var fmh_283_125_638876724012101059 = Quaternion.identity; _P1 = Quaternion.Inverse(_Rot) * ((Vector2)Handles.FreeMoveHandle(_Pos + (Vector2)(_Rot * _P1), HandleUtility.GetHandleSize(_Pos + (Vector2)(_Rot * _P1)) / 5, Vector3.one * 0.1f, Handles.CubeHandleCap) - _Pos);
                         }
                         if (lbe.HasVal(TypeVal.Point2))
                         {
                             Handles.color = Color.green;
-                            var fmh_288_125_638859199222743148 = Quaternion.identity; _P2 = Quaternion.Inverse(_Rot) * ((Vector2)Handles.FreeMoveHandle(_Pos + (Vector2)(_Rot * _P2), HandleUtility.GetHandleSize(_Pos + (Vector2)(_Rot * _P2)) / 5, Vector3.one * 0.1f, Handles.CubeHandleCap) - _Pos);
+                            var fmh_288_125_638876724012134127 = Quaternion.identity; _P2 = Quaternion.Inverse(_Rot) * ((Vector2)Handles.FreeMoveHandle(_Pos + (Vector2)(_Rot * _P2), HandleUtility.GetHandleSize(_Pos + (Vector2)(_Rot * _P2)) / 5, Vector3.one * 0.1f, Handles.CubeHandleCap) - _Pos);
                         }
                         if (lbe.HasVal(TypeVal.Rotate1))
                         {
@@ -304,7 +304,7 @@ public class LevelsManagerEditor : Editor
                             for (int i = 0; i < 4; i++)
                             {
                                 Vector3 oldPoint = (Vector3)_Pos + Quaternion.Euler(0f, 0f, 90f * i) * RadiusVector;
-                                var fmh_307_85_638859199222748180 = Quaternion.identity; Vector3 newPoint = Handles.FreeMoveHandle(oldPoint, HandleUtility.GetHandleSize(oldPoint) / 5, Vector3.one * 0.1f, Handles.SphereHandleCap);
+                                var fmh_307_85_638876724012139081 = Quaternion.identity; Vector3 newPoint = Handles.FreeMoveHandle(oldPoint, HandleUtility.GetHandleSize(oldPoint) / 5, Vector3.one * 0.1f, Handles.SphereHandleCap);
                                 if (oldPoint != newPoint)
                                 {
                                     _R = Vector3.Magnitude(newPoint - (Vector3)_Pos);

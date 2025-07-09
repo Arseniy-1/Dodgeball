@@ -55,10 +55,10 @@ public abstract class EntityIdleState : IState
         _cancellationTokenSource = new CancellationTokenSource();
         _disposable = new CompositeDisposable();
 
-        BallService.Instance.OnZoneChanged += HandleBallZoneChanged;
-        BallService.Instance.OnHolderChanged += HandleBallTaken;
+        GameStatusService.Instance.OnZoneChanged += HandleBallZoneChanged;
+        GameStatusService.Instance.OnHolderChanged += HandleBallTaken;
 
-        HandleBallTaken(BallService.Instance.CurrentHolder);
+        HandleBallTaken(GameStatusService.Instance.CurrentHolder);
         
         _rigidbody.isKinematic = true;
         _collisionHandler.enabled = false;
@@ -73,8 +73,8 @@ public abstract class EntityIdleState : IState
         _cancellationTokenSource?.Cancel();
         _disposable?.Dispose();
 
-        BallService.Instance.OnZoneChanged -= HandleBallZoneChanged;
-        BallService.Instance.OnHolderChanged -= HandleBallTaken;
+        GameStatusService.Instance.OnZoneChanged -= HandleBallZoneChanged;
+        GameStatusService.Instance.OnHolderChanged -= HandleBallTaken;
 
         _rigidbody.isKinematic = false;
         _collisionHandler.enabled = true;

@@ -51,3 +51,42 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 0c2279698d5e549f4ba7b233963d11bf, type: 3}
     _volume: 0.237
     _pitchRange: {x: 1.007581, y: 1.0259591}
+  - _id: 0
+    _clips:
+    - {fileID: 8300000, guid: 81a06480f215c484fbde7312575efa4e, type: 3}
+    _volume: 0.5
+    _pitchRange: {x: 0.96754414, y: 1.0391005}
+  - _id: 8
+    _clips:
+    - {fileID: 8300000, guid: 07ec50bf4ed914a2f8e4c1ac09777d7a, type: 3}
+    _volume: 0.5
+    _pitchRange: {x: 1.0026525, y: 1.0026525}
+  - _id: 9
+    _clips:
+    - {fileID: 8300000, guid: ef26659d15c6646d0a8116937f04a938, type: 3}
+    _volume: 0.5
+    _pitchRange: {x: 1.0238727, y: 1.0238727}
+  - _id: 10
+    _clips:
+    - {fileID: 8300000, guid: 996836cf4c8a64266bfdacf5d6cd8dcf, type: 3}
+    _volume: 0.5
+    _pitchRange: {x: 1.066313, y: 1.066313}
+  - _id: 11
+    _clips:
+    - {fileID: 8300000, guid: d523db420e67a4bdaaed1ce6cbf07579, type: 3}
+    _volume: 0.5
+    _pitchRange: {x: 1.0026525, y: 1.0026525}
+  - _id: 12
+    _clips:
+    - {fileID: 8300000, guid: 79b9635c8983841e2af90a88c9d98481, type: 3}
+    _volume: 0.5
+    _pitchRange: {x: 1.0026525, y: 1.0026525}
+  - _id: 13
+    _clips:
+    - {fileID: 8300000, guid: 996836cf4c8a64266bfdacf5d6cd8dcf, type: 3}
+    _volume: 0.5
+    _pitchRange: {x: 1.0450928, y: 1.0450928}
+  - _id: 14
+    _clips: []
+    _volume: 0
+    _pitchRange: {x: 0, y: 0}

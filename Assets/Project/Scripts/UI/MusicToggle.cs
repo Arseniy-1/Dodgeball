@@ -1,4 +1,5 @@
-﻿using YG;
+﻿using UnityEngine;
+using YG;
 
 public class MusicToggle : AudioToggle
 {

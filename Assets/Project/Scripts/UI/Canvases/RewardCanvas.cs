@@ -21,6 +21,7 @@ public class RewardCanvas : InteractiveCanvas
         base.OnEnable();
 
         _boxView.Enable();
+        AudioID.WaitForRewardClicked.PlayOneShot();
     }
 
     protected override void OnDisable()
@@ -40,9 +41,12 @@ public class RewardCanvas : InteractiveCanvas
 
     protected override async void HandleButtonClick()
     {
+        AudioID.RewardClicked.PlayOneShot();
         DisableButton();
 
+        AudioID.RewardCharged.PlayOneShot();
         await _boxView.ShowBoxAnimation(_boxAnimationDuration, _boxEndScale, _boxWhiteFadeDuration);
+        AudioID.RewardReleased.PlayOneShot();
         _boxView.Disable();
 
         var availableAnimations = new List<System.Func<(string name, string type)>>();
@@ -101,6 +105,7 @@ public class RewardCanvas : InteractiveCanvas
 
     private void CloseWindow()
     {
+        AudioID.RewardCompleted.PlayOneShot();
         _playerInputController.ActionButtonCanceled -= CloseWindow;
         _modelView.Disable();
         gameObject.SetActive(false);

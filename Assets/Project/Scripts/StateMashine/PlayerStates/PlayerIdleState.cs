@@ -15,7 +15,7 @@ public class PlayerIdleState : EntityIdleState
     {
         if (zone == SquadZone)
         {
-            if (BallService.Instance.CurrentHolder != null)
+            if (GameStatusService.Instance.CurrentHolder != null)
                 return;
             
             StateSwitcher.SwitchState<PlayerMoveState>();

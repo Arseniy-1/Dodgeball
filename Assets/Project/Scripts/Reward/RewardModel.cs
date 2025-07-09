@@ -9,8 +9,6 @@ public class RewardModel : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private ModelRotator _rotator;
 
-    private float _animationLength;
-
     private void Update()
     {
         _rotator.Update(transform);
@@ -18,9 +16,6 @@ public class RewardModel : MonoBehaviour
 
     public void PlayAnimation(int animationHash, CancellationToken cancellationToken)
     {
-        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        _animationLength = stateInfo.length;
-
         LoopPlayAnimation(animationHash, cancellationToken).Forget();
     }
 
@@ -28,9 +23,15 @@ public class RewardModel : MonoBehaviour
     {
         while (cancellationToken.IsCancellationRequested == false)
         {
-            _animator.Play(animationHash);
-
-            await UniTask.Delay(TimeSpan.FromSeconds(_animationLength));
+            _animator.Play(animationHash, 0, 0f); 
+        
+            await UniTask.NextFrame(cancellationToken: cancellationToken);
+        
+            float length = _animator.GetCurrentAnimatorStateInfo(0).length;
+            
+            await UniTask.Delay(TimeSpan.FromSeconds(length), 
+                DelayType.Realtime, 
+                cancellationToken: cancellationToken);
         }
     }
 }
