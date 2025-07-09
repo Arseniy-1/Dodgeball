@@ -19,7 +19,7 @@ public class Effect : MonoBehaviour, IDestoyable<Effect>
 
         foreach (var particle in _particles)
             particle.Play();
-        
+
         try
         {
             await WaitForAllParticlesAsync(_cancellationToken.Token);
@@ -37,26 +37,33 @@ public class Effect : MonoBehaviour, IDestoyable<Effect>
 
     public void Die()
     {
-        Debug.Log("Effect finished - destroying");
-        transform.parent = null;
+        if (transform != null)
+            transform.parent = null;
+        
         OnDestroyed?.Invoke(this);
     }
 
     private async UniTask WaitForAllParticlesAsync(CancellationToken cancellationToken)
     {
         var tasks = new List<UniTask>();
-        
+
         foreach (var particle in _particles)
         {
             tasks.Add(WaitForParticleAsync(particle, cancellationToken));
         }
-        
+
+        if (cancellationToken.IsCancellationRequested)
+            return;
+
         await UniTask.WhenAll(tasks);
     }
 
     private async UniTask WaitForParticleAsync(ParticleSystem particle, CancellationToken cancellationToken)
     {
         await UniTask.NextFrame(cancellationToken: cancellationToken);
+
+        if (cancellationToken.IsCancellationRequested)
+            return;
 
         while (cancellationToken.IsCancellationRequested == false && particle.IsAlive(true))
         {

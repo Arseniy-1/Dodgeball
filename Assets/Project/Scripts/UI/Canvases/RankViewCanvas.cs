@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections;
 using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 public class RankViewCanvas : InteractiveCanvas
 {
@@ -11,7 +12,7 @@ public class RankViewCanvas : InteractiveCanvas
 
     private const int MaxAmount = 100;
     private RankHolder _rankHolder;
-    private Coroutine _animRoutine;
+    private CancellationTokenSource _cancellationTokenSource;
 
     public event Action OnRewardViewClosed;
     
@@ -20,15 +21,13 @@ public class RankViewCanvas : InteractiveCanvas
         _rankHolder = rankHolder;
     }
 
-    public void ShowResults()
+    public UniTask ShowResultsAsync()
     {
-        if (_animRoutine != null)
-            StopCoroutine(_animRoutine);
-
-        _animRoutine = StartCoroutine(AnimateProgress(_rankHolder.PreviousAmount, _rankHolder.CurrentAmount));
+        _cancellationTokenSource = new CancellationTokenSource();
+        return AnimateProgressAsync(_rankHolder.PreviousAmount, _rankHolder.CurrentAmount, _cancellationTokenSource.Token);
     }
 
-    private IEnumerator AnimateProgress(int from, int to)
+    private async UniTask AnimateProgressAsync(int from, int to, CancellationToken cancellationToken)
     {
         float duration = 2.5f;
         float time = 0f;
@@ -36,7 +35,7 @@ public class RankViewCanvas : InteractiveCanvas
         float startFill = from / (float)MaxAmount;
         float endFill = to / (float)MaxAmount;
 
-        while (time < duration)
+        while (cancellationToken.IsCancellationRequested == false || time < duration)
         {
             time += Time.deltaTime;
             float t = time / duration;
@@ -47,7 +46,10 @@ public class RankViewCanvas : InteractiveCanvas
             int percent = Mathf.RoundToInt(currentFill * 100f);
             _percentageText.text = percent + "%";
 
-            yield return null;
+            await UniTask.Yield();
+            
+            if(cancellationToken.IsCancellationRequested)
+                return;
         }
 
         _chestFillImage.fillAmount = endFill;
@@ -57,5 +59,6 @@ public class RankViewCanvas : InteractiveCanvas
     protected override void HandleButtonClick()
     {
         OnRewardViewClosed?.Invoke();
+        _cancellationTokenSource.Cancel();
     }
 }

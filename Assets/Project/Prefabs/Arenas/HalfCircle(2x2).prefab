@@ -1940,8 +1940,8 @@ MonoBehaviour:
   _ballUpgraderFabric: {fileID: 4255509474837757483}
   _frames:
   - {fileID: 6027190835173568754}
-  _minInactiveInterval: 1
-  _maxInactiveInterval: 2
+  _minInactiveInterval: 3
+  _maxInactiveInterval: 6
 --- !u!1 &6321924411649089773
 GameObject:
   m_ObjectHideFlags: 0

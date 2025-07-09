@@ -6,29 +6,43 @@ public abstract class EntityCelebrateState : IState
 {
     private readonly AnimatorController _animatorController;
     private readonly Entity _entity;
+    private readonly BallHolder _ballHolder;
+    private readonly BallThrower _ballThrower;
+    private readonly CollisionHandler _collisionHandler;
     private readonly List<Entity> _teammates;
     private readonly Rotator _rotator;
 
-    protected EntityCelebrateState(
-        Entity entity,
-        AnimatorController animatorController,
-        List<Entity> teammates)
+    protected EntityCelebrateState(Entity entity, AnimatorController animatorController, BallHolder ballHolder,
+        BallThrower ballThrower, CollisionHandler collisionHandler,List<Entity> teammates)
     {
         _entity = entity;
         _animatorController = animatorController;
+        _ballHolder = ballHolder;
+        _ballThrower = ballThrower;
+        _collisionHandler = collisionHandler;
         _teammates = teammates;
         _rotator = new Rotator();
     }
 
     public virtual void Enter()
     {
+        _ballHolder.LostBall();
+        _ballHolder.enabled = false;
+        _ballThrower.enabled = false;
+        _collisionHandler.enabled = false;
+        
         _animatorController.Celebrate();
 
         Transform targetTransform = GetTargetTransform();
         _rotator.RotateToTarget(targetTransform, _entity.transform);
     }
 
-    public virtual void Exit() { }
+    public virtual void Exit()
+    {
+        _ballHolder.enabled = true;
+        _ballThrower.enabled = true;
+        _collisionHandler.enabled = true;
+    }
     
     public void Initialize(IStateSwitcher stateSwitcher)
     {

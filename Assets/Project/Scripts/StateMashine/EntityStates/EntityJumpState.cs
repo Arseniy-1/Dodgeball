@@ -43,9 +43,12 @@ public abstract class EntityJumpState : IState
             _hitCheker.enabled = false;
         
         _hitCheker.DetectBallHit -= HandleBallDodge;
+
+        if(_collider != null)
+            _collisionHandler.enabled = true;
         
-        _collisionHandler.enabled = true;
-        _collider.isTrigger = false;
+        if(_collider != null)
+            _collider.isTrigger = false;
     }
 
     public virtual void Update() { }

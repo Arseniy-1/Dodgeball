@@ -87,6 +87,9 @@ public abstract class EntityDodgeState : IState
             Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
             _animatorController.DodgeIdle();
             Debug.Log("Dodge movement Wait Move " + _entity.gameObject.name);
+            if(token.IsCancellationRequested)
+                return;
+            
             await _mover.MoveTo(target, _entityConfig.DodgeSpeed, token);
             
             if(token.IsCancellationRequested)

@@ -43,7 +43,7 @@ public class Arena : MonoBehaviour
         _cancellationTokenSource.Cancel();
     }
     
-    public void StartGame(Ball ball)
+    public void Initialize(Ball ball)
     {
         _ballUpgraders = _ballUpgraderFabric.Create();
         
@@ -57,7 +57,7 @@ public class Arena : MonoBehaviour
                 squad.LostPlayers += HandleEnemySquadDeath;
         }
 
-        EnableFrame();
+        EnableFrame().Forget();
     }
 
     private void HandleEnemySquadDeath(Squad squad)
@@ -100,18 +100,18 @@ public class Arena : MonoBehaviour
         int randomFrameIndex = Random.Range(0, _frames.Count);
         Frame selectedFrame = _frames[randomFrameIndex];
 
-        var tcs = new TaskCompletionSource<bool>();
+        var taskCompletionSource = new TaskCompletionSource<bool>();
 
         void Handler(Frame frame)
         {
             selectedFrame.OnFrameHitted -= Handler;
-            tcs.SetResult(true);
+            taskCompletionSource.SetResult(true);
         }
 
         selectedFrame.OnFrameHitted += Handler;
         selectedFrame.Activate(_ballUpgraders[Random.Range(0, _ballUpgraders.Count)]);
 
-        await tcs.Task;
+        await taskCompletionSource.Task;
     }
     
     private void NotifyWinners()

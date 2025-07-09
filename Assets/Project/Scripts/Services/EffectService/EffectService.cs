@@ -29,7 +29,7 @@ public class EffectService : IDisposable
         foreach (var pair in _effectsData)
         {
             List<EffectsSpawner> spawners = new List<EffectsSpawner>();
-            
+
             foreach (var effect in pair.Value.Effects)
                 spawners.Add(new EffectsSpawner(effect, poolHolder.transform));
 
@@ -50,14 +50,16 @@ public class EffectService : IDisposable
         _compositeDisposable.Dispose();
     }
 
-    private void ShowEffects(EffectID effectID, Transform parent)
+    private void ShowEffects(EffectID effectID, Transform transform, bool isParent = false)
     {
         if (_spawners.TryGetValue(effectID, out var spawners))
         {
             EffectsSpawner randomSpawner = spawners[UnityEngine.Random.Range(0, spawners.Count)];
             var effect = randomSpawner.Spawn();
-            effect.transform.parent = parent.transform;
-            effect.transform.position = parent.position;
+            effect.transform.position = transform.position;
+
+            if (isParent)
+                effect.transform.parent = transform.transform;
         }
         else
         {

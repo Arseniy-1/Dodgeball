@@ -9,10 +9,10 @@ public class RankHolder
 
     private int _currentAmount;
     private int _previousAmount;
-    
-    public event Action<int, int> RankAmoutChanged; 
-    public event Action RankRaised; 
-    
+
+    public event Action<int, int> RankAmoutChanged;
+    public event Action RankRaised;
+
     public int CurrentAmount => _currentAmount;
     public int PreviousAmount => _previousAmount;
     public int MaxRankAmount => MaxAmount;
@@ -23,23 +23,26 @@ public class RankHolder
         _previousAmount = YG2.saves.ProgressData.PreviousRankAmount;
         CurrentRank = YG2.saves.ProgressData.CurrentRank;
     }
-    
+
     public void IncreaseRank(int amount)
     {
-        if(amount <= 0)
+        if (_currentAmount >= MaxAmount)
+            _currentAmount = 0;
+
+        if (amount <= 0)
             return;
-        
+
         _previousAmount = _currentAmount;
-        _currentAmount += amount;
+        _currentAmount += 120;
 
         if (_currentAmount >= MaxAmount)
         {
-            _currentAmount = 0;
+            _currentAmount = MaxAmount;
             RankRaised?.Invoke();
         }
-        
+
         RankAmoutChanged?.Invoke(_currentAmount, MaxAmount);
-        
+
         YG2.saves.ProgressData.CurrentRankAmount = _currentAmount;
         YG2.saves.ProgressData.PreviousRankAmount = _previousAmount;
         YG2.saves.ProgressData.CurrentRank = CurrentRank;

@@ -26,7 +26,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
         _enemyStates = new List<IState>
         {
             new EnemyPrepareState(this, AnimatorController, TargetScanner, Teammates),
-            new EnemyCelebrateState(this, AnimatorController, Teammates),
+            new EnemyCelebrateState(this, AnimatorController,BallHolder, BallThrower, CollisionHandler, Teammates),
             new EnemyIdleState(this,AnimatorController, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, enemyConfig, Teammates),
             new EnemyMoveState(this, AnimatorController,Teammates, enemyConfig, CollisionHandler, SquadZone, BallHolder, ball, Collider, Mover),
             new EnemyDodgeState(this, AnimatorController, ball, Mover, SquadZone, Rigidbody, enemyConfig),
@@ -35,10 +35,10 @@ public class Enemy : Entity, IDestoyable<Enemy>
             new EnemyDeathState(AnimatorController, CollisionHandler, Collider, BallHolder)
         };
         
-        StateMaсhine = new StateMaсhine(_enemyStates);
+        StateMachine = new StateMaсhine(_enemyStates);
 
         foreach (var state in _enemyStates)
-            state.Initialize(StateMaсhine);
+            state.Initialize(StateMachine);
 
         Reset();
     }
@@ -46,7 +46,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
     [Button]
     protected override async void HandleLostHealth()
     {
-        StateMaсhine.SwitchState<EnemyDeathState>();
+        StateMachine.SwitchState<EnemyDeathState>();
         HealthCanvas.gameObject.SetActive(false);
         EffectID.Death.PlayEffect(transform);
         AudioID.Dead.PlayOneShot();
@@ -59,7 +59,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
 
     public override void Selebrate()
     {
-        StateMaсhine.SwitchState<EnemyCelebrateState>();
+        StateMachine.SwitchState<EnemyCelebrateState>();
         BallHolder.LostBall();
     }
 

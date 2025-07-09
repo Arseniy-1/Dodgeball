@@ -25,13 +25,14 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private Saves _saves;
 
     [SerializeField] private RewardService _rewardService;
+
+    private bool _rewardRaised = false;
+    
     private EffectService _effectService;
     private AudioService _audioService;
     private RankHolder _rankHolder;
 
     private Ball _ballInstance;
-
-    private List<UniTask> _operations;
 
     private PlayerSpawner _playerSpawner;
     private List<EnemySpawner> _enemySpawners = new();
@@ -88,7 +89,7 @@ public class CompositionRoot : MonoBehaviour
     {
         _startGameCanvas.gameObject.SetActive(false);
         _gameCanvas.gameObject.SetActive(true);
-        _arenaInstance.StartGame(_ballInstance);
+        _arenaInstance.Initialize(_ballInstance);
         GameStatusService.Instance.Initialize(_ballInstance);
 
         MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
@@ -152,10 +153,16 @@ public class CompositionRoot : MonoBehaviour
         await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
 
         _rankViewCanvas.gameObject.SetActive(true);
-        _rankViewCanvas.ShowResults();
+        await _rankViewCanvas.ShowResultsAsync();
+        _rankViewCanvas.gameObject.SetActive(false);
+        
+        if (_rewardRaised)
+        {
+            _rewardCanvas.gameObject.SetActive(true);
+            _rewardRaised = false;   
+        }
     }
-
-
+    
     private void HandleRankCanvasClose()
     {
         ClearEntities();
@@ -210,6 +217,6 @@ public class CompositionRoot : MonoBehaviour
 
     private void HandleRankRaised()
     {
-        _rewardCanvas.gameObject.SetActive(true);
+        _rewardRaised = true;
     }
 }

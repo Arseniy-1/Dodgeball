@@ -26,7 +26,7 @@ public abstract class Entity : MonoBehaviour
     protected Rigidbody Rigidbody;
     protected AnimatorController AnimatorController;
 
-    protected StateMaсhine StateMaсhine;
+    protected StateMaсhine StateMachine;
 
     [SerializeField] protected Ball Ball;
     
@@ -64,13 +64,13 @@ public abstract class Entity : MonoBehaviour
 
     protected virtual void Update()
     {
-        StateMaсhine.Update();
+        StateMachine.Update();
 
-        CurrentState = StateMaсhine._currentState.ToString();
+        CurrentState = StateMachine._currentState.ToString();
 
         CurrentStates.Clear();
         
-        foreach (var state in StateMaсhine._states.Values)
+        foreach (var state in StateMachine._states.Values)
             CurrentStates.Add(state.ToString());
     }
 
@@ -81,7 +81,7 @@ public abstract class Entity : MonoBehaviour
     [Button]
     public virtual void Die()
     {
-        StateMaсhine.Dispose();
+        StateMachine.Dispose();
         AnimatorController.Dispose();
     }
     

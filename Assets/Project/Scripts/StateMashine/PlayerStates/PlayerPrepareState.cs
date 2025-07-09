@@ -17,7 +17,7 @@ public class PlayerPrepareState : EntityPrepareState
 
     public override void Exit()
     {
-        EffectID.Pointer.PlayEffect(_playerTransform);
+        EffectID.Pointer.PlayEffect(_playerTransform, true);
     }
     
     protected override void HandleStartGame()
