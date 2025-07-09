@@ -397,6 +397,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3180865846243327988, guid: 1d99f9d24dc049e4ea4760a515b62462, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3180865846243327988, guid: 1d99f9d24dc049e4ea4760a515b62462, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3180865846243327988, guid: 1d99f9d24dc049e4ea4760a515b62462, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.45
+      objectReference: {fileID: 0}
     - target: {fileID: 4142087708596268309, guid: 1d99f9d24dc049e4ea4760a515b62462, type: 3}
       propertyPath: m_Name
       value: ChargeCanvasView
@@ -405,6 +417,10 @@ PrefabInstance:
       propertyPath: _ballThrower
       value: 
       objectReference: {fileID: 2967383579765363493}
+    - target: {fileID: 8387276243243957335, guid: 1d99f9d24dc049e4ea4760a515b62462, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

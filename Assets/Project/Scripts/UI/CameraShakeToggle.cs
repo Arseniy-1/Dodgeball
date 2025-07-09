@@ -9,6 +9,7 @@ public class CameraShakeToggle : SettingToggle
 
     protected override void Toggle()
     {
+        base.Toggle();
         YG2.saves.SettingsData.IsCameraShakeEnabled = !YG2.saves.SettingsData.IsCameraShakeEnabled;
     }
 }

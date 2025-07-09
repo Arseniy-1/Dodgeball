@@ -3,7 +3,7 @@
 [RequireComponent(typeof(Rigidbody))]
 public class Damageable : MonoBehaviour
 {
-    [SerializeField] private float _damageMultiplier = 1f;
+    [SerializeField] private float _damageMultiplier = 2f;
     
     public int Damage => (int)(_rigidbody.velocity.magnitude * _damageMultiplier);
 

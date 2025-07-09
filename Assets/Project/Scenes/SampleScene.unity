@@ -1097,6 +1097,18 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6102953360150870323, guid: 4ad7a5a7fc42f6b49945c81440d0dfe0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6102953360150870323, guid: 4ad7a5a7fc42f6b49945c81440d0dfe0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6102953360150870323, guid: 4ad7a5a7fc42f6b49945c81440d0dfe0, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6427302355750310189, guid: 4ad7a5a7fc42f6b49945c81440d0dfe0, type: 3}
       propertyPath: m_Name
       value: japanes island
@@ -2577,7 +2589,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -836015002319680740, guid: 26f2e8b8e2ff55948ab04abe9f88cc2b, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 1572bfd46e1afc640a60951875a4b91b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b19018c4aa2ac4a88a47254fb227fa6c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.337
   m_Pitch: 1
@@ -6438,7 +6450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 1455161914}
   _boxView: {fileID: 41337797}
-  _boxAnimationDuration: 1.55
+  _boxAnimationDuration: 1.7
   _boxEndScale: 1.51
   _boxWhiteFadeDuration: 0.28
   _modelView: {fileID: 1754970801}

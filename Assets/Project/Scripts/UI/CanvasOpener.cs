@@ -7,5 +7,6 @@ public class CanvasOpener : ButtonHandler
     protected override void HandleButtonClick()
     {
         _canvas.gameObject.SetActive(true);
+        AudioID.UISoft.PlayOneShot();
     }
 }

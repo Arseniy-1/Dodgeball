@@ -10,6 +10,7 @@ public class MusicToggle : AudioToggle
 
     protected override void Toggle()
     {
+        base.Toggle();
         YG2.saves.SettingsData.IsMusicEnabled = !YG2.saves.SettingsData.IsMusicEnabled;
         EnableVolume();
     }

@@ -27,5 +27,6 @@ public class LanquageButton : ButtonHandler
     protected override void HandleButtonClick()
     {
         OnClick?.Invoke(_languageData.Language);
+        AudioID.UISolid.PlayOneShot();
     }
 }

@@ -7,6 +7,7 @@ public class HealthDelayedBar : DelayedViewBar
     private void OnEnable()
     {
         _health.HealthChanged += OnValueChanged;
+        Reset();
     }
 
     private void OnDisable()

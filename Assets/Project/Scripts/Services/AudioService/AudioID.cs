@@ -15,4 +15,5 @@
     RewardReleased = 12,
     RewardCompleted = 13,
     GameStarted = 14,
+    NegativeAction = 15,
 }

@@ -88,9 +88,16 @@ public abstract class EntityDodgeState : IState
             _animatorController.DodgeIdle();
             Debug.Log("Dodge movement Wait Move " + _entity.gameObject.name);
             await _mover.MoveTo(target, _entityConfig.DodgeSpeed, token);
+            
+            if(token.IsCancellationRequested)
+                return;
+            
             _animatorController.Idle();
             Debug.Log("Dodge movement Wait StandTime " + _entity.gameObject.name + " Stand Time: " + standTime);
             await UniTask.Delay((int)(standTime * 1000), cancellationToken: token);
+            
+            if(token.IsCancellationRequested)
+                return;
         }
     }
 }

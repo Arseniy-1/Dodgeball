@@ -7,5 +7,6 @@ public class ExitButton : ButtonHandler
     protected override void HandleButtonClick()
     {
         ExitButtonClicked?.Invoke();
+        AudioID.NegativeAction.PlayOneShot();
     }
 }

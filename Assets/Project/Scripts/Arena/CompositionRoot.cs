@@ -31,6 +31,8 @@ public class CompositionRoot : MonoBehaviour
 
     private Ball _ballInstance;
 
+    private List<UniTask> _operations;
+
     private PlayerSpawner _playerSpawner;
     private List<EnemySpawner> _enemySpawners = new();
 
@@ -65,14 +67,14 @@ public class CompositionRoot : MonoBehaviour
     {
         _startGameCanvas.OnStartGameButtonPressed += StartGame;
         _rankViewCanvas.OnRewardViewClosed += HandleRankCanvasClose;
-        _rankHolder.RankRaised += GiveReward;
+        _rankHolder.RankRaised += HandleRankRaised;
     }
 
     private void OnDisable()
     {
         _startGameCanvas.OnStartGameButtonPressed -= StartGame;
         _rankViewCanvas.OnRewardViewClosed -= HandleRankCanvasClose;
-        _rankHolder.RankRaised -= GiveReward;
+        _rankHolder.RankRaised -= HandleRankRaised;
     }
 
     private void Start()
@@ -206,7 +208,7 @@ public class CompositionRoot : MonoBehaviour
         squad.Initialize(enemies);
     }
 
-    private void GiveReward()
+    private void HandleRankRaised()
     {
         _rewardCanvas.gameObject.SetActive(true);
     }

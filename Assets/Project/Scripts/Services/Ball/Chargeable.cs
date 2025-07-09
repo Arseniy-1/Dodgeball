@@ -7,13 +7,8 @@ public class Chargeable : MonoBehaviour
     
     public bool IsCharged => _velocity.magnitude >= _dangerousSpeed;
 
-    public Rigidbody _rigidbody;
+    private Rigidbody _rigidbody;
     private Vector3 _velocity;
-    
-    private void Update()
-    {
-         // Debug.Log(_rigidbody.velocity.magnitude + ">=" + _dangerousSpeed);
-    }
     
     private void Awake()
     {

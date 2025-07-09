@@ -33,6 +33,10 @@ public abstract class SettingToggle : ButtonHandler
         UpdateView();
     }
 
+    protected virtual void Toggle()
+    {
+        AudioID.UISolid.PlayOneShot();
+    }
+    
     protected abstract bool IsEnabled();
-    protected abstract void Toggle();
 }

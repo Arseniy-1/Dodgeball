@@ -13,4 +13,10 @@ public abstract class DelayedViewBar : ViewBar
         else
             _delayedBar.value = TargetFill;
     }
+
+    protected override void Reset()
+    {
+        base.Reset();
+        _delayedBar.value = TargetFill;
+    }
 }

@@ -11,6 +11,7 @@ public class SoundsToggle : AudioToggle
 
     protected override void Toggle()
     {
+        base.Toggle();
         YG2.saves.SettingsData.IsSoundsEnabled = !YG2.saves.SettingsData.IsSoundsEnabled;
         EnableVolume();
     }

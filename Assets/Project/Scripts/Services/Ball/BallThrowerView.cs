@@ -6,6 +6,9 @@ public class BallThrowerView : MonoBehaviour
     [SerializeField] private BallThrower _ballThrower;
     [SerializeField] private Image _chargeFill;
     [SerializeField] private Image _chargeBackground;
+    
+    [SerializeField] private Color _minChargeColor = Color.green;
+    [SerializeField] private Color _maxChargeColor = Color.red;
 
     private void OnEnable()
     {
@@ -28,7 +31,7 @@ public class BallThrowerView : MonoBehaviour
         float chargePercent = Mathf.InverseLerp(minForce, maxForce, currentForce);
         _chargeFill.fillAmount = chargePercent;
 
-        _chargeFill.color = Color.Lerp(Color.green, Color.red, chargePercent);
+        _chargeFill.color = Color.Lerp(_minChargeColor, _maxChargeColor, chargePercent);
     }
 
 

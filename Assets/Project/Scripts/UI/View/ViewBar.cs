@@ -12,4 +12,9 @@ public abstract class ViewBar : MonoBehaviour
         TargetFill = (float)current / max;
         _bar.value = TargetFill;
     }
+    
+    protected virtual void Reset()
+    {
+        _bar.value = 1;
+    }
 }
