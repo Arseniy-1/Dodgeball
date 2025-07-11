@@ -33,11 +33,30 @@ public class AnimatorController
     }
 
     public UniTask Attack() => PlayAndWait(_throw, _cancellationTokenSource.Token);
-    public void PrepareAttack() => _animator.Play(_prepareToThrow);
 
-    public void Run() => _animator.Play(_run);
-    public void Idle() => _animator.Play(_idle);
-    public void DodgeIdle() => _animator.Play(_dodgeIdle);
+    public void PrepareAttack()
+    {
+        if (_animator != null)
+            _animator.Play(_prepareToThrow);
+    }
+
+    public void Run()
+    {
+        if (_animator != null)
+            _animator.Play(_run);
+    }
+
+    public void Idle()
+    {
+        if (_animator != null)
+            _animator.Play(_idle);
+    }
+
+    public void DodgeIdle()
+    {
+        if (_animator != null)
+            _animator.Play(_dodgeIdle);
+    }
 
     public void Celebrate()
     {

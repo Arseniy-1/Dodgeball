@@ -17,7 +17,6 @@ public abstract class EntityDeathState : IState
 
     public virtual void Enter()
     {
-        Debug.Log("EnterDeath");
         _animatorController.Death();
         _ballHolder.LostBall();
         _collisionHandler.enabled = false;
@@ -26,7 +25,6 @@ public abstract class EntityDeathState : IState
 
     public virtual void Exit()
     {
-        Debug.Log("ExitDeath");
         _collisionHandler.enabled = true;
         _collider.enabled = true;
     }

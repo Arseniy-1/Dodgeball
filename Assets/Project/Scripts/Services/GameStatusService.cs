@@ -47,6 +47,7 @@ public class GameStatusService
 
     public void Initialize(Ball ball)
     {
+        ClearHolder();
         _ball = ball;
         
         _ball.OnTriggerEnterAsObservable()

@@ -41,7 +41,7 @@ public class EffectService : IDisposable
         MessageBrokerHolder.GameActions
             .Receive<M_PlayEffectByType>()
             .Subscribe((message) =>
-                ShowEffects(message.EffectID, message.Transform))
+                ShowEffects(message.EffectID, message.Transform, message.IsParent))
             .AddTo(_compositeDisposable);
     }
 

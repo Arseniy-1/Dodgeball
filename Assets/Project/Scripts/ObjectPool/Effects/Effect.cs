@@ -37,7 +37,7 @@ public class Effect : MonoBehaviour, IDestoyable<Effect>
 
     public void Die()
     {
-        if (transform != null)
+        if (this != null)
             transform.parent = null;
         
         OnDestroyed?.Invoke(this);

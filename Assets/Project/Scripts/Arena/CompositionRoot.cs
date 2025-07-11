@@ -159,6 +159,7 @@ public class CompositionRoot : MonoBehaviour
         if (_rewardRaised)
         {
             _rewardCanvas.gameObject.SetActive(true);
+            _startGameCanvas.gameObject.SetActive(false);
             _rewardRaised = false;   
         }
     }

@@ -24,7 +24,6 @@ public class PlayerAttackState : EntityAttackState
 
     public override void Enter()
     {
-        Debug.Log("Enter Player Attack State");
         base.Enter();
 
         _buttonStartedHandler = OnButtonClicked;
@@ -34,12 +33,17 @@ public class PlayerAttackState : EntityAttackState
         _inputController.ActionButtonCanceled += _buttonCanceledHandler;
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+        _inputController.ActionButtonStarted -= _buttonStartedHandler;
+        _inputController.ActionButtonCanceled -= _buttonCanceledHandler;
+    }
+
     private void OnButtonClicked()
     {
-        Debug.Log("OnButtonClicked");
         if (TargetProvider.Target != null)
         {
-            Debug.Log("Start Attack");
             StartAttack();
         }
     }

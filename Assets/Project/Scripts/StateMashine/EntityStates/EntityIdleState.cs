@@ -57,8 +57,6 @@ public abstract class EntityIdleState : IState
 
         GameStatusService.Instance.OnZoneChanged += HandleBallZoneChanged;
         GameStatusService.Instance.OnHolderChanged += HandleBallTaken;
-
-        HandleBallTaken(GameStatusService.Instance.CurrentHolder);
         
         _rigidbody.isKinematic = true;
         _collisionHandler.enabled = false;
@@ -66,6 +64,9 @@ public abstract class EntityIdleState : IState
 
         _animatorController.Idle();
         RunIdleMovementLoop(_cancellationTokenSource.Token).Forget();
+ 
+        HandleBallTaken(GameStatusService.Instance.CurrentHolder);
+        HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
     }
 
     public virtual void Exit()

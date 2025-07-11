@@ -9,6 +9,5 @@ public class ChargeBallUpgrader : BallUpgrader
     
     public override void UpgradeBall(Ball ball)
     {
-        Debug.Log("Charge Ball");
     }
 }

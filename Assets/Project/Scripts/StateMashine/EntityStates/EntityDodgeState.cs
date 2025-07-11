@@ -75,7 +75,7 @@ public abstract class EntityDodgeState : IState
 
     private async UniTaskVoid RunDodgeMovementLoop(CancellationToken token)
     {
-        Debug.Log("Enter to dodge movement Wait Move " + _entity.gameObject.name);
+        // Debug.Log("Enter to dodge movement Wait Move " + _entity.gameObject.name);
         
         while (token.IsCancellationRequested == false)
         {
@@ -86,7 +86,7 @@ public abstract class EntityDodgeState : IState
 
             Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
             _animatorController.DodgeIdle();
-            Debug.Log("Dodge movement Wait Move " + _entity.gameObject.name);
+            // Debug.Log("Dodge movement Wait Move " + _entity.gameObject.name);
             if(token.IsCancellationRequested)
                 return;
             
@@ -96,7 +96,7 @@ public abstract class EntityDodgeState : IState
                 return;
             
             _animatorController.Idle();
-            Debug.Log("Dodge movement Wait StandTime " + _entity.gameObject.name + " Stand Time: " + standTime);
+            // Debug.Log("Dodge movement Wait StandTime " + _entity.gameObject.name + " Stand Time: " + standTime);
             await UniTask.Delay((int)(standTime * 1000), cancellationToken: token);
             
             if(token.IsCancellationRequested)

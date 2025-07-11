@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using UnityEngine;
 
 public abstract class EntityJumpState : IState
 {
@@ -9,6 +10,8 @@ public abstract class EntityJumpState : IState
 
     protected IStateSwitcher StateSwitcher;
 
+    private CancellationTokenSource _cancellationTokenSource;
+    
     protected EntityJumpState(
         AnimatorController animatorController,
         CollisionHandler collisionHandler,
@@ -28,13 +31,15 @@ public abstract class EntityJumpState : IState
 
     public virtual void Enter()
     {
+        _cancellationTokenSource = new CancellationTokenSource();
+        
         _hitCheker.enabled = true;
         _hitCheker.DetectBallHit += HandleBallDodge;
             
         _collisionHandler.enabled = false;
         _collider.isTrigger = true;
         AudioID.Jump.PlayOneShot();
-        Jump();
+        Jump(_cancellationTokenSource.Token);
     }
 
     public virtual void Exit()
@@ -49,15 +54,21 @@ public abstract class EntityJumpState : IState
         
         if(_collider != null)
             _collider.isTrigger = false;
+        
+        _cancellationTokenSource.Cancel();
     }
 
     public virtual void Update() { }
     
     protected abstract void OnJumpFinished();
 
-    private async void Jump()
+    private async void Jump(CancellationToken cancellationToken)
     {
         await _animatorController.Dodge();
+        
+        if(cancellationToken.IsCancellationRequested)
+            return;
+        
         OnJumpFinished();
     }
 
