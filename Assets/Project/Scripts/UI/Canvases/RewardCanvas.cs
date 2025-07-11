@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using YG;
+using Random = UnityEngine.Random;
 
 public class RewardCanvas : InteractiveCanvas
 {
@@ -12,10 +14,13 @@ public class RewardCanvas : InteractiveCanvas
 
     [SerializeField] private ModelView _modelView;
     [SerializeField] private PlayerInputController _playerInputController;
+
     private RewardService _rewardService;
 
     private CancellationTokenSource _cancellationTokenSource;
 
+    public event Action RewardCanvasClosed;
+    
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -32,6 +37,12 @@ public class RewardCanvas : InteractiveCanvas
         _boxView.Disable();
     }
 
+    protected override void HandleButtonClick()
+    {
+        AudioID.RewardClicked.PlayOneShot();
+        DisableButton();
+    }
+
     public void Initialize(RewardService rewardService)
     {
         _rewardService = rewardService;
@@ -39,11 +50,8 @@ public class RewardCanvas : InteractiveCanvas
         _cancellationTokenSource = new CancellationTokenSource();
     }
 
-    protected override async void HandleButtonClick()
+    public async UniTask ShowReward()
     {
-        AudioID.RewardClicked.PlayOneShot();
-        DisableButton();
-
         AudioID.RewardCharged.PlayOneShot();
         await _boxView.ShowBoxAnimation(_boxAnimationDuration, _boxEndScale, _boxWhiteFadeDuration);
         AudioID.RewardReleased.PlayOneShot();
@@ -100,13 +108,18 @@ public class RewardCanvas : InteractiveCanvas
             _modelView.ShowReward(animationHash, selectedAnimation.name);
         }
 
-        _playerInputController.ActionButtonCanceled += CloseWindow;
+        var taskCompletionSource = new UniTaskCompletionSource();
+        
+        _playerInputController.ActionButtonCanceled += () => taskCompletionSource.TrySetResult();
+        
+        await taskCompletionSource.Task;
+
+        CloseWindow();
     }
 
     private void CloseWindow()
     {
         AudioID.RewardCompleted.PlayOneShot();
-        _playerInputController.ActionButtonCanceled -= CloseWindow;
         _modelView.Disable();
         gameObject.SetActive(false);
     }

@@ -27,7 +27,7 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private RewardService _rewardService;
 
     private bool _rewardRaised = false;
-    
+
     private EffectService _effectService;
     private AudioService _audioService;
     private RankHolder _rankHolder;
@@ -59,7 +59,7 @@ public class CompositionRoot : MonoBehaviour
             EnemySpawner enemySpawner = new EnemySpawner(_enemyPrefabs[i]);
             _enemySpawners.Add(enemySpawner);
         }
-        
+
         YG2.SwitchLanguage(YG2.lang);
         LocalizationManager.Language = YG2.lang;
     }
@@ -155,15 +155,24 @@ public class CompositionRoot : MonoBehaviour
         _rankViewCanvas.gameObject.SetActive(true);
         await _rankViewCanvas.ShowResultsAsync();
         _rankViewCanvas.gameObject.SetActive(false);
-        
+
         if (_rewardRaised)
         {
-            _rewardCanvas.gameObject.SetActive(true);
             _startGameCanvas.gameObject.SetActive(false);
-            _rewardRaised = false;   
+            _rewardCanvas.gameObject.SetActive(true);
+            _rewardRaised = false;
+            await _rewardCanvas.ShowReward();
+            _startGameCanvas.gameObject.SetActive(true);
         }
     }
-    
+
+    private void HandleRewardCanvasClosed()
+    {
+        _rewardCanvas.RewardCanvasClosed -= HandleRewardCanvasClosed;
+        _rewardCanvas.gameObject.SetActive(false);
+        _startGameCanvas.gameObject.SetActive(true);
+    }
+
     private void HandleRankCanvasClose()
     {
         ClearEntities();

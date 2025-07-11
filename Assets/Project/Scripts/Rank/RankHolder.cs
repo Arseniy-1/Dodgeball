@@ -33,7 +33,7 @@ public class RankHolder
             return;
 
         _previousAmount = _currentAmount;
-        _currentAmount += amount;
+        _currentAmount += 120;
 
         if (_currentAmount >= MaxAmount)
         {
