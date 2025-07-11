@@ -24,10 +24,11 @@ public class CompositionRoot : MonoBehaviour
 
     [SerializeField] private Saves _saves;
 
+    [SerializeField] private RewardButton _rewardButton;
     [SerializeField] private RewardService _rewardService;
 
     private bool _rewardRaised = false;
-
+    
     private EffectService _effectService;
     private AudioService _audioService;
     private RankHolder _rankHolder;
@@ -59,7 +60,7 @@ public class CompositionRoot : MonoBehaviour
             EnemySpawner enemySpawner = new EnemySpawner(_enemyPrefabs[i]);
             _enemySpawners.Add(enemySpawner);
         }
-
+        
         YG2.SwitchLanguage(YG2.lang);
         LocalizationManager.Language = YG2.lang;
     }
@@ -69,6 +70,7 @@ public class CompositionRoot : MonoBehaviour
         _startGameCanvas.OnStartGameButtonPressed += StartGame;
         _rankViewCanvas.OnRewardViewClosed += HandleRankCanvasClose;
         _rankHolder.RankRaised += HandleRankRaised;
+        _rewardButton.RewardButtonClicked += GiveReward;
     }
 
     private void OnDisable()
@@ -76,6 +78,7 @@ public class CompositionRoot : MonoBehaviour
         _startGameCanvas.OnStartGameButtonPressed -= StartGame;
         _rankViewCanvas.OnRewardViewClosed -= HandleRankCanvasClose;
         _rankHolder.RankRaised -= HandleRankRaised;
+        _rewardButton.RewardButtonClicked -= GiveReward;
     }
 
     private void Start()
@@ -155,15 +158,20 @@ public class CompositionRoot : MonoBehaviour
         _rankViewCanvas.gameObject.SetActive(true);
         await _rankViewCanvas.ShowResultsAsync();
         _rankViewCanvas.gameObject.SetActive(false);
-
+        
         if (_rewardRaised)
         {
-            _startGameCanvas.gameObject.SetActive(false);
-            _rewardCanvas.gameObject.SetActive(true);
-            _rewardRaised = false;
-            await _rewardCanvas.ShowReward();
-            _startGameCanvas.gameObject.SetActive(true);
+            GiveReward();
         }
+    }
+
+    private void GiveReward()
+    {
+        _startGameCanvas.gameObject.SetActive(false);
+        _rewardCanvas.gameObject.SetActive(true);
+        _rewardRaised = false;
+
+        _rewardCanvas.RewardCanvasClosed += HandleRewardCanvasClosed;
     }
 
     private void HandleRewardCanvasClosed()

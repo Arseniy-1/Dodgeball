@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -37,12 +36,6 @@ public class RewardCanvas : InteractiveCanvas
         _boxView.Disable();
     }
 
-    protected override void HandleButtonClick()
-    {
-        AudioID.RewardClicked.PlayOneShot();
-        DisableButton();
-    }
-
     public void Initialize(RewardService rewardService)
     {
         _rewardService = rewardService;
@@ -50,8 +43,11 @@ public class RewardCanvas : InteractiveCanvas
         _cancellationTokenSource = new CancellationTokenSource();
     }
 
-    public async UniTask ShowReward()
+    protected override async void HandleButtonClick()
     {
+        AudioID.RewardClicked.PlayOneShot();
+        DisableButton();
+
         AudioID.RewardCharged.PlayOneShot();
         await _boxView.ShowBoxAnimation(_boxAnimationDuration, _boxEndScale, _boxWhiteFadeDuration);
         AudioID.RewardReleased.PlayOneShot();
@@ -107,20 +103,17 @@ public class RewardCanvas : InteractiveCanvas
             int animationHash = Animator.StringToHash(selectedAnimation.name);
             _modelView.ShowReward(animationHash, selectedAnimation.name);
         }
-
-        var taskCompletionSource = new UniTaskCompletionSource();
         
-        _playerInputController.ActionButtonCanceled += () => taskCompletionSource.TrySetResult();
-        
-        await taskCompletionSource.Task;
-
-        CloseWindow();
+        _playerInputController.ActionButtonCanceled += CloseWindow;
     }
 
     private void CloseWindow()
     {
         AudioID.RewardCompleted.PlayOneShot();
+        _playerInputController.ActionButtonCanceled -= CloseWindow;
         _modelView.Disable();
         gameObject.SetActive(false);
+        
+        RewardCanvasClosed?.Invoke();
     }
 }

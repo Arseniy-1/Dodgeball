@@ -33,16 +33,19 @@ public class RankHolder
             return;
 
         _previousAmount = _currentAmount;
-        _currentAmount += 120;
+        _currentAmount += amount;
 
         if (_currentAmount >= MaxAmount)
         {
             _currentAmount = MaxAmount;
+            CurrentRank++;
+
             RankRaised?.Invoke();
         }
 
         RankAmoutChanged?.Invoke(_currentAmount, MaxAmount);
 
+        YG2.SetLeaderboard("Leaderboard", CurrentRank);
         YG2.saves.ProgressData.CurrentRankAmount = _currentAmount;
         YG2.saves.ProgressData.PreviousRankAmount = _previousAmount;
         YG2.saves.ProgressData.CurrentRank = CurrentRank;
