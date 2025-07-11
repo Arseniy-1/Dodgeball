@@ -18,7 +18,7 @@ MonoBehaviour:
   <DodgeSpeed>k__BackingField: 10
   <MinThrowForce>k__BackingField: 500
   <MaxThrowForce>k__BackingField: 1000
-  <ThrowChargeTime>k__BackingField: 2
+  <ThrowChargeTime>k__BackingField: 0.4
   <DodgeDirectionChangeMinTime>k__BackingField: 0.2
   <DodgeDirectionChangeMaxTime>k__BackingField: 1.4
   <IdleMinStandTime>k__BackingField: 0.5

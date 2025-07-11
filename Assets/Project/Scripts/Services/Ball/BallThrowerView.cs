@@ -25,10 +25,12 @@ public class BallThrowerView : MonoBehaviour
 
     private void Show(float minForce, float maxForce, float currentForce)
     {
+        Debug.Log(minForce + " " + maxForce + " " + currentForce);
         _chargeFill.enabled = true;
         _chargeBackground.enabled = true;
 
         float chargePercent = Mathf.InverseLerp(minForce, maxForce, currentForce);
+        Debug.Log(chargePercent);
         _chargeFill.fillAmount = chargePercent;
 
         _chargeFill.color = Color.Lerp(_minChargeColor, _maxChargeColor, chargePercent);
