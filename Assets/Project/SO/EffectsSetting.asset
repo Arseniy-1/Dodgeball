@@ -31,3 +31,6 @@ MonoBehaviour:
   - _id: 4
     _effects:
     - {fileID: 5824700782308156033, guid: 0fe242fd96f9e0744bd7aabc4980ad18, type: 3}
+  - _id: 1
+    _effects:
+    - {fileID: 3042163043809353462, guid: 4f8498aff9df94d41b1cb1684d9580c1, type: 3}

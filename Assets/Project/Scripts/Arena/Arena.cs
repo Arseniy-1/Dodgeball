@@ -70,6 +70,7 @@ public class Arena : MonoBehaviour
         {
             NotifyWinners();
             
+            EffectID.Confetti.PlayEffect(transform);
             int rankAmount = Random.Range(_minWinRankAmount, _maxWinRankAmount);
             GameOver?.Invoke(rankAmount);
         }

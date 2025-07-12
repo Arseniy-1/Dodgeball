@@ -48,6 +48,7 @@ public class Health : MonoBehaviour
         _currentHealthPoint = Mathf.Clamp(_currentHealthPoint - amount, 0, _maxHealth);
 
         HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
+        ShakeID.Light.Play();
         
         if (_currentHealthPoint == 0)
         {

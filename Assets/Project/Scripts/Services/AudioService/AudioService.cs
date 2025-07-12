@@ -44,9 +44,6 @@ public class AudioService : IDisposable
 
     private void PlaySound(AudioID audioID)
     {
-        if (YG2.saves.SettingsData.IsSoundsEnabled == false)
-            return;
-        
         AudioData data = _audioData[audioID];
         AudioClip randomClip = data.Clips[Random.Range(0, data.Clips.Count)];
         float pitch = Random.Range(data._pitchRange.x, data._pitchRange.y);

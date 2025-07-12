@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89da9bfa6604b93acee210cf0ae2ba9, type: 3}
   m_Name: CameraShakeSettings
   m_EditorClassIdentifier: 
-  _cameraShakeDatas: []
+  _cameraShakeDatas:
+  - <ShakeId>k__BackingField: 0
+    <Duration>k__BackingField: 0.45
+    <Strength>k__BackingField: 0.165
+    <Vibrato>k__BackingField: 4
+    <Randomness>k__BackingField: 25
+  - <ShakeId>k__BackingField: 3
+    <Duration>k__BackingField: 2.54
+    <Strength>k__BackingField: 0.218
+    <Vibrato>k__BackingField: 3
+    <Randomness>k__BackingField: 36

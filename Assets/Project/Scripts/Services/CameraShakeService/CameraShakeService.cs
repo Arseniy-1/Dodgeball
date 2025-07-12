@@ -3,7 +3,7 @@ using UniRx;
 using UnityEngine;
 using YG;
 
-public class CameraShaker : MonoBehaviour
+public class CameraShakeService : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
     [SerializeField] private CameraShakeSettings _settings;
@@ -34,9 +34,6 @@ public class CameraShaker : MonoBehaviour
 
     private void Shake(ShakeID shakeID)
     {
-        if (YG2.saves.SettingsData.IsCameraShakeEnabled == false)
-            return;
-
         if (_settings.TryGet(shakeID, out CameraShakeData shake) == false)
             return;
 
