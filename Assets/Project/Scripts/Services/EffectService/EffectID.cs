@@ -4,5 +4,8 @@
     Confetti = 1,
     Death = 2,
     Joy = 3,
-    Pointer = 4
+    Pointer = 4,
+    FireExplosion = 5,
+    ElectroExplosion = 6,
+    PoisonExplosion = 7 
 }

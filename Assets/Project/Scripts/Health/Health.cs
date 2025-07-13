@@ -12,6 +12,8 @@ public class Health : MonoBehaviour
     public event Action<int, int> HealthChanged;
     public event Action LostHealth;
 
+    public int CurrentHealthPoint => _currentHealthPoint;
+
     private void OnEnable()
     {
         HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
@@ -49,7 +51,7 @@ public class Health : MonoBehaviour
 
         HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
         ShakeID.Light.Play();
-        
+
         if (_currentHealthPoint == 0)
         {
             LostHealth?.Invoke();

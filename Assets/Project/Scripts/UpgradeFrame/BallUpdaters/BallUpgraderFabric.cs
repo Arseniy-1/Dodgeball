@@ -14,8 +14,11 @@ public class BallUpgraderFabric : SerializedMonoBehaviour
         ChargeBallUpgrader chargeBallUpgrader = new ChargeBallUpgrader(_ballUpgradeInfo[typeof(ChargeBallUpgrader)]);        
         ballUpgraders.Add(chargeBallUpgrader);
         
-        MultipleBallUpgrader multipleBallUpgrader = new MultipleBallUpgrader(_ballUpgradeInfo[typeof(MultipleBallUpgrader)]);
-        ballUpgraders.Add(multipleBallUpgrader);
+        ElectroBallUpgrader electroBallUpgrader = new ElectroBallUpgrader(_ballUpgradeInfo[typeof(ElectroBallUpgrader)]);
+        ballUpgraders.Add(electroBallUpgrader);
+        
+        PoisonBallUpgrader poisonBallUpgrader = new PoisonBallUpgrader(_ballUpgradeInfo[typeof(PoisonBallUpgrader)]);
+        ballUpgraders.Add(poisonBallUpgrader);
         
         return ballUpgraders;
     } 

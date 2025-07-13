@@ -21,6 +21,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
             if (state is IDisposable disposable)
                 disposable.Dispose();
         }
+        
         _enemyStates.Clear();
         
         _enemyStates = new List<IState>
@@ -32,7 +33,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
             new EnemyDodgeState(this, AnimatorController, ball, Mover, SquadZone, Rigidbody, enemyConfig),
             new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, enemyConfig),
             new EnemyJumpState(AnimatorController, CollisionHandler, HitCheker, Collider),
-            new EnemyDeathState(AnimatorController, CollisionHandler, Collider, BallHolder)
+            new EnemyDeathState(AnimatorController, CollisionHandler, Collider, BallHolder, BallThrower)
         };
         
         StateMachine = new StateMaсhine(_enemyStates);

@@ -34,3 +34,10 @@ MonoBehaviour:
   - _id: 1
     _effects:
     - {fileID: 3042163043809353462, guid: 4f8498aff9df94d41b1cb1684d9580c1, type: 3}
+  - _id: 5
+    _effects:
+    - {fileID: 5824700782308156033, guid: e04368e8655f05a43924e608c087d333, type: 3}
+  - _id: 6
+    _effects: []
+  - _id: 7
+    _effects: []

@@ -5,4 +5,5 @@ public class BallUpgradeInfo : ScriptableObject
 {
     [field: SerializeField] public Sprite Icon { get; private set; }
     [field: SerializeField] public Sprite BackgroundView { get; private set; }
+    [field: SerializeField] public ParticleSystem StaticEffect { get; private set; }
 }

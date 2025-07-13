@@ -2,7 +2,9 @@
 
 public class PlayerDeathState : EntityDeathState
 {
-    public PlayerDeathState(AnimatorController animatorController,  CollisionHandler collisionHandler, Collider collider, BallHolder ballHolder) : base(animatorController, collisionHandler, collider, ballHolder)
+    public PlayerDeathState(AnimatorController animatorController,  CollisionHandler collisionHandler,
+        Collider collider, BallHolder ballHolder, BallThrower ballThrower) 
+        : base(animatorController, collisionHandler, collider, ballHolder, ballThrower)
     {
     }
 }

@@ -34,7 +34,7 @@ public class Player : Entity, IDestoyable<Player>
             new PlayerDodgeState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _playerConfig, _inputController),
             new PlayerAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController, BallThrower),
             new PlayerJumpState(AnimatorController, CollisionHandler, HitCheker, Collider),
-            new PlayerDeathState(AnimatorController, CollisionHandler, Collider, BallHolder)
+            new PlayerDeathState(AnimatorController, CollisionHandler, Collider, BallHolder, BallThrower)
         };
 
         StateMachine = new StateMaсhine(_playerStates);

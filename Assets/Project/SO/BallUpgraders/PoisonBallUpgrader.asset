@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45b968c854954cbb88a2f417db66afee, type: 3}
-  m_Name: ChargeBallUpgrader
+  m_Name: PoisonBallUpgrader
   m_EditorClassIdentifier: 
-  <Icon>k__BackingField: {fileID: 21300000, guid: 1346376655e6040a7882ec332ba28935, type: 3}
-  <BackgroundView>k__BackingField: {fileID: 21300000, guid: 81843e8272c8d4858a6477b3d3ceac28, type: 3}
-  <StaticEffect>k__BackingField: {fileID: 19821742, guid: 7cfc30e9807ebb54e92fbc67239154cc, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 9f43c6911bfdb489fad5cd24622b5182, type: 3}
+  <BackgroundView>k__BackingField: {fileID: 21300000, guid: b7ba11948c4b242239d59ab8d59c9e9f, type: 3}

@@ -33,7 +33,8 @@ public class BallThrower : MonoBehaviour
 
     public void StopCharging()
     {
-        _cancellationTokenSource.Cancel();
+        if (_cancellationTokenSource != null)
+            _cancellationTokenSource.Cancel();
     }
 
     public void Throw(Ball ball)
