@@ -70,7 +70,7 @@ public class CompositionRoot : MonoBehaviour
         _startGameCanvas.OnStartGameButtonPressed += StartGame;
         _rankViewCanvas.OnRewardViewClosed += HandleRankCanvasClose;
         _rankHolder.RankRaised += HandleRankRaised;
-        _rewardButton.RewardButtonClicked += GiveReward;
+        _rewardButton.RewardButtonClicked += ShowReward;
     }
 
     private void OnDisable()
@@ -78,7 +78,7 @@ public class CompositionRoot : MonoBehaviour
         _startGameCanvas.OnStartGameButtonPressed -= StartGame;
         _rankViewCanvas.OnRewardViewClosed -= HandleRankCanvasClose;
         _rankHolder.RankRaised -= HandleRankRaised;
-        _rewardButton.RewardButtonClicked -= GiveReward;
+        _rewardButton.RewardButtonClicked -= ShowReward;
     }
 
     private void Start()
@@ -165,6 +165,13 @@ public class CompositionRoot : MonoBehaviour
         }
     }
 
+    private void ShowReward()
+    {
+        string id = "coin"; // Передача id требуется для внутренней работы плагина
+        
+        YG2.RewardedAdvShow(id, GiveReward);
+    }
+    
     private void GiveReward()
     {
         _startGameCanvas.gameObject.SetActive(false);

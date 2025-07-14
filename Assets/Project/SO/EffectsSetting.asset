@@ -38,6 +38,8 @@ MonoBehaviour:
     _effects:
     - {fileID: 5824700782308156033, guid: e04368e8655f05a43924e608c087d333, type: 3}
   - _id: 6
-    _effects: []
+    _effects:
+    - {fileID: 1237021493035578478, guid: ff48c257e875cfe45a8f9c152758ef58, type: 3}
   - _id: 7
-    _effects: []
+    _effects:
+    - {fileID: 6643554427895399763, guid: bf87a8e335f1cd849b580dec3fce7fbd, type: 3}

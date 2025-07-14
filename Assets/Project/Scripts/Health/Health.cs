@@ -12,16 +12,9 @@ public class Health : MonoBehaviour
     public event Action<int, int> HealthChanged;
     public event Action LostHealth;
 
-    public int CurrentHealthPoint => _currentHealthPoint;
-
     private void OnEnable()
     {
         HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
-    }
-
-    private void OnDestroy()
-    {
-        _collisionHandler.DamageTaken -= TakeDamage;
     }
 
     public void Initialize(CollisionHandler collisionHandler)
@@ -46,6 +39,9 @@ public class Health : MonoBehaviour
     {
         if (amount <= 0)
             return;
+        
+        if(_currentHealthPoint <= 0)
+            return;
 
         _currentHealthPoint = Mathf.Clamp(_currentHealthPoint - amount, 0, _maxHealth);
 
@@ -66,5 +62,6 @@ public class Health : MonoBehaviour
     public void Reset()
     {
         _currentHealthPoint = _maxHealth;
+        _collisionHandler.DamageTaken -= TakeDamage;
     }
 }

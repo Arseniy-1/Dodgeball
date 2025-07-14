@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -67,6 +68,8 @@ public abstract class EntityIdleState : IState
  
         HandleBallTaken(GameStatusService.Instance.CurrentHolder);
         HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
+        
+        FindTarget(_cancellationTokenSource.Token).Forget();
     }
 
     public virtual void Exit()
@@ -82,6 +85,12 @@ public abstract class EntityIdleState : IState
         _collider.isTrigger = false;
     }
 
+    public virtual void Update()
+    {
+        if (_ball != null)
+            _rotator.RotateToTarget(_ball.transform, _entity.transform);
+    }
+    
     private async UniTaskVoid RunIdleMovementLoop(CancellationToken token)
     {
         while (!token.IsCancellationRequested)
@@ -96,10 +105,17 @@ public abstract class EntityIdleState : IState
         }
     }
 
-    public virtual void Update()
+    private async UniTask FindTarget(CancellationToken token)
     {
-        if (_ball != null)
-            _rotator.RotateToTarget(_ball.transform, _entity.transform);
+        float delay = 1f;
+        
+        while (token.IsCancellationRequested == false)
+        {
+            HandleBallTaken(GameStatusService.Instance.CurrentHolder);
+            HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: token);
+        }
     }
 
     protected abstract void HandleBallZoneChanged(Collider zone);

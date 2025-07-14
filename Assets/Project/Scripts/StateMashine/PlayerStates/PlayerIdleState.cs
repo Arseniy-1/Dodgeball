@@ -17,7 +17,7 @@ public class PlayerIdleState : EntityIdleState
         {
             if (GameStatusService.Instance.CurrentHolder != null)
                 return;
-            
+
             StateSwitcher.SwitchState<PlayerMoveState>();
         }
     }

@@ -57,6 +57,9 @@ public class EntityAttackState : IState
 
         _animatorController.Idle();
         
+        if(_cancellationTokenSource.Token.IsCancellationRequested)
+            return;
+        
         Entity  target = await FindTarget(_cancellationTokenSource.Token);
         TargetProvider.SelectTarget(target);
     }
@@ -91,7 +94,7 @@ public class EntityAttackState : IState
         _ballThrower.Throw(ball);
 
         AudioID.Attack.PlayOneShot();
-
+        
         return _animatorController.Attack();
     }
 

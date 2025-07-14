@@ -40,6 +40,18 @@ public abstract class Entity : MonoBehaviour
         Health.LostHealth -= HandleLostHealth;
     }
 
+    protected virtual void Update()
+    {
+        StateMachine.Update();
+
+        CurrentState = StateMachine._currentState.ToString();
+
+        CurrentStates.Clear();
+        
+        foreach (var state in StateMachine._states.Values)
+            CurrentStates.Add(state.ToString());
+    }
+
     public virtual void Initialize(Collider squadZone, List<Entity> teammates, Ball ball)
     {
         Collider = GetComponent<Collider>();
@@ -57,33 +69,21 @@ public abstract class Entity : MonoBehaviour
     {
         CollisionHandler.enabled = true;
         Collider.enabled = true;
-        Health.Reset();
         BallHolder.LostBall();
         HealthCanvas.gameObject.SetActive(true);
     }
-
-    protected virtual void Update()
-    {
-        StateMachine.Update();
-
-        CurrentState = StateMachine._currentState.ToString();
-
-        CurrentStates.Clear();
-        
-        foreach (var state in StateMachine._states.Values)
-            CurrentStates.Add(state.ToString());
-    }
-
-    protected abstract void HandleLostHealth();
-
-    public abstract void Selebrate();
+    
+    public abstract void Celebrate();
     
     [Button]
     public virtual void Die()
     {
         StateMachine.Dispose();
         AnimatorController.Dispose();
-    }
+        Health.Reset();
+    }   
+    
+    protected abstract void HandleLostHealth();
     
     protected async UniTask HideEntity()
     {

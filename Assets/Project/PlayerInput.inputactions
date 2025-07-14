@@ -18,17 +18,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "0c83e27a-02d3-48c7-b304-68f80fa3f75a",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9912610b-a753-4c9e-9a21-e70915af186e",
                     "path": "<Touchscreen>/Press",
                     "interactions": "Hold",

@@ -58,7 +58,7 @@ public class Enemy : Entity, IDestoyable<Enemy>
         Die();
     }
 
-    public override void Selebrate()
+    public override void Celebrate()
     {
         StateMachine.SwitchState<EnemyCelebrateState>();
         BallHolder.LostBall();

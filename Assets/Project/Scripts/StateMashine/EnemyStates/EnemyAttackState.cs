@@ -47,6 +47,7 @@ public class EnemyAttackState : EntityAttackState
         {
             _hasReleased = true;
             await ThrowBall();
+            GameStatusService.Instance.ClearHolder();
             StateSwitcher.SwitchState<EnemyIdleState>();
         }
     }

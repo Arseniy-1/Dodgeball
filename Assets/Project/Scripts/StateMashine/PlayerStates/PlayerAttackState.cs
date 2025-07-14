@@ -53,8 +53,9 @@ public class PlayerAttackState : EntityAttackState
         _inputController.ActionButtonStarted -= _buttonStartedHandler;
         _inputController.ActionButtonCanceled -= _buttonCanceledHandler;
 
-
-        StateSwitcher.SwitchState<PlayerIdleState>();
         await ThrowBall();
+        StateSwitcher.SwitchState<PlayerIdleState>();
+        
+        GameStatusService.Instance.ClearHolder();
     }
 }

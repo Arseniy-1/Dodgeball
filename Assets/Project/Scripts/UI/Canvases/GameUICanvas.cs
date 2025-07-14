@@ -24,7 +24,7 @@ public class GameUICanvas : GameCanvas
         _enemyName.text = Constans.EnemyNames.GetRandomName();
         _playerName.text = YG2.player.name;
         
-        _timer.Start(_cancellationTokenSource.Token);
+        _timer.Start(_cancellationTokenSource.Token).Forget();
     }
 
     private void OnDisable()

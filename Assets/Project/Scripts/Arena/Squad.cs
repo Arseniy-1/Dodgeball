@@ -43,7 +43,7 @@ public class Squad : MonoBehaviour
     {
         foreach (var entity in _entities)
         {
-            entity.Selebrate();
+            entity.Celebrate();
         }
     }
 

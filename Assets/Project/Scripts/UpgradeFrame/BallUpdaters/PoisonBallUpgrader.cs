@@ -8,10 +8,12 @@ using Random = UnityEngine.Random;
 
 public class PoisonBallUpgrader : BallUpgrader
 {
-    private const int PoisonIterationCount = 12;
-    private const float PoisonIterationDelay = 0.7f;
+    private const int PoisonIterationCount = 5;
+    private const float PoisonIterationDelay = 0.3f;
     private const int MinPoisonIterationDamage = 1;
     private const int MaxPoisonIterationDamage = 5;
+    
+    private const float ExplosionRadius = 2;
 
     private CompositeDisposable _compositeDisposable;
 
@@ -26,28 +28,36 @@ public class PoisonBallUpgrader : BallUpgrader
         ball.OnCollisionEnterAsObservable()
             .Subscribe(collision =>
             {
-                HandleHit(collision);
+                HandleHit(collision, ball.transform);
             })
             .AddTo(_compositeDisposable);
     }
 
-    private async void HandleHit(Collision collision)
+    private void HandleHit(Collision collision, Transform ballTransform)
     {
-        _compositeDisposable.Dispose();
+        EffectID.PoisonExplosion.PlayEffect(ballTransform);
 
-        if (collision.collider.TryGetComponent(out Health health))
+        Collider[] hitColliders = Physics.OverlapSphere(collision.transform.position, ExplosionRadius);
+
+        foreach (var hitCollider in hitColliders)
         {
-            for (int i = 0; i < PoisonIterationCount; i++)
+            if (hitCollider.TryGetComponent(out Health health))
             {
-                if(health.CurrentHealthPoint == 0)
-                    return;
-                
-                int damage = Random.Range(MinPoisonIterationDamage, MaxPoisonIterationDamage);
-                health.TakeDamage(damage);
-                EffectID.PoisonExplosion.PlayEffect(health.transform);
-
-                await UniTask.Delay(TimeSpan.FromSeconds(PoisonIterationDelay));
+                TakePoisonDamage(health).Forget();
             }
+        }
+        
+        _compositeDisposable.Dispose();
+    }
+
+    private async UniTask TakePoisonDamage(Health health)
+    {
+        for (int i = 0; i < PoisonIterationCount; i++)
+        {
+            int damage = Random.Range(MinPoisonIterationDamage, MaxPoisonIterationDamage);
+            health.TakeDamage(damage);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(PoisonIterationDelay));
         }
     }
 }

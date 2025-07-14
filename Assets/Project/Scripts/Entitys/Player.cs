@@ -59,7 +59,7 @@ public class Player : Entity, IDestoyable<Player>
         Die();
     }
     
-    public override void Selebrate()
+    public override void Celebrate()
     {
         StateMachine.SwitchState<PlayerCelebrateState>();
         BallHolder.LostBall();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using YG;
 using Random = UnityEngine.Random;
 
 public class RewardCanvas : InteractiveCanvas
@@ -60,7 +61,8 @@ public class RewardCanvas : InteractiveCanvas
             availableAnimations.Add(() =>
             {
                 var anim = _rewardService.GetRandomDodgeAnimation();
-                // YG2.saves.AnimationsHolder.AddDodgeAnimation(anim.AnimationType);
+                YG2.saves.AnimationsHolder.AddDodgeAnimation(anim.AnimationType);
+                
                 return (anim.Name, anim.AnimationType.ToString());
             });
         }
@@ -70,7 +72,8 @@ public class RewardCanvas : InteractiveCanvas
             availableAnimations.Add(() =>
             {
                 var anim = _rewardService.GetRandomCelebrateAnimation();
-                // YG2.saves.AnimationsHolder.AddCelebrateAnimation(anim.AnimationType);
+                YG2.saves.AnimationsHolder.AddCelebrateAnimation(anim.AnimationType);
+                
                 return (anim.Name, anim.AnimationType.ToString());
             });
         }
@@ -80,7 +83,8 @@ public class RewardCanvas : InteractiveCanvas
             availableAnimations.Add(() =>
             {
                 var anim = _rewardService.GetRandomDeathAnimation();
-                // YG2.saves.AnimationsHolder.AddDeathAnimation(anim.AnimationType);
+                YG2.saves.AnimationsHolder.AddDeathAnimation(anim.AnimationType);
+                
                 return (anim.Name, anim.AnimationType.ToString());
             });
         }
@@ -90,7 +94,8 @@ public class RewardCanvas : InteractiveCanvas
             availableAnimations.Add(() =>
             {
                 var anim = _rewardService.GetRandomPrepareAnimation();
-                // YG2.saves.AnimationsHolder.AddPrepareAnimation(anim.AnimationType);
+                YG2.saves.AnimationsHolder.AddPrepareAnimation(anim.AnimationType);
+                
                 return (anim.Name, anim.AnimationType.ToString());
             });
         }

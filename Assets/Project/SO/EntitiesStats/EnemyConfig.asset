@@ -23,7 +23,7 @@ MonoBehaviour:
   <DodgeDirectionChangeMaxTime>k__BackingField: 1.4
   <IdleMinStandTime>k__BackingField: 0.5
   <IdleMaxStandTime>k__BackingField: 2
-  <MinThrowWait>k__BackingField: 0.3
-  <MaxThrowWait>k__BackingField: 2.7
+  <MinThrowWait>k__BackingField: 0.24
+  <MaxThrowWait>k__BackingField: 2
   <DodgeJumpDelayMinTime>k__BackingField: 0.8
   <DodgeJumpDelayMaxTime>k__BackingField: 2

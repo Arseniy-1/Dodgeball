@@ -13,14 +13,14 @@ public class Timer
         _timeText = timeText;
     }
 
-    public async void Start(CancellationToken token)
+    public async UniTaskVoid Start(CancellationToken token)
     {
         while (token.IsCancellationRequested == false)
         {
             _totalSeconds++;
             UpdateTimeDisplay();
             
-            await UniTask.Delay(1000, DelayType.Realtime, PlayerLoopTiming.Update, token);
+            await UniTask.Delay(1000, DelayType.DeltaTime, PlayerLoopTiming.Update, token);
         }
     }
 

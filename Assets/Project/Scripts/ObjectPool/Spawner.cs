@@ -6,7 +6,7 @@ using UnityEngine;
 public class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
 {
     private List<T> _spawned = new List<T>();
-    
+
     [SerializeField] protected int StartAmount = 5;
     protected T Prefab;
 
@@ -21,14 +21,14 @@ public class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
             _spawned[i].Die();
         }
     }
-    
+
     public T Spawn()
     {
         T spawnedObject = Pool.Get();
-        
+
         spawnedObject.OnDestroyed += OnSpawnedDestroyed;
         _spawned.Add(spawnedObject);
-        
+
         return spawnedObject;
     }
 
@@ -36,7 +36,7 @@ public class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
     {
         spawnableObject.OnDestroyed -= OnSpawnedDestroyed;
         _spawned.Remove(spawnableObject);
-        
+
         Pool.Release(spawnableObject);
     }
 }
