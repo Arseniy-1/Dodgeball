@@ -4,13 +4,13 @@
     
     private void OnDestroy()
     {
-        _rankHolder.RankAmoutChanged -= OnValueChanged;
+        _rankHolder.RankAmountChanged -= OnValueChanged;
     }
 
     public void Initialize(RankHolder rankHolder)
     {
         _rankHolder = rankHolder;
-        _rankHolder.RankAmoutChanged += OnValueChanged;
+        _rankHolder.RankAmountChanged += OnValueChanged;
         OnValueChanged(_rankHolder.CurrentAmount, _rankHolder.MaxRankAmount);
     }
 }

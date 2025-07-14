@@ -22,7 +22,7 @@
                     "path": "<Touchscreen>/Press",
                     "interactions": "Hold",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardAndMouse;Device",
                     "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false

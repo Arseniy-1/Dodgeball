@@ -9,6 +9,9 @@ public abstract class ViewBar : MonoBehaviour
 
     protected void OnValueChanged(int current, int max)
     {
+        if (current >= max)
+            current = 0;
+        
         TargetFill = (float)current / max;
         _bar.value = TargetFill;
     }

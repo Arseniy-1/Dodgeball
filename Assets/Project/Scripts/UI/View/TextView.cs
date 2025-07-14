@@ -7,6 +7,9 @@ public abstract class TextView : MonoBehaviour
 
     protected void OnValueChanged(int current, int max)
     {
-        _textView.text = current.ToString() + "/" + max.ToString();
+        if (current >= max)
+            current = 0;
+        
+        _textView.text = current + "/" + max;
     }
 }

@@ -10,7 +10,7 @@ public class RankHolder
     private int _currentAmount;
     private int _previousAmount;
 
-    public event Action<int, int> RankAmoutChanged;
+    public event Action<int, int> RankAmountChanged;
     public event Action RankRaised;
 
     public int CurrentAmount => _currentAmount;
@@ -40,12 +40,12 @@ public class RankHolder
             _currentAmount = MaxAmount;
             CurrentRank++;
 
+            YG2.SetLeaderboard("Leaderboard", CurrentRank);
             RankRaised?.Invoke();
         }
 
-        RankAmoutChanged?.Invoke(_currentAmount, MaxAmount);
+        RankAmountChanged?.Invoke(_currentAmount, MaxAmount);
 
-        YG2.SetLeaderboard("Leaderboard", CurrentRank);
         YG2.saves.ProgressData.CurrentRankAmount = _currentAmount;
         YG2.saves.ProgressData.PreviousRankAmount = _previousAmount;
         YG2.saves.ProgressData.CurrentRank = CurrentRank;
