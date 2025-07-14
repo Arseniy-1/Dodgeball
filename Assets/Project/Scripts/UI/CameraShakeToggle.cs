@@ -11,6 +11,5 @@ public class CameraShakeToggle : SettingToggle
     {
         base.Toggle();
         YG2.saves.SettingsData.IsCameraShakeEnabled = !YG2.saves.SettingsData.IsCameraShakeEnabled;
-        YG2.saves.ProgressData
     }
 }
