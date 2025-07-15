@@ -5,10 +5,10 @@ using UnityEngine;
 [Serializable]
 public class AnimationsHolder
 {
-    [SerializeField] private List<Constans.DodgeAnimations> _dodgeAnimations = new List<Constans.DodgeAnimations>();
-    [SerializeField] private List<Constans.CelebrateAnimations> _selebrateAnimations = new List<Constans.CelebrateAnimations>();
-    [SerializeField] private List<Constans.DeathAnimations> _deathAnimations = new List<Constans.DeathAnimations>();
-    [SerializeField] private List<Constans.PrepareAnimations> _prepareAnimations = new List<Constans.PrepareAnimations>();
+    [field: SerializeField] public List<Constans.DodgeAnimations> _dodgeAnimations {get; private set;} = new List<Constans.DodgeAnimations>();
+    [field: SerializeField] public List<Constans.CelebrateAnimations> _selebrateAnimations {get; private set;} = new List<Constans.CelebrateAnimations>();
+    [field: SerializeField] public List<Constans.DeathAnimations> _deathAnimations {get; private set;} = new List<Constans.DeathAnimations>();
+    [field: SerializeField] public List<Constans.PrepareAnimations> _prepareAnimations {get; private set;} = new List<Constans.PrepareAnimations>();
 
     [field: SerializeField] public List<int> DodgeAnimationsHash { get; private set; } = new List<int>();
     [field: SerializeField] public List<int> CelebrateAnimationsHash { get; private set; } = new List<int>();

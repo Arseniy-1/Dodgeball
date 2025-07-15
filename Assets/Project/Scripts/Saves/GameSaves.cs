@@ -5,6 +5,7 @@ namespace YG
     public partial class SavesYG
     {
         [SerializeField] private StartAnimationsData _startAnimationsData;
+        
         [field: SerializeField] public AnimationsHolder AnimationsHolder { get; private set; } = new AnimationsHolder();
 
         [field: SerializeField] public SettingsData SettingsData { get; private set; } = new SettingsData();
