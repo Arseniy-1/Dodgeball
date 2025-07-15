@@ -16,13 +16,7 @@ public abstract class AudioToggle : SettingToggle
     
     protected void EnableVolume()
     {
-        float currentVolume;
-
-        if (IsEnabled())
-            currentVolume = _maxlVolume;
-        else
-            currentVolume = _minlVolume;
-        
-        _audioMixer.audioMixer.SetFloat(_audioMixer.name, Mathf.Log10(currentVolume) * 40);
+        float volumeDB = IsEnabled() ? _maxlVolume : _minlVolume;
+        _audioMixer.audioMixer.SetFloat(_audioMixer.name, volumeDB);
     }
 }

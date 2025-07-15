@@ -4,32 +4,36 @@ namespace YG
 {
     public partial class SavesYG
     {
-        [SerializeField] private StartAnimationsData _startAnimationsData;
-        
-        [field: SerializeField] public AnimationsHolder AnimationsHolder { get; private set; } = new AnimationsHolder();
+        public StartAnimationsData StartAnimationsData;
 
-        [field: SerializeField] public SettingsData SettingsData { get; private set; } = new SettingsData();
-        [field: SerializeField] public ProgressData ProgressData { get; private set; } = new ProgressData();
+        public AnimationsHolder AnimationsHolder= new AnimationsHolder();
 
+        public SettingsData SettingsData= new SettingsData();
+        public ProgressData ProgressData= new ProgressData();
 
-        public void InitializeSaves()
+        public void InitializeStartSaves(StartAnimationsData startAnimationsData)
         {
-            if (YG2.isFirstGameSession || true)
-            {
-                foreach (var animation in _startAnimationsData.DodgeAnimations)
-                    YG2.saves.AnimationsHolder.AddDodgeAnimation(animation);
+            StartAnimationsData = startAnimationsData;
+            
+            foreach (var animation in StartAnimationsData.DodgeAnimations)
+                YG2.saves.AnimationsHolder.AddDodgeAnimation(animation);
 
-                foreach (var animation in _startAnimationsData.CelebrateAnimations)
-                    YG2.saves.AnimationsHolder.AddCelebrateAnimation(animation);
+            foreach (var animation in StartAnimationsData.CelebrateAnimations)
+                YG2.saves.AnimationsHolder.AddCelebrateAnimation(animation);
 
-                foreach (var animation in _startAnimationsData.DeathAnimations)
-                    YG2.saves.AnimationsHolder.AddDeathAnimation(animation);
+            foreach (var animation in StartAnimationsData.DeathAnimations)
+                YG2.saves.AnimationsHolder.AddDeathAnimation(animation);
 
-                foreach (var animation in _startAnimationsData.PrepareAnimations)
-                    YG2.saves.AnimationsHolder.AddPrepareAnimation(animation);
-                
-                YG2.SaveProgress();
-            }
+            foreach (var animation in StartAnimationsData.PrepareAnimations)
+                YG2.saves.AnimationsHolder.AddPrepareAnimation(animation);
+
+            YG2.SaveProgress();
+        }
+
+        public void ResetAnimations()
+        {
+            AnimationsHolder.ResetAnimations();
+            YG2.SaveProgress();
         }
     }
 }

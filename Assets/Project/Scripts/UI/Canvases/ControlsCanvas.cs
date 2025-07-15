@@ -1,19 +1,17 @@
 ﻿using UnityEngine;
 
-public class SettingCanvas : GameCanvas
+public class ControlsCanvas : GameCanvas
 {
     [SerializeField] private ExitButton _exitButton;
 
     private void OnEnable()
     {
         _exitButton.ExitButtonClicked += Disable;
-        Time.timeScale = 0;
     }
 
     private void OnDisable()
     {
         _exitButton.ExitButtonClicked -= Disable;
-        Time.timeScale = 1;
     }
 
     private void Disable()

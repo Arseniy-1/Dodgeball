@@ -103,6 +103,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8279196, guid: 76ea784c73256a744b24cba813a687e3, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6031429118317368676, guid: 26f2e8b8e2ff55948ab04abe9f88cc2b, type: 2}
     - target: {fileID: 19915184, guid: 76ea784c73256a744b24cba813a687e3, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1

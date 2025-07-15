@@ -94,10 +94,10 @@ MonoBehaviour:
     _pitchRange: {x: 1.0450928, y: 1.0450928}
   - _id: 14
     _clips: []
-    _volume: 0
-    _pitchRange: {x: 0, y: 0}
+    _volume: 0.5
+    _pitchRange: {x: 1.0026525, y: 1.0026525}
   - _id: 15
     _clips:
     - {fileID: 8300000, guid: b8086ab967945467bb06d64b00948604, type: 3}
-    _volume: 0
-    _pitchRange: {x: 0, y: 0}
+    _volume: 0.5
+    _pitchRange: {x: 1.0132626, y: 1.0132626}

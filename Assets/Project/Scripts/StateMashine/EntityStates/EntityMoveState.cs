@@ -13,7 +13,7 @@ public abstract class EntityMoveState : IState
     private readonly EntityConfig _entityConfig;
     private readonly Mover _mover;
 
-    private CancellationTokenSource _cts;
+    private CancellationTokenSource _cancellationTokenSource;
     private Ball _targetBall;
 
     protected readonly BallHolder BallHolder;
@@ -41,7 +41,7 @@ public abstract class EntityMoveState : IState
 
     public virtual void Enter()
     {
-        _cts = new CancellationTokenSource();
+        _cancellationTokenSource = new CancellationTokenSource();
         _targetBall = GameStatusService.Instance.CurrentBall;
 
         _collisionHandler.BallDetected += OnBallDetected;
@@ -61,8 +61,7 @@ public abstract class EntityMoveState : IState
         GameStatusService.Instance.OnZoneChanged -= HandleBallZoneChanged;
         GameStatusService.Instance.OnHolderChanged -= HandleBallTaken;
         
-        _cts?.Cancel();
-        _cts?.Dispose();
+        _cancellationTokenSource.Cancel();
         _targetBall = null;
     }
 

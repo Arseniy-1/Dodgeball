@@ -26,6 +26,8 @@ public class AnimationsViewCanvas : GameCanvas
     {
         _cancellationTokenSource = new CancellationTokenSource();
 
+        _currentAnimationIndex = 0;
+        
         _exitButton.ExitButtonClicked += Disable;
         _nextButton.onClick.AddListener(HandleNextButtonClicked);
         _previousButton.onClick.AddListener(HandlePreviousButtonClicked);
@@ -49,6 +51,7 @@ public class AnimationsViewCanvas : GameCanvas
         _animations.AddRange(YG2.saves.AnimationsHolder.CelebrateAnimationsHash);
         _animations.AddRange(YG2.saves.AnimationsHolder.DeathAnimationsHash);
         _animations.AddRange(YG2.saves.AnimationsHolder.PrepareAnimationsHash);
+        Debug.Log(YG2.saves.AnimationsHolder.PrepareAnimationsHash.Count);
         
         HandleClick();
     }

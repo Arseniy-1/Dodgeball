@@ -7,20 +7,38 @@
     false,
     false
   ],
-  "idSave": 277,
-  "AnimationsHolder": {
-    "_dodgeAnimations": [
+  "idSave": 31,
+  "StartAnimationsData": {
+    "DodgeAnimations": [
       1,
       0
     ],
-    "_selebrateAnimations": [
+    "CelebrateAnimations": [
       0
     ],
-    "_deathAnimations": [
+    "DeathAnimations": [
       0,
       1
     ],
-    "_prepareAnimations": [
+    "PrepareAnimations": [
+      3
+    ],
+    "name": "StartAnimations",
+    "hideFlags": 0
+  },
+  "AnimationsHolder": {
+    "DodgeAnimations": [
+      1,
+      0
+    ],
+    "CelebrateAnimations": [
+      0
+    ],
+    "DeathAnimations": [
+      0,
+      1
+    ],
+    "PrepareAnimations": [
       3
     ],
     "DodgeAnimationsHash": [
@@ -39,7 +57,7 @@
     ]
   },
   "SettingsData": {
-    "IsSoundsEnabled": true,
+    "IsSoundsEnabled": false,
     "IsMusicEnabled": true,
     "IsCameraShakeEnabled": true
   },
