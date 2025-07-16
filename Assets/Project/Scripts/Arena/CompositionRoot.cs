@@ -83,7 +83,6 @@ public class CompositionRoot : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(YG2.isFirstGameSession);
         _saves.Initialize();
         CreateMap();
         _startGameCanvas.gameObject.SetActive(true);

@@ -81,11 +81,12 @@ public class GameStatusService
     public void SetHolder(Entity newHolder)
     {
         CurrentHolder = newHolder;
-        OnHolderChanged?.Invoke(newHolder);
+        OnHolderChanged?.Invoke(CurrentHolder);
     }
 
     public void ClearHolder()
     {
         CurrentHolder = null;
+        OnHolderChanged?.Invoke(CurrentHolder);
     }
 }

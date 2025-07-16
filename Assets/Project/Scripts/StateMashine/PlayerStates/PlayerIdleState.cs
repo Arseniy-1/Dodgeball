@@ -24,6 +24,9 @@ public class PlayerIdleState : EntityIdleState
 
     protected override void HandleBallTaken(Entity entity)
     {
+        if(entity == null)
+            return;
+        
         if (Teammates.Contains(entity) == false)
         {
             StateSwitcher.SwitchState<PlayerDodgeState>();
