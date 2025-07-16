@@ -7,7 +7,7 @@
     false,
     false
   ],
-  "idSave": 62,
+  "idSave": 251,
   "StartAnimationsData": {
     "DodgeAnimations": [
       1,
@@ -58,12 +58,13 @@
   },
   "SettingsData": {
     "IsSoundsEnabled": false,
-    "IsMusicEnabled": true,
-    "IsCameraShakeEnabled": true
+    "IsMusicEnabled": false,
+    "IsCameraShakeEnabled": false
   },
   "ProgressData": {
-    "CurrentRank": 0,
-    "CurrentRankAmount": 0,
-    "PreviousRankAmount": 0
+    "CurrentRank": 6,
+    "CurrentRankAmount": 100,
+    "PreviousRankAmount": 74,
+    "IsFirstSession": false
   }
 }

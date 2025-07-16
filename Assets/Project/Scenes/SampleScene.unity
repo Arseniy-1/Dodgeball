@@ -2905,7 +2905,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &95586760
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3004,6 +3004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tutorialScreens:
   - {fileID: 939711716}
+  - {fileID: 991741585}
 --- !u!1 &128391107
 GameObject:
   m_ObjectHideFlags: 0
@@ -3472,16 +3473,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143819689}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 939711715}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -632}
-  m_SizeDelta: {x: 1023.6, y: 255.2}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -5}
+  m_SizeDelta: {x: -398.40002, y: -633.80005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &143819691
 MonoBehaviour:
@@ -3514,8 +3515,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4286513048
-  m_fontColor: {r: 0.59622645, g: 1, b: 0.495283, a: 1}
+    rgba: 4283226623
+  m_fontColor: {r: 1, g: 0.8517221, b: 0.2971698, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4765,10 +4766,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 991741584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -632}
-  m_SizeDelta: {x: 1023.6, y: 255.2}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -87}
+  m_SizeDelta: {x: -398.40002, y: -633.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &271841548
 MonoBehaviour:
@@ -4801,8 +4802,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4286513048
-  m_fontColor: {r: 0.59622645, g: 1, b: 0.495283, a: 1}
+    rgba: 4283226623
+  m_fontColor: {r: 1, g: 0.8509804, b: 0.29803923, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5842,6 +5843,7 @@ MonoBehaviour:
   _rankViewCanvas: {fileID: 1880922101}
   _rewardCanvas: {fileID: 794015268}
   _gameCanvas: {fileID: 1999762566}
+  _tutorialCanvas: {fileID: 95586764}
   _userInfoView: {fileID: 1373820079}
   _audioSettings: {fileID: 11400000, guid: 06f54f93dab2c66409b8a6256dfb1a50, type: 2}
   _effectsSetting: {fileID: 11400000, guid: 0f6c396f961d5914fbf74725c2fa517e, type: 2}
@@ -12461,7 +12463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &991741584
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19406,6 +19408,7 @@ MonoBehaviour:
       CurrentRank: 0
       CurrentRankAmount: 0
       PreviousRankAmount: 0
+      IsFirstSession: 1
 --- !u!4 &1847178382
 Transform:
   m_ObjectHideFlags: 0
@@ -20528,7 +20531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.34571436, g: 1, b: 0.33490568, a: 0.7019608}
+  m_Color: {r: 1, g: 0.1462264, b: 0.20080045, a: 0.7019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

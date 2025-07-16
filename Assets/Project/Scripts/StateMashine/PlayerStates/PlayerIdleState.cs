@@ -11,22 +11,16 @@ public class PlayerIdleState : EntityIdleState
     {
     }
 
-    protected override void HandleBallZoneChanged(Collider zone)
+    protected override void SwitchToMove()
     {
-        if (zone == SquadZone)
-        {
-            if (GameStatusService.Instance.CurrentHolder != null)
-                return;
-
-            StateSwitcher.SwitchState<PlayerMoveState>();
-        }
+        StateSwitcher.SwitchState<PlayerMoveState>();
     }
 
-    protected override void HandleBallTaken(Entity entity)
+    protected override void HandleHolderChanged(Entity entity)
     {
-        if(entity == null)
+        if (entity == null)
             return;
-        
+
         if (Teammates.Contains(entity) == false)
         {
             StateSwitcher.SwitchState<PlayerDodgeState>();

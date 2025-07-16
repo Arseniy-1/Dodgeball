@@ -56,6 +56,5 @@ public class PlayerAttackState : EntityAttackState
         await ThrowBall();
         StateSwitcher.SwitchState<PlayerIdleState>();
         
-        GameStatusService.Instance.ClearHolder();
     }
 }

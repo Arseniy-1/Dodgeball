@@ -92,7 +92,7 @@ public class EntityAttackState : IState
         Ball ball = _ballHolder.LostBall();
         _ballThrower.StopCharging();
         _ballThrower.Throw(ball);
-
+        
         AudioID.Attack.PlayOneShot();
         
         return _animatorController.Attack();

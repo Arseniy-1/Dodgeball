@@ -20,7 +20,7 @@ public class Saves : MonoBehaviour
 
     public void ResetProgress()
     {
-        _saves.ResetAnimations();
+        _saves.ResetProgress();
         YG2.isFirstGameSession = true;
     }
 }

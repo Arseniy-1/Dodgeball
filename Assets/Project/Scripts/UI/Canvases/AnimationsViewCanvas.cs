@@ -51,7 +51,6 @@ public class AnimationsViewCanvas : GameCanvas
         _animations.AddRange(YG2.saves.AnimationsHolder.CelebrateAnimationsHash);
         _animations.AddRange(YG2.saves.AnimationsHolder.DeathAnimationsHash);
         _animations.AddRange(YG2.saves.AnimationsHolder.PrepareAnimationsHash);
-        Debug.Log(YG2.saves.AnimationsHolder.PrepareAnimationsHash.Count);
         
         HandleClick();
     }

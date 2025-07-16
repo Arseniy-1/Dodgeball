@@ -17,6 +17,7 @@ public class Mover : MonoBehaviour
 
         while (this != null && cancellationToken.IsCancellationRequested == false && Vector3.Distance(transform.position, target) > _stoppingDistance)
         {
+            // Debug.Log("MovingIteration");
             cancellationToken.ThrowIfCancellationRequested();
 
             Vector3 direction = (target - transform.position);
@@ -35,7 +36,8 @@ public class Mover : MonoBehaviour
 
     public void FollowTarget(Transform target, float speed)
     {
-        if (target == null) return;
+        if (target == null) 
+            return;
 
         Vector3 currentPos = transform.position;
         Vector3 targetPos = target.position;

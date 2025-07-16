@@ -7,7 +7,7 @@ public class GameStatusService
 {
     private static GameStatusService _instance;
     public static GameStatusService Instance => _instance ??= new GameStatusService();
-    
+
     private Ball _ball;
     private Entity _currentHolder;
     private Collider _currentZone;
@@ -16,15 +16,15 @@ public class GameStatusService
     public event Action<Collider> OnZoneChanged;
 
     public Ball CurrentBall => _ball;
-    
+
     public Entity CurrentHolder
     {
         get => _currentHolder;
         private set
         {
-            if (ReferenceEquals(_currentHolder, value)) 
+            if (ReferenceEquals(_currentHolder, value))
                 return;
-            
+
             _currentHolder = value;
             OnHolderChanged?.Invoke(value);
         }
@@ -35,23 +35,34 @@ public class GameStatusService
         get => _currentZone;
         private set
         {
-            if (ReferenceEquals(_currentZone, value)) 
+            if (ReferenceEquals(_currentZone, value))
                 return;
-            
+
             _currentZone = value;
             OnZoneChanged?.Invoke(value);
         }
     }
 
-    private GameStatusService() { }
+    private GameStatusService()
+    {
+    }
 
     public void Initialize(Ball ball)
     {
         ClearHolder();
         _ball = ball;
+
+        _ball.OnTriggerStayAsObservable()
+            .Subscribe(collider =>
+            {
+                if (collider.GetComponent<Collider>().TryGetComponent<Squad>(out _))
+                {
+                    CurrentZone = collider.GetComponent<Collider>();
+                }
+            });
         
         _ball.OnTriggerEnterAsObservable()
-            .Subscribe(collider => 
+            .Subscribe(collider =>
             {
                 if (collider.TryGetComponent<Squad>(out _))
                 {
@@ -60,20 +71,11 @@ public class GameStatusService
             });
 
         _ball.OnTriggerExitAsObservable()
-            .Subscribe(collider => 
+            .Subscribe(collider =>
             {
                 if (ReferenceEquals(collider, CurrentZone))
                 {
                     CurrentZone = null;
-                }
-            });
-
-        _ball.OnCollisionEnterAsObservable()
-            .Subscribe(collision =>
-            {
-                if (collision.gameObject.TryGetComponent<Entity>(out var entity))
-                {
-                    SetHolder(entity);
                 }
             });
     }

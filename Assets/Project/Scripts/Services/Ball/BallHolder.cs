@@ -17,10 +17,11 @@ public class BallHolder : MonoBehaviour
         Ball returnedBall = _ball;
         _ball = null;
 
+        GameStatusService.Instance.ClearHolder();
+        
         return returnedBall;
     }
-
-
+    
     public void EquipBall(Ball ball)
     {
         ball.transform.position = _hand.transform.position;
@@ -30,7 +31,6 @@ public class BallHolder : MonoBehaviour
         ball.Rigidbody.angularVelocity = Vector3.zero;
         ball.Rigidbody.useGravity = false;
         ball.Rigidbody.isKinematic = true;
-
         
         _ball = ball;
     }

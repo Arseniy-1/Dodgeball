@@ -17,6 +17,7 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private RankViewCanvas _rankViewCanvas;
     [SerializeField] private RewardCanvas _rewardCanvas;
     [SerializeField] private GameUICanvas _gameCanvas;
+    [SerializeField] private TutorialCanvas _tutorialCanvas;
     [SerializeField] private UserInfoView _userInfoView;
 
     [SerializeField] private AudioSettings _audioSettings;
@@ -28,7 +29,7 @@ public class CompositionRoot : MonoBehaviour
     [SerializeField] private RewardService _rewardService;
 
     private bool _rewardRaised = false;
-    
+
     private EffectService _effectService;
     private AudioService _audioService;
     private RankHolder _rankHolder;
@@ -60,7 +61,7 @@ public class CompositionRoot : MonoBehaviour
             EnemySpawner enemySpawner = new EnemySpawner(_enemyPrefabs[i]);
             _enemySpawners.Add(enemySpawner);
         }
-        
+
         YG2.SwitchLanguage(YG2.lang);
         LocalizationManager.Language = YG2.lang;
     }
@@ -90,6 +91,16 @@ public class CompositionRoot : MonoBehaviour
 
     private void StartGame()
     {
+        _tutorialCanvas.gameObject.SetActive(false);
+        
+        if (YG2.saves.ProgressData.IsFirstSession)
+        {
+            YG2.saves.ProgressData.IsFirstSession = false;
+            YG2.SaveProgress();
+            
+            _tutorialCanvas.gameObject.SetActive(true);
+        }
+        
         _startGameCanvas.gameObject.SetActive(false);
         _gameCanvas.gameObject.SetActive(true);
         _arenaInstance.Initialize(_ballInstance);
@@ -158,7 +169,7 @@ public class CompositionRoot : MonoBehaviour
         _rankViewCanvas.gameObject.SetActive(true);
         await _rankViewCanvas.ShowResultsAsync();
         _rankViewCanvas.gameObject.SetActive(false);
-        
+
         if (_rewardRaised)
         {
             GiveReward();
@@ -168,10 +179,10 @@ public class CompositionRoot : MonoBehaviour
     private void ShowReward()
     {
         string id = "coin"; // Передача id требуется для внутренней работы плагина
-        
+
         YG2.RewardedAdvShow(id, GiveReward);
     }
-    
+
     private void GiveReward()
     {
         _startGameCanvas.gameObject.SetActive(false);

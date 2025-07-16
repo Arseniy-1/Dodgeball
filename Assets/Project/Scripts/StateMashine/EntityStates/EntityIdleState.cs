@@ -56,20 +56,19 @@ public abstract class EntityIdleState : IState
         _cancellationTokenSource = new CancellationTokenSource();
         _disposable = new CompositeDisposable();
 
-        GameStatusService.Instance.OnZoneChanged += HandleBallZoneChanged;
-        GameStatusService.Instance.OnHolderChanged += HandleBallTaken;
-        
+        GameStatusService.Instance.OnHolderChanged += HandleHolderChanged;
+
         _rigidbody.isKinematic = true;
         _collisionHandler.enabled = false;
         _collider.isTrigger = true;
 
         _animatorController.Idle();
         RunIdleMovementLoop(_cancellationTokenSource.Token).Forget();
- 
-        HandleBallTaken(GameStatusService.Instance.CurrentHolder);
-        HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
-        
+
+        HandleHolderChanged(GameStatusService.Instance.CurrentHolder);
+
         FindTarget(_cancellationTokenSource.Token).Forget();
+        TryMoveToBall(_cancellationTokenSource.Token).Forget();
     }
 
     public virtual void Exit()
@@ -77,8 +76,7 @@ public abstract class EntityIdleState : IState
         _cancellationTokenSource?.Cancel();
         _disposable?.Dispose();
 
-        GameStatusService.Instance.OnZoneChanged -= HandleBallZoneChanged;
-        GameStatusService.Instance.OnHolderChanged -= HandleBallTaken;
+        GameStatusService.Instance.OnHolderChanged -= HandleHolderChanged;
 
         _rigidbody.isKinematic = false;
         _collisionHandler.enabled = true;
@@ -90,10 +88,10 @@ public abstract class EntityIdleState : IState
         if (_ball != null)
             _rotator.RotateToTarget(_ball.transform, _entity.transform);
     }
-    
+
     private async UniTaskVoid RunIdleMovementLoop(CancellationToken token)
     {
-        while (!token.IsCancellationRequested)
+        while (token.IsCancellationRequested == false)
         {
             float standTime = Random.Range(_entityConfig.IdleMinStandTime, _entityConfig.IdleMaxStandTime);
             Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
@@ -105,20 +103,40 @@ public abstract class EntityIdleState : IState
         }
     }
 
-    private async UniTask FindTarget(CancellationToken token)
+    private async UniTaskVoid FindTarget(CancellationToken token)
     {
         float delay = 1f;
-        
+
         while (token.IsCancellationRequested == false)
         {
-            HandleBallTaken(GameStatusService.Instance.CurrentHolder);
-            HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
-
+            Debug.Log("FindTargetIteration " + _entity.gameObject.name);
+            HandleHolderChanged(GameStatusService.Instance.CurrentHolder);
+            TryMoveToBall(_cancellationTokenSource.Token).Forget();
             await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: token);
         }
     }
 
-    protected abstract void HandleBallZoneChanged(Collider zone);
+    private async UniTaskVoid TryMoveToBall(CancellationToken token)
+    {
+        Debug.Log("1");    
+        if (GameStatusService.Instance.CurrentZone != SquadZone)
+            return;
+        Debug.Log("2");    
 
-    protected abstract void HandleBallTaken(Entity entity);
+        if (GameStatusService.Instance.CurrentHolder != null)
+            return;
+        Debug.Log("3");    
+
+        await UniTask.WaitForFixedUpdate(cancellationToken: token);
+        await UniTask.WaitForFixedUpdate(cancellationToken: token);
+
+        if (GameStatusService.Instance.CurrentBall.Chargeable.IsCharged)
+            return;
+
+        SwitchToMove();
+    }
+
+    protected abstract void SwitchToMove();
+
+    protected abstract void HandleHolderChanged(Entity entity);
 }

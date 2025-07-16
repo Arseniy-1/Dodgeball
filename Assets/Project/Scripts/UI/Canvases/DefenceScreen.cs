@@ -15,7 +15,7 @@ public class DefenceScreen : TutorialScreen
         if(entity is Enemy == false)
             return;
 
-        Time.timeScale = 0.4f;
+        Time.timeScale = 0.25f;
         
         gameObject.SetActive(true);
         

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
 {
-    private Entity _owner; 
-    
+    private Entity _owner;
+
     public event Action<Ball> BallDetected;
     public event Action<int> DamageTaken;
 
@@ -12,12 +12,12 @@ public class CollisionHandler : MonoBehaviour
     {
         _owner = GetComponent<Entity>();
     }
-    
+
     private void Start()
     {
         // Метод нужен, чтобы была возможность выключать компонент
     }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
         if (enabled == false)
@@ -30,7 +30,7 @@ public class CollisionHandler : MonoBehaviour
                 if (chargeable.TryGetComponent(out Damageable damageable))
                 {
                     DamageTaken?.Invoke(damageable.Damage);
-                    
+
                     return;
                 }
             }
@@ -42,6 +42,13 @@ public class CollisionHandler : MonoBehaviour
 
     private void InteractWithBall(Ball ball)
     {
+        if (GameStatusService.Instance.CurrentHolder != null)
+            return;
+        
+        if(GameStatusService.Instance.CurrentBall.Chargeable.IsCharged)
+            return;
+        
+        GameStatusService.Instance.SetHolder(_owner);
         MessageBrokerHolder.GameActions.Publish(new M_BallTaken(_owner));
         BallDetected?.Invoke(ball);
     }

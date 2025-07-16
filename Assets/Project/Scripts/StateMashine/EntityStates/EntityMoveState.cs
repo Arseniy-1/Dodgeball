@@ -14,7 +14,6 @@ public abstract class EntityMoveState : IState
     private readonly Mover _mover;
 
     private CancellationTokenSource _cancellationTokenSource;
-    private Ball _targetBall;
 
     protected readonly BallHolder BallHolder;
     protected readonly Collider SquadZone;
@@ -42,11 +41,10 @@ public abstract class EntityMoveState : IState
     public virtual void Enter()
     {
         _cancellationTokenSource = new CancellationTokenSource();
-        _targetBall = GameStatusService.Instance.CurrentBall;
 
         _collisionHandler.BallDetected += OnBallDetected;
         GameStatusService.Instance.OnZoneChanged += HandleBallZoneChanged;
-        GameStatusService.Instance.OnHolderChanged += HandleBallTaken;
+        GameStatusService.Instance.OnHolderChanged += HandleBallHolderChanged;
 
         _collisionHandler.enabled = true;
         _collider.enabled = true;
@@ -59,26 +57,23 @@ public abstract class EntityMoveState : IState
     {
         _collisionHandler.BallDetected -= OnBallDetected;
         GameStatusService.Instance.OnZoneChanged -= HandleBallZoneChanged;
-        GameStatusService.Instance.OnHolderChanged -= HandleBallTaken;
-        
+        GameStatusService.Instance.OnHolderChanged -= HandleBallHolderChanged;
+
         _cancellationTokenSource.Cancel();
-        _targetBall = null;
     }
 
     public virtual void Update()
     {
-        if (_targetBall == null)
-            return;
+        if (GameStatusService.Instance.CurrentHolder != null)
+            HandleBallHolderChanged(GameStatusService.Instance.CurrentHolder);
 
-        _rotator.RotateToTarget(_targetBall.transform, _entity.transform, _entityConfig.RotationSpeed);
-        _mover.FollowTarget(_targetBall.transform, _entityConfig.RunSpeed);
+        _rotator.RotateToTarget(GameStatusService.Instance.CurrentBall.transform, _entity.transform, _entityConfig.RotationSpeed);
+        _mover.FollowTarget(GameStatusService.Instance.CurrentBall.transform, _entityConfig.RunSpeed);
     }
 
-    protected virtual void OnBallDetected(Ball ball)
-    {
-        GameStatusService.Instance.SetHolder(_entity);
-    }
+    protected abstract void OnBallDetected(Ball ball);
 
     protected abstract void HandleBallZoneChanged(Collider zone);
-    protected abstract void HandleBallTaken(Entity entity);
+    
+    protected abstract void HandleBallHolderChanged(Entity entity);
 }

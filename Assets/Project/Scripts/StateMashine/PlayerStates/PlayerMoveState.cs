@@ -29,7 +29,7 @@ public class PlayerMoveState : EntityMoveState
         }
     }
 
-    protected override void HandleBallTaken(Entity entity)
+    protected override void HandleBallHolderChanged(Entity entity)
     {
         if (_teammates.Contains(entity) == false)
         {
