@@ -31,8 +31,12 @@ public class PlayerMoveState : EntityMoveState
 
     protected override void HandleBallHolderChanged(Entity entity)
     {
+        if (entity == null)
+            return;
+        
         if (_teammates.Contains(entity) == false)
         {
+            Debug.Log("return");
             StateSwitcher.SwitchState<PlayerDodgeState>();
         }
         else if (entity != _player)

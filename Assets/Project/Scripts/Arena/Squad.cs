@@ -14,7 +14,7 @@ public class Squad : MonoBehaviour
     [SerializeField] private Collider _squadZone;
 
     public event Action<Squad> LostPlayers;
-    
+
     private void OnDestroy()
     {
         foreach (var entity in _entities)
@@ -51,14 +51,26 @@ public class Squad : MonoBehaviour
     {
         if (other.TryGetComponent(out Ball ball))
         {
+            // if (ball.Rigidbody.isKinematic)
+            //     return;
+            //
+            // if (GameStatusService.Instance.CurrentZone != null)
+            //     return;
+            //
+            // Debug.Log("1");
+            //
+            // GameStatusService.Instance.SetCurrentZone(_squadZone);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out Ball ball))
+        {
             if (ball.Rigidbody.isKinematic)
                 return;
-            
-            if(ball.TryGetComponent(out Chargeable chargeable))
-                if(chargeable.IsCharged)
-                    return;
-            
-            MessageBrokerHolder.GameActions.Publish(new M_BallChangedZone(_squadZone));
+
+            GameStatusService.Instance.ClearCurrentZone();
         }
     }
 
@@ -68,12 +80,11 @@ public class Squad : MonoBehaviour
         {
             if (ball.Rigidbody.isKinematic)
                 return;
-            
-            if(ball.TryGetComponent(out Chargeable chargeable))
-                if(chargeable.IsCharged)
-                    return;
-            
-            MessageBrokerHolder.GameActions.Publish(new M_BallChangedZone(_squadZone));
+
+            if (GameStatusService.Instance.CurrentZone != null)
+                return;
+
+            GameStatusService.Instance.SetCurrentZone(_squadZone);
         }
     }
 

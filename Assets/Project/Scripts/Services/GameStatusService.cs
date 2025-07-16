@@ -26,7 +26,6 @@ public class GameStatusService
                 return;
 
             _currentHolder = value;
-            OnHolderChanged?.Invoke(value);
         }
     }
 
@@ -39,7 +38,6 @@ public class GameStatusService
                 return;
 
             _currentZone = value;
-            OnZoneChanged?.Invoke(value);
         }
     }
 
@@ -51,35 +49,19 @@ public class GameStatusService
     {
         ClearHolder();
         _ball = ball;
-
-        _ball.OnTriggerStayAsObservable()
-            .Subscribe(collider =>
-            {
-                if (collider.GetComponent<Collider>().TryGetComponent<Squad>(out _))
-                {
-                    CurrentZone = collider.GetComponent<Collider>();
-                }
-            });
-        
-        _ball.OnTriggerEnterAsObservable()
-            .Subscribe(collider =>
-            {
-                if (collider.TryGetComponent<Squad>(out _))
-                {
-                    CurrentZone = collider;
-                }
-            });
-
-        _ball.OnTriggerExitAsObservable()
-            .Subscribe(collider =>
-            {
-                if (ReferenceEquals(collider, CurrentZone))
-                {
-                    CurrentZone = null;
-                }
-            });
     }
 
+    public void SetCurrentZone(Collider zone)
+    {
+        CurrentZone = zone;
+        OnZoneChanged?.Invoke(CurrentZone);
+    }
+    
+    public void ClearCurrentZone()
+    {
+        CurrentZone = null;
+    }
+    
     public void SetHolder(Entity newHolder)
     {
         CurrentHolder = newHolder;

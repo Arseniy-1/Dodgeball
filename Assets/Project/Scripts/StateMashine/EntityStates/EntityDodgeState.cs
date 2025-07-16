@@ -49,10 +49,7 @@ public abstract class EntityDodgeState : IState
         _animatorController.DodgeIdle();
         _rigidbody.isKinematic = true;
         
-        MessageBrokerHolder.GameActions
-            .Receive<M_BallChangedZone>()
-            .Subscribe(message => HandleBallZoneChanged(message.Zone))
-            .AddTo(_disposable);
+        GameStatusService.Instance.OnZoneChanged += HandleBallZoneChanged;
         
         RunDodgeMovementLoop(_cancellationTokenSource.Token).Forget();
     }
@@ -63,6 +60,8 @@ public abstract class EntityDodgeState : IState
         _disposable.Dispose();
         
         _rigidbody.isKinematic = false;
+        
+        GameStatusService.Instance.OnZoneChanged -= HandleBallZoneChanged;
     }
 
     public virtual void Update()

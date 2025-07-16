@@ -20,7 +20,6 @@ public abstract class EntityIdleState : IState
     private readonly Entity _entity;
     private readonly EntityConfig _entityConfig;
 
-    private CompositeDisposable _disposable;
     private CancellationTokenSource _cancellationTokenSource;
 
     protected readonly List<Entity> Teammates;
@@ -54,7 +53,6 @@ public abstract class EntityIdleState : IState
     public virtual void Enter()
     {
         _cancellationTokenSource = new CancellationTokenSource();
-        _disposable = new CompositeDisposable();
 
         GameStatusService.Instance.OnHolderChanged += HandleHolderChanged;
 
@@ -73,8 +71,7 @@ public abstract class EntityIdleState : IState
 
     public virtual void Exit()
     {
-        _cancellationTokenSource?.Cancel();
-        _disposable?.Dispose();
+        _cancellationTokenSource.Cancel();
 
         GameStatusService.Instance.OnHolderChanged -= HandleHolderChanged;
 
@@ -98,6 +95,7 @@ public abstract class EntityIdleState : IState
 
             _animatorController.DodgeIdle();
             await _mover.MoveTo(target, _entityConfig.WalkSpeed, token);
+            
             _animatorController.Idle();
             await UniTask.Delay((int)(standTime * 1000), cancellationToken: token);
         }
@@ -109,31 +107,29 @@ public abstract class EntityIdleState : IState
 
         while (token.IsCancellationRequested == false)
         {
-            Debug.Log("FindTargetIteration " + _entity.gameObject.name);
             HandleHolderChanged(GameStatusService.Instance.CurrentHolder);
-            TryMoveToBall(_cancellationTokenSource.Token).Forget();
             await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: token);
         }
     }
 
     private async UniTaskVoid TryMoveToBall(CancellationToken token)
     {
-        Debug.Log("1");    
-        if (GameStatusService.Instance.CurrentZone != SquadZone)
-            return;
-        Debug.Log("2");    
+        while (token.IsCancellationRequested == false)
+        {
+            await UniTask.WaitForFixedUpdate(cancellationToken: token);
+            await UniTask.WaitForFixedUpdate(cancellationToken: token);
 
-        if (GameStatusService.Instance.CurrentHolder != null)
-            return;
-        Debug.Log("3");    
+            if (GameStatusService.Instance.CurrentZone != SquadZone)
+                continue;
 
-        await UniTask.WaitForFixedUpdate(cancellationToken: token);
-        await UniTask.WaitForFixedUpdate(cancellationToken: token);
+            if (GameStatusService.Instance.CurrentHolder != null)
+                continue;
+            
+            if (GameStatusService.Instance.CurrentBall.Chargeable.IsCharged)
+                continue;
 
-        if (GameStatusService.Instance.CurrentBall.Chargeable.IsCharged)
-            return;
-
-        SwitchToMove();
+            SwitchToMove();
+        }
     }
 
     protected abstract void SwitchToMove();

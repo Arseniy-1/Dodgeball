@@ -34,7 +34,6 @@ namespace YG
         {
             AnimationsHolder.ResetAnimations();
             ProgressData.IsFirstSession = true;
-            Debug.Log(ProgressData.IsFirstSession);
             YG2.SaveProgress();
         }
     }

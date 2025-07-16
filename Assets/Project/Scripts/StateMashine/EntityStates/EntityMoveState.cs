@@ -66,6 +66,9 @@ public abstract class EntityMoveState : IState
     {
         if (GameStatusService.Instance.CurrentHolder != null)
             HandleBallHolderChanged(GameStatusService.Instance.CurrentHolder);
+        
+        if (GameStatusService.Instance.CurrentZone != SquadZone)
+            HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
 
         _rotator.RotateToTarget(GameStatusService.Instance.CurrentBall.transform, _entity.transform, _entityConfig.RotationSpeed);
         _mover.FollowTarget(GameStatusService.Instance.CurrentBall.transform, _entityConfig.RunSpeed);

@@ -8123,12 +8123,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586258256}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0d54c15b0eb46f5a942be0dca7c5c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeScale: 1
+  _timeScale: 0.03
 --- !u!4 &586258258
 Transform:
   m_ObjectHideFlags: 0

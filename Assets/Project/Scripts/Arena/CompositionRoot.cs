@@ -124,9 +124,9 @@ public class CompositionRoot : MonoBehaviour
         if (_ballInstance != null)
             Destroy(_ballInstance.gameObject);
 
-        float ballOffsetY = 2f;
-        float ballOffsetX = 2f;
-        float ballOffsetZ = 2f;
+        float ballOffsetX = -2.5f;
+        float ballOffsetY = 1f;
+        float ballOffsetZ = -1.5f;
         Vector3 ballPosition = new Vector3(transform.position.x + ballOffsetX, transform.position.y + ballOffsetY,
             transform.position.z + ballOffsetZ);
         _ballInstance = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
