@@ -29,9 +29,6 @@ public class ResetProgressCanvas : GameCanvas
         _saves.ResetProgress();
         YG2.SaveProgress();
         
-        _saves.Initialize();
-        YG2.SaveProgress();
-
         Disable();
     }
 }

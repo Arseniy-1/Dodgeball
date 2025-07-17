@@ -51,4 +51,18 @@ public class RankHolder
         YG2.saves.ProgressData.CurrentRank = CurrentRank;
         YG2.SaveProgress();
     }
+
+    public void Reset()
+    {
+        _currentAmount = 0;
+        _previousAmount = 0;
+        CurrentRank = 0;
+        
+        YG2.saves.ProgressData.CurrentRankAmount = 0;
+        YG2.saves.ProgressData.PreviousRankAmount = 0;
+        YG2.saves.ProgressData.CurrentRank = 0;
+        
+        RankRaised?.Invoke();
+        RankAmountChanged?.Invoke(_currentAmount, MaxAmount);
+    }
 }

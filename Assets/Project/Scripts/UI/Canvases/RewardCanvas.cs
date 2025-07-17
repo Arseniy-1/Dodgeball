@@ -109,6 +109,7 @@ public class RewardCanvas : InteractiveCanvas
             _modelView.ShowReward(animationHash, selectedAnimation.name);
         }
         
+        YG2.SaveProgress();
         _playerInputController.ActionButtonCanceled += CloseWindow;
     }
 

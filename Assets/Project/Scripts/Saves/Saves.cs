@@ -1,7 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Serialization;
 using YG;
 
 [Serializable]
@@ -10,17 +9,16 @@ public class Saves : MonoBehaviour
 {
     [SerializeField] private SavesYG _saves;
     
-    public void Initialize()
+    public void Initialize(RankHolder rankHolder)
     {
         var startAnimationsData = _saves.StartAnimationsData;
         
         _saves = YG2.saves;
-        _saves.InitializeStartSaves(startAnimationsData);
+        _saves.InitializeStartSaves(startAnimationsData, rankHolder);
     }
 
     public void ResetProgress()
     {
         _saves.ResetProgress();
-        YG2.isFirstGameSession = true;
     }
 }

@@ -84,7 +84,7 @@ public class CompositionRoot : MonoBehaviour
 
     private void Start()
     {
-        _saves.Initialize();
+        _saves.Initialize(_rankHolder);
         CreateMap();
         _startGameCanvas.gameObject.SetActive(true);
     }
