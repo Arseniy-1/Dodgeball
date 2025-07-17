@@ -34,11 +34,8 @@ public class PlayerMoveState : EntityMoveState
         if (entity == null)
             return;
         
-        Debug.Log(entity.name);
-        
         if (_teammates.Contains(entity) == false)
         {
-            Debug.Log("return");
             StateSwitcher.SwitchState<PlayerDodgeState>();
         }
         else if (entity != _player)

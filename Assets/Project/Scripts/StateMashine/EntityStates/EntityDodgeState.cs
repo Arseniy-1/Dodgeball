@@ -47,18 +47,15 @@ public abstract class EntityDodgeState : IState
         _animatorController.DodgeIdle();
         _rigidbody.isKinematic = true;
         
-        GameStatusService.Instance.OnZoneChanged += HandleBallZoneChanged;
-        RunDodgeMovementLoop(_cancellationTokenSource.Token).Forget();
         HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
+        
+        RunDodgeMovementLoop(_cancellationTokenSource.Token).Forget();
     }
 
     public virtual void Exit()
     {
         _cancellationTokenSource.Cancel();
-        
         _rigidbody.isKinematic = false;
-        
-        GameStatusService.Instance.OnZoneChanged -= HandleBallZoneChanged;
     }
 
     public virtual void Update()

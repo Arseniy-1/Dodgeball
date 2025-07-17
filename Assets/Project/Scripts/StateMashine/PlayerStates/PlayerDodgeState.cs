@@ -30,10 +30,7 @@ public class PlayerDodgeState : EntityDodgeState
 
     protected override void HandleBallZoneChanged(Collider zone)
     {
-        if(GameStatusService.Instance.CurrentBall.Chargeable.IsCharged)
-            return;
-        
-        if (GameStatusService.Instance.CurrentHolder != null)
+        if(GameStatusService.Instance.IsBallFree == false)
             return;
         
         if (zone == SquadZone)

@@ -42,10 +42,10 @@ public abstract class EntityMoveState : IState
     {
         _cancellationTokenSource = new CancellationTokenSource();
 
-        _collisionHandler.BallDetected += OnBallDetected;
-        GameStatusService.Instance.OnZoneChanged += HandleBallZoneChanged;
         GameStatusService.Instance.OnHolderChanged += HandleBallHolderChanged;
-
+        GameStatusService.Instance.OnZoneChanged += HandleBallZoneChanged;
+        _collisionHandler.BallDetected += OnBallDetected;
+        
         _collisionHandler.enabled = true;
         _collider.enabled = true;
         _collider.isTrigger = false;
@@ -55,21 +55,15 @@ public abstract class EntityMoveState : IState
 
     public virtual void Exit()
     {
-        _collisionHandler.BallDetected -= OnBallDetected;
-        GameStatusService.Instance.OnZoneChanged -= HandleBallZoneChanged;
-        GameStatusService.Instance.OnHolderChanged -= HandleBallHolderChanged;
-
         _cancellationTokenSource.Cancel();
+        
+        GameStatusService.Instance.OnHolderChanged -= HandleBallHolderChanged;
+        GameStatusService.Instance.OnZoneChanged -= HandleBallZoneChanged;
+        _collisionHandler.BallDetected -= OnBallDetected;
     }
 
     public virtual void Update()
     {
-        if (GameStatusService.Instance.CurrentHolder != null)
-            HandleBallHolderChanged(GameStatusService.Instance.CurrentHolder);
-        
-        if (GameStatusService.Instance.CurrentZone != SquadZone)
-            HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
-
         _rotator.RotateToTarget(GameStatusService.Instance.CurrentBall.transform, _entity.transform, _entityConfig.RotationSpeed);
         _mover.FollowTarget(GameStatusService.Instance.CurrentBall.transform, _entityConfig.RunSpeed);
     }
