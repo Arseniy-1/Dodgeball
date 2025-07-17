@@ -19,7 +19,6 @@ public abstract class EntityDodgeState : IState
     protected IStateSwitcher StateSwitcher;
 
     private CancellationTokenSource _cancellationTokenSource;
-    private CompositeDisposable _disposable;
 
     protected EntityDodgeState(
         Entity entity, AnimatorController animatorController, Ball ball,
@@ -45,19 +44,17 @@ public abstract class EntityDodgeState : IState
     public virtual void Enter()
     {
         _cancellationTokenSource = new CancellationTokenSource();
-        _disposable = new CompositeDisposable();
         _animatorController.DodgeIdle();
         _rigidbody.isKinematic = true;
         
         GameStatusService.Instance.OnZoneChanged += HandleBallZoneChanged;
-        
         RunDodgeMovementLoop(_cancellationTokenSource.Token).Forget();
+        HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
     }
 
     public virtual void Exit()
     {
-        _cancellationTokenSource?.Cancel();
-        _disposable.Dispose();
+        _cancellationTokenSource.Cancel();
         
         _rigidbody.isKinematic = false;
         
@@ -74,8 +71,6 @@ public abstract class EntityDodgeState : IState
 
     private async UniTaskVoid RunDodgeMovementLoop(CancellationToken token)
     {
-        // Debug.Log("Enter to dodge movement Wait Move " + _entity.gameObject.name);
-        
         while (token.IsCancellationRequested == false)
         {
             float standTime = Random.Range(
@@ -85,7 +80,7 @@ public abstract class EntityDodgeState : IState
 
             Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
             _animatorController.DodgeIdle();
-            // Debug.Log("Dodge movement Wait Move " + _entity.gameObject.name);
+         
             if(token.IsCancellationRequested)
                 return;
             
@@ -95,7 +90,7 @@ public abstract class EntityDodgeState : IState
                 return;
             
             _animatorController.Idle();
-            // Debug.Log("Dodge movement Wait StandTime " + _entity.gameObject.name + " Stand Time: " + standTime);
+            
             await UniTask.Delay((int)(standTime * 1000), cancellationToken: token);
             
             if(token.IsCancellationRequested)

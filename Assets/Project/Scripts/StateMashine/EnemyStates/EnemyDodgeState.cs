@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class EnemyDodgeState : EntityDodgeState
 {
     private readonly EnemyConfig _enemyConfig;
-    
+
     private CancellationTokenSource _jumpCancellationTokenSource;
 
     public EnemyDodgeState(Enemy enemy, AnimatorController animatorController, Ball ball, Mover mover,
@@ -22,29 +22,43 @@ public class EnemyDodgeState : EntityDodgeState
         base.Enter();
         _jumpCancellationTokenSource = new CancellationTokenSource();
         RunJumpLoop(_jumpCancellationTokenSource.Token).Forget();
+        Debug.Log("*");
     }
 
     public override void Exit()
     {
         base.Exit();
-        _jumpCancellationTokenSource?.Cancel();
-        _jumpCancellationTokenSource?.Dispose();
-        _jumpCancellationTokenSource = null;
+        _jumpCancellationTokenSource.Cancel();
+        Debug.Log(_jumpCancellationTokenSource.Token.IsCancellationRequested);
+        Debug.Log("#");
     }
 
     private async UniTaskVoid RunJumpLoop(CancellationToken token)
     {
+        Debug.Log(token.IsCancellationRequested);
         while (token.IsCancellationRequested == false)
         {
             float waitTime = Random.Range(_enemyConfig.DodgeJumpDelayMinTime, _enemyConfig.DodgeJumpDelayMaxTime);
-            await UniTask.Delay((int)(waitTime * 1000), cancellationToken: _jumpCancellationTokenSource.Token);
+            await UniTask.Delay((int)(waitTime * 1000), cancellationToken: token);
+
+            if (token.IsCancellationRequested)
+                return;
+
             StateSwitcher.SwitchState<EnemyJumpState>();
         }
     }
 
     protected override void HandleBallZoneChanged(Collider zone)
     {
+        if (GameStatusService.Instance.CurrentBall.Chargeable.IsCharged)
+            return;
+
+        if (GameStatusService.Instance.CurrentHolder != null)
+            return;
+
         if (zone == SquadZone)
+        {
             StateSwitcher.SwitchState<EnemyMoveState>();
+        }
     }
 }
