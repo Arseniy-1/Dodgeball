@@ -22,10 +22,11 @@ public class PlayerAttackState : EntityAttackState
         _inputController = inputController;
     }
 
-    public override void Enter()
+    public override async void Enter()
     {
         base.Enter();
-
+        await ApplyTarget();
+        
         _buttonStartedHandler = OnButtonClicked;
         _buttonCanceledHandler = () => _ = OnButtonReleasedAsync();
 
@@ -55,6 +56,5 @@ public class PlayerAttackState : EntityAttackState
 
         await ThrowBall();
         StateSwitcher.SwitchState<PlayerIdleState>();
-        
     }
 }

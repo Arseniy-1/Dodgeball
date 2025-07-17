@@ -40,15 +40,17 @@ public class CollisionHandler : MonoBehaviour
             InteractWithBall(interactable);
     }
 
+    private void OnCollisionStay(Collision other)
+    {
+        if (other.collider.TryGetComponent(out Ball interactable))
+            InteractWithBall(interactable);
+    }
+
     private void InteractWithBall(Ball ball)
     {
-        if (GameStatusService.Instance.CurrentHolder != null)
+        if (GameStatusService.Instance.IsBallFree == false)
             return;
-        
-        if(GameStatusService.Instance.CurrentBall.Chargeable.IsCharged)
-            return;
-        
-        GameStatusService.Instance.SetHolder(_owner);
+
         MessageBrokerHolder.GameActions.Publish(new M_BallTaken(_owner));
         BallDetected?.Invoke(ball);
     }

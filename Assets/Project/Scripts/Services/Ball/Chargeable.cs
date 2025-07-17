@@ -1,14 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Chargeable : MonoBehaviour
 {
     [SerializeField] private float _dangerousSpeed = 10f;
     
-    public bool IsCharged => _velocity.magnitude >= _dangerousSpeed;
-
     private Rigidbody _rigidbody;
     private Vector3 _velocity;
+    
+    public event Action OnCharged;
+    
+    public bool IsCharged => _velocity.magnitude >= _dangerousSpeed;
     
     private void Awake()
     {
@@ -18,5 +21,6 @@ public class Chargeable : MonoBehaviour
     private void FixedUpdate()
     {
         _velocity = _rigidbody.velocity;
+        OnCharged?.Invoke();
     }
 }

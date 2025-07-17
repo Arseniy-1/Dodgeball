@@ -17,7 +17,7 @@ public class EnemyMoveState : EntityMoveState
 
     protected override void OnBallDetected(Ball ball)
     {
-        BallHolder.EquipBall(ball);
+        BallHolder.EquipBall(ball, _enemy);
         StateSwitcher.SwitchState<EnemyAttackState>();
     }
 

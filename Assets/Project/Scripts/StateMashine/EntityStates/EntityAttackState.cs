@@ -47,7 +47,7 @@ public class EntityAttackState : IState
         StateSwitcher = stateSwitcher;
     }
 
-    public virtual async void Enter()
+    public virtual void Enter()
     {
         _cancellationTokenSource = new CancellationTokenSource();
         
@@ -56,12 +56,6 @@ public class EntityAttackState : IState
         Collider.enabled = false;
 
         _animatorController.Idle();
-        
-        if(_cancellationTokenSource.Token.IsCancellationRequested)
-            return;
-        
-        Entity  target = await FindTarget(_cancellationTokenSource.Token);
-        TargetProvider.SelectTarget(target);
     }
 
     public virtual void Exit()
@@ -98,6 +92,12 @@ public class EntityAttackState : IState
         return _animatorController.Attack();
     }
 
+    protected async UniTask ApplyTarget()
+    {
+        Entity  target = await FindTarget(_cancellationTokenSource.Token);
+        TargetProvider.SelectTarget(target);
+    }
+    
     private async UniTask<Entity> FindTarget(CancellationToken token)
     {
         Entity target = _targetScanner.Scan(_teammates);

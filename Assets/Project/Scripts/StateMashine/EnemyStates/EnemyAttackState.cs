@@ -1,13 +1,15 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using Random = UnityEngine.Random;
 
 public class EnemyAttackState : EntityAttackState
 {
     private readonly EnemyConfig _enemyConfig;
 
-    private float _shootDelay;
-    private float _releaseTimer;
-    private bool _hasReleased;
+    private CancellationTokenSource _cancellationTokenSource;
 
     public EnemyAttackState(Enemy enemy, CollisionHandler collisionHandler,
         Collider collider, Rigidbody rigidbody,
@@ -22,32 +24,31 @@ public class EnemyAttackState : EntityAttackState
         _enemyConfig = enemyConfig;
     }
 
-    public override void Enter()
+    public override async void Enter()
     {
+        _cancellationTokenSource = new CancellationTokenSource();
+
         base.Enter();
+        await ApplyTarget();
 
-        if (TargetProvider.Target != null)
-            StartAttack();
-
-        _shootDelay = Random.Range(_enemyConfig.MinThrowWait, _enemyConfig.MaxThrowWait);
-        _releaseTimer = 0f;
-        _hasReleased = false;
+        Attack(_cancellationTokenSource.Token);
     }
 
-    public override async void Update()
+    public override void Exit()
     {
-        base.Update();
+        _cancellationTokenSource.Cancel();
+        base.Exit();
+    }
 
-        if (_hasReleased)
-            return;
+    private async void Attack(CancellationToken token)
+    {
+        StartAttack();
 
-        _releaseTimer += Time.deltaTime;
+        float shootDelay = Random.Range(_enemyConfig.MinThrowWait, _enemyConfig.MaxThrowWait);
 
-        if (_releaseTimer >= _shootDelay)
-        {
-            _hasReleased = true;
-            await ThrowBall();
-            StateSwitcher.SwitchState<EnemyIdleState>();
-        }
+        await UniTask.Delay(TimeSpan.FromSeconds(shootDelay), cancellationToken: token);
+        await ThrowBall();
+        
+        StateSwitcher.SwitchState<EnemyIdleState>();
     }
 }

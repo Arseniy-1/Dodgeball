@@ -16,7 +16,7 @@ public class GameStatusService
     public event Action<Collider> OnZoneChanged;
 
     public Ball CurrentBall => _ball;
-    public bool IsBallFree => _ball.Chargeable.IsCharged == false || _currentHolder == null;
+    public bool IsBallFree => _ball.Chargeable.IsCharged == false && _currentHolder == null;
 
     public Entity CurrentHolder
     {

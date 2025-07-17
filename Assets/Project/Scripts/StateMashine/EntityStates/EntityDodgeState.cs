@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -46,9 +48,8 @@ public abstract class EntityDodgeState : IState
         _cancellationTokenSource = new CancellationTokenSource();
         _animatorController.DodgeIdle();
         _rigidbody.isKinematic = true;
-        
-        HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
-        
+
+        CheckBallStatus(_cancellationTokenSource.Token).Forget();
         RunDodgeMovementLoop(_cancellationTokenSource.Token).Forget();
     }
 
@@ -66,6 +67,15 @@ public abstract class EntityDodgeState : IState
 
     protected abstract void HandleBallZoneChanged(Collider zone);
 
+    private async UniTaskVoid CheckBallStatus(CancellationToken token)
+    {
+        while (token.IsCancellationRequested == false)
+        {
+            await UniTask.WaitForFixedUpdate();
+            HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
+        }
+    }
+    
     private async UniTaskVoid RunDodgeMovementLoop(CancellationToken token)
     {
         while (token.IsCancellationRequested == false)
@@ -77,20 +87,20 @@ public abstract class EntityDodgeState : IState
 
             Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
             _animatorController.DodgeIdle();
-         
-            if(token.IsCancellationRequested)
+
+            if (token.IsCancellationRequested)
                 return;
-            
+
             await _mover.MoveTo(target, _entityConfig.DodgeSpeed, token);
-            
-            if(token.IsCancellationRequested)
+
+            if (token.IsCancellationRequested)
                 return;
-            
+
             _animatorController.Idle();
-            
-            await UniTask.Delay((int)(standTime * 1000), cancellationToken: token);
-            
-            if(token.IsCancellationRequested)
+
+            await UniTask.Delay(TimeSpan.FromSeconds(standTime), cancellationToken: token);
+
+            if (token.IsCancellationRequested)
                 return;
         }
     }

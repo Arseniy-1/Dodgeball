@@ -12,18 +12,19 @@ public class BallHolder : MonoBehaviour
             _ball.transform.parent = null;
             _ball.Rigidbody.useGravity = true;
             _ball.Rigidbody.isKinematic = false;
+            GameStatusService.Instance.ClearHolder();
         }
 
         Ball returnedBall = _ball;
         _ball = null;
-
-        GameStatusService.Instance.ClearHolder();
         
         return returnedBall;
     }
-    
-    public void EquipBall(Ball ball)
+
+    public void EquipBall(Ball ball, Entity owner)
     {
+        GameStatusService.Instance.SetHolder(owner);   
+        
         ball.transform.position = _hand.transform.position;
         ball.transform.parent = transform;
 
@@ -31,7 +32,7 @@ public class BallHolder : MonoBehaviour
         ball.Rigidbody.angularVelocity = Vector3.zero;
         ball.Rigidbody.useGravity = false;
         ball.Rigidbody.isKinematic = true;
-        
+
         _ball = ball;
     }
 }

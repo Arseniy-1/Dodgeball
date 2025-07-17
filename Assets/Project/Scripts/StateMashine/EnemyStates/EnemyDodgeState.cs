@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -20,28 +21,23 @@ public class EnemyDodgeState : EntityDodgeState
     public override void Enter()
     {
         base.Enter();
-        _jumpCancellationTokenSource?.Cancel();
         _jumpCancellationTokenSource = new CancellationTokenSource();
         RunJumpLoop(_jumpCancellationTokenSource.Token).Forget();
-        Debug.Log("*");
     }
 
     public override void Exit()
     {
         base.Exit();
         _jumpCancellationTokenSource?.Cancel();
-        Debug.Log(_jumpCancellationTokenSource.Token.IsCancellationRequested);
-        Debug.Log("#");
     }
 
     private async UniTaskVoid RunJumpLoop(CancellationToken token)
     {
-        Debug.Log(token.IsCancellationRequested);
         while (token.IsCancellationRequested == false)
         {
-            Debug.Log("11");
             float waitTime = Random.Range(_enemyConfig.DodgeJumpDelayMinTime, _enemyConfig.DodgeJumpDelayMaxTime);
-            await UniTask.Delay((int)(waitTime * 1000), cancellationToken: token);
+            
+            await UniTask.Delay(TimeSpan.FromSeconds(waitTime), cancellationToken: token);
 
             if (token.IsCancellationRequested)
                 return;
