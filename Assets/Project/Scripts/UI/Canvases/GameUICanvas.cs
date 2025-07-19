@@ -2,13 +2,16 @@
 using TMPro;
 using UnityEngine;
 using YG;
+using YG.LanguageLegacy;
 
 public class GameUICanvas : GameCanvas
 {
     [SerializeField] private TextMeshProUGUI _enemyName;
     [SerializeField] private TextMeshProUGUI _playerName;
     [SerializeField] private TextMeshProUGUI _timeView;
-    
+
+    [SerializeField] private LanguageYG _languageTranslator;
+
     private Timer _timer;
     private CancellationTokenSource _cancellationTokenSource;
 
@@ -20,10 +23,28 @@ public class GameUICanvas : GameCanvas
     private void OnEnable()
     {
         _cancellationTokenSource = new CancellationTokenSource();
-        
-        _enemyName.text = Constans.EnemyNames.GetRandomName();
-        _playerName.text = YG2.player.name;
-        
+
+        switch (YG2.lang)
+        {
+            case nameof(Languages.en):
+                _enemyName.text = Constans.EnemyNames.GetRandomEnglishName();
+                break;
+            
+            case nameof(Languages.ru):
+                _enemyName.text = Constans.EnemyNames.GetRandomRussianName();
+                break;
+            
+            case nameof(Languages.tr):
+                _enemyName.text = Constans.EnemyNames.GetRandomTurkishName();
+                break;
+        }
+
+        if (YG2.player.auth)
+        {
+            _languageTranslator.enabled = false;
+            _playerName.text = YG2.player.name;
+        }
+
         _timer.Start(_cancellationTokenSource.Token).Forget();
     }
 

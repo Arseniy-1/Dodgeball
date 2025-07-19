@@ -112,11 +112,9 @@ public abstract class EntityIdleState : IState
     {
         while (token.IsCancellationRequested == false)
         {
-            await UniTask.WaitForFixedUpdate(cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.3f), cancellationToken: token);
 
             GameStatusService.Instance.CurrentBall.Chargeable.OnCharged += HandleBallCharged;
-            
-            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
         }
     }
 

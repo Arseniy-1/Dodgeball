@@ -28,10 +28,8 @@ public class PlayerAttackState : EntityAttackState
         await ApplyTarget();
         
         _buttonStartedHandler = OnButtonClicked;
-        _buttonCanceledHandler = () => _ = OnButtonReleasedAsync();
 
         _inputController.ActionButtonStarted += _buttonStartedHandler;
-        _inputController.ActionButtonCanceled += _buttonCanceledHandler;
     }
 
     public override void Exit()
@@ -47,6 +45,9 @@ public class PlayerAttackState : EntityAttackState
         {
             StartAttack();
         }
+        
+        _buttonCanceledHandler = () => _ = OnButtonReleasedAsync();
+        _inputController.ActionButtonCanceled += _buttonCanceledHandler;
     }
 
     private async Task OnButtonReleasedAsync()

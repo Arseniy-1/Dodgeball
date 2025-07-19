@@ -4,7 +4,7 @@ public static class Constans
 {
     public static class EnemyNames
     {
-        private static List<string> _names = new List<string>
+        private static List<string> _englishNames = new List<string>
         {
             "Antony_124",
             "John_being",
@@ -18,9 +18,57 @@ public static class Constans
             "\\UWU//",
         };
         
-        public static string GetRandomName()
+        private static List<string> _russianNames = new List<string>
         {
-            return _names[UnityEngine.Random.Range(0, _names.Count)];
+            "Вован_2007",
+            "Пушистик^^",
+            "Киллер_007",
+            "Танкист_",
+            "Няшка_",
+            "Череп_666",
+            "БоТаныЧ",
+            "Максимка",
+            "Люся<3",
+            "\\ОГО//",
+            "Санек_",
+            "Капитан",
+            "Гриша_ТТ",
+            "Валерчик",
+            "Zайка",
+        };
+
+        private static List<string> _turkishNames = new List<string>
+        {
+            "Kral_TR",
+            "Delikanlı",
+            "Aşkım_<3",
+            "Ölümcül",
+            "Fırtına",
+            "Kaplan_",
+            "Şahin_01",
+            "Yıldız_",
+            "Kuzu_^^",
+            "//ASLAN\\",
+            "Reis_",
+            "Türkoglu",
+            "Savaşçı",
+            "Bebek_",
+            "Karanlık",
+        };
+        
+        public static string GetRandomEnglishName()
+        {
+            return _englishNames[UnityEngine.Random.Range(0, _englishNames.Count)];
+        }
+
+        public static string GetRandomRussianName()
+        {
+            return _russianNames[UnityEngine.Random.Range(0, _russianNames.Count)];
+        }
+
+        public static string GetRandomTurkishName()
+        {
+            return _turkishNames[UnityEngine.Random.Range(0, _turkishNames.Count)];
         }
     }
 

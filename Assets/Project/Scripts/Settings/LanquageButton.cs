@@ -11,7 +11,7 @@ public class LanquageButton : ButtonHandler
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private Image _view;
     
-    public event Action<Lanquages> OnClick;
+    public event Action<Languages> OnClick;
 
     private void Start()
     {

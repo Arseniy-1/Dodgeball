@@ -62,8 +62,9 @@ public class CompositionRoot : MonoBehaviour
             _enemySpawners.Add(enemySpawner);
         }
 
-        YG2.SwitchLanguage(YG2.lang);
-        LocalizationManager.Language = YG2.lang;
+        LocalizationManager.Language = YG2.saves.SettingsData.Language.ToString();
+        YG2.lang = YG2.saves.SettingsData.Language.ToString();
+        YG2.SwitchLanguage(YG2.saves.SettingsData.Language.ToString());
     }
 
     private void OnEnable()

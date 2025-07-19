@@ -7,7 +7,7 @@
     false,
     false
   ],
-  "idSave": 513,
+  "idSave": 568,
   "StartAnimationsData": {
     "DodgeAnimations": [
       1,
@@ -34,10 +34,10 @@
     ],
     "CelebrateAnimations": [
       0,
-      3,
-      1,
+      4,
       2,
-      4
+      3,
+      1
     ],
     "DeathAnimations": [
       0,
@@ -46,8 +46,8 @@
     ],
     "PrepareAnimations": [
       3,
-      2,
       1,
+      2,
       0
     ],
     "DodgeAnimationsHash": [
@@ -57,10 +57,10 @@
     ],
     "CelebrateAnimationsHash": [
       1684810025,
-      1989812487,
-      529790606,
+      1433932453,
       -56261239,
-      1433932453
+      1989812487,
+      529790606
     ],
     "DeathAnimationsHash": [
       -1821740194,
@@ -69,26 +69,27 @@
     ],
     "PrepareAnimationsHash": [
       1189485320,
-      1329710843,
       -410739780,
+      1329710843,
       2044726910
     ]
   },
   "SettingsData": {
     "IsSoundsEnabled": false,
     "IsMusicEnabled": false,
-    "IsCameraShakeEnabled": false
+    "IsCameraShakeEnabled": false,
+    "Language": 1
   },
   "ProgressData": {
     "CurrentRank": 1,
-    "CurrentRankAmount": 100,
-    "PreviousRankAmount": 99,
+    "CurrentRankAmount": 95,
+    "PreviousRankAmount": 59,
     "IsFirstSession": false
   },
   "RankHolder": {
     "CurrentRank": 1,
-    "CurrentAmount": 100,
-    "PreviousAmount": 99,
+    "CurrentAmount": 95,
+    "PreviousAmount": 59,
     "MaxRankAmount": 100
   }
 }

@@ -1,4 +1,4 @@
-﻿public enum Lanquages
+﻿public enum Languages
 {
     ru,
     en,
