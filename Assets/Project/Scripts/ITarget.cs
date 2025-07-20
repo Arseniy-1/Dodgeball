@@ -1,5 +1,6 @@
-using System.Numerics;
-
-public interface ITarget
+namespace Project.Scripts
 {
+    public interface ITarget
+    {
+    }
 }

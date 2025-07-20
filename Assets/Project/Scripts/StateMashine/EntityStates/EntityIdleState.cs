@@ -19,28 +19,27 @@ public abstract class EntityIdleState : IState
     private readonly Rotator _rotator;
     private readonly Entity _entity;
     private readonly EntityConfig _entityConfig;
+    private readonly Collider _squadZone;
+    private readonly List<Entity> _teammates;
 
     private CancellationTokenSource _cancellationTokenSource;
 
-    protected readonly List<Entity> Teammates;
-    protected readonly Collider SquadZone;
     protected IStateSwitcher StateSwitcher;
 
     protected EntityIdleState(
-        AnimatorController animatorController, Ball ball, Mover mover,
-        CollisionHandler collisionHandler, Collider squadZone,
+        AnimatorController animatorController, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
         Collider collider, Rigidbody rigidbody, Entity entity, EntityConfig entityConfig, List<Entity> teammates)
     {
         _animatorController = animatorController;
         _ball = ball;
         _mover = mover;
         _collisionHandler = collisionHandler;
-        SquadZone = squadZone;
+        _squadZone = squadZone;
         _collider = collider;
         _rigidbody = rigidbody;
         _entity = entity;
         _entityConfig = entityConfig;
-        Teammates = teammates;
+        _teammates = teammates;
         _areaPointSelector = new AreaPointSelector();
         _rotator = new Rotator();
     }
@@ -61,7 +60,7 @@ public abstract class EntityIdleState : IState
         _animatorController.Idle();
         RunIdleMovementLoop(_cancellationTokenSource.Token).Forget();
 
-        FindTarget(_cancellationTokenSource.Token).Forget();
+        HandleHolderChanged(_cancellationTokenSource.Token).Forget();
         TryMoveToBall(_cancellationTokenSource.Token).Forget();
     }
 
@@ -81,15 +80,23 @@ public abstract class EntityIdleState : IState
     }
 
     protected abstract void SwitchToMove();
+    protected abstract void SwitchToDodge();
 
-    protected abstract void HandleHolderChanged(Entity entity);
+    private void HandleHolderChanged(Entity entity)
+    {
+        if (entity == null)
+            return;
+
+        if (_teammates.Contains(entity) == false)
+            SwitchToDodge();
+    }
     
     private async UniTaskVoid RunIdleMovementLoop(CancellationToken token)
     {
         while (token.IsCancellationRequested == false)
         {
             float standTime = Random.Range(_entityConfig.IdleMinStandTime, _entityConfig.IdleMaxStandTime);
-            Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
+            Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _entity.transform.position);
 
             _animatorController.DodgeIdle();
             await _mover.MoveTo(target, _entityConfig.WalkSpeed, token);
@@ -99,7 +106,7 @@ public abstract class EntityIdleState : IState
         }
     }
 
-    private async UniTaskVoid FindTarget(CancellationToken token)
+    private async UniTaskVoid HandleHolderChanged(CancellationToken token)
     {
         while (token.IsCancellationRequested == false)
         {
@@ -110,9 +117,11 @@ public abstract class EntityIdleState : IState
 
     private async UniTaskVoid TryMoveToBall(CancellationToken token)
     {
+        float checkDelay = 0.3f;
+        
         while (token.IsCancellationRequested == false)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(0.3f), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(checkDelay), cancellationToken: token);
 
             GameStatusService.Instance.CurrentBall.Chargeable.OnCharged += HandleBallCharged;
         }
@@ -124,7 +133,7 @@ public abstract class EntityIdleState : IState
         
         if (GameStatusService.Instance.IsBallFree)
         {
-            if (GameStatusService.Instance.CurrentZone == SquadZone)
+            if (GameStatusService.Instance.CurrentZone == _squadZone)
             {
                 SwitchToMove();
             }

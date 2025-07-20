@@ -1,62 +1,12 @@
-using System;
-using System.Threading;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class EnemyDodgeState : EntityDodgeState
 {
-    private readonly EnemyConfig _enemyConfig;
+    public EnemyDodgeState(AnimatorController animatorController, CollisionHandler collisionHandler, HitCheker hitChecker, Collider collider)
+        : base(animatorController, collisionHandler, hitChecker, collider) { }
 
-    private CancellationTokenSource _jumpCancellationTokenSource;
-
-    public EnemyDodgeState(Enemy enemy, AnimatorController animatorController, Ball ball, Mover mover,
-        Collider squadZone,
-        Rigidbody rigidbody, EnemyConfig enemyConfig)
-        : base(enemy, animatorController, ball, mover, squadZone, rigidbody, enemyConfig)
+    protected override void OnJumpFinished()
     {
-        _enemyConfig = enemyConfig;
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-        _jumpCancellationTokenSource = new CancellationTokenSource();
-        RunJumpLoop(_jumpCancellationTokenSource.Token).Forget();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-        _jumpCancellationTokenSource?.Cancel();
-    }
-
-    private async UniTaskVoid RunJumpLoop(CancellationToken token)
-    {
-        while (token.IsCancellationRequested == false)
-        {
-            float waitTime = Random.Range(_enemyConfig.DodgeJumpDelayMinTime, _enemyConfig.DodgeJumpDelayMaxTime);
-            
-            await UniTask.Delay(TimeSpan.FromSeconds(waitTime), cancellationToken: token);
-
-            if (token.IsCancellationRequested)
-                return;
-
-            StateSwitcher.SwitchState<EnemyJumpState>();
-        }
-    }
-
-    protected override void HandleBallZoneChanged(Collider zone)
-    {
-        if (GameStatusService.Instance.CurrentBall.Chargeable.IsCharged)
-            return;
-
-        if (GameStatusService.Instance.CurrentHolder != null)
-            return;
-
-        if (zone == SquadZone)
-        {
-            StateSwitcher.SwitchState<EnemyMoveState>();
-        }
+        StateSwitcher.SwitchState<EnemyDodgeReadyState>();
     }
 }

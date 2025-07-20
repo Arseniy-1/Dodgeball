@@ -13,10 +13,10 @@ public abstract class EntityMoveState : IState
     private readonly EntityConfig _entityConfig;
     private readonly Mover _mover;
 
-    private CancellationTokenSource _cancellationTokenSource;
-
     protected readonly BallHolder BallHolder;
     protected readonly Collider SquadZone;
+
+    private CancellationTokenSource _cancellationTokenSource;
     protected IStateSwitcher StateSwitcher;
 
     protected EntityMoveState(Entity entity, AnimatorController animatorController, CollisionHandler collisionHandler,

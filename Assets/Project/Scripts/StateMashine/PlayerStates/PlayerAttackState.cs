@@ -1,23 +1,19 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 public class PlayerAttackState : EntityAttackState
 {
-    private PlayerInputController _inputController;
+    private readonly PlayerInputController _inputController;
 
-    private System.Action _buttonCanceledHandler;
-    private System.Action _buttonStartedHandler;
+    private Action _buttonCanceledHandler;
+    private Action _buttonStartedHandler;
 
-    public PlayerAttackState(Player player, CollisionHandler collisionHandler,
-        Collider collider, Rigidbody rigidbody,
-        AnimatorController animatorController,
-        BallHolder ballHolder, TargetScanner targetScanner,
-        TargetProvider targetProvider, List<Entity> teammates,
-        PlayerInputController inputController, BallThrower ballThrower) :
-        base(player, collisionHandler, collider, rigidbody,
-            animatorController, ballHolder, targetScanner,
-            targetProvider, teammates, ballThrower)
+    public PlayerAttackState(Player player, CollisionHandler collisionHandler, Collider collider, Rigidbody rigidbody,
+        AnimatorController animatorController, BallHolder ballHolder, TargetScanner targetScanner, TargetProvider targetProvider,
+        List<Entity> teammates, PlayerInputController inputController, BallThrower ballThrower) :
+        base(player, collisionHandler, collider, rigidbody, animatorController, ballHolder, targetScanner, targetProvider, teammates, ballThrower)
     {
         _inputController = inputController;
     }
@@ -26,9 +22,8 @@ public class PlayerAttackState : EntityAttackState
     {
         base.Enter();
         await ApplyTarget();
-        
-        _buttonStartedHandler = OnButtonClicked;
 
+        _buttonStartedHandler = OnButtonClicked;
         _inputController.ActionButtonStarted += _buttonStartedHandler;
     }
 
@@ -41,11 +36,8 @@ public class PlayerAttackState : EntityAttackState
 
     private void OnButtonClicked()
     {
-        if (TargetProvider.Target != null)
-        {
-            StartAttack();
-        }
-        
+        StartAttack();
+
         _buttonCanceledHandler = () => _ = OnButtonReleasedAsync();
         _inputController.ActionButtonCanceled += _buttonCanceledHandler;
     }

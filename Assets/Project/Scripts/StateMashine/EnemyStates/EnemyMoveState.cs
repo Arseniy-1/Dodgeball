@@ -24,7 +24,7 @@ public class EnemyMoveState : EntityMoveState
     protected override void HandleBallZoneChanged(Collider zone)
     {
         if (zone != SquadZone)
-            StateSwitcher.SwitchState<EnemyDodgeState>();
+            StateSwitcher.SwitchState<EnemyDodgeReadyState>();
     }
 
     protected override void HandleBallHolderChanged(Entity entity)
@@ -34,7 +34,7 @@ public class EnemyMoveState : EntityMoveState
         
         if (_teammates.Contains(entity) == false)
         {
-            StateSwitcher.SwitchState<EnemyDodgeState>();
+            StateSwitcher.SwitchState<EnemyDodgeReadyState>();
         }
         else if (entity != _enemy)
         {

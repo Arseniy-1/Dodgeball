@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 
 public class EntityAttackState : IState
@@ -13,29 +12,29 @@ public class EntityAttackState : IState
     private readonly List<Entity> _teammates;
     private readonly BallThrower _ballThrower;
     private readonly Rotator _rotator;
-
-    protected readonly TargetProvider TargetProvider;
-    protected readonly CollisionHandler CollisionHandler;
-    protected readonly Collider Collider;
-    protected readonly Rigidbody Rigidbody;
-
-    protected IStateSwitcher StateSwitcher;
+    private readonly CollisionHandler _collisionHandler;
+    private readonly Collider _collider;
+    private readonly Rigidbody _rigidbody;
     
-    private CancellationTokenSource _cancellationTokenSource;
+    private readonly TargetProvider _targetProvider;
 
-    public EntityAttackState(Entity entity, CollisionHandler collisionHandler,
+    private CancellationTokenSource _cancellationTokenSource;
+    
+    protected IStateSwitcher StateSwitcher;
+
+    protected EntityAttackState(Entity entity, CollisionHandler collisionHandler,
         Collider collider, Rigidbody rigidbody, AnimatorController animatorController, BallHolder ballHolder,
         TargetScanner targetScanner, TargetProvider targetProvider,
         List<Entity> teammates, BallThrower ballThrower)
     {
         _entity = entity;
-        CollisionHandler = collisionHandler;
-        Collider = collider;
-        Rigidbody = rigidbody;
+        _collisionHandler = collisionHandler;
+        _collider = collider;
+        _rigidbody = rigidbody;
         _animatorController = animatorController;
         _ballHolder = ballHolder;
         _targetScanner = targetScanner;
-        TargetProvider = targetProvider;
+        _targetProvider = targetProvider;
         _teammates = teammates;
         _ballThrower = ballThrower;
 
@@ -51,9 +50,9 @@ public class EntityAttackState : IState
     {
         _cancellationTokenSource = new CancellationTokenSource();
         
-        Rigidbody.isKinematic = true;
-        CollisionHandler.enabled = false;
-        Collider.enabled = false;
+        _rigidbody.isKinematic = true;
+        _collisionHandler.enabled = false;
+        _collider.enabled = false;
 
         _animatorController.Idle();
     }
@@ -62,16 +61,16 @@ public class EntityAttackState : IState
     {
         _cancellationTokenSource.Cancel();
         
-        Rigidbody.isKinematic = false;
-        CollisionHandler.enabled = true;
-        Collider.enabled = true;
+        _rigidbody.isKinematic = false;
+        _collisionHandler.enabled = true;
+        _collider.enabled = true;
     }
 
     public virtual void Update()
     {
-        if (TargetProvider.Target != null)
+        if (_targetProvider.Target != null)
         {
-            _rotator.RotateToTarget(TargetProvider.Target.transform, _entity.transform);
+            _rotator.RotateToTarget(_targetProvider.Target.transform, _entity.transform);
         }
     }
 
@@ -95,7 +94,7 @@ public class EntityAttackState : IState
     protected async UniTask ApplyTarget()
     {
         Entity  target = await FindTarget(_cancellationTokenSource.Token);
-        TargetProvider.SelectTarget(target);
+        _targetProvider.SelectTarget(target);
     }
     
     private async UniTask<Entity> FindTarget(CancellationToken token)

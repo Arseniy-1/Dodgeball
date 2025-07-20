@@ -2,7 +2,8 @@
 
 public class PlayerCelebrateState : EntityCelebrateState
 {
-    private PlayerInputController _inputController;
+    private readonly PlayerInputController _inputController;
+    
     public PlayerCelebrateState(
         Player player, AnimatorController animatorController, BallHolder ballHolder,
         BallThrower ballThrower, CollisionHandler collisionHandler, PlayerInputController playerInputController, List<Entity> teammates)

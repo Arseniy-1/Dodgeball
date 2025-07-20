@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UniRx;
-using UnityEngine;
 
 public abstract class EntityPrepareState : IState
 {
@@ -14,11 +13,7 @@ public abstract class EntityPrepareState : IState
 
     protected IStateSwitcher StateSwitcher;
 
-    protected EntityPrepareState(
-        Entity entity,
-        AnimatorController animatorController,
-        TargetScanner targetScanner,
-        List<Entity> teammates)
+    protected EntityPrepareState(Entity entity, AnimatorController animatorController, TargetScanner targetScanner, List<Entity> teammates)
     {
         _entity = entity;
         _animatorController = animatorController;
@@ -52,6 +47,8 @@ public abstract class EntityPrepareState : IState
 
     public virtual void Update() { }
 
+    protected abstract void HandleStartGame();
+    
     private void LookToTarget()
     {
         Entity target = _targetScanner.Scan(_teammates);
@@ -61,6 +58,4 @@ public abstract class EntityPrepareState : IState
 
         _rotator.RotateToTarget(target.transform, _entity.transform);
     }
-
-    protected abstract void HandleStartGame();
 }

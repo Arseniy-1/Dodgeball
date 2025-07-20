@@ -8,7 +8,7 @@ public class PlayerMoveState : EntityMoveState
 
     public PlayerMoveState(Player player, AnimatorController animatorController, List<Entity> teammates,
         PlayerConfig playerConfig, CollisionHandler collisionHandler, Collider squadZone,
-        BallHolder ballHolder, Ball ball, Collider collider, Mover mover)
+        BallHolder ballHolder, Collider collider, Mover mover)
         : base(player, animatorController, collisionHandler, squadZone, ballHolder, collider, playerConfig, mover)
     {
         _player = player;
@@ -25,7 +25,7 @@ public class PlayerMoveState : EntityMoveState
     {
         if (zone != SquadZone)
         {
-            StateSwitcher.SwitchState<PlayerDodgeState>();
+            StateSwitcher.SwitchState<PlayerDodgeReadyState>();
         }
     }
 
@@ -36,7 +36,7 @@ public class PlayerMoveState : EntityMoveState
         
         if (_teammates.Contains(entity) == false)
         {
-            StateSwitcher.SwitchState<PlayerDodgeState>();
+            StateSwitcher.SwitchState<PlayerDodgeReadyState>();
         }
         else if (entity != _player)
         {

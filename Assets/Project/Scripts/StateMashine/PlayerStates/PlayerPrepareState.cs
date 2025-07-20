@@ -3,13 +3,9 @@ using UnityEngine;
 
 public class PlayerPrepareState : EntityPrepareState
 {
-    private Transform _playerTransform;
+    private readonly Transform _playerTransform;
     
-    public PlayerPrepareState(
-        Player player,
-        AnimatorController animatorController,
-        TargetScanner targetScanner,
-        List<Entity> teammates)
+    public PlayerPrepareState(Player player, AnimatorController animatorController, TargetScanner targetScanner, List<Entity> teammates)
         : base(player, animatorController, targetScanner, teammates)
     {
         _playerTransform = player.transform;

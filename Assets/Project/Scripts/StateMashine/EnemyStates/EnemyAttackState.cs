@@ -9,34 +9,30 @@ public class EnemyAttackState : EntityAttackState
 {
     private readonly EnemyConfig _enemyConfig;
 
-    private CancellationTokenSource _cancellationTokenSource;
+    private CancellationTokenSource _attackCancelationTokenSource;
 
-    public EnemyAttackState(Enemy enemy, CollisionHandler collisionHandler,
-        Collider collider, Rigidbody rigidbody,
-        AnimatorController animatorController,
-        BallHolder ballHolder, TargetScanner targetScanner,
-        TargetProvider targetProvider, List<Entity> teammates,
-        BallThrower ballThrower, EnemyConfig enemyConfig) :
-        base(enemy, collisionHandler, collider, rigidbody,
-            animatorController, ballHolder, targetScanner,
-            targetProvider, teammates, ballThrower)
+    public EnemyAttackState(Enemy enemy, CollisionHandler collisionHandler, Collider collider, Rigidbody rigidbody,
+        AnimatorController animatorController, BallHolder ballHolder, TargetScanner targetScanner,
+        TargetProvider targetProvider, List<Entity> teammates, BallThrower ballThrower, EnemyConfig enemyConfig) :
+        base(enemy, collisionHandler, collider, rigidbody, animatorController, 
+            ballHolder, targetScanner, targetProvider, teammates, ballThrower)
     {
         _enemyConfig = enemyConfig;
     }
 
     public override async void Enter()
     {
-        _cancellationTokenSource = new CancellationTokenSource();
+        _attackCancelationTokenSource = new CancellationTokenSource();
 
         base.Enter();
         await ApplyTarget();
 
-        Attack(_cancellationTokenSource.Token);
+        Attack(_attackCancelationTokenSource.Token);
     }
 
     public override void Exit()
     {
-        _cancellationTokenSource.Cancel();
+        _attackCancelationTokenSource.Cancel();
         base.Exit();
     }
 

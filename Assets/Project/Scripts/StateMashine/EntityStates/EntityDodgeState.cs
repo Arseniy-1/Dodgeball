@@ -1,41 +1,27 @@
-﻿using System;
-using System.Threading;
-using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
-using UniRx;
+﻿using System.Threading;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public abstract class EntityDodgeState : IState
 {
-    private readonly Entity _entity;
     private readonly AnimatorController _animatorController;
-    private readonly Ball _ball;
-    private readonly Mover _mover;
-    private readonly Rigidbody _rigidbody;
-    private readonly AreaPointSelector _areaPointSelector;
-    private readonly Rotator _rotator;
-    private readonly EntityConfig _entityConfig;
-
-    protected readonly Collider SquadZone;
-    protected IStateSwitcher StateSwitcher;
+    private readonly CollisionHandler _collisionHandler;
+    private readonly HitCheker _hitChecker;
+    private readonly Collider _collider;
 
     private CancellationTokenSource _cancellationTokenSource;
 
+    protected IStateSwitcher StateSwitcher;
+    
     protected EntityDodgeState(
-        Entity entity, AnimatorController animatorController, Ball ball,
-        Mover mover, Collider squadZone, Rigidbody rigidbody,
-        EntityConfig entityConfig)
+        AnimatorController animatorController,
+        CollisionHandler collisionHandler,
+        HitCheker hitChecker,
+        Collider collider)
     {
-        _entity = entity;
         _animatorController = animatorController;
-        _ball = ball;
-        _mover = mover;
-        SquadZone = squadZone;
-        _rigidbody = rigidbody;
-        _entityConfig = entityConfig;
-        _areaPointSelector = new AreaPointSelector();
-        _rotator = new Rotator();
+        _collisionHandler = collisionHandler;
+        _hitChecker = hitChecker;
+        _collider = collider;
     }
 
     public void Initialize(IStateSwitcher stateSwitcher)
@@ -46,62 +32,49 @@ public abstract class EntityDodgeState : IState
     public virtual void Enter()
     {
         _cancellationTokenSource = new CancellationTokenSource();
-        _animatorController.DodgeIdle();
-        _rigidbody.isKinematic = true;
-
-        CheckBallStatus(_cancellationTokenSource.Token).Forget();
-        RunDodgeMovementLoop(_cancellationTokenSource.Token).Forget();
+        
+        _hitChecker.enabled = true;
+        _hitChecker.DetectBallHit += HandleBallDodge;
+            
+        _collisionHandler.enabled = false;
+        _collider.isTrigger = true;
+        AudioID.Jump.PlayOneShot();
+        Jump(_cancellationTokenSource.Token);
     }
 
     public virtual void Exit()
     {
+        if(_hitChecker != null)
+            _hitChecker.enabled = false;
+        
+        _hitChecker.DetectBallHit -= HandleBallDodge;
+
+        if(_collider != null)
+            _collisionHandler.enabled = true;
+        
+        if(_collider != null)
+            _collider.isTrigger = false;
+        
         _cancellationTokenSource.Cancel();
-        _rigidbody.isKinematic = false;
     }
 
-    public virtual void Update()
-    {
-        if (_ball != null)
-            _rotator.RotateToTarget(_ball.transform, _entity.transform, _entityConfig.RotationSpeed);
-    }
-
-    protected abstract void HandleBallZoneChanged(Collider zone);
-
-    private async UniTaskVoid CheckBallStatus(CancellationToken token)
-    {
-        while (token.IsCancellationRequested == false)
-        {
-            await UniTask.WaitForFixedUpdate();
-            HandleBallZoneChanged(GameStatusService.Instance.CurrentZone);
-        }
-    }
+    public virtual void Update() { }
     
-    private async UniTaskVoid RunDodgeMovementLoop(CancellationToken token)
+    protected abstract void OnJumpFinished();
+
+    private async void Jump(CancellationToken cancellationToken)
     {
-        while (token.IsCancellationRequested == false)
-        {
-            float standTime = Random.Range(
-                _entityConfig.DodgeDirectionChangeMinTime,
-                _entityConfig.DodgeDirectionChangeMaxTime
-            );
+        await _animatorController.Dodge();
+        
+        if(cancellationToken.IsCancellationRequested)
+            return;
+        
+        OnJumpFinished();
+    }
 
-            Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
-            _animatorController.DodgeIdle();
-
-            if (token.IsCancellationRequested)
-                return;
-
-            await _mover.MoveTo(target, _entityConfig.DodgeSpeed, token);
-
-            if (token.IsCancellationRequested)
-                return;
-
-            _animatorController.Idle();
-
-            await UniTask.Delay(TimeSpan.FromSeconds(standTime), cancellationToken: token);
-
-            if (token.IsCancellationRequested)
-                return;
-        }
+    private void HandleBallDodge()
+    {
+        AudioID.Dodge.PlayOneShot();
+        EffectID.Joy.PlayEffect(_collider.transform);
     }
 }
