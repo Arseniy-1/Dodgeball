@@ -32,7 +32,6 @@ public class LanquageSelectorCanvas : GameCanvas
     [Button]
     private void HandleButtonClick(Languages language)
     {
-        YG2.saves.SettingsData.Language = language;
         YG2.lang = language.ToString();
         
         YG2.SwitchLanguage(YG2.lang);
