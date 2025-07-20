@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class Damageable : MonoBehaviour
+namespace Project.Scripts.Services.Ball
 {
-    [SerializeField] private float _damageMultiplier = 2f;
-    
-    public int Damage => (int)(_rigidbody.velocity.magnitude * _damageMultiplier);
-
-    private Rigidbody _rigidbody;
-    
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    public class Damageable : MonoBehaviour
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        [SerializeField] private float _damageMultiplier = 2f;
+    
+        public int Damage => (int)(_rigidbody.velocity.magnitude * _damageMultiplier);
+
+        private Rigidbody _rigidbody;
+    
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
     }
 }

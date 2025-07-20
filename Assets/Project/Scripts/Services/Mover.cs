@@ -1,64 +1,68 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using Project.Scripts.Services.AudioService;
 using UnityEngine;
 
-public class Mover : MonoBehaviour
+namespace Project.Scripts.Services
 {
-    private float _stoppingDistance = 0.1f;
-
-    private float _stepDistanceThreshold = 1.2f;
-    private float _distanceSinceLastStep = 0f;
-    private Vector3 _lastPosition;
-
-    public async UniTask MoveTo(Vector3 target, float speed, CancellationToken cancellationToken)
+    public class Mover : MonoBehaviour
     {
-        _lastPosition = transform.position;
-        _distanceSinceLastStep = 0f;
+        private float _stoppingDistance = 0.1f;
 
-        while (this != null && cancellationToken.IsCancellationRequested == false && Vector3.Distance(transform.position, target) > _stoppingDistance)
+        private float _stepDistanceThreshold = 1.2f;
+        private float _distanceSinceLastStep = 0f;
+        private Vector3 _lastPosition;
+
+        public async UniTask MoveTo(Vector3 target, float speed, CancellationToken cancellationToken)
         {
-            // Debug.Log("MovingIteration");
-            cancellationToken.ThrowIfCancellationRequested();
+            _lastPosition = transform.position;
+            _distanceSinceLastStep = 0f;
 
-            Vector3 direction = (target - transform.position);
-            direction.y = 0;
+            while (this != null && cancellationToken.IsCancellationRequested == false && Vector3.Distance(transform.position, target) > _stoppingDistance)
+            {
+                // Debug.Log("MovingIteration");
+                cancellationToken.ThrowIfCancellationRequested();
 
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                transform.position + direction,
-                speed * Time.deltaTime
-            );
+                Vector3 direction = (target - transform.position);
+                direction.y = 0;
+
+                transform.position = Vector3.MoveTowards(
+                    transform.position,
+                    transform.position + direction,
+                    speed * Time.deltaTime
+                );
+
+                TrackStep();
+                await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+            }
+        }
+
+        public void FollowTarget(Transform target, float speed)
+        {
+            if (target == null) 
+                return;
+
+            Vector3 currentPos = transform.position;
+            Vector3 targetPos = target.position;
+            targetPos.y = currentPos.y;
+
+            transform.position = Vector3.MoveTowards(currentPos, targetPos, speed * Time.deltaTime);
 
             TrackStep();
-            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
         }
-    }
 
-    public void FollowTarget(Transform target, float speed)
-    {
-        if (target == null) 
-            return;
-
-        Vector3 currentPos = transform.position;
-        Vector3 targetPos = target.position;
-        targetPos.y = currentPos.y;
-
-        transform.position = Vector3.MoveTowards(currentPos, targetPos, speed * Time.deltaTime);
-
-        TrackStep();
-    }
-
-    private void TrackStep()
-    {
-        float moved = Vector3.Distance(transform.position, _lastPosition);
-        _distanceSinceLastStep += moved;
-
-        if (moved > 0.001f && _distanceSinceLastStep >= _stepDistanceThreshold)
+        private void TrackStep()
         {
-            AudioID.Walk.PlayOneShot();
-            _distanceSinceLastStep = 0f;
-        }
+            float moved = Vector3.Distance(transform.position, _lastPosition);
+            _distanceSinceLastStep += moved;
 
-        _lastPosition = transform.position;
+            if (moved > 0.001f && _distanceSinceLastStep >= _stepDistanceThreshold)
+            {
+                AudioID.Walk.PlayOneShot();
+                _distanceSinceLastStep = 0f;
+            }
+
+            _lastPosition = transform.position;
+        }
     }
 }

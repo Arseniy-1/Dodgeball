@@ -1,0 +1,66 @@
+﻿using System;
+using Cysharp.Threading.Tasks;
+using Project.Scripts.Services.EffectService;
+using UniRx;
+using UniRx.Triggers;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+namespace Project.Scripts.UpgradeFrame.BallUpdaters
+{
+    public class PoisonBallUpgrade : BallUpgrade
+    {
+        private const int PoisonIterationCount = 5;
+        private const float PoisonIterationDelay = 0.3f;
+        private const int MinPoisonIterationDamage = 1;
+        private const int MaxPoisonIterationDamage = 5;
+    
+        private const float ExplosionRadius = 2;
+
+        private CompositeDisposable _compositeDisposable;
+
+        public PoisonBallUpgrade(BallUpgradeInfo ballUpgradeInfo) : base(ballUpgradeInfo)
+        {
+        }
+
+        public override void UpgradeBall(Ball ball)
+        {
+            _compositeDisposable = new CompositeDisposable();
+
+            ball.OnCollisionEnterAsObservable()
+                .Subscribe(collision =>
+                {
+                    HandleHit(collision, ball.transform);
+                })
+                .AddTo(_compositeDisposable);
+        }
+
+        private void HandleHit(Collision collision, Transform ballTransform)
+        {
+            EffectID.PoisonExplosion.PlayEffect(ballTransform);
+
+            Collider[] hitColliders = Physics.OverlapSphere(collision.transform.position, ExplosionRadius);
+
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.TryGetComponent(out Health.Health health))
+                {
+                    TakePoisonDamage(health).Forget();
+                }
+            }
+        
+            _compositeDisposable.Dispose();
+        }
+
+        private async UniTask TakePoisonDamage(Health.Health health)
+        {
+            for (int i = 0; i < PoisonIterationCount; i++)
+            {
+                int damage = Random.Range(MinPoisonIterationDamage, MaxPoisonIterationDamage);
+                health.TakeDamage(damage);
+
+                await UniTask.Delay(TimeSpan.FromSeconds(PoisonIterationDelay));
+            }
+        }
+    }
+}

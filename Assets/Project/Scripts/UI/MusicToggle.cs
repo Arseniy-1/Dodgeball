@@ -1,17 +1,19 @@
-﻿using UnityEngine;
-using YG;
+﻿using YG;
 
-public class MusicToggle : AudioToggle
+namespace Project.Scripts.UI
 {
-    protected override bool IsEnabled()
+    public class MusicToggle : AudioToggle
     {
-        return YG2.saves.SettingsData.IsMusicEnabled;
-    }
+        protected override bool IsEnabled()
+        {
+            return YG2.saves.SettingsData.IsMusicEnabled;
+        }
 
-    protected override void Toggle()
-    {
-        base.Toggle();
-        YG2.saves.SettingsData.IsMusicEnabled = !YG2.saves.SettingsData.IsMusicEnabled;
-        EnableVolume();
+        protected override void Toggle()
+        {
+            base.Toggle();
+            YG2.saves.SettingsData.IsMusicEnabled = !YG2.saves.SettingsData.IsMusicEnabled;
+            EnableVolume();
+        }
     }
 }

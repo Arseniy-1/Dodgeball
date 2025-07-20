@@ -2,41 +2,42 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
+namespace Project.Scripts.ObjectPool
 {
-    private List<T> _spawned = new List<T>();
-
-    [SerializeField] protected int StartAmount = 5;
-    protected T Prefab;
-
-    protected Pool<T> Pool;
-
-    public event Action<int, int, int> CountChanged;
-
-    public void DisableSpawned()
+    [Serializable]
+    public class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
     {
-        for (int i = _spawned.Count - 1; i >= 0; i--)
+        [SerializeField] protected int StartAmount = 5;
+
+        protected T Prefab;
+        protected Pool<T> Pool;
+        
+        private List<T> _spawned = new();
+
+        public void DisableSpawned()
         {
-            _spawned[i].Die();
+            for (int i = _spawned.Count - 1; i >= 0; i--)
+            {
+                _spawned[i].Die();
+            }
         }
-    }
 
-    public T Spawn()
-    {
-        T spawnedObject = Pool.Get();
+        public T Spawn()
+        {
+            T spawnedObject = Pool.Get();
 
-        spawnedObject.OnDestroyed += OnSpawnedDestroyed;
-        _spawned.Add(spawnedObject);
+            spawnedObject.OnDestroyed += OnSpawnedDestroyed;
+            _spawned.Add(spawnedObject);
 
-        return spawnedObject;
-    }
+            return spawnedObject;
+        }
 
-    protected void OnSpawnedDestroyed(T spawnableObject)
-    {
-        spawnableObject.OnDestroyed -= OnSpawnedDestroyed;
-        _spawned.Remove(spawnableObject);
+        protected void OnSpawnedDestroyed(T spawnableObject)
+        {
+            spawnableObject.OnDestroyed -= OnSpawnedDestroyed;
+            _spawned.Remove(spawnableObject);
 
-        Pool.Release(spawnableObject);
+            Pool.Release(spawnableObject);
+        }
     }
 }

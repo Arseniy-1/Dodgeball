@@ -1,42 +1,46 @@
-﻿using UnityEngine;
+﻿using Project.Scripts.Services.AudioService;
+using UnityEngine;
 using UnityEngine.UI;
 using YG;
 
-public abstract class SettingToggle : ButtonHandler
+namespace Project.Scripts.UI
 {
-    [SerializeField] private Sprite _enabledSprite;
-    [SerializeField] private Sprite _disabledSprite;
-
-    [SerializeField] private Image _view;
-
-    public virtual void Initialize()
+    public abstract class SettingToggle : ButtonHandler
     {
-        UpdateView();
-    }
+        [SerializeField] private Sprite _enabledSprite;
+        [SerializeField] private Sprite _disabledSprite;
 
-    private void UpdateView()
-    {
-        if (IsEnabled())
+        [SerializeField] private Image _view;
+
+        public virtual void Initialize()
         {
-            _view.sprite = _enabledSprite;
+            UpdateView();
         }
-        else
+
+        private void UpdateView()
         {
-            _view.sprite = _disabledSprite;
+            if (IsEnabled())
+            {
+                _view.sprite = _enabledSprite;
+            }
+            else
+            {
+                _view.sprite = _disabledSprite;
+            }
         }
-    }
 
-    protected override void HandleButtonClick()
-    {
-        Toggle();
-        YG2.SaveProgress();
-        UpdateView();
-    }
+        protected override void HandleButtonClick()
+        {
+            Toggle();
+            YG2.SaveProgress();
+            UpdateView();
+        }
 
-    protected virtual void Toggle()
-    {
-        AudioID.UISoft.PlayOneShot();
-    }
+        protected virtual void Toggle()
+        {
+            AudioID.UISoft.PlayOneShot();
+        }
     
-    protected abstract bool IsEnabled();
+        protected abstract bool IsEnabled();
+    }
 }

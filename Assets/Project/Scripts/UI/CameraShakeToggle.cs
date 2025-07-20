@@ -1,15 +1,18 @@
 ﻿using YG;
 
-public class CameraShakeToggle : SettingToggle
+namespace Project.Scripts.UI
 {
-    protected override bool IsEnabled()
+    public class CameraShakeToggle : SettingToggle
     {
-        return YG2.saves.SettingsData.IsCameraShakeEnabled;
-    }
+        protected override bool IsEnabled()
+        {
+            return YG2.saves.SettingsData.IsCameraShakeEnabled;
+        }
 
-    protected override void Toggle()
-    {
-        base.Toggle();
-        YG2.saves.SettingsData.IsCameraShakeEnabled = !YG2.saves.SettingsData.IsCameraShakeEnabled;
+        protected override void Toggle()
+        {
+            base.Toggle();
+            YG2.saves.SettingsData.IsCameraShakeEnabled = !YG2.saves.SettingsData.IsCameraShakeEnabled;
+        }
     }
 }

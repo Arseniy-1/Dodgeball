@@ -3,23 +3,26 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 
-public class BallUpgraderFabric : SerializedMonoBehaviour
+namespace Project.Scripts.UpgradeFrame.BallUpdaters
 {
-    [OdinSerialize] private Dictionary<Type, BallUpgradeInfo> _ballUpgradeInfo;
-    
-    public List<BallUpgrader> Create()
+    public class BallUpgraderFabric : SerializedMonoBehaviour
     {
-        List<BallUpgrader> ballUpgraders = new List<BallUpgrader>();
+        [OdinSerialize] private Dictionary<Type, BallUpgradeInfo> _ballUpgradeInfo;
+    
+        public List<BallUpgrade> Create()
+        {
+            List<BallUpgrade> ballUpgraders = new List<BallUpgrade>();
 
-        ChargeBallUpgrader chargeBallUpgrader = new ChargeBallUpgrader(_ballUpgradeInfo[typeof(ChargeBallUpgrader)]);        
-        ballUpgraders.Add(chargeBallUpgrader);
+            ChargeBallUpgrade chargeBallUpgrade = new ChargeBallUpgrade(_ballUpgradeInfo[typeof(ChargeBallUpgrade)]);        
+            ballUpgraders.Add(chargeBallUpgrade);
         
-        ElectroBallUpgrader electroBallUpgrader = new ElectroBallUpgrader(_ballUpgradeInfo[typeof(ElectroBallUpgrader)]);
-        ballUpgraders.Add(electroBallUpgrader);
+            ElectricBallUpgrade electricBallUpgrade = new ElectricBallUpgrade(_ballUpgradeInfo[typeof(ElectricBallUpgrade)]);
+            ballUpgraders.Add(electricBallUpgrade);
         
-        PoisonBallUpgrader poisonBallUpgrader = new PoisonBallUpgrader(_ballUpgradeInfo[typeof(PoisonBallUpgrader)]);
-        ballUpgraders.Add(poisonBallUpgrader);
+            PoisonBallUpgrade poisonBallUpgrade = new PoisonBallUpgrade(_ballUpgradeInfo[typeof(PoisonBallUpgrade)]);
+            ballUpgraders.Add(poisonBallUpgrade);
         
-        return ballUpgraders;
-    } 
+            return ballUpgraders;
+        } 
+    }
 }

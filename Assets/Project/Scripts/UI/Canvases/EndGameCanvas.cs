@@ -1,6 +1,6 @@
-﻿public class EndGameCanvas : InteractiveCanvas
+﻿namespace Project.Scripts.UI.Canvases
 {
-    protected override void HandleButtonClick()
+    public class EndGameCanvas : GameCanvas
     {
     }
 }

@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialCanvas : GameCanvas
+namespace Project.Scripts.UI.Canvases
 {
-    [SerializeField] private List<TutorialScreen> _tutorialScreens;
-
-    private void OnEnable()
+    public class TutorialCanvas : GameCanvas
     {
-        foreach (TutorialScreen tutorialScreen in _tutorialScreens)
-            tutorialScreen.Initialize();
+        [SerializeField] private List<TutorialScreen> _tutorialScreens;
+
+        private void OnEnable()
+        {
+            foreach (TutorialScreen tutorialScreen in _tutorialScreens)
+                tutorialScreen.Initialize();
+        }
     }
 }

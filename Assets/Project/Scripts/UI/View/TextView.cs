@@ -1,15 +1,18 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public abstract class TextView : MonoBehaviour
+namespace Project.Scripts.UI.View
 {
-    [SerializeField] private TextMeshProUGUI _textView;
-
-    protected void OnValueChanged(int current, int max)
+    public abstract class TextView : MonoBehaviour
     {
-        if (current >= max)
-            current = 0;
+        [SerializeField] private TextMeshProUGUI _textView;
+
+        protected void OnValueChanged(int current, int max)
+        {
+            if (current >= max)
+                current = 0;
         
-        _textView.text = current + "/" + max;
+            _textView.text = current + "/" + max;
+        }
     }
 }

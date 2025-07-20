@@ -1,67 +1,74 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using Project.Scripts.Services;
+using Project.Scripts.Services.AudioService;
+using Project.Scripts.Services.CameraShakeService;
+using Project.Scripts.Services.EffectService;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
-public class Health : MonoBehaviour
+namespace Project.Scripts.Health
 {
-    [SerializeField] private int _maxHealth;
-    [SerializeField] private int _currentHealthPoint;
-
-    private CollisionHandler _collisionHandler;
-
-    public event Action<int, int> HealthChanged;
-    public event Action LostHealth;
-
-    private void OnEnable()
+    public class Health : MonoBehaviour
     {
-        HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
-    }
+        [SerializeField] private int _maxHealth;
+        [SerializeField] private int _currentHealthPoint;
 
-    public void Initialize(CollisionHandler collisionHandler)
-    {
-        _collisionHandler = collisionHandler;
-        _collisionHandler.DamageTaken += TakeDamage;
-    }
+        private CollisionHandler _collisionHandler;
 
-    [Button]
-    public void Heal(int amount)
-    {
-        if (amount <= 0)
-            return;
+        public event Action<int, int> HealthChanged;
+        public event Action LostHealth;
 
-        _currentHealthPoint = Mathf.Clamp(_currentHealthPoint + amount, 0, _maxHealth);
-
-        HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
-    }
-
-    [Button]
-    public void TakeDamage(int amount)
-    {
-        if (amount <= 0)
-            return;
-        
-        if(_currentHealthPoint <= 0)
-            return;
-
-        _currentHealthPoint = Mathf.Clamp(_currentHealthPoint - amount, 0, _maxHealth);
-
-        HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
-        ShakeID.Light.Play();
-
-        if (_currentHealthPoint == 0)
+        private void OnEnable()
         {
-            LostHealth?.Invoke();
-
-            return;
+            HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
         }
 
-        EffectID.Cry.PlayEffect(transform);
-        AudioID.DamageTaken.PlayOneShot();
-    }
+        public void Initialize(CollisionHandler collisionHandler)
+        {
+            _collisionHandler = collisionHandler;
+            _collisionHandler.DamageTaken += TakeDamage;
+        }
 
-    public void Reset()
-    {
-        _currentHealthPoint = _maxHealth;
-        _collisionHandler.DamageTaken -= TakeDamage;
+        [Button]
+        public void Heal(int amount)
+        {
+            if (amount <= 0)
+                return;
+
+            _currentHealthPoint = Mathf.Clamp(_currentHealthPoint + amount, 0, _maxHealth);
+
+            HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
+        }
+
+        [Button]
+        public void TakeDamage(int amount)
+        {
+            if (amount <= 0)
+                return;
+        
+            if(_currentHealthPoint <= 0)
+                return;
+
+            _currentHealthPoint = Mathf.Clamp(_currentHealthPoint - amount, 0, _maxHealth);
+
+            HealthChanged?.Invoke(_currentHealthPoint, _maxHealth);
+            ShakeID.Light.Play();
+
+            if (_currentHealthPoint == 0)
+            {
+                LostHealth?.Invoke();
+
+                return;
+            }
+
+            EffectID.Cry.PlayEffect(transform);
+            AudioID.DamageTaken.PlayOneShot();
+        }
+
+        public void Reset()
+        {
+            _currentHealthPoint = _maxHealth;
+            _collisionHandler.DamageTaken -= TakeDamage;
+        }
     }
 }

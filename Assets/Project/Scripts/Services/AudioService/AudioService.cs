@@ -1,64 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Project.Scripts.Messages;
 using Sirenix.Serialization;
-using UnityEngine;
 using UniRx;
+using UnityEngine;
 using UnityEngine.Pool;
-using YG;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
-using AudioData = AudioSettings.AudioData;
+using AudioData = Project.Scripts.Services.AudioService.AudioSettings.AudioData;
 
-public class AudioService : IDisposable
+namespace Project.Scripts.Services.AudioService
 {
-    [OdinSerialize] private Dictionary<AudioID, AudioData> _audioData;
-
-    private ObjectPool<AudioSource> _audioPool;
-    private CompositeDisposable _compositeDisposable;
-
-    public AudioService(Dictionary<AudioID, AudioData> audioData)
+    public class AudioService : IDisposable
     {
-        _audioData = audioData;
+        [OdinSerialize] private Dictionary<AudioID, AudioData> _audioData;
 
-        var poolHolder = new GameObject("AudioPoolHolder");
-        Object.DontDestroyOnLoad(poolHolder);
+        private ObjectPool<AudioSource> _audioPool;
+        private CompositeDisposable _compositeDisposable;
 
-        AudioSource audioSourse = new GameObject("AudioSourse").AddComponent<AudioSource>();
+        public AudioService(Dictionary<AudioID, AudioData> audioData)
+        {
+            _audioData = audioData;
 
-        _audioPool = new ObjectPool<AudioSource>(() => Object.Instantiate(audioSourse, poolHolder.transform));
+            var poolHolder = new GameObject("AudioPoolHolder");
+            Object.DontDestroyOnLoad(poolHolder);
 
-        _compositeDisposable = new CompositeDisposable();
+            AudioSource audioSourse = new GameObject("AudioSourse").AddComponent<AudioSource>();
 
-        MessageBrokerHolder.GameActions
-            .Receive<M_PlayClipByType>()
-            .Subscribe((message) =>
-                PlaySound(message.AudioID))
-            .AddTo(_compositeDisposable);
-    }
+            _audioPool = new ObjectPool<AudioSource>(() => Object.Instantiate(audioSourse, poolHolder.transform));
 
-    public void Dispose()
-    {
-        _compositeDisposable.Dispose();
-    }
+            _compositeDisposable = new CompositeDisposable();
 
-    private void PlaySound(AudioID audioID)
-    {
-        AudioData data = _audioData[audioID];
-        AudioClip randomClip = data.Clips[Random.Range(0, data.Clips.Count)];
-        float pitch = Random.Range(data._pitchRange.x, data._pitchRange.y);
+            MessageBrokerHolder.GameActions
+                .Receive<M_PlayClipByType>()
+                .Subscribe((message) =>
+                    PlaySound(message.AudioID))
+                .AddTo(_compositeDisposable);
+        }
 
-        AudioSource audioSource = _audioPool.Get();
-        audioSource.volume = data.Volume;
-        audioSource.pitch = pitch;
+        public void Dispose()
+        {
+            _compositeDisposable.Dispose();
+        }
 
-        audioSource.PlayOneShot(randomClip);
-        ReleaseSourse(audioSource, _audioPool, randomClip.length).Forget();
-    }
+        private void PlaySound(AudioID audioID)
+        {
+            AudioData data = _audioData[audioID];
+            AudioClip randomClip = data.Clips[Random.Range(0, data.Clips.Count)];
+            float pitch = Random.Range(data.PitchRange.x, data.PitchRange.y);
 
-    private async UniTaskVoid ReleaseSourse(AudioSource source, ObjectPool<AudioSource> pool, float length = 1)
-    {
-        await UniTask.Delay(TimeSpan.FromSeconds(length));
-        pool.Release(source);
+            AudioSource audioSource = _audioPool.Get();
+            audioSource.volume = data.Volume;
+            audioSource.pitch = pitch;
+
+            audioSource.PlayOneShot(randomClip);
+            ReleaseSourse(audioSource, _audioPool, randomClip.length).Forget();
+        }
+
+        private async UniTaskVoid ReleaseSourse(AudioSource source, ObjectPool<AudioSource> pool, float length = 1)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(length));
+            pool.Release(source);
+        }
     }
 }

@@ -1,16 +1,20 @@
+using Project.Scripts.Services.Ball;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Chargeable))]
-[RequireComponent(typeof(Damageable))]
-public class Ball : MonoBehaviour
+namespace Project.Scripts
 {
-    public Rigidbody Rigidbody { get; private set;}
-    public Chargeable Chargeable { get; private set;}
-    
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Chargeable))]
+    [RequireComponent(typeof(Damageable))]
+    public class Ball : MonoBehaviour
     {
-        Rigidbody = GetComponent<Rigidbody>();
-        Chargeable = GetComponent<Chargeable>();
+        public Rigidbody Rigidbody { get; private set;}
+        public Chargeable Chargeable { get; private set;}
+    
+        private void Awake()
+        {
+            Rigidbody = GetComponent<Rigidbody>();
+            Chargeable = GetComponent<Chargeable>();
+        }
     }
 }

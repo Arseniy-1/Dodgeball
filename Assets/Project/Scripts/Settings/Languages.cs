@@ -1,6 +1,9 @@
-﻿public enum Languages
+﻿namespace Project.Scripts.Settings
 {
-    ru,
-    en,
-    tr
+    public enum Languages
+    {
+        ru,
+        en,
+        tr
+    }
 }

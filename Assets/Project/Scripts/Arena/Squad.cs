@@ -1,99 +1,88 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using Project.Scripts.Entities;
+using Project.Scripts.Services;
 using UnityEngine;
 
-public class Squad : MonoBehaviour
+namespace Project.Scripts.Arena
 {
-    [SerializeField] private List<Transform> _spawnPoints;
-    [SerializeField] private List<Entity> _entities;
-
-    public Type SquadType => _entities[0].GetType();
-    public List<Transform> SpawnPoints => _spawnPoints;
-    public Collider SquadZone => _squadZone;
-
-    [SerializeField] private Collider _squadZone;
-
-    public event Action<Squad> LostPlayers;
-
-    private void OnDestroy()
+    public class Squad : MonoBehaviour
     {
-        foreach (var entity in _entities)
+        [SerializeField] private List<Transform> _spawnPoints;
+        [SerializeField] private List<Entity> _entities;
+
+        public Type SquadType => _entities[0].GetType();
+        public List<Transform> SpawnPoints => _spawnPoints;
+        public Collider SquadZone => _squadZone;
+
+        [SerializeField] private Collider _squadZone;
+
+        public event Action<Squad> LostPlayers;
+
+        private void OnDestroy()
         {
-            if (entity is Enemy enemy)
-                enemy.OnDestroyed -= HandleEntityDeath;
-            else if (entity is Player player)
-                player.OnDestroyed -= HandleEntityDeath;
+            foreach (var entity in _entities)
+            {
+                if (entity is Enemy enemy)
+                    enemy.OnDestroyed -= HandleEntityDeath;
+                else if (entity is Player player)
+                    player.OnDestroyed -= HandleEntityDeath;
+            }
         }
-    }
 
-    public void Initialize(List<Entity> entities)
-    {
-        _entities = entities;
-
-        foreach (var entity in _entities)
+        public void Initialize(List<Entity> entities)
         {
-            if (entity is Enemy enemy)
-                enemy.OnDestroyed += HandleEntityDeath;
-            else if (entity is Player player)
-                player.OnDestroyed += HandleEntityDeath;
-        }
-    }
+            _entities = entities;
 
-    public void Celebrate()
-    {
-        foreach (var entity in _entities)
+            foreach (var entity in _entities)
+            {
+                if (entity is Enemy enemy)
+                    enemy.OnDestroyed += HandleEntityDeath;
+                else if (entity is Player player)
+                    player.OnDestroyed += HandleEntityDeath;
+            }
+        }
+
+        public void Celebrate()
         {
-            entity.Celebrate();
+            foreach (var entity in _entities)
+            {
+                entity.Celebrate();
+            }
         }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent(out Ball ball))
+        private void OnTriggerExit(Collider other)
         {
-            // if (ball.Rigidbody.isKinematic)
-            //     return;
-            //
-            // if (GameStatusService.Instance.CurrentZone != null)
-            //     return;
-            //
-            // Debug.Log("1");
-            //
-            // GameStatusService.Instance.SetCurrentZone(_squadZone);
-        }
-    }
+            if (other.TryGetComponent(out Ball ball))
+            {
+                if (ball.Rigidbody.isKinematic)
+                    return;
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent(out Ball ball))
+                GameStatusService.Instance.ClearCurrentZone();
+            }
+        }
+
+        private void OnTriggerStay(Collider other)
         {
-            if (ball.Rigidbody.isKinematic)
-                return;
+            if (other.TryGetComponent(out Ball ball))
+            {
+                if (ball.Rigidbody.isKinematic)
+                    return;
 
-            GameStatusService.Instance.ClearCurrentZone();
+                if (GameStatusService.Instance.CurrentZone != null)
+                    return;
+
+                GameStatusService.Instance.SetCurrentZone(_squadZone);
+            }
         }
-    }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.TryGetComponent(out Ball ball))
+        private void HandleEntityDeath(Entity entity)
         {
-            if (ball.Rigidbody.isKinematic)
-                return;
+            if (_entities.Contains(entity))
+                _entities.Remove(entity);
 
-            if (GameStatusService.Instance.CurrentZone != null)
-                return;
-
-            GameStatusService.Instance.SetCurrentZone(_squadZone);
+            if (_entities.Count == 0)
+                LostPlayers?.Invoke(this);
         }
-    }
-
-    private void HandleEntityDeath(Entity entity)
-    {
-        if (_entities.Contains(entity))
-            _entities.Remove(entity);
-
-        if (_entities.Count == 0)
-            LostPlayers?.Invoke(this);
     }
 }

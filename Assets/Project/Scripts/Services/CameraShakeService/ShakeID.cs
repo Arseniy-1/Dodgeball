@@ -1,10 +1,13 @@
-﻿public enum ShakeID
+﻿namespace Project.Scripts.Services.CameraShakeService
 {
-    Light = 0,
-    Medium = 1,
-    Hard = 2,
+    public enum ShakeID
+    {
+        Light = 0,
+        Medium = 1,
+        Hard = 2,
 
-    LongLight = 3,
-    LongMedium = 4,
-    LongHard = 5
+        LongLight = 3,
+        LongMedium = 4,
+        LongHard = 5
+    }
 }

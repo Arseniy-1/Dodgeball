@@ -1,11 +1,15 @@
 ﻿using System;
+using Project.Scripts.Services;
 using Sirenix.OdinInspector;
 
-[Serializable]
-public struct CelebrateAnimationData
+namespace Project.Scripts.Saves.AnimationSO
 {
-    [HideLabel, HorizontalGroup]
-    public Constans.CelebrateAnimations AnimationType;
-    [HideLabel, HorizontalGroup]
-    public string Name;
+    [Serializable]
+    public struct CelebrateAnimationData
+    {
+        [HideLabel, HorizontalGroup]
+        public Constans.CelebrateAnimations AnimationType;
+        [HideLabel, HorizontalGroup]
+        public string Name;
+    }
 }

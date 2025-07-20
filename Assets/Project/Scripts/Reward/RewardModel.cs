@@ -1,36 +1,40 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Project.Scripts.Services;
 using UnityEngine;
 
-public class RewardModel : MonoBehaviour
+namespace Project.Scripts.Reward
 {
-    [SerializeField] private Animator _animator;
-    [SerializeField] private ModelRotator _rotator;
-
-    private void Update()
+    public class RewardModel : MonoBehaviour
     {
-        _rotator.Update(transform);
-    }
+        [SerializeField] private Animator _animator;
+        [SerializeField] private ModelRotator _rotator;
 
-    public void PlayAnimation(int animationHash, CancellationToken cancellationToken)
-    {
-        LoopPlayAnimation(animationHash, cancellationToken).Forget();
-    }
-
-    private async UniTaskVoid LoopPlayAnimation(int animationHash, CancellationToken cancellationToken)
-    {
-        while (cancellationToken.IsCancellationRequested == false)
+        private void Update()
         {
-            _animator.Play(animationHash, 0, 0f); 
+            _rotator.Update(transform);
+        }
+
+        public void PlayAnimation(int animationHash, CancellationToken cancellationToken)
+        {
+            LoopPlayAnimation(animationHash, cancellationToken).Forget();
+        }
+
+        private async UniTaskVoid LoopPlayAnimation(int animationHash, CancellationToken cancellationToken)
+        {
+            while (cancellationToken.IsCancellationRequested == false)
+            {
+                _animator.Play(animationHash, 0, 0f); 
         
-            await UniTask.NextFrame(cancellationToken: cancellationToken);
+                await UniTask.NextFrame(cancellationToken: cancellationToken);
         
-            float length = _animator.GetCurrentAnimatorStateInfo(0).length;
+                float length = _animator.GetCurrentAnimatorStateInfo(0).length;
             
-            await UniTask.Delay(TimeSpan.FromSeconds(length), 
-                DelayType.Realtime, 
-                cancellationToken: cancellationToken);
+                await UniTask.Delay(TimeSpan.FromSeconds(length), 
+                    DelayType.Realtime, 
+                    cancellationToken: cancellationToken);
+            }
         }
     }
 }

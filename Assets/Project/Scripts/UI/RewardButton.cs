@@ -1,12 +1,16 @@
 ﻿using System;
+using Project.Scripts.Services.AudioService;
 
-public class RewardButton : ButtonHandler
+namespace Project.Scripts.UI
 {
-    public event Action RewardButtonClicked;
-    
-    protected override void HandleButtonClick()
+    public class RewardButton : ButtonHandler
     {
-        RewardButtonClicked?.Invoke();
-        AudioID.UISoft.PlayOneShot();
+        public event Action RewardButtonClicked;
+    
+        protected override void HandleButtonClick()
+        {
+            RewardButtonClicked?.Invoke();
+            AudioID.UISoft.PlayOneShot();
+        }
     }
 }

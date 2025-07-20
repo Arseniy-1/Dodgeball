@@ -1,6 +1,9 @@
 using UniRx;
 
-public static class MessageBrokerHolder
+namespace Project.Scripts.Messages
 {
-    public static IMessageBroker GameActions { get; private set; } = new MessageBroker();
+    public static class MessageBrokerHolder
+    {
+        public static IMessageBroker GameActions { get; private set; } = new MessageBroker();
+    }
 }

@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 
-public class TimeScaler : MonoBehaviour
+namespace Project.Scripts.Services.Testing
 {
-    [SerializeField, Range(0, 2)] private float _timeScale = 1f;
-
-    private void Update()
+    public class TimeScaler : MonoBehaviour
     {
-        Time.timeScale = _timeScale;
+        [SerializeField, Range(0, 2)] private float _timeScale = 1f;
+
+        private void Update()
+        {
+            Time.timeScale = _timeScale;
+        }
     }
 }

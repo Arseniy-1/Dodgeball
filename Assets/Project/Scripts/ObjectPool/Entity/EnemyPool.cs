@@ -1,16 +1,20 @@
 using UnityEngine;
+using Project.Scripts.Entities;
 
-public class EnemyPool : Pool<Enemy>
+namespace Project.Scripts.ObjectPool.Entity
 {
-    public EnemyPool(Enemy prefab, int startAmount) : base(prefab, startAmount)
+    public class EnemyPool : Pool<Enemy>
     {
-    }
+        public EnemyPool(Enemy prefab, int startAmount) : base(prefab, startAmount)
+        {
+        }
 
-    protected override Enemy Create()
-    {
-        var enemy = Object.Instantiate(Prefab);
-        enemy.gameObject.SetActive(false);
+        protected override Enemy Create()
+        {
+            var enemy = Object.Instantiate(Prefab);
+            enemy.gameObject.SetActive(false);
 
-        return enemy;
+            return enemy;
+        }
     }
 }

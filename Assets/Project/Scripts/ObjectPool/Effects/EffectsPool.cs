@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 
-public class EffectsPool: Pool<Effect>
+namespace Project.Scripts.ObjectPool.Effects
 {
-    private Transform _parent;
+    public class EffectsPool: Pool<Effect>
+    {
+        private readonly Transform _parent;
     
-    public EffectsPool(Effect prefab, int startAmount, Transform parent) : base(prefab, startAmount)
-    {
-        _parent = parent;
-    }
+        public EffectsPool(Effect prefab, int startAmount, Transform parent) : base(prefab, startAmount)
+        {
+            _parent = parent;
+        }
         
-    protected override Effect Create()
-    {
-        var effect =  Object.Instantiate(Prefab, _parent);
-        effect.gameObject.SetActive(false);
+        protected override Effect Create()
+        {
+            var effect =  Object.Instantiate(Prefab, _parent);
+            effect.gameObject.SetActive(false);
             
-        return effect;
+            return effect;
+        }
     }
 }

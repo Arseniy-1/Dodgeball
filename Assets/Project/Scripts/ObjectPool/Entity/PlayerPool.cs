@@ -1,16 +1,20 @@
 using UnityEngine;
+using Project.Scripts.Entities;
 
-public class PlayerPool : Pool<Player>
+namespace Project.Scripts.ObjectPool.Entity
 {
-    public PlayerPool(Player prefab, int startAmount) : base(prefab, startAmount)
+    public class PlayerPool : Pool<Player>
     {
-    }
+        public PlayerPool(Player prefab, int startAmount) : base(prefab, startAmount)
+        {
+        }
 
-    protected override Player Create()
-    {
-        var player = Object.Instantiate(Prefab);
-        player.gameObject.SetActive(false);
+        protected override Player Create()
+        {
+            var player = Object.Instantiate(Prefab);
+            player.gameObject.SetActive(false);
 
-        return player;
+            return player;
+        }
     }
 }

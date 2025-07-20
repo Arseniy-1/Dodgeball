@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
+using Project.Scripts.UI;
 using UnityEngine;
 
-public class SettingsInitializer : MonoBehaviour
+namespace Project.Scripts.Settings
 {
-    [SerializeField] private List<SettingToggle> _settingToggles;
-
-    private void Start() 
+    public class SettingsInitializer : MonoBehaviour
     {
-        foreach (var toggle in _settingToggles)
-            toggle.Initialize();
+        [SerializeField] private List<SettingToggle> _settingToggles;
+
+        private void Start() 
+        {
+            foreach (var toggle in _settingToggles)
+                toggle.Initialize();
+        }
     }
 }

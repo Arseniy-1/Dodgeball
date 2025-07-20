@@ -1,18 +1,22 @@
 ﻿using DG.Tweening;
+using Project.Scripts.Services;
 using UnityEngine;
 
-public class TweenAnimatorExample : MonoBehaviour
+namespace Project.Scripts
 {
-     [SerializeField] private Transform _transform;
-     [SerializeField] private PlayerInputController _playerInputController;
+     public class TweenAnimatorExample : MonoBehaviour
+     {
+          [SerializeField] private Transform _transform;
+          [SerializeField] private PlayerInputController _playerInputController;
      
-     private void OnEnable()
-     {
-          _playerInputController.ActionButtonStarted += Do;
-     }
+          private void OnEnable()
+          {
+               _playerInputController.ActionButtonStarted += Do;
+          }
 
-     private void Do()
-     {
-          _transform.DOMoveX(10, 1.5f).From();
+          private void Do()
+          {
+               _transform.DOMoveX(10, 1.5f).From();
+          }
      }
 }

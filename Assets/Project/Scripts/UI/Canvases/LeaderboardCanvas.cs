@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 
-public class LeaderboardCanvas : GameCanvas
+namespace Project.Scripts.UI.Canvases
 {
-    [SerializeField] private ExitButton _exitButton;
-
-    private void OnEnable()
+    public class LeaderboardCanvas : GameCanvas
     {
-        _exitButton.ExitButtonClicked += Disable;
-    }
+        [SerializeField] private ExitButton _exitButton;
 
-    private void OnDisable()
-    {
-        _exitButton.ExitButtonClicked -= Disable;
-    }
+        private void OnEnable()
+        {
+            _exitButton.ExitButtonClicked += Disable;
+        }
+
+        private void OnDisable()
+        {
+            _exitButton.ExitButtonClicked -= Disable;
+        }
     
-    private void Disable()
-    {
-        gameObject.SetActive(false);
+        private void Disable()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

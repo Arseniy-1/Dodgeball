@@ -1,9 +1,14 @@
-﻿public struct M_CameraShake
-{
-    public M_CameraShake(ShakeID shakeId)
-    {
-        ShakeID = shakeId;
-    }
+﻿using Project.Scripts.Services.CameraShakeService;
 
-    public ShakeID ShakeID { get; private set; }
+namespace Project.Scripts.Messages
+{
+    public struct M_CameraShake
+    {
+        public M_CameraShake(ShakeID shakeId)
+        {
+            ShakeID = shakeId;
+        }
+
+        public ShakeID ShakeID { get; private set; }
+    }
 }

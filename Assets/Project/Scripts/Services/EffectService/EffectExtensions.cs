@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using Project.Scripts.Messages;
+using UnityEngine;
 
-public static class EffectExtensions
+namespace Project.Scripts.Services.EffectService
 {
-    public static void PlayEffect(this EffectID effectID, Transform transform, bool isParent = false)
+    public static class EffectExtensions
     {
-        MessageBrokerHolder.GameActions.Publish(new M_PlayEffectByType(effectID, transform, isParent));
+        public static void PlayEffect(this EffectID effectID, Transform transform, bool isParent = false)
+        {
+            MessageBrokerHolder.GameActions.Publish(new M_PlayEffectByType(effectID, transform, isParent));
+        }
     }
 }

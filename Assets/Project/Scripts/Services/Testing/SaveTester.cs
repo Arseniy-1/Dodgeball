@@ -2,25 +2,28 @@
 using UnityEngine;
 using YG;
 
-public class SaveTester : MonoBehaviour
+namespace Project.Scripts.Services.Testing
 {
-    [Button]
-    public void SaveProgress()
+    public class SaveTester : MonoBehaviour
     {
-        YG2.SaveProgress();
-    }
+        [Button]
+        public void SaveProgress()
+        {
+            YG2.SaveProgress();
+        }
     
-    [Button]
-    public void AddDodgeAnimation(Constans.DodgeAnimations dodgeAnimation)
-    {
-        YG2.saves.AnimationsHolder.AddDodgeAnimation(dodgeAnimation);
-        YG2.SaveProgress();
-    }
+        [Button]
+        public void AddDodgeAnimation(Constans.DodgeAnimations dodgeAnimation)
+        {
+            YG2.saves.AnimationsHolder.AddDodgeAnimation(dodgeAnimation);
+            YG2.SaveProgress();
+        }
     
-    [Button]
-    public void Reset()
-    {
-        YG2.SetDefaultSaves();
-        YG2.SaveProgress();
+        [Button]
+        public void Reset()
+        {
+            YG2.SetDefaultSaves();
+            YG2.SaveProgress();
+        }
     }
 }

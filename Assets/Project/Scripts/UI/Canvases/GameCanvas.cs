@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
-public abstract class GameCanvas : MonoBehaviour
+namespace Project.Scripts.UI.Canvases
 {
+    public abstract class GameCanvas : MonoBehaviour
+    {
+    }
 }

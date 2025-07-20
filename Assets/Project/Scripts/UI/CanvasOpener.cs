@@ -1,12 +1,17 @@
-﻿using UnityEngine;
+﻿using Project.Scripts.Services.AudioService;
+using Project.Scripts.UI.Canvases;
+using UnityEngine;
 
-public class CanvasOpener : ButtonHandler
+namespace Project.Scripts.UI
 {
-    [SerializeField] private GameCanvas _canvas;
-    
-    protected override void HandleButtonClick()
+    public class CanvasOpener : ButtonHandler
     {
-        _canvas.gameObject.SetActive(true);
-        AudioID.UISoft.PlayOneShot();
+        [SerializeField] private GameCanvas _canvas;
+    
+        protected override void HandleButtonClick()
+        {
+            _canvas.gameObject.SetActive(true);
+            AudioID.UISoft.PlayOneShot();
+        }
     }
 }

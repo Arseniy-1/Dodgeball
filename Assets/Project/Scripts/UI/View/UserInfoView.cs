@@ -1,43 +1,47 @@
-﻿using TMPro;
+﻿using Project.Scripts.Rank;
+using TMPro;
 using UnityEngine;
 using YG;
 using YG.LanguageLegacy;
 
-public class UserInfoView : MonoBehaviour
+namespace Project.Scripts.UI.View
 {
-    [SerializeField] private TextMeshProUGUI _currentRank;
-    [SerializeField] private TextMeshProUGUI _userName;
-    [SerializeField] private LanguageYG _languageTranslator;
-
-    [SerializeField] private RankAmountBar _rankAmountBar;
-    [SerializeField] private RankAmountTextView _rankAmountTextView;
-
-    private RankHolder _rankHolder;
-
-    private void OnDestroy()
+    public class UserInfoView : MonoBehaviour
     {
-        _rankHolder.RankRaised -= HandleRankRaised;
-    }
+        [SerializeField] private TextMeshProUGUI _currentRank;
+        [SerializeField] private TextMeshProUGUI _userName;
+        [SerializeField] private LanguageYG _languageTranslator;
 
-    public void Initialize(RankHolder rankHolder)
-    {
-        _rankHolder = rankHolder;
+        [SerializeField] private RankAmountBar _rankAmountBar;
+        [SerializeField] private RankAmountTextView _rankAmountTextView;
 
-        HandleRankRaised();
+        private RankHolder _rankHolder;
 
-        _rankHolder.RankRaised += HandleRankRaised;
-        _rankAmountBar.Initialize(_rankHolder);
-        _rankAmountTextView.Initialize(_rankHolder);
-        
-        if (YG2.player.auth)
+        private void OnDestroy()
         {
-            _languageTranslator.enabled = false;
-            _userName.text = YG2.player.name;
+            _rankHolder.RankRaised -= HandleRankRaised;
         }
-    }
 
-    private void HandleRankRaised()
-    {
-        _currentRank.text = _rankHolder.CurrentRank.ToString();
+        public void Initialize(RankHolder rankHolder)
+        {
+            _rankHolder = rankHolder;
+
+            HandleRankRaised();
+
+            _rankHolder.RankRaised += HandleRankRaised;
+            _rankAmountBar.Initialize(_rankHolder);
+            _rankAmountTextView.Initialize(_rankHolder);
+        
+            if (YG2.player.auth)
+            {
+                _languageTranslator.enabled = false;
+                _userName.text = YG2.player.name;
+            }
+        }
+
+        private void HandleRankRaised()
+        {
+            _currentRank.text = _rankHolder.CurrentRank.ToString();
+        }
     }
 }

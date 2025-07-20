@@ -1,12 +1,16 @@
 ﻿using System;
+using Project.Scripts.Services.AudioService;
 
-public class ExitButton : ButtonHandler
+namespace Project.Scripts.UI
 {
-    public event Action ExitButtonClicked;
-    
-    protected override void HandleButtonClick()
+    public class ExitButton : ButtonHandler
     {
-        ExitButtonClicked?.Invoke();
-        AudioID.NegativeAction.PlayOneShot();
+        public event Action ExitButtonClicked;
+    
+        protected override void HandleButtonClick()
+        {
+            ExitButtonClicked?.Invoke();
+            AudioID.NegativeAction.PlayOneShot();
+        }
     }
 }

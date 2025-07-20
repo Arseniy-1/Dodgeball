@@ -1,16 +1,21 @@
-﻿public class RankAmountBar : ViewBar
-{
-    private RankHolder _rankHolder;
-    
-    private void OnDestroy()
-    {
-        _rankHolder.RankAmountChanged -= OnValueChanged;
-    }
+﻿using Project.Scripts.Rank;
 
-    public void Initialize(RankHolder rankHolder)
+namespace Project.Scripts.UI.View
+{
+    public class RankAmountBar : ViewBar
     {
-        _rankHolder = rankHolder;
-        _rankHolder.RankAmountChanged += OnValueChanged;
-        OnValueChanged(_rankHolder.CurrentAmount, _rankHolder.MaxRankAmount);
+        private RankHolder _rankHolder;
+    
+        private void OnDestroy()
+        {
+            _rankHolder.RankAmountChanged -= OnValueChanged;
+        }
+
+        public void Initialize(RankHolder rankHolder)
+        {
+            _rankHolder = rankHolder;
+            _rankHolder.RankAmountChanged += OnValueChanged;
+            OnValueChanged(_rankHolder.CurrentAmount, _rankHolder.MaxRankAmount);
+        }
     }
 }

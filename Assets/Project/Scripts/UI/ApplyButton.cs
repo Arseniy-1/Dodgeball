@@ -1,12 +1,16 @@
 ﻿using System;
+using Project.Scripts.Services.AudioService;
 
-public class ApplyButton : ButtonHandler
+namespace Project.Scripts.UI
 {
-    public event Action ApplyButtonClicked;
-    
-    protected override void HandleButtonClick()
+    public class ApplyButton : ButtonHandler
     {
-        ApplyButtonClicked?.Invoke();
-        AudioID.UISoft.PlayOneShot();
+        public event Action ApplyButtonClicked;
+    
+        protected override void HandleButtonClick()
+        {
+            ApplyButtonClicked?.Invoke();
+            AudioID.UISoft.PlayOneShot();
+        }
     }
 }

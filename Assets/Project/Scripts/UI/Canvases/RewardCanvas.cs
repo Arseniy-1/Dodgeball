@@ -1,125 +1,131 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Project.Scripts.Reward;
+using Project.Scripts.Services;
+using Project.Scripts.Services.AudioService;
 using UnityEngine;
 using YG;
 using Random = UnityEngine.Random;
 
-public class RewardCanvas : InteractiveCanvas
+namespace Project.Scripts.UI.Canvases
 {
-    [SerializeField] private BoxView _boxView;
-    [SerializeField, Range(0, 5)] private float _boxAnimationDuration;
-    [SerializeField, Range(0, 8)] private float _boxEndScale = 1.5f;
-    [SerializeField, Range(0, 3)] private float _boxWhiteFadeDuration = 0.3f;
+    public class RewardCanvas : InteractiveCanvas
+    {
+        [SerializeField] private BoxView _boxView;
+        [SerializeField, Range(0, 5)] private float _boxAnimationDuration;
+        [SerializeField, Range(0, 8)] private float _boxEndScale = 1.5f;
+        [SerializeField, Range(0, 3)] private float _boxWhiteFadeDuration = 0.3f;
 
-    [SerializeField] private ModelView _modelView;
-    [SerializeField] private PlayerInputController _playerInputController;
+        [SerializeField] private ModelView _modelView;
+        [SerializeField] private PlayerInputController _playerInputController;
 
-    private RewardService _rewardService;
+        private RewardService _rewardService;
 
-    private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _cancellationTokenSource;
 
-    public event Action RewardCanvasClosed;
+        public event Action RewardCanvasClosed;
     
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-
-        _boxView.Enable();
-        AudioID.WaitForRewardClicked.PlayOneShot();
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-
-        _cancellationTokenSource.Cancel();
-        _boxView.Disable();
-    }
-
-    public void Initialize(RewardService rewardService)
-    {
-        _rewardService = rewardService;
-
-        _cancellationTokenSource = new CancellationTokenSource();
-    }
-
-    protected override async void HandleButtonClick()
-    {
-        AudioID.RewardClicked.PlayOneShot();
-        DisableButton();
-
-        AudioID.RewardCharged.PlayOneShot();
-        await _boxView.ShowBoxAnimation(_boxAnimationDuration, _boxEndScale, _boxWhiteFadeDuration);
-        AudioID.RewardReleased.PlayOneShot();
-        _boxView.Disable();
-
-        var availableAnimations = new List<System.Func<(string name, string type)>>();
-
-        if (_rewardService.DodgeAnimationCount > 0)
+        protected override void OnEnable()
         {
-            availableAnimations.Add(() =>
+            base.OnEnable();
+
+            _boxView.Enable();
+            AudioID.WaitForRewardClicked.PlayOneShot();
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            _cancellationTokenSource.Cancel();
+            _boxView.Disable();
+        }
+
+        public void Initialize(RewardService rewardService)
+        {
+            _rewardService = rewardService;
+
+            _cancellationTokenSource = new CancellationTokenSource();
+        }
+
+        protected override async void HandleButtonClick()
+        {
+            AudioID.RewardClicked.PlayOneShot();
+            DisableButton();
+
+            AudioID.RewardCharged.PlayOneShot();
+            await _boxView.ShowBoxAnimation(_boxAnimationDuration, _boxEndScale, _boxWhiteFadeDuration);
+            AudioID.RewardReleased.PlayOneShot();
+            _boxView.Disable();
+
+            var availableAnimations = new List<Func<(string name, string type)>>();
+
+            if (_rewardService.DodgeAnimationCount > 0)
             {
-                var anim = _rewardService.GetRandomDodgeAnimation();
-                YG2.saves.AnimationsHolder.AddDodgeAnimation(anim.AnimationType);
+                availableAnimations.Add(() =>
+                {
+                    var anim = _rewardService.GetRandomDodgeAnimation();
+                    YG2.saves.AnimationsHolder.AddDodgeAnimation(anim.AnimationType);
                 
-                return (anim.Name, anim.AnimationType.ToString());
-            });
-        }
+                    return (anim.Name, anim.AnimationType.ToString());
+                });
+            }
 
-        if (_rewardService.CelebrateAnimationCount > 0)
-        {
-            availableAnimations.Add(() =>
+            if (_rewardService.CelebrateAnimationCount > 0)
             {
-                var anim = _rewardService.GetRandomCelebrateAnimation();
-                YG2.saves.AnimationsHolder.AddCelebrateAnimation(anim.AnimationType);
+                availableAnimations.Add(() =>
+                {
+                    var anim = _rewardService.GetRandomCelebrateAnimation();
+                    YG2.saves.AnimationsHolder.AddCelebrateAnimation(anim.AnimationType);
                 
-                return (anim.Name, anim.AnimationType.ToString());
-            });
-        }
+                    return (anim.Name, anim.AnimationType.ToString());
+                });
+            }
 
-        if (_rewardService.DeathAnimationCount > 0)
-        {
-            availableAnimations.Add(() =>
+            if (_rewardService.DeathAnimationCount > 0)
             {
-                var anim = _rewardService.GetRandomDeathAnimation();
-                YG2.saves.AnimationsHolder.AddDeathAnimation(anim.AnimationType);
+                availableAnimations.Add(() =>
+                {
+                    var anim = _rewardService.GetRandomDeathAnimation();
+                    YG2.saves.AnimationsHolder.AddDeathAnimation(anim.AnimationType);
                 
-                return (anim.Name, anim.AnimationType.ToString());
-            });
-        }
+                    return (anim.Name, anim.AnimationType.ToString());
+                });
+            }
 
-        if (_rewardService.PrepareAnimationCount > 0)
-        {
-            availableAnimations.Add(() =>
+            if (_rewardService.PrepareAnimationCount > 0)
             {
-                var anim = _rewardService.GetRandomPrepareAnimation();
-                YG2.saves.AnimationsHolder.AddPrepareAnimation(anim.AnimationType);
+                availableAnimations.Add(() =>
+                {
+                    var anim = _rewardService.GetRandomPrepareAnimation();
+                    YG2.saves.AnimationsHolder.AddPrepareAnimation(anim.AnimationType);
                 
-                return (anim.Name, anim.AnimationType.ToString());
-            });
-        }
+                    return (anim.Name, anim.AnimationType.ToString());
+                });
+            }
 
-        if (availableAnimations.Count > 0)
-        {
-            var selectedAnimation = availableAnimations[Random.Range(0, availableAnimations.Count)]();
+            if (availableAnimations.Count > 0)
+            {
+                var selectedAnimation = availableAnimations[Random.Range(0, availableAnimations.Count)]();
 
-            _modelView.gameObject.SetActive(true);
-            int animationHash = Animator.StringToHash(selectedAnimation.name);
-            _modelView.ShowReward(animationHash, selectedAnimation.name);
-        }
+                _modelView.gameObject.SetActive(true);
+                int animationHash = Animator.StringToHash(selectedAnimation.name);
+                _modelView.ShowReward(animationHash, selectedAnimation.name);
+            }
         
-        YG2.SaveProgress();
-        _playerInputController.ActionButtonCanceled += CloseWindow;
-    }
+            YG2.SaveProgress();
+            _playerInputController.ActionButtonCanceled += CloseWindow;
+        }
 
-    private void CloseWindow()
-    {
-        AudioID.RewardCompleted.PlayOneShot();
-        _playerInputController.ActionButtonCanceled -= CloseWindow;
-        _modelView.Disable();
-        gameObject.SetActive(false);
+        private void CloseWindow()
+        {
+            AudioID.RewardCompleted.PlayOneShot();
+            _playerInputController.ActionButtonCanceled -= CloseWindow;
+            _modelView.Disable();
+            gameObject.SetActive(false);
         
-        RewardCanvasClosed?.Invoke();
+            RewardCanvasClosed?.Invoke();
+        }
     }
 }

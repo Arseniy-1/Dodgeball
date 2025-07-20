@@ -1,15 +1,19 @@
-﻿using UnityEngine;
+﻿using Project.Scripts.Services.EffectService;
+using UnityEngine;
 
-public struct M_PlayEffectByType
+namespace Project.Scripts.Messages
 {
-    public EffectID EffectID { get; private set; }
-    public Transform Transform { get; private set; }
-    public bool IsParent { get; private set; }
-
-    public M_PlayEffectByType(EffectID effectID, Transform transform, bool isParent = false)
+    public struct M_PlayEffectByType
     {
-        EffectID = effectID;
-        Transform = transform;
-        IsParent = isParent;
+        public EffectID EffectID { get; private set; }
+        public Transform Transform { get; private set; }
+        public bool IsParent { get; private set; }
+
+        public M_PlayEffectByType(EffectID effectID, Transform transform, bool isParent = false)
+        {
+            EffectID = effectID;
+            Transform = transform;
+            IsParent = isParent;
+        }
     }
 }

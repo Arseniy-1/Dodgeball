@@ -1,77 +1,79 @@
 ﻿using System;
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
+using Project.Scripts.Entities;
 
-public class GameStatusService
+namespace Project.Scripts.Services
 {
-    private static GameStatusService _instance;
-    public static GameStatusService Instance => _instance ??= new GameStatusService();
-
-    private Ball _ball;
-    private Entity _currentHolder;
-    private Collider _currentZone;
-
-    public event Action<Entity> OnHolderChanged;
-    public event Action<Collider> OnZoneChanged;
-
-    public Ball CurrentBall => _ball;
-    public bool IsBallFree => _ball.Chargeable.IsCharged == false && _currentHolder == null;
-
-    public Entity CurrentHolder
+    public class GameStatusService
     {
-        get => _currentHolder;
-        private set
+        private static GameStatusService _instance;
+        public static GameStatusService Instance => _instance ??= new GameStatusService();
+
+        private Scripts.Ball _ball;
+        private Entity _currentHolder;
+        private Collider _currentZone;
+
+        public event Action<Entity> OnHolderChanged;
+        public event Action<Collider> OnZoneChanged;
+
+        public Scripts.Ball CurrentBall => _ball;
+        public bool IsBallFree => _ball.Chargeable.IsCharged == false && _currentHolder == null;
+
+        public Entity CurrentHolder
         {
-            if (ReferenceEquals(_currentHolder, value))
-                return;
+            get => _currentHolder;
+            private set
+            {
+                if (ReferenceEquals(_currentHolder, value))
+                    return;
 
-            _currentHolder = value;
+                _currentHolder = value;
+            }
         }
-    }
 
-    public Collider CurrentZone
-    {
-        get => _currentZone;
-        private set
+        public Collider CurrentZone
         {
-            if (ReferenceEquals(_currentZone, value))
-                return;
+            get => _currentZone;
+            private set
+            {
+                if (ReferenceEquals(_currentZone, value))
+                    return;
 
-            _currentZone = value;
+                _currentZone = value;
+            }
         }
-    }
 
-    private GameStatusService()
-    {
-    }
+        private GameStatusService()
+        {
+        }
 
-    public void Initialize(Ball ball)
-    {
-        ClearHolder();
-        _ball = ball;
-    }
+        public void Initialize(Scripts.Ball ball)
+        {
+            ClearHolder();
+            _ball = ball;
+        }
 
-    public void SetCurrentZone(Collider zone)
-    {
-        CurrentZone = zone;
-        OnZoneChanged?.Invoke(CurrentZone);
-    }
+        public void SetCurrentZone(Collider zone)
+        {
+            CurrentZone = zone;
+            OnZoneChanged?.Invoke(CurrentZone);
+        }
     
-    public void ClearCurrentZone()
-    {
-        CurrentZone = null;
-    }
+        public void ClearCurrentZone()
+        {
+            CurrentZone = null;
+        }
     
-    public void SetHolder(Entity newHolder)
-    {
-        CurrentHolder = newHolder;
-        OnHolderChanged?.Invoke(CurrentHolder);
-    }
+        public void SetHolder(Entity newHolder)
+        {
+            CurrentHolder = newHolder;
+            OnHolderChanged?.Invoke(CurrentHolder);
+        }
 
-    public void ClearHolder()
-    {
-        CurrentHolder = null;
-        OnHolderChanged?.Invoke(CurrentHolder);
+        public void ClearHolder()
+        {
+            CurrentHolder = null;
+            OnHolderChanged?.Invoke(CurrentHolder);
+        }
     }
 }

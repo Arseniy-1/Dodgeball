@@ -3,46 +3,41 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AudioSettings", menuName = "AudioSystem/AudioSettings")]
-public class AudioSettings : ScriptableObject
+namespace Project.Scripts.Services.AudioService
 {
-    [SerializeField] private AudioData[] _audioData;
-
-    public Dictionary<AudioID, AudioData> GetData()
+    [CreateAssetMenu(fileName = "AudioSettings", menuName = "AudioSystem/AudioSettings")]
+    public class AudioSettings : ScriptableObject
     {
-        var dictionary = new Dictionary<AudioID, AudioData>();
+        [SerializeField] private AudioData[] _audioData;
 
-        foreach (var data in _audioData)
+        public Dictionary<AudioID, AudioData> GetData()
         {
-            if (dictionary.ContainsKey(data.ID) == false)
+            var dictionary = new Dictionary<AudioID, AudioData>();
+
+            foreach (var data in _audioData)
             {
-                dictionary.Add(data.ID, data);
+                if (dictionary.TryAdd(data.ID, data) == false)
+                {
+                    Debug.LogWarning($"Duplicate AudioID detected: {data.ID}");
+                }
             }
-            else
-            {
-                Debug.LogWarning($"Duplicate AudioID detected: {data.ID}");
-            }
+
+            return dictionary;
         }
-
-        return dictionary;
-    }
     
-    [Serializable]
-    public struct AudioData
-    {
-        [HideLabel]
-        [HorizontalGroup]
-        public AudioID _id;
-        [HideLabel]
-        [HorizontalGroup]
-        public List<AudioClip> _clips;
-        [Range(0f,1f)]
-        public float _volume;
-        [MinMaxSlider(0f, 2f)]
-        public Vector2 _pitchRange;
-
-        public AudioID ID => _id;
-        public IReadOnlyList<AudioClip> Clips => _clips;
-        public float Volume => _volume;
+        [Serializable]
+        public struct AudioData
+        {
+            [HideLabel]
+            [HorizontalGroup]
+            public AudioID ID;
+            [HideLabel]
+            [HorizontalGroup]
+            public List<AudioClip> Clips;
+            [Range(0f,1f)]
+            public float Volume;
+            [MinMaxSlider(0f, 2f)]
+            public Vector2 PitchRange;
+        }
     }
 }

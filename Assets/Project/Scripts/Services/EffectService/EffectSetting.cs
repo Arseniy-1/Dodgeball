@@ -1,44 +1,48 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
+using Project.Scripts.ObjectPool.Effects;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EffectsSetting", menuName = "EffectsSystem/EffectsSetting")]
-public class EffectsSetting : ScriptableObject
+namespace Project.Scripts.Services.EffectService
 {
-    [SerializeField] private EffectData[] _effectsData;
-
-    public Dictionary<EffectID, EffectData> GetData()
+    [CreateAssetMenu(fileName = "EffectsSetting", menuName = "EffectsSystem/EffectsSetting")]
+    public class EffectsSetting : ScriptableObject
     {
-        var dictionary = new Dictionary<EffectID, EffectData>();
+        [SerializeField] private EffectData[] _effectsData;
 
-        foreach (var data in _effectsData)
+        public Dictionary<EffectID, EffectData> GetData()
         {
-            if (dictionary.ContainsKey(data.ID) == false)
+            var dictionary = new Dictionary<EffectID, EffectData>();
+
+            foreach (var data in _effectsData)
             {
-                dictionary.Add(data.ID, data);
+                if (dictionary.ContainsKey(data.ID) == false)
+                {
+                    dictionary.Add(data.ID, data);
+                }
+                else
+                {
+                    Debug.LogWarning($"Duplicate AudioID detected: {data.ID}");
+                }
             }
-            else
-            {
-                Debug.LogWarning($"Duplicate AudioID detected: {data.ID}");
-            }
+
+            return dictionary;
         }
 
-        return dictionary;
-    }
+        [Serializable]
+        public struct EffectData
+        {
+            [HideLabel] 
+            [HorizontalGroup] 
+            public EffectID _id;
 
-    [Serializable]
-    public struct EffectData
-    {
-        [HideLabel] 
-        [HorizontalGroup] 
-        public EffectID _id;
-
-        [HideLabel] 
-        [HorizontalGroup] 
-        public List<Effect> _effects;
+            [HideLabel] 
+            [HorizontalGroup] 
+            public List<Effect> _effects;
         
-        public EffectID ID => _id;
-        public List<Effect> Effects => _effects;
+            public EffectID ID => _id;
+            public List<Effect> Effects => _effects;
+        }
     }
 }

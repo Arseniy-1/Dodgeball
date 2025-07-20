@@ -1,23 +1,23 @@
-﻿using System;
-using TMPro;
-using Unity.VisualScripting;
+﻿using Project.Scripts.UpgradeFrame.BallUpdaters;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class FrameView : MonoBehaviour
+namespace Project.Scripts.UpgradeFrame
 {
-    [SerializeField] private Image _backgroundView;
-    [SerializeField] private Image _upgradeIcon;
-
-    private void Start()
+    public class FrameView : MonoBehaviour
     {
-        //Метод для жизненного цикла юнити
-    }
+        [SerializeField] private Image _backgroundView;
+        [SerializeField] private Image _upgradeIcon;
 
-    public void Initialize(BallUpgradeInfo ballUpgradeInfo)
-    {
-        _backgroundView.sprite = ballUpgradeInfo.BackgroundView;
-        _upgradeIcon.sprite = ballUpgradeInfo.Icon;
+        private void Start()
+        {
+            //Метод для жизненного цикла юнити
+        }
+
+        public void Initialize(BallUpgradeInfo ballUpgradeInfo)
+        {
+            _backgroundView.sprite = ballUpgradeInfo.BackgroundView;
+            _upgradeIcon.sprite = ballUpgradeInfo.Icon;
+        }
     }
 }

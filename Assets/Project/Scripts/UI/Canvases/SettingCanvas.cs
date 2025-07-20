@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 
-public class SettingCanvas : GameCanvas
+namespace Project.Scripts.UI.Canvases
 {
-    [SerializeField] private ExitButton _exitButton;
-
-    private void OnEnable()
+    public class SettingCanvas : GameCanvas
     {
-        _exitButton.ExitButtonClicked += Disable;
-        Time.timeScale = 0;
-    }
+        [SerializeField] private ExitButton _exitButton;
 
-    private void OnDisable()
-    {
-        _exitButton.ExitButtonClicked -= Disable;
-        Time.timeScale = 1;
-    }
+        private void OnEnable()
+        {
+            _exitButton.ExitButtonClicked += Disable;
+            Time.timeScale = 0;
+        }
 
-    private void Disable()
-    {
-        gameObject.SetActive(false);
+        private void OnDisable()
+        {
+            _exitButton.ExitButtonClicked -= Disable;
+            Time.timeScale = 1;
+        }
+
+        private void Disable()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

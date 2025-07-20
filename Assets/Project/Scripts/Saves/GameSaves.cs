@@ -1,5 +1,8 @@
 ﻿using Assets.SimpleLocalization.Scripts;
-using UnityEngine;
+using Project.Scripts.Rank;
+using Project.Scripts.Saves;
+using Project.Scripts.Saves.AnimationSO;
+using Project.Scripts.Settings;
 
 namespace YG
 {
@@ -7,10 +10,10 @@ namespace YG
     {
         public StartAnimationsData StartAnimationsData;
 
-        public AnimationsHolder AnimationsHolder = new AnimationsHolder();
+        public AnimationsHolder AnimationsHolder = new();
 
-        public SettingsData SettingsData = new SettingsData();
-        public ProgressData ProgressData = new ProgressData();
+        public SettingsData SettingsData = new();
+        public ProgressData ProgressData = new();
 
         public RankHolder RankHolder;
         

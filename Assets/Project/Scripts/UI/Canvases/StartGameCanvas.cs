@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Threading.Tasks;
-using UnityEngine;
 
-public class StartGameCanvas : InteractiveCanvas
+namespace Project.Scripts.UI.Canvases
 {
-    public event Action OnStartGameButtonPressed;
-
-    protected override void HandleButtonClick()
+    public class StartGameCanvas : InteractiveCanvas
     {
-        OnStartGameButtonPressed?.Invoke();
+        public event Action OnStartGameButtonPressed;
+
+        protected override void HandleButtonClick()
+        {
+            OnStartGameButtonPressed?.Invoke();
+        }
     }
 }

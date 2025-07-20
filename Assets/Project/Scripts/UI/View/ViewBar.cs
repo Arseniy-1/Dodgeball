@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ViewBar : MonoBehaviour
+namespace Project.Scripts.UI.View
 {
-    [SerializeField] private Slider _bar;
-
-    protected float TargetFill;
-
-    protected void OnValueChanged(int current, int max)
+    public abstract class ViewBar : MonoBehaviour
     {
-        if (current >= max)
-            current = 0;
+        [SerializeField] private Slider _bar;
+
+        protected float TargetFill;
+
+        protected void OnValueChanged(int current, int max)
+        {
+            if (current >= max)
+                current = 0;
         
-        TargetFill = (float)current / max;
-        _bar.value = TargetFill;
-    }
+            TargetFill = (float)current / max;
+            _bar.value = TargetFill;
+        }
     
-    protected virtual void Reset()
-    {
-        _bar.value = 1;
+        protected virtual void Reset()
+        {
+            _bar.value = 1;
+        }
     }
 }

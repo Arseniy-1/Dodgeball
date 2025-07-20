@@ -1,33 +1,37 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Project.Scripts.Entities;
 
-public class TargetScanner : MonoBehaviour
+namespace Project.Scripts.Services
 {
-    public Entity Scan(List<Entity> teammates)
+    public class TargetScanner : MonoBehaviour
     {
-        float scanRadius = 500f;
-        float closestDistance = float.MaxValue;
-        Entity closestEnemy = null;
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, scanRadius);
-
-        foreach (Collider col in colliders)
+        public Entity Scan(List<Entity> teammates)
         {
-            if (col.TryGetComponent(out Entity entity))
-            {
-                if (entity == null || teammates.Contains(entity)) 
-                    continue;
+            float scanRadius = 500f;
+            float closestDistance = float.MaxValue;
+            Entity closestEnemy = null;
 
-                float distance = Vector3.Distance(transform.position, entity.transform.position);
-                
-                if (distance < closestDistance)
+            Collider[] colliders = Physics.OverlapSphere(transform.position, scanRadius);
+
+            foreach (Collider col in colliders)
+            {
+                if (col.TryGetComponent(out Entity entity))
                 {
-                    closestDistance = distance;
-                    closestEnemy = entity;
+                    if (entity == null || teammates.Contains(entity)) 
+                        continue;
+
+                    float distance = Vector3.Distance(transform.position, entity.transform.position);
+                
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestEnemy = entity;
+                    }
                 }
             }
-        }
 
-        return closestEnemy;
+            return closestEnemy;
+        }
     }
 }

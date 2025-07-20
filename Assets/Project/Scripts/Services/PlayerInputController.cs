@@ -3,40 +3,43 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputController : MonoBehaviour
+namespace Project.Scripts.Services
 {
-    private PlayerInput _payerInput;
-
-    public event Action ActionButtonStarted;
-    public event Action ActionButtonCanceled;
-
-    private void Awake()
+    public class PlayerInputController : MonoBehaviour
     {
-        _payerInput = new PlayerInput();
-        _payerInput.Enable();
-    }
+        private PlayerInput _payerInput;
 
-    private void OnEnable()
-    {
-        _payerInput.Player.Action.started += OnActionButtonStarted;
-        _payerInput.Player.Action.canceled += OnActionButtonCanceled;
-    }
+        public event Action ActionButtonStarted;
+        public event Action ActionButtonCanceled;
 
-    private void OnDisable()
-    {
-        _payerInput.Player.Action.started -= OnActionButtonStarted;
-        _payerInput.Player.Action.canceled -= OnActionButtonCanceled;
-    }
+        private void Awake()
+        {
+            _payerInput = new PlayerInput();
+            _payerInput.Enable();
+        }
 
-    [Button]
-    private void OnActionButtonStarted(InputAction.CallbackContext callbackContext)
-    {
-        ActionButtonStarted?.Invoke();
-    }
+        private void OnEnable()
+        {
+            _payerInput.Player.Action.started += OnActionButtonStarted;
+            _payerInput.Player.Action.canceled += OnActionButtonCanceled;
+        }
 
-    [Button]
-    private void OnActionButtonCanceled(InputAction.CallbackContext callbackContext)
-    {
-        ActionButtonCanceled?.Invoke();
+        private void OnDisable()
+        {
+            _payerInput.Player.Action.started -= OnActionButtonStarted;
+            _payerInput.Player.Action.canceled -= OnActionButtonCanceled;
+        }
+
+        [Button]
+        private void OnActionButtonStarted(InputAction.CallbackContext callbackContext)
+        {
+            ActionButtonStarted?.Invoke();
+        }
+
+        [Button]
+        private void OnActionButtonCanceled(InputAction.CallbackContext callbackContext)
+        {
+            ActionButtonCanceled?.Invoke();
+        }
     }
 }

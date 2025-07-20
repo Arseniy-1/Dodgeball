@@ -2,21 +2,24 @@
 using UniRx;
 using UnityEngine;
 
-[Serializable]
-public class EffectsSpawner : Spawner<Effect>
+namespace Project.Scripts.ObjectPool.Effects
 {
-    protected CompositeDisposable CompositeDisposable;
-
-    public EffectsSpawner(Effect effect, Transform parent)
+    [Serializable]
+    public class EffectsSpawner : Spawner<Effect>
     {
-        Prefab = effect;
-        Pool = new EffectsPool(Prefab, StartAmount, parent);
+        protected CompositeDisposable CompositeDisposable;
 
-        CompositeDisposable = new CompositeDisposable();
-    }
+        public EffectsSpawner(Effect effect, Transform parent)
+        {
+            Prefab = effect;
+            Pool = new EffectsPool(Prefab, StartAmount, parent);
 
-    public void Dispose()
-    {
-        CompositeDisposable.Dispose();
+            CompositeDisposable = new CompositeDisposable();
+        }
+
+        public void Dispose()
+        {
+            CompositeDisposable.Dispose();
+        }
     }
 }

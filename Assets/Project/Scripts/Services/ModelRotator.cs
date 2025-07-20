@@ -1,16 +1,19 @@
 ﻿using System;
 using UnityEngine;
 
-[Serializable]
-public class ModelRotator
+namespace Project.Scripts.Services
 {
-    [SerializeField, Range(-200, 200)] private float _rotationSpeed;
-    
-    private float _currentRotation = 0;
-
-    public void Update(Transform holder)
+    [Serializable]
+    public class ModelRotator
     {
-        _currentRotation -= Time.deltaTime * _rotationSpeed;
-        holder.transform.rotation = Quaternion.Euler(0, _currentRotation, 0);
+        [SerializeField, Range(-200, 200)] private float _rotationSpeed;
+    
+        private float _currentRotation = 0;
+
+        public void Update(Transform holder)
+        {
+            _currentRotation -= Time.deltaTime * _rotationSpeed;
+            holder.transform.rotation = Quaternion.Euler(0, _currentRotation, 0);
+        }
     }
 }

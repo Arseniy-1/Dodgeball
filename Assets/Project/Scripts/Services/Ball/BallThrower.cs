@@ -1,81 +1,84 @@
-﻿using Cysharp.Threading.Tasks;
-using System;
+﻿using System;
 using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class BallThrower : MonoBehaviour
+namespace Project.Scripts.Services.Ball
 {
-    [SerializeField] private float _currentForce;
-
-    private IThrowerStats _throwerStats;
-    private CancellationTokenSource _cancellationTokenSource;
-    private bool _isCharging = true;
-    private float _chargeProgress;
-
-    public event Action<float, float, float> OnCharging;
-    public event Action OnThrown;
-
-    public void Initialize(IThrowerStats throwerStats)
+    public class BallThrower : MonoBehaviour
     {
-        _throwerStats = throwerStats;
-    }
+        [SerializeField] private float _currentForce;
 
-    public void StartCharging()
-    {
-        _cancellationTokenSource = new CancellationTokenSource();
+        private IThrowerStats _throwerStats;
+        private CancellationTokenSource _cancellationTokenSource;
+        private bool _isCharging = true;
+        private float _chargeProgress;
 
-        _currentForce = _throwerStats.MinThrowForce;
-        _isCharging = true;
-        _chargeProgress = 0f;
+        public event Action<float, float, float> OnCharging;
+        public event Action OnThrown;
 
-        ChargingCycle(_cancellationTokenSource.Token).Forget();
-    }
-
-    public void StopCharging()
-    {
-        if (_cancellationTokenSource != null)
-            _cancellationTokenSource.Cancel();
-    }
-
-    public void Throw(Ball ball)
-    {
-        if (ball == null)
-            return;
-
-        ball.Rigidbody.AddForce(transform.forward * _currentForce, ForceMode.Force);
-        OnThrown?.Invoke();
-    }
-
-    private async UniTaskVoid ChargingCycle(CancellationToken cancellationToken)
-    {
-        while (cancellationToken.IsCancellationRequested == false)
+        public void Initialize(IThrowerStats throwerStats)
         {
-            if (_isCharging)
+            _throwerStats = throwerStats;
+        }
+
+        public void StartCharging()
+        {
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            _currentForce = _throwerStats.MinThrowForce;
+            _isCharging = true;
+            _chargeProgress = 0f;
+
+            ChargingCycle(_cancellationTokenSource.Token).Forget();
+        }
+
+        public void StopCharging()
+        {
+            if (_cancellationTokenSource != null)
+                _cancellationTokenSource.Cancel();
+        }
+
+        public void Throw(Scripts.Ball ball)
+        {
+            if (ball == null)
+                return;
+
+            ball.Rigidbody.AddForce(transform.forward * _currentForce, ForceMode.Force);
+            OnThrown?.Invoke();
+        }
+
+        private async UniTaskVoid ChargingCycle(CancellationToken cancellationToken)
+        {
+            while (cancellationToken.IsCancellationRequested == false)
             {
-                _chargeProgress += Time.deltaTime / _throwerStats.ThrowChargeTime;
-
-                if (_chargeProgress >= 1f)
+                if (_isCharging)
                 {
-                    _chargeProgress = 1f;
-                    _isCharging = false;
-                }
-            }
-            else
-            {
-                _chargeProgress -= Time.deltaTime / _throwerStats.ThrowChargeTime;
+                    _chargeProgress += Time.deltaTime / _throwerStats.ThrowChargeTime;
 
-                if (_chargeProgress <= 0f)
+                    if (_chargeProgress >= 1f)
+                    {
+                        _chargeProgress = 1f;
+                        _isCharging = false;
+                    }
+                }
+                else
                 {
-                    _chargeProgress = 0f;
-                    _isCharging = true;
+                    _chargeProgress -= Time.deltaTime / _throwerStats.ThrowChargeTime;
+
+                    if (_chargeProgress <= 0f)
+                    {
+                        _chargeProgress = 0f;
+                        _isCharging = true;
+                    }
                 }
+
+                _currentForce = Mathf.Lerp(_throwerStats.MinThrowForce, _throwerStats.MaxThrowForce, _chargeProgress);
+
+                OnCharging?.Invoke(_throwerStats.MinThrowForce, _throwerStats.MaxThrowForce, _currentForce);
+
+                await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
             }
-
-            _currentForce = Mathf.Lerp(_throwerStats.MinThrowForce, _throwerStats.MaxThrowForce, _chargeProgress);
-
-            OnCharging?.Invoke(_throwerStats.MinThrowForce, _throwerStats.MaxThrowForce, _currentForce);
-
-            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
         }
     }
 }

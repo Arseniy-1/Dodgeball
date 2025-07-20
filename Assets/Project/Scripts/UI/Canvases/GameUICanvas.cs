@@ -1,56 +1,61 @@
 ﻿using System.Threading;
+using Project.Scripts.Services;
+using Project.Scripts.Settings;
 using TMPro;
 using UnityEngine;
 using YG;
 using YG.LanguageLegacy;
 
-public class GameUICanvas : GameCanvas
+namespace Project.Scripts.UI.Canvases
 {
-    [SerializeField] private TextMeshProUGUI _enemyName;
-    [SerializeField] private TextMeshProUGUI _playerName;
-    [SerializeField] private TextMeshProUGUI _timeView;
-
-    [SerializeField] private LanguageYG _languageTranslator;
-
-    private Timer _timer;
-    private CancellationTokenSource _cancellationTokenSource;
-
-    private void Awake()
+    public class GameUICanvas : GameCanvas
     {
-        _timer = new Timer(_timeView);
-    }
+        [SerializeField] private TextMeshProUGUI _enemyName;
+        [SerializeField] private TextMeshProUGUI _playerName;
+        [SerializeField] private TextMeshProUGUI _timeView;
 
-    private void OnEnable()
-    {
-        _cancellationTokenSource = new CancellationTokenSource();
+        [SerializeField] private LanguageYG _languageTranslator;
 
-        switch (YG2.lang)
+        private Timer _timer;
+        private CancellationTokenSource _cancellationTokenSource;
+
+        private void Awake()
         {
-            case nameof(Languages.en):
-                _enemyName.text = Constans.EnemyNames.GetRandomEnglishName();
-                break;
-            
-            case nameof(Languages.ru):
-                _enemyName.text = Constans.EnemyNames.GetRandomRussianName();
-                break;
-            
-            case nameof(Languages.tr):
-                _enemyName.text = Constans.EnemyNames.GetRandomTurkishName();
-                break;
+            _timer = new Timer(_timeView);
         }
 
-        if (YG2.player.auth)
+        private void OnEnable()
         {
-            _languageTranslator.enabled = false;
-            _playerName.text = YG2.player.name;
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            switch (YG2.lang)
+            {
+                case nameof(Languages.en):
+                    _enemyName.text = Constans.EnemyNames.GetRandomEnglishName();
+                    break;
+            
+                case nameof(Languages.ru):
+                    _enemyName.text = Constans.EnemyNames.GetRandomRussianName();
+                    break;
+            
+                case nameof(Languages.tr):
+                    _enemyName.text = Constans.EnemyNames.GetRandomTurkishName();
+                    break;
+            }
+
+            if (YG2.player.auth)
+            {
+                _languageTranslator.enabled = false;
+                _playerName.text = YG2.player.name;
+            }
+
+            _timer.Start(_cancellationTokenSource.Token).Forget();
         }
 
-        _timer.Start(_cancellationTokenSource.Token).Forget();
-    }
-
-    private void OnDisable()
-    {
-        _cancellationTokenSource?.Cancel();
-        _timer.Reset();
+        private void OnDisable()
+        {
+            _cancellationTokenSource?.Cancel();
+            _timer.Reset();
+        }
     }
 }

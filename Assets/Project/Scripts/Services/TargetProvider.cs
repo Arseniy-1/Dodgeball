@@ -1,14 +1,19 @@
-﻿public class TargetProvider
+﻿using Project.Scripts.Entities;
+
+namespace Project.Scripts.Services
 {
-    public Entity Target { get; private set; }
-    
-    public void SelectTarget(Entity target)
+    public class TargetProvider
     {
-        Target = target;
-    }
+        public Entity Target { get; private set; }
     
-    public void DeselectTarget()
-    {
+        public void SelectTarget(Entity target)
+        {
+            Target = target;
+        }
+    
+        public void DeselectTarget()
+        {
         
+        }
     }
 }

@@ -1,15 +1,18 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CameraShakeSettings", menuName = "CameraShake/CameraShakeSettings", order = 51)]
-public class CameraShakeSettings : ScriptableObject
+namespace Project.Scripts.Services.CameraShakeService
 {
-    [SerializeField] private CameraShakeData[] _cameraShakeDatas;
-
-    public bool TryGet(ShakeID shakeID, out CameraShakeData shakeData)
+    [CreateAssetMenu(fileName = "CameraShakeSettings", menuName = "CameraShake/CameraShakeSettings", order = 51)]
+    public class CameraShakeSettings : ScriptableObject
     {
-        shakeData = _cameraShakeDatas.FirstOrDefault(data => data.ShakeId == shakeID);
+        [SerializeField] private CameraShakeData[] _cameraShakeDatas;
 
-        return shakeData != null;
+        public bool TryGet(ShakeID shakeID, out CameraShakeData shakeData)
+        {
+            shakeData = _cameraShakeDatas.FirstOrDefault(data => data.ShakeId == shakeID);
+
+            return shakeData != null;
+        }
     }
 }

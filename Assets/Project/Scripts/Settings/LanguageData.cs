@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "LanguageData", menuName = "Language Data", order = 51)]
-public class LanguageData : ScriptableObject
+namespace Project.Scripts.Settings
 {
-    [field: SerializeField] public Languages Language { get; private set; }
-    [field: SerializeField] public Sprite View { get; private set; }
-    [field: SerializeField] public string Name { get; private set; }
+    [CreateAssetMenu(fileName = "LanguageData", menuName = "Language Data", order = 51)]
+    public class LanguageData : ScriptableObject
+    {
+        [field: SerializeField] public Languages Language { get; private set; }
+        [field: SerializeField] public Sprite View { get; private set; }
+    }
 }

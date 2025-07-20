@@ -1,11 +1,15 @@
 using System;
+using Project.Scripts.Entities;
 
-[Serializable]
-public class PlayerSpawner : Spawner<Player>
+namespace Project.Scripts.ObjectPool.Entity
 {
-    public PlayerSpawner(Player playerPrefab)
+    [Serializable]
+    public class PlayerSpawner : Spawner<Player>
     {
-        Prefab = playerPrefab;
-        Pool = new PlayerPool(Prefab, StartAmount);
+        public PlayerSpawner(Player playerPrefab)
+        {
+            Prefab = playerPrefab;
+            Pool = new PlayerPool(Prefab, StartAmount);
+        }
     }
 }

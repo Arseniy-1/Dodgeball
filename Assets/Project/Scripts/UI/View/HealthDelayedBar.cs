@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 
-public class HealthDelayedBar : DelayedViewBar
+namespace Project.Scripts.UI.View
 {
-    [SerializeField] private Health _health;
-
-    private void OnEnable()
+    public class HealthDelayedBar : DelayedViewBar
     {
-        _health.HealthChanged += OnValueChanged;
-        Reset();
-    }
+        [SerializeField] private Health.Health _health;
 
-    private void OnDisable()
-    {
-        _health.HealthChanged -= OnValueChanged;
+        private void OnEnable()
+        {
+            _health.HealthChanged += OnValueChanged;
+            Reset();
+        }
+
+        private void OnDisable()
+        {
+            _health.HealthChanged -= OnValueChanged;
+        }
     }
 }
