@@ -48,6 +48,8 @@ namespace Project.Scripts.StateMachine.EntityStates
 
         public virtual void Enter()
         {
+            _animatorController.PrepareToBattle();
+            
             _cancellationTokenSource = new CancellationTokenSource();
             _animatorController.DodgeIdle();
             _rigidbody.isKinematic = true;

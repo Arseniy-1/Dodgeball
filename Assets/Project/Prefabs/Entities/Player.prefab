@@ -163,10 +163,8 @@ MonoBehaviour:
   Health: {fileID: 8879239487028305564}
   Teammates: []
   Animator: {fileID: 4560895213388329803}
-  HitCheker: {fileID: 2493397008812981593}
+  HitDetector: {fileID: 2493397008812981593}
   HealthCanvas: {fileID: 8911252057284938444}
-  CurrentState: 
-  CurrentStates: []
   Ball: {fileID: 0}
   _inputController: {fileID: 4030301884747883651}
   _playerConfig: {fileID: 11400000, guid: 5dfc860117b55e241b2d86868264e357, type: 2}

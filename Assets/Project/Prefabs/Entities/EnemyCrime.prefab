@@ -66,12 +66,10 @@ MonoBehaviour:
   Health: {fileID: 6687391573693435775}
   Teammates: []
   Animator: {fileID: 8379371985372356170}
-  HitCheker: {fileID: 1362388508472015268}
+  HitDetector: {fileID: 1362388508472015268}
   HealthCanvas: {fileID: 4306949712307839419}
-  CurrentState: 
-  CurrentStates: []
   Ball: {fileID: 0}
-  enemyConfig: {fileID: 11400000, guid: 163097e900ea5cf489a17cc4150d2f8c, type: 2}
+  _enemyConfig: {fileID: 11400000, guid: 163097e900ea5cf489a17cc4150d2f8c, type: 2}
 --- !u!114 &5788073546011939865
 MonoBehaviour:
   m_ObjectHideFlags: 0

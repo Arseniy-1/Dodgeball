@@ -77,8 +77,10 @@ namespace Project.Scripts.StateMachine.EntityStates
 
         public virtual void Update()
         {
-            if (_ball != null)
-                _rotator.RotateToTarget(_ball.transform, _entity.transform);
+            var ball = GameStatusService.Instance.CurrentBall;
+            
+            if (ball != null)
+                _rotator.RotateToTarget(ball.transform, _entity.transform);
         }
 
         protected abstract void SwitchToMove();

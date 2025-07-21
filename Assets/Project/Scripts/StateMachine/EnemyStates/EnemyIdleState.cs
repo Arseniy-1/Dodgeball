@@ -20,7 +20,7 @@ namespace Project.Scripts.StateMachine.EnemyStates
 
         protected override void SwitchToDodge()
         {
-            StateSwitcher.SwitchState<EnemyDodgeState>();
+            StateSwitcher.SwitchState<EnemyDodgeReadyState>();
         }
     }
 }

@@ -165,11 +165,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7206733565957789486, guid: e5cbb938042ba43588aae41d8dc911e1, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7206733565957789486, guid: e5cbb938042ba43588aae41d8dc911e1, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7206733566028832826, guid: e5cbb938042ba43588aae41d8dc911e1, type: 3}
       propertyPath: m_text
@@ -6190,18 +6190,20 @@ MonoBehaviour:
   - {fileID: 8061949312178348757, guid: dacae5d66ff17ae4787f4f3e93049254, type: 3}
   _playerPrefab: {fileID: 4579840420478656265, guid: e472b77ec603a6b46a4c685d3655de80, type: 3}
   _ballPrefab: {fileID: 5921492481527234488, guid: 9deab7718edd8e2409452dc72aaa7ac9, type: 3}
-  _startGameCanvas: {fileID: 1237911345}
-  _rankViewCanvas: {fileID: 1880922101}
-  _rewardCanvas: {fileID: 794015268}
-  _gameCanvas: {fileID: 1999762566}
-  _tutorialCanvas: {fileID: 95586764}
-  _userInfoView: {fileID: 1373820079}
-  _audioSettings: {fileID: 11400000, guid: 06f54f93dab2c66409b8a6256dfb1a50, type: 2}
-  _effectsSetting: {fileID: 11400000, guid: 0f6c396f961d5914fbf74725c2fa517e, type: 2}
-  _saves: {fileID: 1847178381}
-  _rewardButton: {fileID: 1960394464}
+  _uiHandler:
+    _startGameCanvas: {fileID: 1237911345}
+    _rankViewCanvas: {fileID: 1880922101}
+    _rewardCanvas: {fileID: 794015268}
+    _gameCanvas: {fileID: 1999762566}
+    _tutorialCanvas: {fileID: 95586764}
+    _userInfoView: {fileID: 1373820079}
+    _rewardButton: {fileID: 1960394464}
   _rewardService:
     _rewardAnimations: {fileID: 11400000, guid: c85e966d7e4c8d44a9563afe68d89113, type: 2}
+  _effectHandler:
+    _audioSettings: {fileID: 11400000, guid: 06f54f93dab2c66409b8a6256dfb1a50, type: 2}
+    _effectsSetting: {fileID: 11400000, guid: 0f6c396f961d5914fbf74725c2fa517e, type: 2}
+  _saves: {fileID: 1847178381}
 --- !u!4 &389377432
 Transform:
   m_ObjectHideFlags: 0
@@ -15031,7 +15033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1237911345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17429,43 +17431,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1276236448637350138, guid: e03349a51600f4d7fac6f09346faacc9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1276236448637350138, guid: e03349a51600f4d7fac6f09346faacc9, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1276236448637350138, guid: e03349a51600f4d7fac6f09346faacc9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 229.02733
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1276236448637350138, guid: e03349a51600f4d7fac6f09346faacc9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 196.75482
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1276236448637350138, guid: e03349a51600f4d7fac6f09346faacc9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -46.25477
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1276236448763145445, guid: e03349a51600f4d7fac6f09346faacc9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1276236448763145445, guid: e03349a51600f4d7fac6f09346faacc9, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1276236448763145445, guid: e03349a51600f4d7fac6f09346faacc9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 57.241154
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1276236448763145445, guid: e03349a51600f4d7fac6f09346faacc9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 28.620577
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1276236448763145445, guid: e03349a51600f4d7fac6f09346faacc9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -46.25477
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19928,7 +19930,6 @@ MonoBehaviour:
       IsSoundsEnabled: 1
       IsMusicEnabled: 1
       IsCameraShakeEnabled: 1
-      Language: 0
     ProgressData:
       CurrentRank: 0
       CurrentRankAmount: 0

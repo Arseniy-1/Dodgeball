@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Assets.SimpleLocalization.Scripts;
 using Cysharp.Threading.Tasks;
@@ -8,14 +7,8 @@ using Project.Scripts.ObjectPool.Entity;
 using Project.Scripts.Rank;
 using Project.Scripts.Reward;
 using Project.Scripts.Services;
-using Project.Scripts.Services.AudioService;
-using Project.Scripts.Services.EffectService;
-using Project.Scripts.UI;
-using Project.Scripts.UI.Canvases;
-using Project.Scripts.UI.View;
 using UnityEngine;
 using YG;
-using AudioSettings = Project.Scripts.Services.AudioService.AudioSettings;
 using Random = UnityEngine.Random;
 
 namespace Project.Scripts.CompositionRoot
@@ -27,46 +20,30 @@ namespace Project.Scripts.CompositionRoot
         [SerializeField] private Player _playerPrefab;
         [SerializeField] private Ball _ballPrefab;
 
-        [SerializeField] private StartGameCanvas _startGameCanvas;
-        [SerializeField] private RankViewCanvas _rankViewCanvas;
-        [SerializeField] private RewardCanvas _rewardCanvas;
-        [SerializeField] private GameUICanvas _gameCanvas;
-        [SerializeField] private TutorialCanvas _tutorialCanvas;
-        [SerializeField] private UserInfoView _userInfoView;
-
-        [SerializeField] private AudioSettings _audioSettings;
-        [SerializeField] private EffectsSetting _effectsSetting;
-
+        [SerializeField] private UIHandler _uiHandler;
+        [SerializeField] private RewardService _rewardService;
+        [SerializeField] private EffectHandler _effectHandler;
         [SerializeField] private Saves.Saves _saves;
 
-        [SerializeField] private RewardButton _rewardButton;
-        [SerializeField] private RewardService _rewardService;
-
         private bool _rewardRaised = false;
-
-        private EffectService _effectService;
-        private AudioService _audioService;
         private RankHolder _rankHolder;
-
+        
+        private EntityCreator _entityCreator;
         private Ball _ballInstance;
+        private Arena _arenaInstance;
 
         private PlayerSpawner _playerSpawner;
         private List<EnemySpawner> _enemySpawners = new();
 
-        private Arena _arenaInstance;
-
         private void Awake()
         {
-            _effectService = new EffectService(_effectsSetting.GetData());
-            _audioService = new AudioService(_audioSettings.GetData());
-            _rewardCanvas.Initialize(_rewardService);
-
+            _entityCreator = new EntityCreator();
             _rewardService.Initialize();
             _rankHolder = new RankHolder();
             _rankHolder.Initialize();
-            _rankViewCanvas.Initialize(_rankHolder);
-
-            _userInfoView.Initialize(_rankHolder);
+            
+            _uiHandler.Initialize(_rewardService, _rankHolder);
+            _effectHandler.Initialize();
 
             _playerSpawner = new PlayerSpawner(_playerPrefab);
 
@@ -83,43 +60,31 @@ namespace Project.Scripts.CompositionRoot
 
         private void OnEnable()
         {
-            _startGameCanvas.OnStartGameButtonPressed += StartGame;
-            _rankViewCanvas.OnRewardViewClosed += HandleRankCanvasClose;
+            _uiHandler.StartButtonPressed += StartGame;
+            _uiHandler.RankCanvasClosed += HandleRankCanvasClose;
             _rankHolder.RankRaised += HandleRankRaised;
-            _rewardButton.RewardButtonClicked += ShowReward;
+            _uiHandler.Enable();
         }
 
         private void OnDisable()
         {
-            _startGameCanvas.OnStartGameButtonPressed -= StartGame;
-            _rankViewCanvas.OnRewardViewClosed -= HandleRankCanvasClose;
+            _uiHandler.StartButtonPressed -= StartGame;
+            _uiHandler.RankCanvasClosed -= HandleRankCanvasClose;
             _rankHolder.RankRaised -= HandleRankRaised;
-            _rewardButton.RewardButtonClicked -= ShowReward;
+            _uiHandler.Enable();
         }
 
         private void Start()
         {
             _saves.Initialize(_rankHolder);
             CreateMap();
-            _startGameCanvas.gameObject.SetActive(true);
+            GameStatusService.Instance.Initialize(_ballInstance);
+            _uiHandler.Start();
         }
 
         private void StartGame()
         {
-            _tutorialCanvas.gameObject.SetActive(false);
-        
-            if (YG2.saves.ProgressData.IsFirstSession)
-            {
-                YG2.saves.ProgressData.IsFirstSession = false;
-                YG2.SaveProgress();
-            
-                _tutorialCanvas.gameObject.SetActive(true);
-            }
-        
-            _startGameCanvas.gameObject.SetActive(false);
-            _gameCanvas.gameObject.SetActive(true);
             _arenaInstance.Initialize(_ballInstance);
-            GameStatusService.Instance.Initialize(_ballInstance);
 
             MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
         }
@@ -150,11 +115,11 @@ namespace Project.Scripts.CompositionRoot
             {
                 if (i == 0)
                 {
-                    FillPlayerSquad(_playerSpawner, _arenaInstance.Squads[i]);
+                    _entityCreator.FillPlayerSquad(_playerSpawner, _arenaInstance.Squads[i]);
                 }
                 else
                 {
-                    FillEnemySquad(_enemySpawners[Random.Range(0, _enemySpawners.Count)], _arenaInstance.Squads[i]);
+                    _entityCreator.FillEnemySquad(_enemySpawners[Random.Range(0, _enemySpawners.Count)], _arenaInstance.Squads[i]);
                 }
             }
 
@@ -163,7 +128,6 @@ namespace Project.Scripts.CompositionRoot
 
         private void HandleGameOverWrapper(int rankAmount)
         {
-            _gameCanvas.gameObject.SetActive(false);
             _rankHolder.IncreaseRank(rankAmount);
             HandleGameOver().Forget();
         }
@@ -172,48 +136,16 @@ namespace Project.Scripts.CompositionRoot
         {
             _arenaInstance.GameOver -= HandleGameOverWrapper;
 
-            float waitTime = 3f;
-            await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
-
-            _rankViewCanvas.gameObject.SetActive(true);
-            await _rankViewCanvas.ShowResultsAsync();
-            _rankViewCanvas.gameObject.SetActive(false);
+            await _uiHandler.GameOver();
 
             if (_rewardRaised)
-            {
-                GiveReward();
-            }
-        }
-
-        private void ShowReward()
-        {
-            string id = "coin"; // Передача id требуется для внутренней работы плагина
-
-            YG2.RewardedAdvShow(id, GiveReward);
-        }
-
-        private void GiveReward()
-        {
-            _startGameCanvas.gameObject.SetActive(false);
-            _rewardCanvas.gameObject.SetActive(true);
-            _rewardRaised = false;
-
-            _rewardCanvas.RewardCanvasClosed += HandleRewardCanvasClosed;
-        }
-
-        private void HandleRewardCanvasClosed()
-        {
-            _rewardCanvas.RewardCanvasClosed -= HandleRewardCanvasClosed;
-            _rewardCanvas.gameObject.SetActive(false);
-            _startGameCanvas.gameObject.SetActive(true);
+                _uiHandler.GiveReward();
         }
 
         private void HandleRankCanvasClose()
         {
             ClearEntities();
             CreateMap();
-            _rankViewCanvas.gameObject.SetActive(false);
-            _startGameCanvas.gameObject.SetActive(true);
         }
 
         private void ClearEntities()
@@ -222,42 +154,6 @@ namespace Project.Scripts.CompositionRoot
                 enemySpawner.DisableSpawned();
 
             _playerSpawner.DisableSpawned();
-        }
-
-        private void FillPlayerSquad(PlayerSpawner playerSpawner, Squad squad)
-        {
-            List<Entity> players = new List<Entity>();
-
-            for (int i = 0; i < squad.SpawnPoints.Count; i++)
-            {
-                Player player = playerSpawner.Spawn();
-                player.transform.position = squad.SpawnPoints[i].position;
-
-                players.Add(player);
-            }
-
-            foreach (var player in players)
-                player.Initialize(squad.SquadZone, players, _ballInstance);
-
-            squad.Initialize(players);
-        }
-
-        private void FillEnemySquad(EnemySpawner enemySpawner, Squad squad)
-        {
-            List<Entity> enemies = new List<Entity>();
-
-            for (int i = 0; i < squad.SpawnPoints.Count; i++)
-            {
-                Enemy enemy = enemySpawner.Spawn();
-                enemy.transform.position = squad.SpawnPoints[i].position;
-
-                enemies.Add(enemy);
-            }
-
-            foreach (var enemy in enemies)
-                enemy.Initialize(squad.SquadZone, enemies, _ballInstance);
-
-            squad.Initialize(enemies);
         }
 
         private void HandleRankRaised()

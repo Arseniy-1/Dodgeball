@@ -13,91 +13,91 @@ MonoBehaviour:
   m_Name: AudioSettings
   m_EditorClassIdentifier: 
   _audioData:
-  - _id: 1
-    _clips:
+  - ID: 1
+    Clips:
     - {fileID: 8300000, guid: 2e0dccecbf4834202833e6a134209a5f, type: 3}
-    _volume: 0.542
-    _pitchRange: {x: 0.9983919, y: 0.9983919}
-  - _id: 7
-    _clips:
+    Volume: 0.542
+    PitchRange: {x: 0.9983919, y: 0.9983919}
+  - ID: 7
+    Clips:
     - {fileID: 8300000, guid: 0dc05ad3023cc4154ad83a5db608fdbe, type: 3}
     - {fileID: 8300000, guid: 2c9fefe00a4f04846a5998eb055ab38a, type: 3}
     - {fileID: 8300000, guid: 53e2c695ba3f644ad913da2ec7a7431a, type: 3}
-    _volume: 0.318
-    _pitchRange: {x: 0.87893414, y: 1.274064}
-  - _id: 2
-    _clips:
+    Volume: 0.318
+    PitchRange: {x: 0.87893414, y: 1.274064}
+  - ID: 2
+    Clips:
     - {fileID: 8300000, guid: 7215d80e7d69146bf9d71617855e7b4b, type: 3}
     - {fileID: 8300000, guid: 1e709014bc4cb431a81bb6bdd40842e5, type: 3}
     - {fileID: 8300000, guid: 43a280bbb27ab44b19a7b31b005a6c6b, type: 3}
     - {fileID: 8300000, guid: 8220ab39fbc014b3abc77337fce9b7ba, type: 3}
     - {fileID: 8300000, guid: f41f744abb5314bf08930e984fa57661, type: 3}
-    _volume: 0.435
-    _pitchRange: {x: 1.007581, y: 1.007581}
-  - _id: 4
-    _clips:
+    Volume: 0.435
+    PitchRange: {x: 1.007581, y: 1.007581}
+  - ID: 4
+    Clips:
     - {fileID: 8300000, guid: acb35e321c246433188565a3095c1aae, type: 3}
     - {fileID: 8300000, guid: 52a9204603f7c4235a90df432eba8dc0, type: 3}
     - {fileID: 8300000, guid: 524ec9b7a01ce4e6cbd0b06747254b5c, type: 3}
     - {fileID: 8300000, guid: 8d6b0832f53674860b4e05d1ccd48cc0, type: 3}
     - {fileID: 8300000, guid: da3c93b87cd7549cf81c44b6c8648617, type: 3}
-    _volume: 0.266
-    _pitchRange: {x: 0.9432576, y: 1.1637951}
-  - _id: 6
-    _clips:
+    Volume: 0.266
+    PitchRange: {x: 0.9432576, y: 1.1637951}
+  - ID: 6
+    Clips:
     - {fileID: 8300000, guid: e79f75a5e0fca455cab0744df6da205c, type: 3}
     - {fileID: 8300000, guid: 90451f6f9a7e34cd19b62bef65f8a796, type: 3}
-    _volume: 0.435
-    _pitchRange: {x: 0.96021223, y: 1.1299735}
-  - _id: 3
-    _clips:
+    Volume: 0.435
+    PitchRange: {x: 0.96021223, y: 1.1299735}
+  - ID: 3
+    Clips:
     - {fileID: 8300000, guid: 6b822defcca6b42d09b056e719d49371, type: 3}
     - {fileID: 8300000, guid: 6a602f228d0e44ac598e838e10e3050e, type: 3}
     - {fileID: 8300000, guid: 3bd01136cd94d4fc0b06219c54bf436f, type: 3}
     - {fileID: 8300000, guid: 0c2279698d5e549f4ba7b233963d11bf, type: 3}
-    _volume: 0.237
-    _pitchRange: {x: 1.007581, y: 1.0259591}
-  - _id: 0
-    _clips:
+    Volume: 0.237
+    PitchRange: {x: 1.007581, y: 1.0259591}
+  - ID: 0
+    Clips:
     - {fileID: 8300000, guid: 81a06480f215c484fbde7312575efa4e, type: 3}
-    _volume: 0.5
-    _pitchRange: {x: 0.96754414, y: 1.0391005}
-  - _id: 8
-    _clips:
+    Volume: 0.5
+    PitchRange: {x: 0.96754414, y: 1.0391005}
+  - ID: 0
+    Clips:
     - {fileID: 8300000, guid: 07ec50bf4ed914a2f8e4c1ac09777d7a, type: 3}
-    _volume: 0.5
-    _pitchRange: {x: 1.0026525, y: 1.0026525}
-  - _id: 9
-    _clips:
+    Volume: 0.5
+    PitchRange: {x: 1.0026525, y: 1.0026525}
+  - ID: 9
+    Clips:
     - {fileID: 8300000, guid: ef26659d15c6646d0a8116937f04a938, type: 3}
-    _volume: 0.5
-    _pitchRange: {x: 1.0238727, y: 1.0238727}
-  - _id: 10
-    _clips:
+    Volume: 0.5
+    PitchRange: {x: 1.0238727, y: 1.0238727}
+  - ID: 10
+    Clips:
     - {fileID: 8300000, guid: 996836cf4c8a64266bfdacf5d6cd8dcf, type: 3}
-    _volume: 0.5
-    _pitchRange: {x: 1.066313, y: 1.066313}
-  - _id: 11
-    _clips:
+    Volume: 0.5
+    PitchRange: {x: 1.066313, y: 1.066313}
+  - ID: 11
+    Clips:
     - {fileID: 8300000, guid: d523db420e67a4bdaaed1ce6cbf07579, type: 3}
-    _volume: 0.5
-    _pitchRange: {x: 1.0026525, y: 1.0026525}
-  - _id: 12
-    _clips:
+    Volume: 0.5
+    PitchRange: {x: 1.0026525, y: 1.0026525}
+  - ID: 12
+    Clips:
     - {fileID: 8300000, guid: 79b9635c8983841e2af90a88c9d98481, type: 3}
-    _volume: 0.5
-    _pitchRange: {x: 1.0026525, y: 1.0026525}
-  - _id: 13
-    _clips:
+    Volume: 0.5
+    PitchRange: {x: 1.0026525, y: 1.0026525}
+  - ID: 13
+    Clips:
     - {fileID: 8300000, guid: 996836cf4c8a64266bfdacf5d6cd8dcf, type: 3}
-    _volume: 0.5
-    _pitchRange: {x: 1.0450928, y: 1.0450928}
-  - _id: 14
-    _clips: []
-    _volume: 0.5
-    _pitchRange: {x: 1.0026525, y: 1.0026525}
-  - _id: 15
-    _clips:
+    Volume: 0.5
+    PitchRange: {x: 1.0450928, y: 1.0450928}
+  - ID: 14
+    Clips: []
+    Volume: 0.5
+    PitchRange: {x: 1.0026525, y: 1.0026525}
+  - ID: 15
+    Clips:
     - {fileID: 8300000, guid: b8086ab967945467bb06d64b00948604, type: 3}
-    _volume: 0.5
-    _pitchRange: {x: 1.0132626, y: 1.0132626}
+    Volume: 0.5
+    PitchRange: {x: 1.0132626, y: 1.0132626}

@@ -21,7 +21,7 @@ namespace Project.Scripts.StateMachine.PlayerStates
 
         protected override void SwitchToDodge()
         {
-            StateSwitcher.SwitchState<PlayerDodgeState>();
+            StateSwitcher.SwitchState<PlayerDodgeReadyState>();
         }
     }
 }

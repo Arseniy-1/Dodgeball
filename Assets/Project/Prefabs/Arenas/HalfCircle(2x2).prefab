@@ -767,7 +767,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: _ballUpgradeInfo
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.Type, mscorlib],[BallUpgradeInfo,
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.Type, mscorlib],[Project.Scripts.UpgradeFrame.BallUpdaters.BallUpgradeInfo,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
@@ -787,7 +787,7 @@ MonoBehaviour:
       Data: 2|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: ChargeBallUpgrader, Assembly-CSharp
+      Data: Project.Scripts.UpgradeFrame.BallUpdaters.ChargeBallUpgrade, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -805,7 +805,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: ElectroBallUpgrader, Assembly-CSharp
+      Data: Project.Scripts.UpgradeFrame.BallUpdaters.ElectricBallUpgrade, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -823,7 +823,7 @@ MonoBehaviour:
       Data: 4|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: PoisonBallUpgrader, Assembly-CSharp
+      Data: Project.Scripts.UpgradeFrame.BallUpdaters.PoisonBallUpgrade, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

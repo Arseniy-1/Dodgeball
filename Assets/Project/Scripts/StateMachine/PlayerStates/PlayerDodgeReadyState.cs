@@ -19,16 +19,16 @@ namespace Project.Scripts.StateMachine.PlayerStates
         public override void Enter()
         {
             base.Enter();
-            _playerInputController.ActionButtonStarted += Jump;
+            _playerInputController.ActionButtonStarted += Dodge;
         }
 
         public override void Exit()
         {
             base.Exit();
-            _playerInputController.ActionButtonStarted -= Jump;
+            _playerInputController.ActionButtonStarted -= Dodge;
         }
 
-        private void Jump()
+        private void Dodge()
         {
             StateSwitcher.SwitchState<PlayerDodgeState>();
         }
