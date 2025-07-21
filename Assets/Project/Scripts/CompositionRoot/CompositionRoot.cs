@@ -18,7 +18,7 @@ using YG;
 using AudioSettings = Project.Scripts.Services.AudioService.AudioSettings;
 using Random = UnityEngine.Random;
 
-namespace Project.Scripts.Arena
+namespace Project.Scripts.CompositionRoot
 {
     public class CompositionRoot : MonoBehaviour
     {

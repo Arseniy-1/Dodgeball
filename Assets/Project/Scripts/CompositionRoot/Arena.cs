@@ -11,7 +11,7 @@ using Project.Scripts.UpgradeFrame.BallUpdaters;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Project.Scripts.Arena
+namespace Project.Scripts.CompositionRoot
 {
     public class Arena : MonoBehaviour
     {

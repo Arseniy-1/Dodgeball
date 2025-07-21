@@ -4,7 +4,7 @@ using Project.Scripts.Entities;
 using Project.Scripts.Services;
 using UnityEngine;
 
-namespace Project.Scripts.Arena
+namespace Project.Scripts.CompositionRoot
 {
     public class Squad : MonoBehaviour
     {
