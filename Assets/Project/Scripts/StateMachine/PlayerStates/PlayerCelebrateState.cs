@@ -11,9 +11,20 @@ namespace Project.Scripts.StateMachine.PlayerStates
         private readonly PlayerInputController _inputController;
     
         public PlayerCelebrateState(
-            Player player, AnimatorController animatorController, BallHolder ballHolder,
-            BallThrower ballThrower, CollisionHandler collisionHandler, PlayerInputController playerInputController, List<Entity> teammates)
-            : base(player, animatorController, ballHolder, ballThrower, collisionHandler, teammates)
+            Player player,
+            AnimatorController animatorController,
+            BallHolder ballHolder,
+            BallThrower ballThrower,
+            CollisionHandler collisionHandler,
+            PlayerInputController playerInputController,
+            List<Entity> teammates)
+            : base(
+                player,
+                animatorController,
+                ballHolder,
+                ballThrower,
+                collisionHandler,
+                teammates)
         {
             _inputController = playerInputController;
         }

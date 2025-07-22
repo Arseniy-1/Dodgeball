@@ -7,6 +7,7 @@ using UniRx;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using EffectData = Project.Scripts.Services.EffectService.EffectsSetting.EffectData;
+using Random = UnityEngine.Random;
 
 namespace Project.Scripts.Services.EffectService
 {
@@ -55,7 +56,7 @@ namespace Project.Scripts.Services.EffectService
         {
             if (_spawners.TryGetValue(effectID, out var spawners))
             {
-                EffectsSpawner randomSpawner = spawners[UnityEngine.Random.Range(0, spawners.Count)];
+                EffectsSpawner randomSpawner = spawners[Random.Range(0, spawners.Count)];
                 var effect = randomSpawner.Spawn();
                 effect.transform.position = transform.position;
 

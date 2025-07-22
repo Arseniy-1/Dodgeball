@@ -6,8 +6,18 @@ namespace Project.Scripts.StateMachine.EnemyStates
 {
     public class EnemyDodgeState : EntityDodgeState
     {
-        public EnemyDodgeState(AnimatorController animatorController, CollisionHandler collisionHandler, HitDetector hitDetector, Collider collider)
-            : base(animatorController, collisionHandler, hitDetector, collider) { }
+        public EnemyDodgeState(
+            AnimatorController animatorController,
+            CollisionHandler collisionHandler,
+            HitDetector hitDetector,
+            Collider collider)
+            : base(
+                animatorController,
+                collisionHandler,
+                hitDetector,
+                collider)
+        {
+        }
 
         protected override void OnJumpFinished()
         {

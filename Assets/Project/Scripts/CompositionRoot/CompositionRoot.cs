@@ -33,7 +33,7 @@ namespace Project.Scripts.CompositionRoot
         private Arena _arenaInstance;
 
         private PlayerSpawner _playerSpawner;
-        private List<EnemySpawner> _enemySpawners = new();
+        private List<EnemySpawner> _enemySpawners = new ();
 
         private void Awake()
         {

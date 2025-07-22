@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using Project.Scripts.Entities;
+﻿using Project.Scripts.Entities;
 using Project.Scripts.Services;
+using UnityEngine;
 
 namespace Project.Scripts.UI.Canvases
 {
@@ -16,7 +16,7 @@ namespace Project.Scripts.UI.Canvases
 
         private void HandleHolderChanged(Entity entity)
         {
-            if(entity is Player == false)
+            if (entity is Player == false)
                 return;
         
             gameObject.SetActive(true);

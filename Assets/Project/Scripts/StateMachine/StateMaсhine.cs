@@ -6,7 +6,7 @@ namespace Project.Scripts.StateMachine
 {
     public class StateMaсhine : IStateSwitcher
     {
-        private Dictionary<Type, IState> _states = new();
+        private Dictionary<Type, IState> _states = new ();
         private IState _currentState;
 
         public StateMaсhine(List<IState> states)

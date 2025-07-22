@@ -8,7 +8,7 @@ namespace Project.Scripts.Saves.AnimationSO
     public struct DeathAnimationData
     {
         [HideLabel, HorizontalGroup]
-        public Constans.DeathAnimations AnimationType;
+        public Constants.DeathAnimations AnimationType;
         [HideLabel, HorizontalGroup]
         public string Name;
     }

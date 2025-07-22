@@ -5,7 +5,8 @@ namespace Project.Scripts.ObjectPool.Entity
 {
     public class EnemyPool : Pool<Enemy>
     {
-        public EnemyPool(Enemy prefab, int startAmount) : base(prefab, startAmount)
+        public EnemyPool(Enemy prefab, int startAmount) 
+            : base(prefab, startAmount)
         {
         }
 

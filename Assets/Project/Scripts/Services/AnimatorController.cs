@@ -11,13 +11,13 @@ namespace Project.Scripts.Services
         private readonly Animator _animator;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
-        private readonly int _idle = Animator.StringToHash(Constans.ConstantAnimations.Idle.ToString());
-        private readonly int _run = Animator.StringToHash(Constans.ConstantAnimations.Run.ToString());
+        private readonly int _idle = Animator.StringToHash(Constants.ConstantAnimations.Idle.ToString());
+        private readonly int _run = Animator.StringToHash(Constants.ConstantAnimations.Run.ToString());
 
-        private readonly int _throw = Animator.StringToHash(Constans.ConstantAnimations.Throw.ToString());
-        private readonly int _prepareToThrow = Animator.StringToHash(Constans.ConstantAnimations.PrepareToThrow.ToString());
+        private readonly int _throw = Animator.StringToHash(Constants.ConstantAnimations.Throw.ToString());
+        private readonly int _prepareToThrow = Animator.StringToHash(Constants.ConstantAnimations.PrepareToThrow.ToString());
 
-        private readonly int _dodgeIdle = Animator.StringToHash(Constans.ConstantAnimations.DodgeIdle.ToString());
+        private readonly int _dodgeIdle = Animator.StringToHash(Constants.ConstantAnimations.DodgeIdle.ToString());
 
         public AnimatorController(Animator animator)
         {

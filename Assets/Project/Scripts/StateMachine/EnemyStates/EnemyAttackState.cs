@@ -17,11 +17,28 @@ namespace Project.Scripts.StateMachine.EnemyStates
 
         private CancellationTokenSource _attackCancelationTokenSource;
 
-        public EnemyAttackState(Enemy enemy, CollisionHandler collisionHandler, Collider collider, Rigidbody rigidbody,
-            AnimatorController animatorController, BallHolder ballHolder, TargetScanner targetScanner,
-            TargetProvider targetProvider, List<Entity> teammates, BallThrower ballThrower, EnemyConfig enemyConfig) :
-            base(enemy, collisionHandler, collider, rigidbody, animatorController, 
-                ballHolder, targetScanner, targetProvider, teammates, ballThrower)
+        public EnemyAttackState(
+            Enemy enemy,
+            CollisionHandler collisionHandler, 
+            Collider collider, 
+            Rigidbody rigidbody,
+            AnimatorController animatorController,
+            BallHolder ballHolder,
+            TargetScanner targetScanner,
+            TargetProvider targetProvider,
+            List<Entity> teammates, 
+            BallThrower ballThrower, 
+            EnemyConfig enemyConfig) 
+            : base(
+                enemy, 
+                collisionHandler, 
+                collider, rigidbody,
+                animatorController, 
+                ballHolder,
+                targetScanner, 
+                targetProvider, 
+                teammates,
+                ballThrower)
         {
             _enemyConfig = enemyConfig;
         }

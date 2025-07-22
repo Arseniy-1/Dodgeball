@@ -11,7 +11,7 @@ namespace Project.Scripts.UpgradeFrame
 
         private void Start()
         {
-            //Метод для жизненного цикла юнити
+            // Метод для жизненного цикла юнити
         }
 
         public void Initialize(BallUpgradeInfo ballUpgradeInfo)

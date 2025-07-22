@@ -17,8 +17,13 @@ namespace Project.Scripts.StateMachine.EntityStates
         private readonly List<Entity> _teammates;
         private readonly Rotator _rotator;
 
-        protected EntityCelebrateState(Entity entity, AnimatorController animatorController, BallHolder ballHolder,
-            BallThrower ballThrower, CollisionHandler collisionHandler,List<Entity> teammates)
+        protected EntityCelebrateState(
+            Entity entity,
+            AnimatorController animatorController,
+            BallHolder ballHolder,
+            BallThrower ballThrower,
+            CollisionHandler collisionHandler,
+            List<Entity> teammates)
         {
             _entity = entity;
             _animatorController = animatorController;
@@ -53,7 +58,9 @@ namespace Project.Scripts.StateMachine.EntityStates
         {
         }
 
-        public virtual void Update() { }
+        public virtual void Update()
+        {
+        }
 
         private Transform GetTargetTransform()
         {

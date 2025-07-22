@@ -7,9 +7,12 @@ namespace Project.Scripts.Saves.AnimationSO
     [Serializable]
     public struct CelebrateAnimationData
     {
-        [HideLabel, HorizontalGroup]
-        public Constans.CelebrateAnimations AnimationType;
-        [HideLabel, HorizontalGroup]
+        [HideLabel] 
+        [HorizontalGroup]
+        public Constants.CelebrateAnimations AnimationType;
+        
+        [HideLabel]
+        [HorizontalGroup]
         public string Name;
     }
 }

@@ -28,10 +28,17 @@ namespace Project.Scripts.StateMachine.EntityStates
     
         protected IStateSwitcher StateSwitcher;
 
-        protected EntityAttackState(Entity entity, CollisionHandler collisionHandler,
-            Collider collider, Rigidbody rigidbody, AnimatorController animatorController, BallHolder ballHolder,
-            TargetScanner targetScanner, TargetProvider targetProvider,
-            List<Entity> teammates, BallThrower ballThrower)
+        protected EntityAttackState(
+            Entity entity,
+            CollisionHandler collisionHandler,
+            Collider collider,
+            Rigidbody rigidbody,
+            AnimatorController animatorController,
+            BallHolder ballHolder,
+            TargetScanner targetScanner,
+            TargetProvider targetProvider,
+            List<Entity> teammates,
+            BallThrower ballThrower)
         {
             _entity = entity;
             _collisionHandler = collisionHandler;
@@ -45,11 +52,6 @@ namespace Project.Scripts.StateMachine.EntityStates
             _ballThrower = ballThrower;
 
             _rotator = new Rotator();
-        }
-
-        public void Initialize(IStateSwitcher stateSwitcher)
-        {
-            StateSwitcher = stateSwitcher;
         }
 
         public virtual void Enter()
@@ -70,6 +72,11 @@ namespace Project.Scripts.StateMachine.EntityStates
             _rigidbody.isKinematic = false;
             _collisionHandler.enabled = true;
             _collider.enabled = true;
+        }
+        
+        public void Initialize(IStateSwitcher stateSwitcher)
+        {
+            StateSwitcher = stateSwitcher;
         }
 
         public virtual void Update()

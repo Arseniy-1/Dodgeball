@@ -7,7 +7,7 @@ namespace Project.Scripts.UI.View
     {
         [SerializeField] private Slider _bar;
 
-        protected float TargetFill;
+        protected float TargetFill { get; private set; }
 
         protected void OnValueChanged(int current, int max)
         {

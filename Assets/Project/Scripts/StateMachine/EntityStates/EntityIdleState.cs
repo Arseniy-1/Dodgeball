@@ -29,8 +29,16 @@ namespace Project.Scripts.StateMachine.EntityStates
         protected IStateSwitcher StateSwitcher;
 
         protected EntityIdleState(
-            AnimatorController animatorController, Ball ball, Mover mover, CollisionHandler collisionHandler, Collider squadZone,
-            Collider collider, Rigidbody rigidbody, Entity entity, EntityConfig entityConfig, List<Entity> teammates)
+            AnimatorController animatorController,
+            Ball ball,
+            Mover mover,
+            CollisionHandler collisionHandler,
+            Collider squadZone,
+            Collider collider,
+            Rigidbody rigidbody,
+            Entity entity,
+            EntityConfig entityConfig,
+            List<Entity> teammates)
         {
             _animatorController = animatorController;
             _ball = ball;

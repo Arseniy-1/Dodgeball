@@ -16,7 +16,7 @@ namespace YG
         public ProgressData ProgressData = new();
 
         public RankHolder RankHolder;
-        
+
         public void InitializeStartSaves(StartAnimationsData startAnimationsData, RankHolder rankHolder)
         {
             RankHolder = rankHolder;
@@ -25,6 +25,25 @@ namespace YG
             SetStartAnimations();
 
             YG2.SaveProgress();
+        }
+
+        public void ResetProgress()
+        {
+            AnimationsHolder.ResetAnimations();
+            SetStartAnimations();
+            ProgressData.IsFirstSession = true;
+            RankHolder.Reset();
+            ResetLanguage();
+
+            YG2.SetLeaderboard("Leaderboard", ProgressData.CurrentRank);
+            YG2.SaveProgress();
+        }
+
+        public void ResetLanguage()
+        {
+            LocalizationManager.Language = Languages.ru.ToString();
+            YG2.lang = Languages.ru.ToString();
+            YG2.SwitchLanguage(Languages.ru.ToString());
         }
 
         private void SetStartAnimations()
@@ -40,25 +59,6 @@ namespace YG
 
             foreach (var animation in StartAnimationsData.PrepareAnimations)
                 YG2.saves.AnimationsHolder.AddPrepareAnimation(animation);
-        }
-
-        public void ResetProgress()
-        {
-            AnimationsHolder.ResetAnimations();
-            SetStartAnimations();
-            ProgressData.IsFirstSession = true;
-            RankHolder.Reset();
-            ResetLanguage();
-            
-            YG2.SetLeaderboard("Leaderboard", ProgressData.CurrentRank);
-            YG2.SaveProgress();
-        }
-
-        public void ResetLanguage()
-        {
-            LocalizationManager.Language = Languages.ru.ToString();
-            YG2.lang = Languages.ru.ToString();
-            YG2.SwitchLanguage(Languages.ru.ToString());
         }
     }
 }

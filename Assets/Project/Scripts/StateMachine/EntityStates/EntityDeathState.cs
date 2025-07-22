@@ -12,8 +12,12 @@ namespace Project.Scripts.StateMachine.EntityStates
         private readonly BallHolder _ballHolder;
         private readonly BallThrower _ballThrower;
 
-        protected EntityDeathState(AnimatorController animatorController, CollisionHandler collisionHandler, 
-            Collider collider, BallHolder ballHolder, BallThrower ballThrower)
+        protected EntityDeathState(
+            AnimatorController animatorController,
+            CollisionHandler collisionHandler,
+            Collider collider,
+            BallHolder ballHolder,
+            BallThrower ballThrower)
         {
             _animatorController = animatorController;
             _collisionHandler = collisionHandler;
@@ -42,6 +46,8 @@ namespace Project.Scripts.StateMachine.EntityStates
         {
         }
 
-        public virtual void Update() { }
+        public virtual void Update()
+        {
+        }
     }
 }

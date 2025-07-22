@@ -7,8 +7,18 @@ namespace Project.Scripts.StateMachine.EnemyStates
 {
     public class EnemyPrepareState : EntityPrepareState
     {
-        public EnemyPrepareState(Enemy enemy, AnimatorController animatorController, TargetScanner targetScanner, List<Entity> teammates)
-            : base(enemy, animatorController, targetScanner, teammates) { }
+        public EnemyPrepareState(
+            Enemy enemy,
+            AnimatorController animatorController,
+            TargetScanner targetScanner,
+            List<Entity> teammates)
+            : base(
+                enemy,
+                animatorController,
+                targetScanner,
+                teammates)
+        {
+        }
 
         protected override void HandleStartGame()
         {

@@ -15,6 +15,12 @@ namespace Project.Scripts.CompositionRoot
 {
     public class Arena : MonoBehaviour
     {
+        private readonly int _maxWinRankAmount = 40;
+        private readonly int _minWinRankAmount = 15; 
+
+        private readonly int _maxLoseRankAmount = 10;
+        private readonly int _minLoseRankAmount = 3;
+        
         [SerializeField] private List<Squad> _squads;
         [SerializeField] private Transform _ballPosition;
         [SerializeField] private BallUpgraderFabric _ballUpgraderFabric;
@@ -28,15 +34,9 @@ namespace Project.Scripts.CompositionRoot
         private List<Squad> _deathSquads;
         private CancellationTokenSource _cancellationTokenSource;
 
-        private readonly int _maxWinRankAmount = 40;
-        private readonly int _minWinRankAmount = 15; 
-
-        private readonly int _maxLoseRankAmount = 10;
-        private readonly int _minLoseRankAmount = 3;
+        public event Action<int> GameOver;
 
         public List<Squad> Squads => _squads;
-
-        public event Action<int> GameOver;
 
         private void Awake()
         {
@@ -111,11 +111,11 @@ namespace Project.Scripts.CompositionRoot
 
             void Handler(Frame frame)
             {
-                selectedFrame.OnFrameHitted -= Handler;
+                selectedFrame.OnFrameHit -= Handler;
                 taskCompletionSource.SetResult(true);
             }
 
-            selectedFrame.OnFrameHitted += Handler;
+            selectedFrame.OnFrameHit += Handler;
             selectedFrame.Activate(_ballUpgraders[Random.Range(0, _ballUpgraders.Count)]);
 
             await taskCompletionSource.Task;

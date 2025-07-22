@@ -17,9 +17,12 @@ namespace Project.Scripts.UpgradeFrame.BallUpdaters
     
         private const float ExplosionRadius = 2;
 
+        private Collider[] _hitCollidersBuffer = new Collider[20];
+        
         private CompositeDisposable _compositeDisposable;
 
-        public PoisonBallUpgrade(BallUpgradeInfo ballUpgradeInfo) : base(ballUpgradeInfo)
+        public PoisonBallUpgrade(BallUpgradeInfo ballUpgradeInfo) 
+            : base(ballUpgradeInfo)
         {
         }
 
@@ -39,16 +42,20 @@ namespace Project.Scripts.UpgradeFrame.BallUpdaters
         {
             EffectID.PoisonExplosion.PlayEffect(ballTransform);
 
-            Collider[] hitColliders = Physics.OverlapSphere(collision.transform.position, ExplosionRadius);
+            int hitsCount = Physics.OverlapSphereNonAlloc(
+                collision.transform.position, 
+                ExplosionRadius, 
+                _hitCollidersBuffer
+            );
 
-            foreach (var hitCollider in hitColliders)
+            for (int i = 0; i < hitsCount; i++)
             {
-                if (hitCollider.TryGetComponent(out Health.Health health))
+                if (_hitCollidersBuffer[i].TryGetComponent(out Health.Health health))
                 {
                     TakePoisonDamage(health).Forget();
                 }
             }
-        
+
             _compositeDisposable.Dispose();
         }
 

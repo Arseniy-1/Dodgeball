@@ -1,4 +1,3 @@
-
 namespace Project.Scripts.StateMachine
 {
     public interface IState

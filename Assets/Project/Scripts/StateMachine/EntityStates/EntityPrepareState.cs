@@ -18,7 +18,11 @@ namespace Project.Scripts.StateMachine.EntityStates
 
         protected IStateSwitcher StateSwitcher;
 
-        protected EntityPrepareState(Entity entity, AnimatorController animatorController, TargetScanner targetScanner, List<Entity> teammates)
+        protected EntityPrepareState(
+            Entity entity,
+            AnimatorController animatorController,
+            TargetScanner targetScanner,
+            List<Entity> teammates)
         {
             _entity = entity;
             _animatorController = animatorController;
@@ -50,7 +54,9 @@ namespace Project.Scripts.StateMachine.EntityStates
             _disposable.Dispose();
         }
 
-        public virtual void Update() { }
+        public virtual void Update()
+        {
+        }
 
         protected abstract void HandleStartGame();
     

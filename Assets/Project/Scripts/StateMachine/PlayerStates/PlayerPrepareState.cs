@@ -11,8 +11,16 @@ namespace Project.Scripts.StateMachine.PlayerStates
     {
         private readonly Transform _playerTransform;
     
-        public PlayerPrepareState(Player player, AnimatorController animatorController, TargetScanner targetScanner, List<Entity> teammates)
-            : base(player, animatorController, targetScanner, teammates)
+        public PlayerPrepareState(
+            Player player,
+            AnimatorController animatorController,
+            TargetScanner targetScanner,
+            List<Entity> teammates)
+            : base(
+                player,
+                animatorController,
+                targetScanner,
+                teammates)
         {
             _playerTransform = player.transform;
         }

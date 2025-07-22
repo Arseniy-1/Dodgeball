@@ -16,7 +16,7 @@ namespace Project.Scripts.UI.Canvases
 
         private void HandleHolderChanged(Entity entity)
         {
-            if(entity is Enemy == false)
+            if (entity is Enemy == false)
                 return;
 
             Time.timeScale = 0.25f;

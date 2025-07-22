@@ -17,18 +17,6 @@ namespace Project.Scripts.UI
             UpdateView();
         }
 
-        private void UpdateView()
-        {
-            if (IsEnabled())
-            {
-                _view.sprite = _enabledSprite;
-            }
-            else
-            {
-                _view.sprite = _disabledSprite;
-            }
-        }
-
         protected override void HandleButtonClick()
         {
             Toggle();
@@ -42,5 +30,17 @@ namespace Project.Scripts.UI
         }
     
         protected abstract bool IsEnabled();
+        
+        private void UpdateView()
+        {
+            if (IsEnabled())
+            {
+                _view.sprite = _enabledSprite;
+            }
+            else
+            {
+                _view.sprite = _disabledSprite;
+            }
+        }
     }
 }

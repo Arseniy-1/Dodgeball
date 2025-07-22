@@ -11,28 +11,25 @@ namespace Project.Scripts.Entities
 {
     public abstract class Entity : MonoBehaviour
     {
-        [SerializeField] protected BallThrower BallThrower;
-        [SerializeField] protected BallHolder BallHolder;
-        [SerializeField] protected CollisionHandler CollisionHandler;
-        [SerializeField] protected TargetScanner TargetScanner;
-        [SerializeField] protected Mover Mover;
-        [SerializeField] protected Health.Health Health;
-        [SerializeField] protected List<Entity> Teammates;
-        [SerializeField] protected Animator Animator;
-        [SerializeField] protected HitDetector HitDetector;
-    
-        [SerializeField] protected HealthCanvas HealthCanvas;
-    
-        protected TargetProvider TargetProvider = new();
-        protected Collider SquadZone;
-        protected Collider Collider;
-        protected Rigidbody Rigidbody;
-        protected AnimatorController AnimatorController;
+        [field: SerializeField] protected BallThrower BallThrower { get; private set; }
+        [field: SerializeField] protected BallHolder BallHolder { get; private set; }
+        [field: SerializeField] protected CollisionHandler CollisionHandler { get; private set; }
+        [field: SerializeField] protected TargetScanner TargetScanner { get; private set; }
+        [field: SerializeField] protected Mover Mover { get; private set; }
+        [field: SerializeField] protected Health.Health Health { get; private set; }
+        [field: SerializeField] protected List<Entity> Teammates { get; private set; }
+        [field: SerializeField] protected Animator Animator { get; private set; }
+        [field: SerializeField] protected HitDetector HitDetector { get; private set; }
+        [field: SerializeField] protected HealthCanvas HealthCanvas { get; private set; }
+        [field: SerializeField] protected Ball Ball { get; private set; }
 
-        protected StateMaсhine StateMachine;
+        protected TargetProvider TargetProvider { get; private set; } = new ();
+        protected Collider SquadZone { get; private set; }
+        protected Collider Collider { get; private set; }
+        protected Rigidbody Rigidbody { get; private set; }
+        protected AnimatorController AnimatorController { get; private set; }
+        protected StateMaсhine StateMachine { get; private set; }
 
-        [SerializeField] protected Ball Ball;
-    
         private void OnEnable()
         {
             Health.LostHealth += HandleLostHealth;
@@ -47,7 +44,7 @@ namespace Project.Scripts.Entities
         {
             StateMachine.Update();
         }
-
+        
         public virtual void Initialize(Collider squadZone, List<Entity> teammates, Ball ball)
         {
             Collider = GetComponent<Collider>();
@@ -55,7 +52,6 @@ namespace Project.Scripts.Entities
             Teammates = teammates;
             SquadZone = squadZone;
             Health.Initialize(CollisionHandler);
-            Ball = ball;
 
             if (Animator != null)
                 AnimatorController = new AnimatorController(Animator);
@@ -97,6 +93,11 @@ namespace Project.Scripts.Entities
             }
 
             transform.position = target;
+        }
+
+        protected void CreateStateMachine(List<IState> states)
+        {
+            StateMachine = new StateMaсhine(states);
         }
     }
 }

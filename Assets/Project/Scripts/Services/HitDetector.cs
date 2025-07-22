@@ -10,15 +10,17 @@ namespace Project.Scripts.Services
 
         private void Start()
         {
-            //Метод для жизненного цикла юнити
+            // Метод для жизненного цикла юнити
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.TryGetComponent(out Chargeable chargeable))
+            if (other.TryGetComponent(out Chargeable chargeable))
             {
-                if(chargeable.IsCharged)
+                if (chargeable.IsCharged)
+                {
                     DetectBallHit?.Invoke();
+                }
             }
         }
     }

@@ -22,8 +22,15 @@ namespace Project.Scripts.StateMachine.EntityStates
         private CancellationTokenSource _cancellationTokenSource;
         protected IStateSwitcher StateSwitcher;
 
-        protected EntityMoveState(Entity entity, AnimatorController animatorController, CollisionHandler collisionHandler,
-            Collider squadZone, BallHolder ballHolder, Collider collider, EntityConfig entityConfig, Mover mover)
+        protected EntityMoveState(
+            Entity entity,
+            AnimatorController animatorController,
+            CollisionHandler collisionHandler,
+            Collider squadZone,
+            BallHolder ballHolder,
+            Collider collider,
+            EntityConfig entityConfig,
+            Mover mover)
         {
             _entity = entity;
             _animatorController = animatorController;

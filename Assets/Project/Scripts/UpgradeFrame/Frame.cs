@@ -19,13 +19,13 @@ namespace Project.Scripts.UpgradeFrame
 
         private int _currentWaypoint = 0;
 
-        public event Action<Frame> OnFrameHitted;
+        public event Action<Frame> OnFrameHit;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out Chargeable chargeable))
             {
-                if(chargeable.IsCharged == false)
+                if (chargeable.IsCharged == false)
                     return;
             
                 if (chargeable.TryGetComponent(out Ball ball))
@@ -41,7 +41,9 @@ namespace Project.Scripts.UpgradeFrame
             if (transform.position == _waypoints[_currentWaypoint].position)
                 _currentWaypoint = (_currentWaypoint + 1) % _waypoints.Count;
 
-            transform.position = Vector3.MoveTowards(transform.position, _waypoints[_currentWaypoint].position,
+            transform.position = Vector3.MoveTowards(
+                transform.position, 
+                _waypoints[_currentWaypoint].position,
                 _speed * Time.deltaTime);
         }
 
@@ -60,7 +62,7 @@ namespace Project.Scripts.UpgradeFrame
             _collider.enabled = false;
             _frameView.gameObject.SetActive(false);
 
-            OnFrameHitted?.Invoke(this);
+            OnFrameHit?.Invoke(this);
         }
     }
 }

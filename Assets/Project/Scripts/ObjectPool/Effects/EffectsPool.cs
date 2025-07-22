@@ -2,18 +2,19 @@
 
 namespace Project.Scripts.ObjectPool.Effects
 {
-    public class EffectsPool: Pool<Effect>
+    public class EffectsPool : Pool<Effect>
     {
         private readonly Transform _parent;
     
-        public EffectsPool(Effect prefab, int startAmount, Transform parent) : base(prefab, startAmount)
+        public EffectsPool(Effect prefab, int startAmount, Transform parent) 
+            : base(prefab, startAmount)
         {
             _parent = parent;
         }
         
         protected override Effect Create()
         {
-            var effect =  Object.Instantiate(Prefab, _parent);
+            var effect = Object.Instantiate(Prefab, _parent);
             effect.gameObject.SetActive(false);
             
             return effect;

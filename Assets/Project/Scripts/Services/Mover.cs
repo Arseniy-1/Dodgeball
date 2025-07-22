@@ -20,7 +20,6 @@ namespace Project.Scripts.Services
 
             while (this != null && cancellationToken.IsCancellationRequested == false && Vector3.Distance(transform.position, target) > _stoppingDistance)
             {
-                // Debug.Log("MovingIteration");
                 cancellationToken.ThrowIfCancellationRequested();
 
                 Vector3 direction = (target - transform.position);
@@ -29,8 +28,7 @@ namespace Project.Scripts.Services
                 transform.position = Vector3.MoveTowards(
                     transform.position,
                     transform.position + direction,
-                    speed * Time.deltaTime
-                );
+                    speed * Time.deltaTime);
 
                 TrackStep();
                 await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
@@ -54,9 +52,11 @@ namespace Project.Scripts.Services
         private void TrackStep()
         {
             float moved = Vector3.Distance(transform.position, _lastPosition);
+            float minStepDistance = 0.001f;
+            
             _distanceSinceLastStep += moved;
 
-            if (moved > 0.001f && _distanceSinceLastStep >= _stepDistanceThreshold)
+            if (moved > minStepDistance && _distanceSinceLastStep >= _stepDistanceThreshold)
             {
                 AudioID.Walk.PlayOneShot();
                 _distanceSinceLastStep = 0f;

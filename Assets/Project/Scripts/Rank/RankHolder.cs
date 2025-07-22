@@ -7,14 +7,13 @@ namespace Project.Scripts.Rank
     {
         private const int MaxAmount = 100;
 
-        public int CurrentRank { get; private set; }
-
         private int _currentAmount;
         private int _previousAmount;
 
         public event Action<int, int> RankAmountChanged;
         public event Action RankRaised;
 
+        public int CurrentRank { get; private set; }
         public int CurrentAmount => _currentAmount;
         public int PreviousAmount => _previousAmount;
         public int MaxRankAmount => MaxAmount;

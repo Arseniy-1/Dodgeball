@@ -12,10 +12,25 @@ namespace Project.Scripts.StateMachine.PlayerStates
         private readonly Player _player;
         private readonly List<Entity> _teammates;
 
-        public PlayerMoveState(Player player, AnimatorController animatorController, List<Entity> teammates,
-            PlayerConfig playerConfig, CollisionHandler collisionHandler, Collider squadZone,
-            BallHolder ballHolder, Collider collider, Mover mover)
-            : base(player, animatorController, collisionHandler, squadZone, ballHolder, collider, playerConfig, mover)
+        public PlayerMoveState(
+            Player player,
+            AnimatorController animatorController,
+            List<Entity> teammates,
+            PlayerConfig playerConfig,
+            CollisionHandler collisionHandler,
+            Collider squadZone,
+            BallHolder ballHolder,
+            Collider collider,
+            Mover mover)
+            : base(
+                player,
+                animatorController,
+                collisionHandler,
+                squadZone,
+                ballHolder,
+                collider,
+                playerConfig,
+                mover)
         {
             _player = player;
             _teammates = teammates;

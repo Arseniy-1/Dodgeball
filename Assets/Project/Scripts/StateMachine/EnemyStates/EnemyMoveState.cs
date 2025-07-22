@@ -12,10 +12,25 @@ namespace Project.Scripts.StateMachine.EnemyStates
         private readonly Enemy _enemy;   
         private readonly List<Entity> _teammates;
 
-        public EnemyMoveState(Enemy enemy, AnimatorController animatorController,List<Entity> teammates, EnemyConfig enemyConfig,
-            CollisionHandler collisionHandler, Collider squadZone,
-            BallHolder ballHolder, Collider collider, Mover mover)
-            : base(enemy, animatorController, collisionHandler, squadZone, ballHolder, collider, enemyConfig, mover)
+        public EnemyMoveState(
+            Enemy enemy,
+            AnimatorController animatorController,
+            List<Entity> teammates,
+            EnemyConfig enemyConfig,
+            CollisionHandler collisionHandler,
+            Collider squadZone,
+            BallHolder ballHolder,
+            Collider collider,
+            Mover mover)
+            : base(
+                enemy,
+                animatorController,
+                collisionHandler,
+                squadZone,
+                ballHolder,
+                collider,
+                enemyConfig,
+                mover)
         {
             _enemy = enemy;
             _teammates = teammates;

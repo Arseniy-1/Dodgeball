@@ -9,9 +9,23 @@ namespace Project.Scripts.StateMachine.PlayerStates
     {
         private readonly PlayerInputController _playerInputController;
     
-        public PlayerDodgeReadyState(Player player, AnimatorController animatorController, Ball ball, Mover mover, Collider squadZone, 
-            Rigidbody rigidbody, PlayerConfig playerConfig, PlayerInputController playerInputController)
-            : base(player, animatorController, ball, mover, squadZone, rigidbody, playerConfig)
+        public PlayerDodgeReadyState(
+            Player player,
+            AnimatorController animatorController,
+            Ball ball,
+            Mover mover,
+            Collider squadZone,
+            Rigidbody rigidbody,
+            PlayerConfig playerConfig,
+            PlayerInputController playerInputController)
+            : base(
+                player,
+                animatorController,
+                ball,
+                mover,
+                squadZone,
+                rigidbody,
+                playerConfig)
         {
             _playerInputController = playerInputController;
         }
@@ -28,11 +42,6 @@ namespace Project.Scripts.StateMachine.PlayerStates
             _playerInputController.ActionButtonStarted -= Dodge;
         }
 
-        private void Dodge()
-        {
-            StateSwitcher.SwitchState<PlayerDodgeState>();
-        }
-
         protected override void HandleBallZoneChanged(Collider zone)
         {
             if(GameStatusService.Instance.IsBallFree == false)
@@ -40,6 +49,11 @@ namespace Project.Scripts.StateMachine.PlayerStates
         
             if (zone == SquadZone)
                 StateSwitcher.SwitchState<PlayerMoveState>();
+        }
+     
+        private void Dodge()
+        {
+            StateSwitcher.SwitchState<PlayerDodgeState>();
         }
     }
 }

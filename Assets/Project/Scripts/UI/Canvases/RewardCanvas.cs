@@ -13,9 +13,15 @@ namespace Project.Scripts.UI.Canvases
     public class RewardCanvas : InteractiveCanvas
     {
         [SerializeField] private BoxView _boxView;
-        [SerializeField, Range(0, 5)] private float _boxAnimationDuration;
-        [SerializeField, Range(0, 8)] private float _boxEndScale = 1.5f;
-        [SerializeField, Range(0, 3)] private float _boxWhiteFadeDuration = 0.3f;
+        
+        [Range(0, 5)]
+        [SerializeField] private float _boxAnimationDuration;
+        
+        [Range(0, 8)]
+        [SerializeField] private float _boxEndScale = 1.5f;
+        
+        [Range(0, 3)]
+        [SerializeField] private float _boxWhiteFadeDuration = 0.3f;
 
         [SerializeField] private ModelView _modelView;
         [SerializeField] private PlayerInputController _playerInputController;

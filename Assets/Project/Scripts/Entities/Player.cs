@@ -15,7 +15,7 @@ namespace Project.Scripts.Entities
         [SerializeField] private PlayerInputController _inputController;
         [SerializeField] private PlayerConfig _playerConfig;
 
-        private List<IState> _playerStates = new();
+        private List<IState> _playerStates = new ();
 
         public event Action<Player> OnDestroyed;
 
@@ -44,26 +44,12 @@ namespace Project.Scripts.Entities
                 new PlayerDeathState(AnimatorController, CollisionHandler, Collider, BallHolder, BallThrower),
             };
 
-            StateMachine = new StateMaсhine(_playerStates);
+            CreateStateMachine(_playerStates);
 
             foreach (var state in _playerStates)
                 state.Initialize(StateMachine);
 
             Reset();
-        }
-    
-        [Button]
-        protected override async void HandleLostHealth()
-        {
-            StateMachine.SwitchState<PlayerDeathState>();
-            HealthCanvas.gameObject.SetActive(false);
-            EffectID.Death.PlayEffect(transform);
-            AudioID.Dead.PlayOneShot();
-        
-            await AnimatorController.Death();
-            await HideEntity();
-
-            Die();
         }
     
         public override void Celebrate()
@@ -77,6 +63,20 @@ namespace Project.Scripts.Entities
         {
             base.Die();
             OnDestroyed?.Invoke(this);
+        }
+        
+        [Button]
+        protected override async void HandleLostHealth()
+        {
+            StateMachine.SwitchState<PlayerDeathState>();
+            HealthCanvas.gameObject.SetActive(false);
+            EffectID.Death.PlayEffect(transform);
+            AudioID.Dead.PlayOneShot();
+        
+            await AnimatorController.Death();
+            await HideEntity();
+
+            Die();
         }
     }
 }

@@ -7,7 +7,8 @@ namespace Project.Scripts.UpgradeFrame.BallUpdaters
     {
         private const float ElectricForce = 20f;
     
-        public ElectricBallUpgrade(BallUpgradeInfo ballUpgradeInfo) : base(ballUpgradeInfo)
+        public ElectricBallUpgrade(BallUpgradeInfo ballUpgradeInfo) 
+            : base(ballUpgradeInfo)
         {
         }
 

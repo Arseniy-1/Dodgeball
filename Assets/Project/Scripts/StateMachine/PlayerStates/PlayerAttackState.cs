@@ -16,10 +16,29 @@ namespace Project.Scripts.StateMachine.PlayerStates
         private Action _buttonCanceledHandler;
         private Action _buttonStartedHandler;
 
-        public PlayerAttackState(Player player, CollisionHandler collisionHandler, Collider collider, Rigidbody rigidbody,
-            AnimatorController animatorController, BallHolder ballHolder, TargetScanner targetScanner, TargetProvider targetProvider,
-            List<Entity> teammates, PlayerInputController inputController, BallThrower ballThrower) :
-            base(player, collisionHandler, collider, rigidbody, animatorController, ballHolder, targetScanner, targetProvider, teammates, ballThrower)
+        public PlayerAttackState(
+            Player player,
+            CollisionHandler collisionHandler,
+            Collider collider,
+            Rigidbody rigidbody,
+            AnimatorController animatorController,
+            BallHolder ballHolder,
+            TargetScanner targetScanner,
+            TargetProvider targetProvider,
+            List<Entity> teammates,
+            PlayerInputController inputController,
+            BallThrower ballThrower)
+            : base(
+                player,
+                collisionHandler,
+                collider,
+                rigidbody,
+                animatorController,
+                ballHolder,
+                targetScanner,
+                targetProvider,
+                teammates,
+                ballThrower)
         {
             _inputController = inputController;
         }

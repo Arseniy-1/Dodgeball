@@ -12,7 +12,7 @@ namespace Project.Scripts.ObjectPool
         protected T Prefab;
         protected Pool<T> Pool;
         
-        private List<T> _spawned = new();
+        private List<T> _spawned = new ();
 
         public void DisableSpawned()
         {

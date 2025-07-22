@@ -7,9 +7,12 @@ namespace Project.Scripts.Saves.AnimationSO
     [Serializable]
     public struct PrepareAnimationData
     {
-        [HideLabel, HorizontalGroup]
-        public Constans.PrepareAnimations AnimationType;
-        [HideLabel, HorizontalGroup]
+        [HideLabel]
+        [HorizontalGroup]
+        public Constants.PrepareAnimations AnimationType;
+        
+        [HideLabel] 
+        [HorizontalGroup]
         public string Name;
     }
 }

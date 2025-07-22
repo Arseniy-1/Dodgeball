@@ -7,8 +7,19 @@ namespace Project.Scripts.StateMachine.EnemyStates
 {
     public class EnemyDeathState : EntityDeathState
     {
-        public EnemyDeathState(AnimatorController animatorController, CollisionHandler collisionHandler,
-            Collider collider, BallHolder ballHolder,BallThrower ballThrower) 
-            : base(animatorController, collisionHandler, collider, ballHolder, ballThrower) { }
+        public EnemyDeathState(
+            AnimatorController animatorController,
+            CollisionHandler collisionHandler,
+            Collider collider,
+            BallHolder ballHolder,
+            BallThrower ballThrower)
+            : base(
+                animatorController,
+                collisionHandler,
+                collider,
+                ballHolder,
+                ballThrower)
+        {
+        }
     }
 }

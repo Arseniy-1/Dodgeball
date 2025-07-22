@@ -26,8 +26,12 @@ namespace Project.Scripts.StateMachine.EntityStates
         protected IStateSwitcher StateSwitcher;
 
         protected EntityDodgeReadyState(
-            Entity entity, AnimatorController animatorController, Ball ball,
-            Mover mover, Collider squadZone, Rigidbody rigidbody,
+            Entity entity,
+            AnimatorController animatorController,
+            Ball ball,
+            Mover mover,
+            Collider squadZone,
+            Rigidbody rigidbody,
             EntityConfig entityConfig)
         {
             _entity = entity;
@@ -87,8 +91,7 @@ namespace Project.Scripts.StateMachine.EntityStates
             {
                 float standTime = Random.Range(
                     _entityConfig.DodgeDirectionChangeMinTime,
-                    _entityConfig.DodgeDirectionChangeMaxTime
-                );
+                    _entityConfig.DodgeDirectionChangeMaxTime);
 
                 Vector3 target = _areaPointSelector.GetRandomPointInZone(SquadZone, _entity.transform.position);
                 _animatorController.DodgeIdle();

@@ -7,15 +7,19 @@ namespace Project.Scripts.Services
     public class GameStatusService
     {
         private static GameStatusService _instance;
-        public static GameStatusService Instance => _instance ??= new GameStatusService();
 
         private Scripts.Ball _ball;
         private Entity _currentHolder;
         private Collider _currentZone;
+   
+        private GameStatusService()
+        {
+        }
 
         public event Action<Entity> OnHolderChanged;
         public event Action<Collider> OnZoneChanged;
 
+        public static GameStatusService Instance => _instance ??= new GameStatusService();
         public Scripts.Ball CurrentBall => _ball;
         public bool IsBallFree => _ball.Chargeable.IsCharged == false && _currentHolder == null;
 
@@ -42,11 +46,7 @@ namespace Project.Scripts.Services
                 _currentZone = value;
             }
         }
-
-        private GameStatusService()
-        {
-        }
-
+        
         public void Initialize(Scripts.Ball ball)
         {
             ClearHolder();

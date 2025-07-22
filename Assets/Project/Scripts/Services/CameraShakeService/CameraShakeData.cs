@@ -7,11 +7,17 @@ namespace Project.Scripts.Services.CameraShakeService
     public class CameraShakeData
     {
         [field: SerializeField] public ShakeID ShakeId { get; private set; }
-        [field: SerializeField, Range(0, 5f)] public float Duration { get; private set; }
-        [field: SerializeField, Range(0, 1f)] public float Strength { get; private set; }
-        [field: SerializeField, Range(0, 20)] public int Vibrato { get; private set; }
+        
+        [field: Range(0, 5f)]
+        [field: SerializeField] public float Duration { get; private set; }
+        
+        [field: Range(0, 1f)]
+        [field: SerializeField] public float Strength { get; private set; }
+        
+        [field: Range(0, 20)]
+        [field: SerializeField] public int Vibrato { get; private set; }
 
-        [field: SerializeField, Range(0, 180f)]
-        public float Randomness { get; private set; }
+        [field: Range(0, 180f)]
+        [field: SerializeField] public float Randomness { get; private set; }
     }
 }

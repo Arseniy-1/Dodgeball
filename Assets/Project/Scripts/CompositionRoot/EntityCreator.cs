@@ -7,7 +7,7 @@ namespace Project.Scripts.CompositionRoot
 {
     public class EntityCreator
     {
-        public  void FillPlayerSquad(PlayerSpawner playerSpawner, Squad squad)
+        public void FillPlayerSquad(PlayerSpawner playerSpawner, Squad squad)
         {
             List<Entity> players = new List<Entity>();
 

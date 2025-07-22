@@ -41,7 +41,7 @@ namespace Project.Scripts.CompositionRoot
             _rewardButton.RewardButtonClicked += ShowReward;
         }
 
-        public  void Disable()
+        public void Disable()
         {
             _startGameCanvas.StartGameButtonPressed -= StartGame;
             _rankViewCanvas.OnRewardViewClosed -= HandleRankCanvasClose;
@@ -53,6 +53,25 @@ namespace Project.Scripts.CompositionRoot
             _startGameCanvas.gameObject.SetActive(true);
         }
 
+        public void GiveReward()
+        {
+            _startGameCanvas.gameObject.SetActive(false);
+            _rewardCanvas.gameObject.SetActive(true);
+
+            _rewardCanvas.RewardCanvasClosed += HandleRewardCanvasClosed;
+        }
+        
+        public async UniTask GameOver()
+        {
+            _gameCanvas.gameObject.SetActive(false);
+            float waitTime = 3f;
+            await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
+
+            _rankViewCanvas.gameObject.SetActive(true);
+            await _rankViewCanvas.ShowResultsAsync();
+            _rankViewCanvas.gameObject.SetActive(false);
+        }
+        
         private void StartGame()
         {
             _tutorialCanvas.gameObject.SetActive(false);
@@ -73,30 +92,11 @@ namespace Project.Scripts.CompositionRoot
             StartButtonPressed?.Invoke();
         }
 
-        public async UniTask GameOver()
-        {
-            _gameCanvas.gameObject.SetActive(false);
-            float waitTime = 3f;
-            await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
-
-            _rankViewCanvas.gameObject.SetActive(true);
-            await _rankViewCanvas.ShowResultsAsync();
-            _rankViewCanvas.gameObject.SetActive(false);
-        }
-
         private void ShowReward()
         {
             string id = "coin"; // Передача id требуется для внутренней работы плагина
 
             YG2.RewardedAdvShow(id, GiveReward);
-        }
-
-        public void GiveReward()
-        {
-            _startGameCanvas.gameObject.SetActive(false);
-            _rewardCanvas.gameObject.SetActive(true);
-
-            _rewardCanvas.RewardCanvasClosed += HandleRewardCanvasClosed;
         }
 
         private void HandleRewardCanvasClosed()

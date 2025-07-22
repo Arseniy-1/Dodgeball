@@ -10,10 +10,11 @@ namespace Project.Scripts.UI.Canvases
 {
     public class RankViewCanvas : InteractiveCanvas
     {
+        private const int MaxAmount = 100;
+        
         [SerializeField] private Image _chestFillImage;
         [SerializeField] private TMP_Text _percentageText;
 
-        private const int MaxAmount = 100;
         private RankHolder _rankHolder;
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -28,6 +29,12 @@ namespace Project.Scripts.UI.Canvases
         {
             _cancellationTokenSource = new CancellationTokenSource();
             return AnimateProgressAsync(_rankHolder.PreviousAmount, _rankHolder.CurrentAmount, _cancellationTokenSource.Token);
+        }
+        
+        protected override void HandleButtonClick()
+        {
+            OnRewardViewClosed?.Invoke();
+            _cancellationTokenSource.Cancel();
         }
 
         private async UniTask AnimateProgressAsync(int from, int to, CancellationToken cancellationToken)
@@ -51,18 +58,12 @@ namespace Project.Scripts.UI.Canvases
 
                 await UniTask.Yield();
             
-                if(cancellationToken.IsCancellationRequested)
+                if (cancellationToken.IsCancellationRequested)
                     return;
             }
 
             _chestFillImage.fillAmount = endFill;
             _percentageText.text = (to * 100 / MaxAmount) + "%";
-        }
-    
-        protected override void HandleButtonClick()
-        {
-            OnRewardViewClosed?.Invoke();
-            _cancellationTokenSource.Cancel();
         }
     }
 }

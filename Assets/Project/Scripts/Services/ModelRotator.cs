@@ -6,7 +6,8 @@ namespace Project.Scripts.Services
     [Serializable]
     public class ModelRotator
     {
-        [SerializeField, Range(-200, 200)] private float _rotationSpeed;
+        [Range(-200, 200)]
+        [SerializeField] private float _rotationSpeed;
     
         private float _currentRotation = 0;
 

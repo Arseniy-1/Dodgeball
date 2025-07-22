@@ -49,21 +49,23 @@ namespace Project.Scripts.StateMachine.EntityStates
 
         public virtual void Exit()
         {
-            if(_hitDetector != null)
+            if (_hitDetector!= null)
                 _hitDetector.enabled = false;
         
             _hitDetector.DetectBallHit -= HandleBallDodge;
 
-            if(_collider != null)
+            if (_collider!= null)
                 _collisionHandler.enabled = true;
         
-            if(_collider != null)
+            if (_collider!= null)
                 _collider.isTrigger = false;
         
             _cancellationTokenSource.Cancel();
         }
 
-        public virtual void Update() { }
+        public virtual void Update()
+        {
+        }
     
         protected abstract void OnJumpFinished();
 

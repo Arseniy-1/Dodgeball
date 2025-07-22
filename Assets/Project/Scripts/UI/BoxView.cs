@@ -28,17 +28,6 @@ namespace Project.Scripts.UI
             _burstAnimation?.Kill();
         }
 
-        private void SetupStaticAnimation()
-        {
-            _staticAnimation?.Kill();
-
-            _staticAnimation = DOTween.Sequence()
-                .Append(_rewardBoxImage.transform.DOScale(_originalScale * 1.1f, 0.5f))
-                .Append(_rewardBoxImage.transform.DOScale(_originalScale, 0.5f))
-                .SetLoops(-1, LoopType.Yoyo)
-                .SetEase(Ease.InOutSine);
-        }
-
         public async UniTask ShowBoxAnimation(float duration, float endScale, float whiteFadeDuration)
         {
             _staticAnimation.Complete();
@@ -52,7 +41,18 @@ namespace Project.Scripts.UI
 
             await _burstAnimation.AsyncWaitForCompletion();
         }
+ 
+        private void SetupStaticAnimation()
+        {
+            _staticAnimation?.Kill();
 
+            _staticAnimation = DOTween.Sequence()
+                .Append(_rewardBoxImage.transform.DOScale(_originalScale * 1.1f, 0.5f))
+                .Append(_rewardBoxImage.transform.DOScale(_originalScale, 0.5f))
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetEase(Ease.InOutSine);
+        }
+        
         private void ResetBox()
         {
             _rewardBoxImage.transform.localScale = _originalScale;

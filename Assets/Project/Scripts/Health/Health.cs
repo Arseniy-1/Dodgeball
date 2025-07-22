@@ -46,7 +46,7 @@ namespace Project.Scripts.Health
             if (amount <= 0)
                 return;
         
-            if(_currentHealthPoint <= 0)
+            if (_currentHealthPoint <= 0)
                 return;
 
             _currentHealthPoint = Mathf.Clamp(_currentHealthPoint - amount, 0, _maxHealth);

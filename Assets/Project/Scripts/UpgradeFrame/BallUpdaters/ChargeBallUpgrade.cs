@@ -11,7 +11,8 @@ namespace Project.Scripts.UpgradeFrame.BallUpdaters
     
         private CompositeDisposable _compositeDisposable;
     
-        public ChargeBallUpgrade(BallUpgradeInfo ballUpgradeInfo) : base(ballUpgradeInfo)
+        public ChargeBallUpgrade(BallUpgradeInfo ballUpgradeInfo) 
+            : base(ballUpgradeInfo)
         {
         }
     

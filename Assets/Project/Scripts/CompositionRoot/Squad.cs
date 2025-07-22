@@ -11,13 +11,14 @@ namespace Project.Scripts.CompositionRoot
         [SerializeField] private List<Transform> _spawnPoints;
         [SerializeField] private List<Entity> _entities;
 
+        private Collider _squadZone;
+        
+        public event Action<Squad> LostPlayers;
+        
         public Type SquadType => _entities[0].GetType();
         public List<Transform> SpawnPoints => _spawnPoints;
         public Collider SquadZone => _squadZone;
-
-        [SerializeField] private Collider _squadZone;
-
-        public event Action<Squad> LostPlayers;
+        
 
         private void OnDestroy()
         {

@@ -10,10 +10,5 @@ namespace Project.Scripts.Services
         {
             Target = target;
         }
-    
-        public void DeselectTarget()
-        {
-        
-        }
     }
 }

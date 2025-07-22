@@ -8,9 +8,9 @@ namespace Project.Scripts
     [RequireComponent(typeof(Damageable))]
     public class Ball : MonoBehaviour
     {
-        public Rigidbody Rigidbody { get; private set;}
-        public Chargeable Chargeable { get; private set;}
-    
+        public Rigidbody Rigidbody { get; private set; }
+        public Chargeable Chargeable { get; private set; }
+
         private void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();

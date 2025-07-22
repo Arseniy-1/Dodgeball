@@ -7,10 +7,11 @@ namespace Project.Scripts.Services.CameraShakeService
 {
     public class CameraShakeService : MonoBehaviour
     {
+        private readonly CompositeDisposable _disposable = new ();
+        
         [SerializeField] private Camera _camera;
         [SerializeField] private CameraShakeSettings _settings;
 
-        private readonly CompositeDisposable _disposable = new();
         private Transform _cameraTransform;
 
         private Vector3 _cameraOriginalPosition;

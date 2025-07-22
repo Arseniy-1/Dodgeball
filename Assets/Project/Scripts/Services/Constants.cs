@@ -2,7 +2,7 @@
 
 namespace Project.Scripts.Services
 {
-    public static class Constans
+    public static class Constants
     {
         public static class EnemyNames
         {

@@ -7,9 +7,9 @@ namespace Project.Scripts.Services.Ball
     {
         [SerializeField] private float _damageMultiplier = 2f;
     
-        public int Damage => (int)(_rigidbody.velocity.magnitude * _damageMultiplier);
-
         private Rigidbody _rigidbody;
+
+        public int Damage => (int)(_rigidbody.velocity.magnitude * _damageMultiplier);
     
         private void Awake()
         {
