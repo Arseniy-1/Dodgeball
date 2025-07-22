@@ -103,7 +103,7 @@ namespace Project.Scripts.Services
         {
             DeathFall,
             DeathFallBack,
-            DeathSlowlyFallBack
+            DeathSlowlyFallBack,
         }
 
         public enum PrepareAnimations

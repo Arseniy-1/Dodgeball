@@ -1,8 +1,8 @@
 ﻿using System.Threading;
+using Project.Scripts.Entities;
 using Project.Scripts.Services;
 using Project.Scripts.Services.Ball;
 using UnityEngine;
-using Project.Scripts.Entities;
 
 namespace Project.Scripts.StateMachine.EntityStates
 {

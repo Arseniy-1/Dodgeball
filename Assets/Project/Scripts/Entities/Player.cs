@@ -41,7 +41,7 @@ namespace Project.Scripts.Entities
                 new PlayerDodgeReadyState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _playerConfig, _inputController),
                 new PlayerAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, _inputController, BallThrower),
                 new PlayerDodgeState(AnimatorController, CollisionHandler, HitDetector, Collider),
-                new PlayerDeathState(AnimatorController, CollisionHandler, Collider, BallHolder, BallThrower)
+                new PlayerDeathState(AnimatorController, CollisionHandler, Collider, BallHolder, BallThrower),
             };
 
             StateMachine = new StateMaсhine(_playerStates);

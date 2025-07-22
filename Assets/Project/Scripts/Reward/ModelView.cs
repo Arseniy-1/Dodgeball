@@ -24,7 +24,7 @@ namespace Project.Scripts.Reward
 
         public void Disable()
         {
-            _rewardName.text = "";
+            _rewardName.text = string.Empty;
             _rewardEffect.Stop();
             gameObject.SetActive(false);
             _cancellationTokenSource.Cancel();

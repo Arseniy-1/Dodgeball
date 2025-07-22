@@ -1,8 +1,7 @@
 using System;
+using Project.Scripts.Entities;
 using Project.Scripts.Services.Ball;
 using UnityEngine;
-using Project.Scripts.Entities;
-using Project.Scripts.Messages;
 
 namespace Project.Scripts.Services
 {

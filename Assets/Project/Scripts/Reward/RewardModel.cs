@@ -31,7 +31,8 @@ namespace Project.Scripts.Reward
         
                 float length = _animator.GetCurrentAnimatorStateInfo(0).length;
             
-                await UniTask.Delay(TimeSpan.FromSeconds(length), 
+                await UniTask.Delay(
+                    TimeSpan.FromSeconds(length), 
                     DelayType.Realtime, 
                     cancellationToken: cancellationToken);
             }

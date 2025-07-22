@@ -31,13 +31,13 @@ namespace Project.Scripts.Services
         }
 
         [Button]
-        private void OnActionButtonStarted(InputAction.CallbackContext callbackContext)
+        private void OnActionButtonStarted(InputAction.CallbackContext _)
         {
             ActionButtonStarted?.Invoke();
         }
 
         [Button]
-        private void OnActionButtonCanceled(InputAction.CallbackContext callbackContext)
+        private void OnActionButtonCanceled(InputAction.CallbackContext _)
         {
             ActionButtonCanceled?.Invoke();
         }

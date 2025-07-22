@@ -16,8 +16,10 @@ namespace Project.Scripts.Services
         private void OnTriggerEnter(Collider other)
         {
             if(other.TryGetComponent(out Chargeable chargeable))
+            {
                 if(chargeable.IsCharged)
                     DetectBallHit?.Invoke();
+            }
         }
     }
 }

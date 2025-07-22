@@ -19,7 +19,6 @@ namespace Project.Scripts.Services
 
         private readonly int _dodgeIdle = Animator.StringToHash(Constans.ConstantAnimations.DodgeIdle.ToString());
 
-
         public AnimatorController(Animator animator)
         {
             _animator = animator;

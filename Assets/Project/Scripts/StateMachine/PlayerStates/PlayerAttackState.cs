@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Project.Scripts.Entities;
 using Project.Scripts.Services;
 using Project.Scripts.Services.Ball;
 using Project.Scripts.StateMachine.EntityStates;
 using UnityEngine;
-using Project.Scripts.Entities;
 
 namespace Project.Scripts.StateMachine.PlayerStates
 {

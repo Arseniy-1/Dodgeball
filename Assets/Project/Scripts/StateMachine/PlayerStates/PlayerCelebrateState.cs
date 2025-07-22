@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using Project.Scripts.Entities;
 using Project.Scripts.Services;
 using Project.Scripts.Services.Ball;
 using Project.Scripts.StateMachine.EntityStates;
-using Project.Scripts.Entities;
 
 namespace Project.Scripts.StateMachine.PlayerStates
 {

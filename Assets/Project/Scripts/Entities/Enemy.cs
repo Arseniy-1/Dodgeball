@@ -39,7 +39,7 @@ namespace Project.Scripts.Entities
                 new EnemyDodgeReadyState(this, AnimatorController, ball, Mover, SquadZone, Rigidbody, _enemyConfig),
                 new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyConfig),
                 new EnemyDodgeState(AnimatorController, CollisionHandler, HitDetector, Collider),
-                new EnemyDeathState(AnimatorController, CollisionHandler, Collider, BallHolder, BallThrower)
+                new EnemyDeathState(AnimatorController, CollisionHandler, Collider, BallHolder, BallThrower),
             };
         
             StateMachine = new StateMaсhine(_enemyStates);

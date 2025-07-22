@@ -1,11 +1,11 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Project.Scripts.Entities;
 using Project.Scripts.Services;
 using Project.Scripts.StateMachine.EntityStates;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using Project.Scripts.Entities;
 
 namespace Project.Scripts.StateMachine.EnemyStates
 {

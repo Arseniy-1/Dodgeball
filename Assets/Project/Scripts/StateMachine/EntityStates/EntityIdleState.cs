@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Project.Scripts.Entities;
 using Project.Scripts.Services;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using Project.Scripts.Entities;
 
 namespace Project.Scripts.StateMachine.EntityStates
 {

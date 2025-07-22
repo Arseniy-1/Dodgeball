@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using Project.Scripts.Entities;
 using Project.Scripts.Services;
 using Project.Scripts.Services.EffectService;
 using Project.Scripts.StateMachine.EntityStates;
 using UnityEngine;
-using Project.Scripts.Entities;
 
 namespace Project.Scripts.StateMachine.PlayerStates
 {

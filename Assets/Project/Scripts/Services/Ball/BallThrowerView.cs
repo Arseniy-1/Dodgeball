@@ -35,8 +35,7 @@ namespace Project.Scripts.Services.Ball
 
             _chargeFill.color = Color.Lerp(_minChargeColor, _maxChargeColor, chargePercent);
         }
-
-
+        
         private void HideView()
         {
             _chargeFill.enabled = false;

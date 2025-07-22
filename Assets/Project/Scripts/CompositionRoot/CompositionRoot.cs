@@ -107,8 +107,12 @@ namespace Project.Scripts.CompositionRoot
             const float ballOffsetX = -2.5f;
             const float ballOffsetY = 1f;
             const float ballOffsetZ = -1.5f;
-            Vector3 ballPosition = new Vector3(transform.position.x + ballOffsetX, transform.position.y + ballOffsetY,
+            
+            Vector3 ballPosition = new Vector3(
+                transform.position.x + ballOffsetX, 
+                transform.position.y + ballOffsetY,
                 transform.position.z + ballOffsetZ);
+            
             _ballInstance = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
 
             for (int i = 0; i < _arenaInstance.Squads.Count; i++)

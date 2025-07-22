@@ -1,7 +1,7 @@
-﻿using Project.Scripts.Services.AudioService;
-using Project.Scripts.Services.EffectService;
+﻿using System;
 using UnityEngine;
-using System;
+using Project.Scripts.Services.AudioService;
+using Project.Scripts.Services.EffectService;
 using AudioSettings = Project.Scripts.Services.AudioService.AudioSettings;
 
 namespace Project.Scripts.CompositionRoot

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using Project.Scripts.Entities;
 using Project.Scripts.Messages;
 using Project.Scripts.Services;
-using Project.Scripts.Entities;
 using UniRx;
 
 namespace Project.Scripts.StateMachine.EntityStates

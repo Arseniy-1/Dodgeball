@@ -9,6 +9,6 @@
         Pointer = 4,
         FireExplosion = 5,
         ElectricExplosion = 6,
-        PoisonExplosion = 7 
+        PoisonExplosion = 7,
     }
 }

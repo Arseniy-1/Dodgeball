@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Project.Scripts.Entities;
 using Project.Scripts.Services;
 using Project.Scripts.Services.AudioService;
 using Project.Scripts.Services.Ball;
-using Project.Scripts.Entities;
 using UnityEngine;
 
 namespace Project.Scripts.StateMachine.EntityStates

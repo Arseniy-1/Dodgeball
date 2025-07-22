@@ -1,5 +1,5 @@
-using UnityEngine;
 using Project.Scripts.Entities;
+using UnityEngine;
 
 namespace Project.Scripts.ObjectPool.Entity
 {

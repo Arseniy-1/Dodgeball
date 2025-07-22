@@ -1,6 +1,6 @@
 ﻿using System;
-using UnityEngine;
 using Project.Scripts.Entities;
+using UnityEngine;
 
 namespace Project.Scripts.Services
 {
