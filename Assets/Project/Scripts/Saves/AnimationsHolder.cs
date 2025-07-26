@@ -10,17 +10,17 @@ namespace Project.Scripts.Saves
     [JsonObject(MemberSerialization.Fields)]
     public class AnimationsHolder
     {
-        public List<Constants.DodgeAnimations> DodgeAnimations = new ();
-        public List<Constants.CelebrateAnimations> CelebrateAnimations = new ();
-        public List<Constants.DeathAnimations> DeathAnimations = new ();
-        public List<Constants.PrepareAnimations> PrepareAnimations = new ();
+        public List<DodgeAnimations> DodgeAnimations = new ();
+        public List<CelebrateAnimations> CelebrateAnimations = new ();
+        public List<DeathAnimations> DeathAnimations = new ();
+        public List<PrepareAnimations> PrepareAnimations = new ();
 
         public List<int> DodgeAnimationsHash = new ();
         public List<int> CelebrateAnimationsHash = new ();
         public List<int> DeathAnimationsHash = new ();
         public List<int> PrepareAnimationsHash = new ();
 
-        public void AddDodgeAnimation(Constants.DodgeAnimations animation)
+        public void AddDodgeAnimation(DodgeAnimations animation)
         {
             if (DodgeAnimations.Contains(animation))
                 return;
@@ -29,7 +29,7 @@ namespace Project.Scripts.Saves
             DodgeAnimationsHash.Add(Animator.StringToHash(animation.ToString()));
         }
 
-        public void AddCelebrateAnimation(Constants.CelebrateAnimations animation)
+        public void AddCelebrateAnimation(CelebrateAnimations animation)
         {
             if (CelebrateAnimations.Contains(animation))
                 return;
@@ -38,7 +38,7 @@ namespace Project.Scripts.Saves
             CelebrateAnimationsHash.Add(Animator.StringToHash(animation.ToString()));
         }
 
-        public void AddDeathAnimation(Constants.DeathAnimations animation)
+        public void AddDeathAnimation(DeathAnimations animation)
         {
             if (DeathAnimations.Contains(animation)) 
                 return;
@@ -47,7 +47,7 @@ namespace Project.Scripts.Saves
             DeathAnimationsHash.Add(Animator.StringToHash(animation.ToString()));
         }
     
-        public void AddPrepareAnimation(Constants.PrepareAnimations animation)
+        public void AddPrepareAnimation(PrepareAnimations animation)
         {
             if (PrepareAnimations.Contains(animation))
                 return;

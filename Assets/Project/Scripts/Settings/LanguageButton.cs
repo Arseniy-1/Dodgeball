@@ -1,6 +1,6 @@
 ﻿using System;
 using Assets.SimpleLocalization.Scripts;
-using Project.Scripts.Services.AudioService;
+using Project.Scripts.Services.AudioServiceSystem;
 using Project.Scripts.UI;
 using TMPro;
 using UnityEngine;
@@ -15,7 +15,7 @@ namespace Project.Scripts.Settings
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private Image _view;
     
-        public event Action<Languages> OnClick;
+        public event Action<Languages> ButtonClicked;
 
         private void Start()
         {
@@ -30,7 +30,7 @@ namespace Project.Scripts.Settings
     
         protected override void HandleButtonClick()
         {
-            OnClick?.Invoke(_languageData.Language);
+            ButtonClicked?.Invoke(_languageData.Language);
             AudioID.UISolid.PlayOneShot();
         }
     }

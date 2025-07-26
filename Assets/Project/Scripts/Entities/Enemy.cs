@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Project.Scripts.Services.AudioService;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using Project.Scripts.Services.AudioServiceSystem;
 using Project.Scripts.Services.EffectService;
 using Project.Scripts.StateMachine;
 using Project.Scripts.StateMachine.EnemyStates;
@@ -13,43 +15,8 @@ namespace Project.Scripts.Entities
     {
         [SerializeField] private EnemyConfig _enemyConfig;
     
-        private List<IState> _enemyStates = new ();
-    
         public event Action<Enemy> OnDestroyed;
-
-        public override void Initialize(Collider squadZone, List<Entity> teammates, Ball ball)
-        {
-            base.Initialize(squadZone, teammates, ball);
-            BallThrower.Initialize(_enemyConfig);
         
-            foreach (var state in _enemyStates)
-            {
-                if (state is IDisposable disposable)
-                    disposable.Dispose();
-            }
-        
-            _enemyStates.Clear();
-        
-            _enemyStates = new List<IState>
-            {
-                new EnemyPrepareState(this, AnimatorController, TargetScanner, Teammates),
-                new EnemyCelebrateState(this, AnimatorController, BallHolder, BallThrower, CollisionHandler, Teammates),
-                new EnemyIdleState(this, AnimatorController, ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyConfig, Teammates),
-                new EnemyMoveState(this, AnimatorController, Teammates, _enemyConfig, CollisionHandler, SquadZone, BallHolder, Collider, Mover),
-                new EnemyDodgeReadyState(this, AnimatorController, ball, Mover, SquadZone, Rigidbody, _enemyConfig),
-                new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyConfig),
-                new EnemyDodgeState(AnimatorController, CollisionHandler, HitDetector, Collider),
-                new EnemyDeathState(AnimatorController, CollisionHandler, Collider, BallHolder, BallThrower),
-            };
-        
-            CreateStateMachine(_enemyStates);
-            
-            foreach (var state in _enemyStates)
-                state.Initialize(StateMachine);
-
-            Reset();
-        }
-
         public override void Celebrate()
         {
             StateMachine.SwitchState<EnemyCelebrateState>();
@@ -64,7 +31,7 @@ namespace Project.Scripts.Entities
         }
         
         [Button]
-        protected override async void HandleLostHealth()
+        protected override async UniTaskVoid HandleLostHealth(CancellationToken token)
         {
             StateMachine.SwitchState<EnemyDeathState>();
             HealthCanvas.gameObject.SetActive(false);
@@ -72,9 +39,29 @@ namespace Project.Scripts.Entities
             AudioID.Dead.PlayOneShot();
         
             await AnimatorController.Death();
-            await HideEntity();
+            await HideEntity(token);
 
             Die();
+        }
+
+        protected override List<IState> CreateStates()
+        {
+            return new List<IState>
+            {
+                new EnemyPrepareState(this, AnimatorController, TargetScanner, Teammates),
+                new EnemyCelebrateState(this, AnimatorController, BallHolder, BallThrower, CollisionHandler, Teammates),
+                new EnemyIdleState(this, AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyConfig, Teammates),
+                new EnemyMoveState(this, AnimatorController, Teammates, _enemyConfig, CollisionHandler, SquadZone, BallHolder, Collider, Mover),
+                new EnemyDodgeReadyState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _enemyConfig),
+                new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyConfig),
+                new EnemyDodgeState(AnimatorController, CollisionHandler, HitDetector, Collider),
+                new EnemyDeathState(AnimatorController, CollisionHandler, Collider, BallHolder, BallThrower),
+            };
+        }
+        
+        protected override EntityConfig GetConfig()
+        {
+            return _enemyConfig;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Project.Scripts.Reward;
 using Project.Scripts.Services;
-using Project.Scripts.Services.AudioService;
+using Project.Scripts.Services.AudioServiceSystem;
 using UnityEngine;
 using YG;
 using Random = UnityEngine.Random;
@@ -23,7 +23,7 @@ namespace Project.Scripts.UI.Canvases
         [Range(0, 3)]
         [SerializeField] private float _boxWhiteFadeDuration = 0.3f;
 
-        [SerializeField] private ModelView _modelView;
+        [SerializeField] private RewardModelWrap _rewardModelWrap;
         [SerializeField] private PlayerInputController _playerInputController;
 
         private RewardService _rewardService;
@@ -115,9 +115,9 @@ namespace Project.Scripts.UI.Canvases
             {
                 var selectedAnimation = availableAnimations[Random.Range(0, availableAnimations.Count)]();
 
-                _modelView.gameObject.SetActive(true);
+                _rewardModelWrap.gameObject.SetActive(true);
                 int animationHash = Animator.StringToHash(selectedAnimation.name);
-                _modelView.ShowReward(animationHash, selectedAnimation.name);
+                _rewardModelWrap.ShowReward(animationHash, selectedAnimation.name);
             }
         
             YG2.SaveProgress();
@@ -128,7 +128,7 @@ namespace Project.Scripts.UI.Canvases
         {
             AudioID.RewardCompleted.PlayOneShot();
             _playerInputController.ActionButtonCanceled -= CloseWindow;
-            _modelView.Disable();
+            _rewardModelWrap.Disable();
             gameObject.SetActive(false);
         
             RewardCanvasClosed?.Invoke();

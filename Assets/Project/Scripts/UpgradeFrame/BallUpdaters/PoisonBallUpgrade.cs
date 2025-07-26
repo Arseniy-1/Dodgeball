@@ -50,7 +50,7 @@ namespace Project.Scripts.UpgradeFrame.BallUpdaters
 
             for (int i = 0; i < hitsCount; i++)
             {
-                if (_hitCollidersBuffer[i].TryGetComponent(out Health.Health health))
+                if (_hitCollidersBuffer[i].TryGetComponent(out HealthSystem.Health health))
                 {
                     TakePoisonDamage(health).Forget();
                 }
@@ -59,7 +59,7 @@ namespace Project.Scripts.UpgradeFrame.BallUpdaters
             _compositeDisposable.Dispose();
         }
 
-        private async UniTask TakePoisonDamage(Health.Health health)
+        private async UniTask TakePoisonDamage(HealthSystem.Health health)
         {
             for (int i = 0; i < PoisonIterationCount; i++)
             {

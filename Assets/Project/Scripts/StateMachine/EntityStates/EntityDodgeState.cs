@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Project.Scripts.Services;
-using Project.Scripts.Services.AudioService;
+using Project.Scripts.Services.AudioServiceSystem;
 using Project.Scripts.Services.EffectService;
 using UnityEngine;
 

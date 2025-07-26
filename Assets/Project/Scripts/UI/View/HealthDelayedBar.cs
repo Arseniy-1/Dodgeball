@@ -4,7 +4,7 @@ namespace Project.Scripts.UI.View
 {
     public class HealthDelayedBar : DelayedViewBar
     {
-        [SerializeField] private Health.Health _health;
+        [SerializeField] private HealthSystem.Health _health;
 
         private void OnEnable()
         {

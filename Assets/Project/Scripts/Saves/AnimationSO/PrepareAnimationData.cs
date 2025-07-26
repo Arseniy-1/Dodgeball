@@ -9,7 +9,7 @@ namespace Project.Scripts.Saves.AnimationSO
     {
         [HideLabel]
         [HorizontalGroup]
-        public Constants.PrepareAnimations AnimationType;
+        public PrepareAnimations AnimationType;
         
         [HideLabel] 
         [HorizontalGroup]

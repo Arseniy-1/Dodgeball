@@ -31,15 +31,15 @@ namespace Project.Scripts.UI.Canvases
             switch (YG2.lang)
             {
                 case nameof(Languages.en):
-                    _enemyName.text = Constants.EnemyNames.GetRandomEnglishName();
+                    _enemyName.text = EnemyNames.GetRandomEnglishName();
                     break;
             
                 case nameof(Languages.ru):
-                    _enemyName.text = Constants.EnemyNames.GetRandomRussianName();
+                    _enemyName.text = EnemyNames.GetRandomRussianName();
                     break;
             
                 case nameof(Languages.tr):
-                    _enemyName.text = Constants.EnemyNames.GetRandomTurkishName();
+                    _enemyName.text = EnemyNames.GetRandomTurkishName();
                     break;
             }
 

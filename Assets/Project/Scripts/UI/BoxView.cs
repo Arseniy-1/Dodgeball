@@ -7,6 +7,15 @@ namespace Project.Scripts.UI
 {
     public class BoxView : MonoBehaviour
     {
+        private const float StaticAnimationScaleFactor = 1.1f;
+        private const float StaticAnimationDuration = 0.5f;
+        private const Ease StaticAnimationEase = Ease.InOutSine;
+        
+        private const float BurstShakeStrength = 0.3f;
+        private const int BurstShakeVibrato = 10;
+        private const float BurstRotationStrength = 15f;
+        private const Ease BurstAnimationEase = Ease.InOutQuad;
+        
         [SerializeField] private Image _rewardBoxImage;
 
         private Sequence _staticAnimation;
@@ -33,11 +42,11 @@ namespace Project.Scripts.UI
             _staticAnimation.Complete();
 
             _burstAnimation = DOTween.Sequence()
-                .Append(_rewardBoxImage.transform.DOShakeScale(duration, 0.3f, 10))
-                .Join(_rewardBoxImage.transform.DOShakeRotation(duration, 15f, 10))
+                .Append(_rewardBoxImage.transform.DOShakeScale(duration, BurstShakeStrength, BurstShakeVibrato))
+                .Join(_rewardBoxImage.transform.DOShakeRotation(duration, BurstRotationStrength, BurstShakeVibrato))
                 .Append(_rewardBoxImage.transform.DOScale(endScale, whiteFadeDuration))
                 .Join(_rewardBoxImage.DOColor(Color.black, whiteFadeDuration))
-                .SetEase(Ease.InOutQuad);
+                .SetEase(BurstAnimationEase);
 
             await _burstAnimation.AsyncWaitForCompletion();
         }
@@ -47,10 +56,10 @@ namespace Project.Scripts.UI
             _staticAnimation?.Kill();
 
             _staticAnimation = DOTween.Sequence()
-                .Append(_rewardBoxImage.transform.DOScale(_originalScale * 1.1f, 0.5f))
-                .Append(_rewardBoxImage.transform.DOScale(_originalScale, 0.5f))
+                .Append(_rewardBoxImage.transform.DOScale(_originalScale * StaticAnimationScaleFactor, StaticAnimationDuration))
+                .Append(_rewardBoxImage.transform.DOScale(_originalScale, StaticAnimationDuration))
                 .SetLoops(-1, LoopType.Yoyo)
-                .SetEase(Ease.InOutSine);
+                .SetEase(StaticAnimationEase);
         }
         
         private void ResetBox()

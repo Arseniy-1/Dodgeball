@@ -3,7 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Project.Scripts.Entities;
 using Project.Scripts.Services;
-using Project.Scripts.Services.AudioService;
+using Project.Scripts.Services.AudioServiceSystem;
 using Project.Scripts.Services.Ball;
 using UnityEngine;
 
@@ -21,11 +21,11 @@ namespace Project.Scripts.StateMachine.EntityStates
         private readonly CollisionHandler _collisionHandler;
         private readonly Collider _collider;
         private readonly Rigidbody _rigidbody;
-    
+
         private readonly TargetProvider _targetProvider;
 
         private CancellationTokenSource _cancellationTokenSource;
-    
+
         protected IStateSwitcher StateSwitcher;
 
         protected EntityAttackState(
@@ -57,7 +57,7 @@ namespace Project.Scripts.StateMachine.EntityStates
         public virtual void Enter()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-        
+
             _rigidbody.isKinematic = true;
             _collisionHandler.enabled = false;
             _collider.enabled = false;
@@ -68,12 +68,12 @@ namespace Project.Scripts.StateMachine.EntityStates
         public virtual void Exit()
         {
             _cancellationTokenSource.Cancel();
-        
+
             _rigidbody.isKinematic = false;
             _collisionHandler.enabled = true;
             _collider.enabled = true;
         }
-        
+
         public void Initialize(IStateSwitcher stateSwitcher)
         {
             StateSwitcher = stateSwitcher;
@@ -98,18 +98,18 @@ namespace Project.Scripts.StateMachine.EntityStates
             Ball ball = _ballHolder.LostBall();
             _ballThrower.StopCharging();
             _ballThrower.Throw(ball);
-        
+
             AudioID.Attack.PlayOneShot();
-        
+
             return _animatorController.Attack();
         }
 
         protected async UniTask ApplyTarget()
         {
-            Entity  target = await FindTarget(_cancellationTokenSource.Token);
+            Entity target = await FindTarget(_cancellationTokenSource.Token);
             _targetProvider.SelectTarget(target);
         }
-    
+
         private async UniTask<Entity> FindTarget(CancellationToken token)
         {
             Entity target = _targetScanner.Scan(_teammates);

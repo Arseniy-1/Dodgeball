@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using Project.Scripts.Reward;
-using Project.Scripts.Services.AudioService;
+using Project.Scripts.Services.AudioServiceSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

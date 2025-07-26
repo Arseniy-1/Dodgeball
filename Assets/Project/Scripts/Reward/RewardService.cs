@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Project.Scripts.Saves.AnimationSO;
 using UnityEngine;
-using YG;
 using Random = UnityEngine.Random;
 
 namespace Project.Scripts.Reward
@@ -12,114 +11,39 @@ namespace Project.Scripts.Reward
     {
         [SerializeField] private RewardAnimations _rewardAnimations;
 
-        private List<DodgeAnimationData> _availableDodgeAnimations = new ();
-        private List<CelebrateAnimationData> _availableCelebrateAnimations = new ();
-        private List<DeathAnimationData> _availableDeathAnimations = new ();
-        private List<PrepareAnimationData> _availablePrepareAnimations = new ();
+        private List<DodgeAnimationData> _availableDodge = new();
+        private List<CelebrateAnimationData> _availableCelebrate = new();
+        private List<DeathAnimationData> _availableDeath = new();
+        private List<PrepareAnimationData> _availablePrepare = new();
 
-        public int DodgeAnimationCount => _availableDodgeAnimations.Count;
-        public int CelebrateAnimationCount => _availableCelebrateAnimations.Count;
-        public int DeathAnimationCount => _availableDeathAnimations.Count;
-        public int PrepareAnimationCount => _availablePrepareAnimations.Count;
+        public int DodgeAnimationCount => _availableDodge.Count;
+        public int CelebrateAnimationCount => _availableCelebrate.Count;
+        public int DeathAnimationCount => _availableDeath.Count;
+        public int PrepareAnimationCount => _availablePrepare.Count;
 
         public void Initialize()
         {
-            _availableDodgeAnimations.Clear();
-            _availableCelebrateAnimations.Clear();
-            _availableDeathAnimations.Clear();
-            _availablePrepareAnimations.Clear();
-
-            foreach (var animation in _rewardAnimations.DodgeAnimations)
-            {
-                int animationHash = Animator.StringToHash(animation.AnimationType.ToString());
-
-                if (YG2.saves.AnimationsHolder.DodgeAnimationsHash.Contains(animationHash) == false)
-                {
-                    _availableDodgeAnimations.Add(new DodgeAnimationData
-                    {
-                        AnimationType = animation.AnimationType,
-                        Name = animation.Name,
-                    });
-                }
-            }
-
-            foreach (var animation in _rewardAnimations.CelebrateAnimations)
-            {
-                int animationHash = Animator.StringToHash(animation.AnimationType.ToString());
-
-                if (YG2.saves.AnimationsHolder.CelebrateAnimationsHash.Contains(animationHash) == false)
-                {
-                    _availableCelebrateAnimations.Add(new CelebrateAnimationData
-                    {
-                        AnimationType = animation.AnimationType,
-                        Name = animation.Name,
-                    });
-                }
-            }
-
-            foreach (var animation in _rewardAnimations.DeathAnimations)
-            {
-                int animationHash = Animator.StringToHash(animation.AnimationType.ToString());
-
-                if (YG2.saves.AnimationsHolder.DeathAnimationsHash.Contains(animationHash) == false)
-                {
-                    _availableDeathAnimations.Add(new DeathAnimationData
-                    {
-                        AnimationType = animation.AnimationType,
-                        Name = animation.Name,
-                    });
-                }
-            }
-
-            foreach (var animation in _rewardAnimations.PrepareAnimations)
-            {
-                int animationHash = Animator.StringToHash(animation.AnimationType.ToString());
-
-                if (YG2.saves.AnimationsHolder.PrepareAnimationsHash.Contains(animationHash) == false)
-                {
-                    _availablePrepareAnimations.Add(new PrepareAnimationData
-                    {
-                        AnimationType = animation.AnimationType,
-                        Name = animation.Name,
-                    });
-                }
-            }
+            _availableDodge = new List<DodgeAnimationData>(_rewardAnimations.DodgeAnimations);
+            _availableCelebrate = new List<CelebrateAnimationData>(_rewardAnimations.CelebrateAnimations);
+            _availableDeath = new List<DeathAnimationData>(_rewardAnimations.DeathAnimations);
+            _availablePrepare = new List<PrepareAnimationData>(_rewardAnimations.PrepareAnimations);
         }
 
-        public DodgeAnimationData GetRandomDodgeAnimation()
+        public DodgeAnimationData GetRandomDodge() => GetRandom(_availableDodge);
+        public CelebrateAnimationData GetRandomCelebrate() => GetRandom(_availableCelebrate);
+        public DeathAnimationData GetRandomDeath() => GetRandom(_availableDeath);
+        public PrepareAnimationData GetRandomPrepare() => GetRandom(_availablePrepare);
+
+        private T GetRandom<T>(List<T> list)
         {
-            int index = Random.Range(0, _availableDodgeAnimations.Count);
-            var animation = _availableDodgeAnimations[index];
-            _availableDodgeAnimations.RemoveAt(index);
+            if (list == null || list.Count == 0)
+                return default;
 
-            return animation;
-        }
-
-        public CelebrateAnimationData GetRandomCelebrateAnimation()
-        {
-            int index = Random.Range(0, _availableCelebrateAnimations.Count);
-            var animation = _availableCelebrateAnimations[index];
-            _availableCelebrateAnimations.RemoveAt(index);
-
-            return animation;
-        }
-
-        public DeathAnimationData GetRandomDeathAnimation()
-        {
-            int index = Random.Range(0, _availableDeathAnimations.Count);
-            var animation = _availableDeathAnimations[index];
-            _availableDeathAnimations.RemoveAt(index);
-
-            return animation;
-        }
-
-        public PrepareAnimationData GetRandomPrepareAnimation()
-        {
-            int index = Random.Range(0, _availablePrepareAnimations.Count);
-            var animation = _availablePrepareAnimations[index];
-            _availablePrepareAnimations.RemoveAt(index);
-
-            return animation;
+            int index = Random.Range(0, list.Count);
+            var item = list[index];
+            list.RemoveAt(index);
+            
+            return item;
         }
     }
 }

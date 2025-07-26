@@ -6,13 +6,13 @@ namespace Project.Scripts.StateMachine
 {
     public class StateMaсhine : IStateSwitcher
     {
-        private Dictionary<Type, IState> _states = new ();
+        private Dictionary<Type, IState> _states = new();
         private IState _currentState;
 
         public StateMaсhine(List<IState> states)
         {
             foreach (var state in states)
-                _states[state.GetType()] = state;         
+                _states[state.GetType()] = state;
 
             _currentState = states.First();
             _currentState.Enter();
@@ -31,7 +31,10 @@ namespace Project.Scripts.StateMachine
             _currentState.Enter();
         }
 
-        public void Update() => _currentState.Update();
+        public void Update()
+        {
+            _currentState.Update();
+        }
 
         public void Dispose()
         {

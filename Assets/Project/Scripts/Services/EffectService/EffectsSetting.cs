@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Project.Scripts.ObjectPool.Effects;
-using Sirenix.OdinInspector;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Project.Scripts.Services.EffectService
@@ -28,21 +25,6 @@ namespace Project.Scripts.Services.EffectService
             }
 
             return dictionary;
-        }
-
-        [Serializable]
-        public struct EffectData
-        {
-            [HideLabel] 
-            [HorizontalGroup] 
-            public EffectID _id;
-
-            [HideLabel] 
-            [HorizontalGroup] 
-            public List<Effect> _effects;
-        
-            public EffectID ID => _id;
-            public List<Effect> Effects => _effects;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Project.Scripts.UI.Canvases
         
             foreach (var languageButton in _lanquageButtons)
             {
-                languageButton.OnClick += HandleButtonClick;
+                languageButton.ButtonClicked += HandleButtonButtonClicked;
             }
         }
 
@@ -28,12 +28,12 @@ namespace Project.Scripts.UI.Canvases
         
             foreach (var languageButton in _lanquageButtons)
             {
-                languageButton.OnClick -= HandleButtonClick;
+                languageButton.ButtonClicked -= HandleButtonButtonClicked;
             }
         }
 
         [Button]
-        private void HandleButtonClick(Languages language)
+        private void HandleButtonButtonClicked(Languages language)
         {
             YG2.lang = language.ToString();
         

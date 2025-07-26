@@ -6,7 +6,6 @@ using Sirenix.Serialization;
 using UniRx;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using EffectData = Project.Scripts.Services.EffectService.EffectsSetting.EffectData;
 using Random = UnityEngine.Random;
 
 namespace Project.Scripts.Services.EffectService

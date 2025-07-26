@@ -13,7 +13,7 @@ namespace Project.Scripts.Services.Testing
         }
     
         [Button]
-        public void AddDodgeAnimation(Constants.DodgeAnimations dodgeAnimation)
+        public void AddDodgeAnimation(DodgeAnimations dodgeAnimation)
         {
             YG2.saves.AnimationsHolder.AddDodgeAnimation(dodgeAnimation);
             YG2.SaveProgress();

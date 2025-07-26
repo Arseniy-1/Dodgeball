@@ -6,10 +6,10 @@ namespace Project.Scripts.Services
 {
     public class TargetScanner : MonoBehaviour
     {
-        private Collider[] _colliderBuffer = new Collider[32];
-
         public Entity Scan(List<Entity> teammates)
         {
+            Collider[] colliderBuffer = new Collider[256];
+            
             float scanRadius = 500f;
             float closestDistance = float.MaxValue;
             Entity closestEnemy = null;
@@ -17,12 +17,11 @@ namespace Project.Scripts.Services
             int hitsCount = Physics.OverlapSphereNonAlloc(
                 transform.position, 
                 scanRadius, 
-                _colliderBuffer
-            );
+                colliderBuffer);
 
             for (int i = 0; i < hitsCount; i++)
             {
-                if (_colliderBuffer[i].TryGetComponent(out Entity entity))
+                if (colliderBuffer[i].TryGetComponent(out Entity entity))
                 {
                     if (entity == null || teammates.Contains(entity)) 
                         continue;

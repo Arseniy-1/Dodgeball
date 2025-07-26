@@ -11,13 +11,13 @@ namespace Project.Scripts.Services
         private readonly Animator _animator;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
-        private readonly int _idle = Animator.StringToHash(Constants.ConstantAnimations.Idle.ToString());
-        private readonly int _run = Animator.StringToHash(Constants.ConstantAnimations.Run.ToString());
+        private readonly int _idle = Animator.StringToHash(ConstantAnimations.Idle.ToString());
+        private readonly int _run = Animator.StringToHash(ConstantAnimations.Run.ToString());
 
-        private readonly int _throw = Animator.StringToHash(Constants.ConstantAnimations.Throw.ToString());
-        private readonly int _prepareToThrow = Animator.StringToHash(Constants.ConstantAnimations.PrepareToThrow.ToString());
+        private readonly int _throw = Animator.StringToHash(ConstantAnimations.Throw.ToString());
+        private readonly int _prepareToThrow = Animator.StringToHash(ConstantAnimations.PrepareToThrow.ToString());
 
-        private readonly int _dodgeIdle = Animator.StringToHash(Constants.ConstantAnimations.DodgeIdle.ToString());
+        private readonly int _dodgeIdle = Animator.StringToHash(ConstantAnimations.DodgeIdle.ToString());
 
         public AnimatorController(Animator animator)
         {
@@ -31,7 +31,10 @@ namespace Project.Scripts.Services
             _cancellationTokenSource.Dispose();
         }
 
-        public UniTask Attack() => PlayAndWait(_throw, _cancellationTokenSource.Token);
+        public UniTask Attack()
+        {
+            return PlayAndWait(_throw, _cancellationTokenSource.Token);
+        }
 
         public void PrepareAttack()
         {
@@ -111,7 +114,8 @@ namespace Project.Scripts.Services
                 attempts++;
             }
 
-            while (token.IsCancellationRequested == false && stateInfo.normalizedTime < 1f && !_animator.IsInTransition(0))
+            while (token.IsCancellationRequested == false && stateInfo.normalizedTime < 1f &&
+                   !_animator.IsInTransition(0))
             {
                 await UniTask.Yield();
 

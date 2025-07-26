@@ -1,4 +1,4 @@
-﻿using Project.Scripts.Services.AudioService;
+﻿using Project.Scripts.Services.AudioServiceSystem;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -33,14 +33,7 @@ namespace Project.Scripts.UI
         
         private void UpdateView()
         {
-            if (IsEnabled())
-            {
-                _view.sprite = _enabledSprite;
-            }
-            else
-            {
-                _view.sprite = _disabledSprite;
-            }
+            _view.sprite = IsEnabled() ? _enabledSprite : _disabledSprite;
         }
     }
 }

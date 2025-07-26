@@ -1,4 +1,4 @@
-﻿using Project.Scripts.Services.CameraShakeService;
+﻿using Project.Scripts.Services.CameraShakeServiceSystem;
 
 namespace Project.Scripts.Messages
 {

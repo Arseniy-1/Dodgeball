@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Project.Scripts.Services.AudioService;
+using Project.Scripts.Services.AudioServiceSystem;
 using UnityEngine;
 
 namespace Project.Scripts.Services
@@ -18,7 +18,8 @@ namespace Project.Scripts.Services
             _lastPosition = transform.position;
             _distanceSinceLastStep = 0f;
 
-            while (this != null && cancellationToken.IsCancellationRequested == false && Vector3.Distance(transform.position, target) > _stoppingDistance)
+            while (this != null && cancellationToken.IsCancellationRequested == false &&
+                   Vector3.Distance(transform.position, target) > _stoppingDistance)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -37,7 +38,7 @@ namespace Project.Scripts.Services
 
         public void FollowTarget(Transform target, float speed)
         {
-            if (target == null) 
+            if (target == null)
                 return;
 
             Vector3 currentPos = transform.position;
@@ -53,7 +54,7 @@ namespace Project.Scripts.Services
         {
             float moved = Vector3.Distance(transform.position, _lastPosition);
             float minStepDistance = 0.001f;
-            
+
             _distanceSinceLastStep += moved;
 
             if (moved > minStepDistance && _distanceSinceLastStep >= _stepDistanceThreshold)

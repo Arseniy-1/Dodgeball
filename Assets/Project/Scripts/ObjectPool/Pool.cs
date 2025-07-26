@@ -9,8 +9,8 @@ namespace Project.Scripts.ObjectPool
     {
         private int _startAmount;
 
-        protected T Prefab;
-        protected Stack<T> Stack = new ();
+        protected T Prefab { get; private set; }
+        protected Stack<T> Stack { get; private set; } = new ();
 
         protected Pool(T prefab, int startAmount)
         {

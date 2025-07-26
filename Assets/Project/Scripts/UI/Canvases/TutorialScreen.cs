@@ -5,9 +5,9 @@ namespace Project.Scripts.UI.Canvases
 {
     public abstract class TutorialScreen : GameCanvas
     {
-        [SerializeField] protected Image SelectionCircle;
-        [SerializeField] protected ApplyButton ApplyButton;
-    
+        [field: SerializeField] protected Image SelectionCircle { get; private set; }
+        [field: SerializeField] protected ApplyButton ApplyButton { get; private set; }
+
         public abstract void Initialize();
     }
 }

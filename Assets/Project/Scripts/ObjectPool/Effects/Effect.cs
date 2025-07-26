@@ -40,7 +40,7 @@ namespace Project.Scripts.ObjectPool.Effects
         {
             if (this != null)
                 transform.parent = null;
-        
+
             OnDestroyed?.Invoke(this);
         }
 

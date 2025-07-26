@@ -6,10 +6,14 @@ namespace Project.Scripts.ObjectPool.Entity
     [Serializable]
     public class PlayerSpawner : Spawner<Player>
     {
-        public PlayerSpawner(Player playerPrefab)
+        public PlayerSpawner(Player playerPrefab) 
+            : base(playerPrefab)
         {
-            Prefab = playerPrefab;
-            Pool = new PlayerPool(Prefab, StartAmount);
+        }
+        
+        protected override Pool<Player> CreatePool()
+        {
+            return new PlayerPool(Prefab, StartAmount);
         }
     }
 }

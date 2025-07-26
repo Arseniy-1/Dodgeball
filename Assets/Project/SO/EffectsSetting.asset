@@ -13,33 +13,33 @@ MonoBehaviour:
   m_Name: EffectsSetting
   m_EditorClassIdentifier: 
   _effectsData:
-  - _id: 0
-    _effects:
+  - ID: 0
+    Effects:
     - {fileID: 7317254845682095868, guid: d198ed3dd43b0ab4eadf94261274125a, type: 3}
     - {fileID: 7317254845682095868, guid: ef4114e0964f80349931e7c1adc28af6, type: 3}
     - {fileID: 7317254845682095868, guid: d88679b13e2aa2e49b9f0438164866be, type: 3}
-  - _id: 2
-    _effects:
+  - ID: 2
+    Effects:
     - {fileID: 7317254845682095868, guid: 58b24b923bf37fe45834fa1c58a86087, type: 3}
     - {fileID: 7317254845682095868, guid: 04114ac1dec57d94f92ceb6e7c9d9169, type: 3}
-  - _id: 3
-    _effects:
+  - ID: 3
+    Effects:
     - {fileID: 7753008160627204928, guid: 5b24d25451926db4485b5c164323abfd, type: 3}
     - {fileID: 7753008160627204928, guid: ccfbfc5e6486ac64bad1c4b875ab6876, type: 3}
     - {fileID: 7753008160627204928, guid: 80b5f409c8dcb064ebcbf1e102f32469, type: 3}
     - {fileID: 7753008160627204928, guid: 36bf5d2e9218a974d8c288fc332b6749, type: 3}
-  - _id: 4
-    _effects:
+  - ID: 4
+    Effects:
     - {fileID: 5824700782308156033, guid: 0fe242fd96f9e0744bd7aabc4980ad18, type: 3}
-  - _id: 1
-    _effects:
+  - ID: 1
+    Effects:
     - {fileID: 3042163043809353462, guid: 4f8498aff9df94d41b1cb1684d9580c1, type: 3}
-  - _id: 5
-    _effects:
+  - ID: 5
+    Effects:
     - {fileID: 5824700782308156033, guid: e04368e8655f05a43924e608c087d333, type: 3}
-  - _id: 6
-    _effects:
+  - ID: 6
+    Effects:
     - {fileID: 1237021493035578478, guid: ff48c257e875cfe45a8f9c152758ef58, type: 3}
-  - _id: 7
-    _effects:
+  - ID: 7
+    Effects:
     - {fileID: 6643554427895399763, guid: bf87a8e335f1cd849b580dec3fce7fbd, type: 3}

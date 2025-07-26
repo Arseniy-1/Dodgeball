@@ -5,14 +5,22 @@ using UnityEngine;
 namespace Project.Scripts.ObjectPool
 {
     [Serializable]
-    public class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
+    public abstract class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
     {
         [SerializeField] protected int StartAmount = 5;
 
-        protected T Prefab;
-        protected Pool<T> Pool;
-        
-        private List<T> _spawned = new ();
+        protected T Prefab { get; private set; }
+        protected Pool<T> Pool { get; private set; }
+
+        private List<T> _spawned = new();
+
+        protected Spawner(T prefab)
+        {
+            Prefab = prefab;
+            Pool = CreatePool();
+        }
+
+        protected abstract Pool<T> CreatePool();
 
         public void DisableSpawned()
         {

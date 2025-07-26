@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Project.Scripts.Services;
 using Project.Scripts.Services.Ball;
@@ -16,7 +18,7 @@ namespace Project.Scripts.Entities
         [field: SerializeField] protected CollisionHandler CollisionHandler { get; private set; }
         [field: SerializeField] protected TargetScanner TargetScanner { get; private set; }
         [field: SerializeField] protected Mover Mover { get; private set; }
-        [field: SerializeField] protected Health.Health Health { get; private set; }
+        [field: SerializeField] protected HealthSystem.Health Health { get; private set; }
         [field: SerializeField] protected List<Entity> Teammates { get; private set; }
         [field: SerializeField] protected Animator Animator { get; private set; }
         [field: SerializeField] protected HitDetector HitDetector { get; private set; }
@@ -30,14 +32,19 @@ namespace Project.Scripts.Entities
         protected AnimatorController AnimatorController { get; private set; }
         protected StateMaсhine StateMachine { get; private set; }
 
+        private CancellationTokenSource _cancellationTokenSource;
+        private List<IState> _states = new ();
+        
         private void OnEnable()
         {
-            Health.LostHealth += HandleLostHealth;
+            _cancellationTokenSource = new CancellationTokenSource();
+            Health.LostHealth += HandleLostHeathWrapper;
         }
 
         private void OnDisable()
         {
-            Health.LostHealth -= HandleLostHealth;
+            _cancellationTokenSource.Cancel();
+            Health.LostHealth -= HandleLostHeathWrapper;
         }
 
         protected virtual void Update()
@@ -45,16 +52,36 @@ namespace Project.Scripts.Entities
             StateMachine.Update();
         }
         
-        public virtual void Initialize(Collider squadZone, List<Entity> teammates, Ball ball)
+        public void Initialize(Collider squadZone, List<Entity> teammates, Ball ball)
         {
             Collider = GetComponent<Collider>();
             Rigidbody = GetComponent<Rigidbody>();
-            Teammates = teammates;
             SquadZone = squadZone;
+            Teammates = teammates;
+            Ball = ball;
             Health.Initialize(CollisionHandler);
 
+            BallThrower.Initialize(GetConfig());
+            
             if (Animator != null)
                 AnimatorController = new AnimatorController(Animator);
+            
+            foreach (var state in _states)
+            {
+                if (state is IDisposable disposable)
+                    disposable.Dispose();
+            }
+        
+            _states.Clear();
+
+            _states = CreateStates();
+            
+            CreateStateMachine(_states);
+
+            foreach (var state in _states)
+                state.Initialize(StateMachine);
+
+            Reset();
         }
 
         public virtual void Reset()
@@ -75,16 +102,19 @@ namespace Project.Scripts.Entities
             Health.Reset();
         }   
     
-        protected abstract void HandleLostHealth();
+        protected abstract UniTaskVoid HandleLostHealth(CancellationToken token);
+
+        protected abstract List<IState> CreateStates(); 
+        protected abstract EntityConfig GetConfig(); 
     
-        protected async UniTask HideEntity()
+        protected async UniTask HideEntity(CancellationToken token)
         {
             float duration = 1.5f;
             float elapsed = 0f;
             Vector3 start = transform.position;
             Vector3 target = start + Vector3.down * 2f;
 
-            while (elapsed < duration)
+            while (elapsed < duration && token.IsCancellationRequested == false) 
             {
                 elapsed += Time.deltaTime;
                 float t = elapsed / duration;
@@ -98,6 +128,11 @@ namespace Project.Scripts.Entities
         protected void CreateStateMachine(List<IState> states)
         {
             StateMachine = new StateMaсhine(states);
+        }
+
+        private void HandleLostHeathWrapper()
+        {
+            HandleLostHealth(_cancellationTokenSource.Token).Forget();
         }
     }
 }
