@@ -23,7 +23,7 @@ namespace Project.Scripts.Services
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                Vector3 direction = (target - transform.position);
+                Vector3 direction = target - transform.position;
                 direction.y = 0;
 
                 transform.position = Vector3.MoveTowards(

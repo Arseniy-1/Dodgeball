@@ -107,6 +107,10 @@ namespace Project.Scripts.StateMachine.EntityStates
         protected async UniTask ApplyTarget()
         {
             Entity target = await FindTarget(_cancellationTokenSource.Token);
+            
+            if(_cancellationTokenSource.Token.IsCancellationRequested)
+                return;
+            
             _targetProvider.SelectTarget(target);
         }
 

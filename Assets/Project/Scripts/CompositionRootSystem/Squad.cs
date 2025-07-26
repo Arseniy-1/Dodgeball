@@ -15,7 +15,6 @@ namespace Project.Scripts.CompositionRootSystem
         
         public event Action<Squad> LostPlayers;
         
-        public Type SquadType => _entities[0].GetType();
         public List<Transform> SpawnPoints => _spawnPoints;
         public Collider SquadZone => _squadZone;
         
