@@ -29,10 +29,25 @@ namespace Project.Scripts.Reward
             _availablePrepare = new List<PrepareAnimationData>(_rewardAnimations.PrepareAnimations);
         }
 
-        public DodgeAnimationData GetRandomDodge() => GetRandom(_availableDodge);
-        public CelebrateAnimationData GetRandomCelebrate() => GetRandom(_availableCelebrate);
-        public DeathAnimationData GetRandomDeath() => GetRandom(_availableDeath);
-        public PrepareAnimationData GetRandomPrepare() => GetRandom(_availablePrepare);
+        public DodgeAnimationData GetRandomDodgeAnimation()
+        {
+            return GetRandom(_availableDodge);
+        }
+
+        public CelebrateAnimationData GetRandomCelebrateAnimation()
+        {
+            return GetRandom(_availableCelebrate);
+        }
+
+        public DeathAnimationData GetRandomDeathAnimation()
+        {
+            return GetRandom(_availableDeath);
+        }
+
+        public PrepareAnimationData GetRandomPrepareAnimation()
+        {
+            return GetRandom(_availablePrepare);
+        }
 
         private T GetRandom<T>(List<T> list)
         {
@@ -41,8 +56,9 @@ namespace Project.Scripts.Reward
 
             int index = Random.Range(0, list.Count);
             var item = list[index];
-            list.RemoveAt(index);
             
+            list.RemoveAt(index);
+
             return item;
         }
     }

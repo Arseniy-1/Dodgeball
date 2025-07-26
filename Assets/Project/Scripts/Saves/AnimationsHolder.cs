@@ -20,40 +20,35 @@ namespace Project.Scripts.Saves
         public List<int> DeathAnimationsHash = new ();
         public List<int> PrepareAnimationsHash = new ();
 
+        private void AddAnimation<T>(T animation, List<T> animations, List<int> hashes) where T : Enum
+        {
+            if (animations.Contains(animation))
+            {
+                return;
+            }
+
+            animations.Add(animation);
+            hashes.Add(Animator.StringToHash(animation.ToString()));
+        }
+
         public void AddDodgeAnimation(DodgeAnimations animation)
         {
-            if (DodgeAnimations.Contains(animation))
-                return;
-        
-            DodgeAnimations.Add(animation);
-            DodgeAnimationsHash.Add(Animator.StringToHash(animation.ToString()));
+            AddAnimation(animation, DodgeAnimations, DodgeAnimationsHash);
         }
 
         public void AddCelebrateAnimation(CelebrateAnimations animation)
         {
-            if (CelebrateAnimations.Contains(animation))
-                return;
-        
-            CelebrateAnimations.Add(animation);
-            CelebrateAnimationsHash.Add(Animator.StringToHash(animation.ToString()));
+            AddAnimation(animation, CelebrateAnimations, CelebrateAnimationsHash);
         }
 
         public void AddDeathAnimation(DeathAnimations animation)
         {
-            if (DeathAnimations.Contains(animation)) 
-                return;
-        
-            DeathAnimations.Add(animation);
-            DeathAnimationsHash.Add(Animator.StringToHash(animation.ToString()));
+            AddAnimation(animation, DeathAnimations, DeathAnimationsHash);
         }
-    
+
         public void AddPrepareAnimation(PrepareAnimations animation)
         {
-            if (PrepareAnimations.Contains(animation))
-                return;
-
-            PrepareAnimations.Add(animation);
-            PrepareAnimationsHash.Add(Animator.StringToHash(animation.ToString()));
+            AddAnimation(animation, PrepareAnimations, PrepareAnimationsHash);
         }
 
         public void ResetAnimations()

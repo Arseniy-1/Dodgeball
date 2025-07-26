@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
-using Project.Scripts.Entities;
 using Project.Scripts.Services.EffectService;
 using Project.Scripts.UpgradeFrame;
 using Project.Scripts.UpgradeFrame.BallUpdaters;
@@ -15,121 +10,61 @@ namespace Project.Scripts.CompositionRootSystem
 {
     public class Arena : MonoBehaviour
     {
-        private readonly int _maxWinRankAmount = 40;
-        private readonly int _minWinRankAmount = 15; 
-
-        private readonly int _maxLoseRankAmount = 10;
-        private readonly int _minLoseRankAmount = 3;
+        [Header("Settings")]
+        [SerializeField] private int _maxWinRankAmount = 40;
+        [SerializeField] private int _minWinRankAmount = 15;
+        [SerializeField] private int _maxLoseRankAmount = 10;
+        [SerializeField] private int _minLoseRankAmount = 3;
         
+        [SerializeField] private float _minInactiveInterval = 1f;
+        [SerializeField] private float _maxInactiveInterval = 3f;
+
+        [Header("References")]
         [SerializeField] private List<Squad> _squads;
         [SerializeField] private Transform _ballPosition;
         [SerializeField] private BallUpgraderFabric _ballUpgraderFabric;
-
         [SerializeField] private List<Frame> _frames;
 
-        [SerializeField] private float _minInactiveInterval;
-        [SerializeField] private float _maxInactiveInterval;
-
-        private List<BallUpgrade> _ballUpgraders;
-        private List<Squad> _deathSquads;
-        private CancellationTokenSource _cancellationTokenSource;
+        private SquadDeathHandler _deathHandler;
+        private BallUpgradeHolder _ballUpgradeHolder;
+        private FrameActivator _frameActivator;
 
         public event Action<int> GameOver;
-
+        
         public List<Squad> Squads => _squads;
 
         private void Awake()
         {
-            _cancellationTokenSource = new CancellationTokenSource();
-            _deathSquads = new List<Squad>();
+            _deathHandler = new SquadDeathHandler(_squads);
+            _ballUpgradeHolder = new BallUpgradeHolder(_ballUpgraderFabric);
+            _frameActivator = new FrameActivator(_frames, _minInactiveInterval, _maxInactiveInterval);
         }
 
         private void OnDestroy()
         {
-            _cancellationTokenSource.Cancel();
+            _frameActivator.Dispose();
         }
 
         public void Initialize(Ball ball)
         {
-            _ballUpgraders = _ballUpgraderFabric.Create();
-
             ball.transform.position = _ballPosition.position;
-
-            foreach (var squad in _squads)
-            {
-                if (squad.SquadType == typeof(Player))
-                    squad.LostPlayers += HandlePlayerSquadDeath;
-                else
-                    squad.LostPlayers += HandleEnemySquadDeath;
-            }
-
-            EnableFrame().Forget();
+            _deathHandler.Initialize(HandleGameOver);
+            _frameActivator.Initialize(_ballUpgradeHolder.Upgraders);
         }
 
-        private void HandleEnemySquadDeath(Squad squad)
+        private void HandleGameOver(bool isWin)
         {
-            squad.LostPlayers -= HandleEnemySquadDeath;
-
-            _deathSquads.Add(squad);
-
-            if (_deathSquads.Count == _squads.Count - 1)
+            int rankAmount = 
+                isWin ? 
+                Random.Range(_minWinRankAmount, _maxWinRankAmount) : 
+                Random.Range(_minLoseRankAmount, _maxLoseRankAmount);
+            
+            if (isWin)
             {
-
                 EffectID.Confetti.PlayEffect(transform);
-                HandleGameOver(Random.Range(_minWinRankAmount, _maxWinRankAmount));
             }
-        }
-
-        private void HandlePlayerSquadDeath(Squad squad)
-        {
-            squad.LostPlayers -= HandlePlayerSquadDeath;
-
-            HandleGameOver(Random.Range(_minLoseRankAmount, _maxLoseRankAmount));
-        }
-
-        private void HandleGameOver(int rankAmount)
-        {
-            NotifyWinners();
+            
             GameOver?.Invoke(rankAmount);
-        }
-
-        private async UniTaskVoid EnableFrame()
-        {
-            while (_cancellationTokenSource.IsCancellationRequested == false)
-            {
-                await WaitForHitAsync();
-                float delay = Random.Range(_minInactiveInterval, _maxInactiveInterval);
-                await UniTask.Delay((int)(delay * 1000), cancellationToken: _cancellationTokenSource.Token);
-            }
-        }
-
-        private async Task WaitForHitAsync()
-        {
-            int randomFrameIndex = Random.Range(0, _frames.Count);
-            Frame selectedFrame = _frames[randomFrameIndex];
-
-            var taskCompletionSource = new TaskCompletionSource<bool>();
-
-            void Handler(Frame frame)
-            {
-                selectedFrame.OnFrameHit -= Handler;
-                taskCompletionSource.SetResult(true);
-            }
-
-            selectedFrame.OnFrameHit += Handler;
-            selectedFrame.Activate(_ballUpgraders[Random.Range(0, _ballUpgraders.Count)]);
-
-            await taskCompletionSource.Task;
-        }
-
-        private void NotifyWinners()
-        {
-            var winners = _squads.Except(_deathSquads);
-
-            foreach (var squad in winners)
-            {
-                squad.Celebrate();
-            }
         }
     }
 }

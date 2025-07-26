@@ -8,12 +8,7 @@ namespace Project.Scripts.UpgradeFrame
     {
         [SerializeField] private Image _backgroundView;
         [SerializeField] private Image _upgradeIcon;
-
-        private void Start()
-        {
-            // Метод для жизненного цикла юнити
-        }
-
+        
         public void Initialize(BallUpgradeInfo ballUpgradeInfo)
         {
             _backgroundView.sprite = ballUpgradeInfo.BackgroundView;

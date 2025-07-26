@@ -7,20 +7,8 @@ namespace Project.Scripts.Services
 {
     public class CollisionHandler : MonoBehaviour
     {
-        private Entity _owner;
-
         public event Action<Scripts.Ball> BallDetected;
         public event Action<int> DamageTaken;
-
-        private void Awake()
-        {
-            _owner = GetComponent<Entity>();
-        }
-
-        private void Start()
-        {
-            // Метод нужен, чтобы была возможность выключать компонент
-        }
 
         private void OnCollisionEnter(Collision collision)
         {

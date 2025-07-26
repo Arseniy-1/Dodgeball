@@ -21,51 +21,57 @@ namespace Project.Scripts.Services.EffectService
         public EffectService(Dictionary<EffectID, EffectData> effectsData)
         {
             _effectsData = effectsData;
-
-            var poolHolder = new GameObject("EffectsPoolHolder");
-            Object.DontDestroyOnLoad(poolHolder);
-
-            _spawners = new Dictionary<EffectID, List<EffectsSpawner>>();
-
-            foreach (var pair in _effectsData)
-            {
-                List<EffectsSpawner> spawners = new List<EffectsSpawner>();
-
-                foreach (var effect in pair.Value.Effects)
-                    spawners.Add(new EffectsSpawner(effect, poolHolder.transform));
-
-                _spawners[pair.Key] = spawners;
-            }
-
-            _compositeDisposable = new CompositeDisposable();
-
-            MessageBrokerHolder.GameActions
-                .Receive<M_PlayEffectByType>()
-                .Subscribe((message) =>
-                    ShowEffects(message.EffectID, message.Transform, message.IsParent))
-                .AddTo(_compositeDisposable);
+            InitializePool();
+            SubscribeToMessages();
         }
-
+        
         public void Dispose()
         {
             _compositeDisposable.Dispose();
         }
 
-        private void ShowEffects(EffectID effectID, Transform transform, bool isParent = false)
+        private void InitializePool()
         {
-            if (_spawners.TryGetValue(effectID, out var spawners))
-            {
-                EffectsSpawner randomSpawner = spawners[Random.Range(0, spawners.Count)];
-                var effect = randomSpawner.Spawn();
-                effect.transform.position = transform.position;
+            var poolHolder = new GameObject("EffectsPoolHolder");
+            Object.DontDestroyOnLoad(poolHolder);
+            
+            _spawners = new Dictionary<EffectID, List<EffectsSpawner>>();
 
-                if (isParent)
-                    effect.transform.parent = transform.transform;
-            }
-            else
+            foreach (var pair in _effectsData)
             {
-                Debug.LogWarning($"No spawner found for EffectID: {effectID}");
+                var spawners = new List<EffectsSpawner>();
+                
+                foreach (var effect in pair.Value.Effects)
+                {
+                    spawners.Add(new EffectsSpawner(effect, poolHolder.transform));
+                }
+                
+                _spawners[pair.Key] = spawners;
             }
+        }
+
+        private void SubscribeToMessages()
+        {
+            _compositeDisposable = new CompositeDisposable();
+            
+            MessageBrokerHolder.GameActions
+                .Receive<M_PlayEffectByType>()
+                .Subscribe(ShowEffect)
+                .AddTo(_compositeDisposable);
+        }
+
+        private void ShowEffect(M_PlayEffectByType message)
+        {
+            if (_spawners.TryGetValue(message.EffectID, out var spawners) == false)
+                return;
+
+            var randomSpawner = spawners[Random.Range(0, spawners.Count)];
+            var effect = randomSpawner.Spawn();
+            
+            effect.transform.position = message.Transform.position;
+
+            if (message.IsParent)
+                effect.transform.parent = message.Transform;
         }
     }
 }
