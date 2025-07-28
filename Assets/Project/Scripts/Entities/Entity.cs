@@ -125,7 +125,7 @@ namespace Project.Scripts.Entities
             transform.position = target;
         }
 
-        protected void CreateStateMachine(List<IState> states)
+        private void CreateStateMachine(List<IState> states)
         {
             StateMachine = new StateMaсhine(states);
         }

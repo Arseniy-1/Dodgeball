@@ -87,6 +87,7 @@ namespace Project.Scripts.StateMachine.EntityStates
         {
             var ball = GameStatusService.Instance.CurrentBall;
             
+            Debug.Log(GameStatusService.Instance.CurrentBall);
             if (ball != null)
                 _rotator.RotateToTarget(ball.transform, _entity.transform);
         }
