@@ -39,17 +39,18 @@ namespace Project.Scripts.CompositionRootSystem
             _ballUpgradeHolder = new BallUpgradeHolder(_ballUpgraderFabric);
             _frameActivator = new FrameActivator(_frames, _minInactiveInterval, _maxInactiveInterval);
         }
-
+        
         private void OnDestroy()
         {
             _frameActivator.Dispose();
         }
-
+        
         public void Initialize(Ball ball)
         {
             ball.transform.position = _ballPosition.position;
             _deathHandler.Initialize(HandleGameOver);
             _frameActivator.Initialize(_ballUpgradeHolder.Upgraders);
+            _frameActivator.Activate();
         }
 
         private void HandleGameOver(bool isWin)

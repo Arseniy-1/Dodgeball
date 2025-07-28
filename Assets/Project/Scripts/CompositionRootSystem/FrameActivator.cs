@@ -28,8 +28,12 @@ namespace Project.Scripts.CompositionRootSystem
         public void Initialize(List<BallUpgrade> upgraders)
         {
             _currentUpgraders = upgraders;
+        }
+
+        public void Activate()
+        {
             _cancellationTokenSource = new CancellationTokenSource();
-            ActivateFramesLoop().Forget();
+            ActivateFramesLoop().Forget(); 
         }
         
         public void Dispose()
@@ -41,13 +45,13 @@ namespace Project.Scripts.CompositionRootSystem
         {
             while (_cancellationTokenSource.IsCancellationRequested == false)
             {
-                await ActivateRandomFrame();
+                await ActivateFrame();
                 float delay = Random.Range(_minInterval, _maxInterval);
                 await UniTask.Delay((int)(delay * 1000), cancellationToken: _cancellationTokenSource.Token);
             }
         }
 
-        private async Task ActivateRandomFrame()
+        private async Task ActivateFrame()
         {
             var frame = _frames[Random.Range(0, _frames.Count)];
             var upgrade = _currentUpgraders[Random.Range(0, _currentUpgraders.Count)];

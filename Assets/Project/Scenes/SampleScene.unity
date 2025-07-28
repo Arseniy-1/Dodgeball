@@ -10604,7 +10604,7 @@ MonoBehaviour:
   _boxAnimationDuration: 1.7
   _boxEndScale: 1.51
   _boxWhiteFadeDuration: 0.28
-  _rewardModelWrap: {fileID: 0}
+  _rewardModelWrap: {fileID: 1754970801}
   _playerInputController: {fileID: 794015269}
 --- !u!114 &794015269
 MonoBehaviour:
@@ -12599,8 +12599,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a9dec80965474db55dcc7d74340105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SelectionCircle>k__BackingField: {fileID: 0}
-  <ApplyButton>k__BackingField: {fileID: 0}
+  <SelectionCircle>k__BackingField: {fileID: 373501451}
+  <ApplyButton>k__BackingField: {fileID: 1101095289}
 --- !u!114 &958739266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12857,8 +12857,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030938b0c4074d18a543c0a56e1a2fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SelectionCircle>k__BackingField: {fileID: 0}
-  <ApplyButton>k__BackingField: {fileID: 0}
+  <SelectionCircle>k__BackingField: {fileID: 1908022872}
+  <ApplyButton>k__BackingField: {fileID: 1753575235}
 --- !u!114 &994589543
 MonoBehaviour:
   m_ObjectHideFlags: 0

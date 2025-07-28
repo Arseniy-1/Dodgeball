@@ -71,10 +71,15 @@ namespace Project.Scripts.CompositionRootSystem
         private void Start()
         {
             _saves.Initialize(_rankHolder);
-            _mapController.CreateMap();
-            GameStatusService.Instance.Initialize(_mapController.BallInstance);
             _uiHandler.Start();
             
+            PrepareMap();
+        }
+
+        private void PrepareMap()
+        {
+            _mapController.CreateMap();
+            GameStatusService.Instance.Initialize(_mapController.BallInstance);
             _mapController.ArenaInstance.Initialize(_mapController.BallInstance);
         }
 
@@ -103,7 +108,7 @@ namespace Project.Scripts.CompositionRootSystem
         private void HandleRankCanvasClose()
         {
             _mapController.ClearEntities();
-            _mapController.CreateMap();
+            _mapController.ArenaInstance.Initialize(_mapController.BallInstance);
         }
 
         private void HandleRankRaised()
