@@ -15,7 +15,7 @@ namespace Project.Scripts.Entities
     {
         [SerializeField] private EnemyConfig _enemyConfig;
     
-        public event Action<Enemy> OnDestroyed;
+        public event Action<Enemy> Destroyed;
         
         public override void Celebrate()
         {
@@ -27,7 +27,7 @@ namespace Project.Scripts.Entities
         public override void Die()
         {
             base.Die();
-            OnDestroyed?.Invoke(this);
+            Destroyed?.Invoke(this);
         }
         
         [Button]

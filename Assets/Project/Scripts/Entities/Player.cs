@@ -17,7 +17,7 @@ namespace Project.Scripts.Entities
         [SerializeField] private PlayerInputController _inputController;
         [SerializeField] private PlayerConfig _playerConfig;
 
-        public event Action<Player> OnDestroyed;
+        public event Action<Player> Destroyed;
     
         public override void Celebrate()
         {
@@ -29,7 +29,7 @@ namespace Project.Scripts.Entities
         public override void Die()
         {
             base.Die();
-            OnDestroyed?.Invoke(this);
+            Destroyed?.Invoke(this);
         }
         
         [Button]

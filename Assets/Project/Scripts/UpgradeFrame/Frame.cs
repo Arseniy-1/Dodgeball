@@ -19,7 +19,7 @@ namespace Project.Scripts.UpgradeFrame
 
         private int _currentWaypoint = 0;
 
-        public event Action<Frame> OnFrameHit;
+        public event Action<Frame> FrameHit;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -62,7 +62,7 @@ namespace Project.Scripts.UpgradeFrame
             _collider.enabled = false;
             _frameView.gameObject.SetActive(false);
 
-            OnFrameHit?.Invoke(this);
+            FrameHit?.Invoke(this);
         }
     }
 }

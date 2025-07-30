@@ -12,7 +12,7 @@ namespace Project.Scripts.ObjectPool.Effects
 
         private CancellationTokenSource _cancellationToken;
 
-        public event Action<Effect> OnDestroyed;
+        public event Action<Effect> Destroyed;
 
         private async void OnEnable()
         {
@@ -41,7 +41,7 @@ namespace Project.Scripts.ObjectPool.Effects
             if (this != null)
                 transform.parent = null;
 
-            OnDestroyed?.Invoke(this);
+            Destroyed?.Invoke(this);
         }
 
         private async UniTask WaitForAllParticlesAsync(CancellationToken cancellationToken)

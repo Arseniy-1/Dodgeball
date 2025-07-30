@@ -5,12 +5,12 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     [Serializable]
     public class MapController
     {
-        [SerializeField] private List<Arena> _arenaPrefabs;
+        [SerializeField] private List<MatchManager> _arenaPrefabs;
         [SerializeField] private Ball _ballPrefab;
 
         private EntityCreator _entityCreator;
@@ -28,21 +28,21 @@ namespace Project.Scripts.CompositionRootSystem
         }
         
         public Ball BallInstance { get; private set; }
-        public Arena ArenaInstance { get; private set; }
+        public MatchManager MatchManagerInstance { get; private set; }
 
         public void CreateMap()
         {
             var position = Vector3.zero;
 
-            if (ArenaInstance != null)
+            if (MatchManagerInstance != null)
             {
                 ClearEntities();
-                Object.Destroy(ArenaInstance.gameObject);
+                Object.Destroy(MatchManagerInstance.gameObject);
             }
 
-            Arena arenaPrefab = _arenaPrefabs[Random.Range(0, _arenaPrefabs.Count)];
+            MatchManager matchManagerPrefab = _arenaPrefabs[Random.Range(0, _arenaPrefabs.Count)];
 
-            ArenaInstance = Object.Instantiate(arenaPrefab, position, Quaternion.identity);
+            MatchManagerInstance = Object.Instantiate(matchManagerPrefab, position, Quaternion.identity);
 
             if (BallInstance != null)
                 Object.Destroy(BallInstance.gameObject);
@@ -58,16 +58,16 @@ namespace Project.Scripts.CompositionRootSystem
 
             BallInstance = Object.Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
 
-            for (int i = 0; i < ArenaInstance.Squads.Count; i++)
+            for (int i = 0; i < MatchManagerInstance.Squads.Count; i++)
             {
                 if (i == 0)
                 {
-                    _entityCreator.FillPlayerSquad(_playerSpawner, ArenaInstance.Squads[i]);
+                    _entityCreator.FillPlayerSquad(_playerSpawner, MatchManagerInstance.Squads[i]);
                 }
                 else
                 {
                     _entityCreator.FillEnemySquad(_enemySpawners[Random.Range(0, _enemySpawners.Count)],
-                        ArenaInstance.Squads[i]);
+                        MatchManagerInstance.Squads[i]);
                 }
             }
         }

@@ -52,8 +52,8 @@ namespace Project.Scripts.StateMachine.EntityStates
         {
             _cancellationTokenSource = new CancellationTokenSource();
 
-            GameStatusService.Instance.OnHolderChanged += HandleBallHolderChanged;
-            GameStatusService.Instance.OnZoneChanged += HandleBallZoneChanged;
+            GameStatusService.Instance.HolderChanged += OnHolderChanged;
+            GameStatusService.Instance.ZoneChanged += OnBallZoneChanged;
             _collisionHandler.BallDetected += OnBallDetected;
         
             _collisionHandler.enabled = true;
@@ -67,8 +67,8 @@ namespace Project.Scripts.StateMachine.EntityStates
         {
             _cancellationTokenSource.Cancel();
         
-            GameStatusService.Instance.OnHolderChanged -= HandleBallHolderChanged;
-            GameStatusService.Instance.OnZoneChanged -= HandleBallZoneChanged;
+            GameStatusService.Instance.HolderChanged -= OnHolderChanged;
+            GameStatusService.Instance.ZoneChanged -= OnBallZoneChanged;
             _collisionHandler.BallDetected -= OnBallDetected;
         }
 
@@ -80,8 +80,8 @@ namespace Project.Scripts.StateMachine.EntityStates
 
         protected abstract void OnBallDetected(Ball ball);
 
-        protected abstract void HandleBallZoneChanged(Collider zone);
+        protected abstract void OnBallZoneChanged(Collider zone);
     
-        protected abstract void HandleBallHolderChanged(Entity entity);
+        protected abstract void OnHolderChanged(Entity entity);
     }
 }

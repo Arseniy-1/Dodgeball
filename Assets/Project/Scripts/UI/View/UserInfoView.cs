@@ -19,16 +19,16 @@ namespace Project.Scripts.UI.View
 
         private void OnDestroy()
         {
-            _rankHolder.RankRaised -= HandleRankRaised;
+            _rankHolder.RankRaised -= OnRankRaised;
         }
 
         public void Initialize(RankHolder rankHolder)
         {
             _rankHolder = rankHolder;
 
-            HandleRankRaised();
+            OnRankRaised();
 
-            _rankHolder.RankRaised += HandleRankRaised;
+            _rankHolder.RankRaised += OnRankRaised;
             _rankAmountBar.Initialize(_rankHolder);
             _rankAmountTextView.Initialize(_rankHolder);
         
@@ -39,7 +39,7 @@ namespace Project.Scripts.UI.View
             }
         }
 
-        private void HandleRankRaised()
+        private void OnRankRaised()
         {
             _currentRank.text = _rankHolder.CurrentRank.ToString();
         }

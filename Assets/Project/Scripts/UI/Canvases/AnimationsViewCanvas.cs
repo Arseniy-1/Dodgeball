@@ -31,7 +31,7 @@ namespace Project.Scripts.UI.Canvases
 
             _currentAnimationIndex = 0;
         
-            _exitButton.ExitButtonClicked += Disable;
+            _exitButton.ExitButtonClicked += OnExitButtonClicked;
             _nextButton.onClick.AddListener(HandleNextButtonClicked);
             _previousButton.onClick.AddListener(HandlePreviousButtonClicked);
 
@@ -41,7 +41,7 @@ namespace Project.Scripts.UI.Canvases
 
         private void OnDisable()
         {
-            _exitButton.ExitButtonClicked -= Disable;
+            _exitButton.ExitButtonClicked -= OnExitButtonClicked;
             _nextButton.onClick.RemoveListener(HandleNextButtonClicked);
             _previousButton.onClick.RemoveListener(HandlePreviousButtonClicked);
         }
@@ -58,7 +58,7 @@ namespace Project.Scripts.UI.Canvases
             HandleClick();
         }
 
-        private void Disable()
+        private void OnExitButtonClicked()
         {
             gameObject.SetActive(false);
             _cancellationTokenSource.Cancel();

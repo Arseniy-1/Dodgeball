@@ -135,13 +135,13 @@ namespace Project.Scripts.StateMachine.EntityStates
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(checkDelay), cancellationToken: token);
 
-                GameStatusService.Instance.CurrentBall.Chargeable.OnCharged += HandleBallCharged;
+                GameStatusService.Instance.CurrentBall.Chargeable.Charged += OnCharged;
             }
         }
 
-        private void HandleBallCharged()
+        private void OnCharged()
         {
-            GameStatusService.Instance.CurrentBall.Chargeable.OnCharged -= HandleBallCharged;
+            GameStatusService.Instance.CurrentBall.Chargeable.Charged -= OnCharged;
         
             if (GameStatusService.Instance.IsBallFree)
             {

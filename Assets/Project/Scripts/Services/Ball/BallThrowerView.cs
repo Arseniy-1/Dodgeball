@@ -14,15 +14,15 @@ namespace Project.Scripts.Services.Ball
 
         private void OnEnable()
         {
-            _ballThrower.OnCharging += Show;
-            _ballThrower.OnThrown += HideView;
+            _ballThrower.Charging += Show;
+            _ballThrower.Thrown += HideView;
             HideView();
         }
 
         private void OnDisable()
         {
-            _ballThrower.OnCharging -= Show;
-            _ballThrower.OnThrown -= HideView;
+            _ballThrower.Charging -= Show;
+            _ballThrower.Thrown -= HideView;
         }
 
         private void Show(float minForce, float maxForce, float currentForce)

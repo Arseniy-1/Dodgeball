@@ -14,26 +14,26 @@ namespace Project.Scripts.UI.Canvases
     
         private void OnEnable()
         {
-            _exitButton.ExitButtonClicked += Disable;
+            _exitButton.ExitButtonClicked += OnExitButtonClicked;
         
             foreach (var languageButton in _lanquageButtons)
             {
-                languageButton.ButtonClicked += HandleButtonButtonClicked;
+                languageButton.ButtonClicked += OnButtonClicked;
             }
         }
 
         private void OnDisable()
         {
-            _exitButton.ExitButtonClicked -= Disable;
+            _exitButton.ExitButtonClicked -= OnExitButtonClicked;
         
             foreach (var languageButton in _lanquageButtons)
             {
-                languageButton.ButtonClicked -= HandleButtonButtonClicked;
+                languageButton.ButtonClicked -= OnButtonClicked;
             }
         }
 
         [Button]
-        private void HandleButtonButtonClicked(Languages language)
+        private void OnButtonClicked(Languages language)
         {
             YG2.lang = language.ToString();
         
@@ -46,7 +46,7 @@ namespace Project.Scripts.UI.Canvases
                 languageButton.UpdateLanguage();
         }
 
-        private void Disable()
+        private void OnExitButtonClicked()
         {
             gameObject.SetActive(false);
         }

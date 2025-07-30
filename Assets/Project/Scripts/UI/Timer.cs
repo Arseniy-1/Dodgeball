@@ -18,7 +18,7 @@ namespace Project.Scripts.UI
 
         public async UniTaskVoid Start(CancellationToken token)
         {
-            int delay = 1000;
+            int delay = 1;
             
             while (token.IsCancellationRequested == false)
             {
@@ -37,8 +37,10 @@ namespace Project.Scripts.UI
 
         private void UpdateTimeDisplay()
         {
-            int minutes = _totalSeconds / 60;
-            int seconds = _totalSeconds % 60;
+            int secondsPerMinute = 60;
+            
+            int minutes = _totalSeconds / secondsPerMinute;
+            int seconds = _totalSeconds % secondsPerMinute;
         
             _timeText.text = $"{minutes:00}:{seconds:00}";
         }

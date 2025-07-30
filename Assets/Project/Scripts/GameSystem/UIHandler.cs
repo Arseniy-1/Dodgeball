@@ -9,7 +9,7 @@ using Project.Scripts.UI.View;
 using UnityEngine;
 using YG;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     [Serializable]
     public class UIHandler
@@ -37,14 +37,14 @@ namespace Project.Scripts.CompositionRootSystem
         public void Enable()
         {
             _startGameCanvas.StartGameButtonPressed += StartGame;
-            _rankViewCanvas.OnRewardViewClosed += HandleRankCanvasClose;
+            _rankViewCanvas.RewardViewClosed += HandleRankCanvasClose;
             _rewardButton.RewardButtonClicked += ShowReward;
         }
 
         public void Disable()
         {
             _startGameCanvas.StartGameButtonPressed -= StartGame;
-            _rankViewCanvas.OnRewardViewClosed -= HandleRankCanvasClose;
+            _rankViewCanvas.RewardViewClosed -= HandleRankCanvasClose;
             _rewardButton.RewardButtonClicked -= ShowReward;
         }
 

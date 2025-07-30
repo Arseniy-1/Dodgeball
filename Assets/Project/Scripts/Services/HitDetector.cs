@@ -6,7 +6,7 @@ namespace Project.Scripts.Services
 {
     public class HitDetector : MonoBehaviour
     {
-        public event Action DetectBallHit;
+        public event Action BallHitDetected;
         
         private void OnTriggerEnter(Collider other)
         {
@@ -14,7 +14,7 @@ namespace Project.Scripts.Services
             {
                 if (chargeable.IsCharged)
                 {
-                    DetectBallHit?.Invoke();
+                    BallHitDetected?.Invoke();
                 }
             }
         }

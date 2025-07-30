@@ -18,7 +18,7 @@ namespace Project.Scripts.UI.Canvases
         private RankHolder _rankHolder;
         private CancellationTokenSource _cancellationTokenSource;
 
-        public event Action OnRewardViewClosed;
+        public event Action RewardViewClosed;
     
         public void Initialize(RankHolder rankHolder)
         {
@@ -33,7 +33,7 @@ namespace Project.Scripts.UI.Canvases
         
         protected override void HandleButtonClick()
         {
-            OnRewardViewClosed?.Invoke();
+            RewardViewClosed?.Invoke();
             _cancellationTokenSource.Cancel();
         }
 
@@ -41,6 +41,7 @@ namespace Project.Scripts.UI.Canvases
         {
             float duration = 2.5f;
             float time = 0f;
+            float maxPercent = 100f;
 
             float startFill = from / (float)MaxAmount;
             float endFill = to / (float)MaxAmount;
@@ -53,7 +54,7 @@ namespace Project.Scripts.UI.Canvases
                 float currentFill = Mathf.Lerp(startFill, endFill, t);
                 _chestFillImage.fillAmount = currentFill;
 
-                int percent = Mathf.RoundToInt(currentFill * 100f);
+                int percent = Mathf.RoundToInt(currentFill * maxPercent);
                 _percentageText.text = percent + "%";
 
                 await UniTask.Yield();
@@ -63,7 +64,7 @@ namespace Project.Scripts.UI.Canvases
             }
 
             _chestFillImage.fillAmount = endFill;
-            _percentageText.text = (to * 100 / MaxAmount) + "%";
+            _percentageText.text = (to * maxPercent / MaxAmount) + "%";
         }
     }
 }

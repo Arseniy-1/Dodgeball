@@ -7,7 +7,7 @@ using Project.Scripts.UpgradeFrame;
 using Project.Scripts.UpgradeFrame.BallUpdaters;
 using Random = UnityEngine.Random;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     public class FrameActivator : IDisposable
     {
@@ -58,13 +58,13 @@ namespace Project.Scripts.CompositionRootSystem
             
             var taskCompletionSource = new TaskCompletionSource<bool>();
             
-            void Handler(Frame _)
+            void OnFrameHit(Frame _)
             {
-                frame.OnFrameHit -= Handler;
+                frame.FrameHit -= OnFrameHit;
                 taskCompletionSource.SetResult(true);
             }
 
-            frame.OnFrameHit += Handler;
+            frame.FrameHit += OnFrameHit;
             frame.Activate(upgrade);
             
             await taskCompletionSource.Task;

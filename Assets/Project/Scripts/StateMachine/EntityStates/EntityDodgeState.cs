@@ -39,7 +39,7 @@ namespace Project.Scripts.StateMachine.EntityStates
             _cancellationTokenSource = new CancellationTokenSource();
         
             _hitDetector.enabled = true;
-            _hitDetector.DetectBallHit += HandleBallDodge;
+            _hitDetector.BallHitDetected += HandleBallDodge;
             
             _collisionHandler.enabled = false;
             _collider.isTrigger = true;
@@ -52,7 +52,7 @@ namespace Project.Scripts.StateMachine.EntityStates
             if (_hitDetector!= null)
                 _hitDetector.enabled = false;
         
-            _hitDetector.DetectBallHit -= HandleBallDodge;
+            _hitDetector.BallHitDetected -= HandleBallDodge;
 
             if (_collider!= null)
                 _collisionHandler.enabled = true;

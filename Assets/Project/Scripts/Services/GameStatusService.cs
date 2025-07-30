@@ -16,8 +16,8 @@ namespace Project.Scripts.Services
         {
         }
 
-        public event Action<Entity> OnHolderChanged;
-        public event Action<Collider> OnZoneChanged;
+        public event Action<Entity> HolderChanged;
+        public event Action<Collider> ZoneChanged;
 
         public static GameStatusService Instance => _instance ??= new GameStatusService();
         public Scripts.Ball CurrentBall => _ball;
@@ -56,7 +56,7 @@ namespace Project.Scripts.Services
         public void SetCurrentZone(Collider zone)
         {
             CurrentZone = zone;
-            OnZoneChanged?.Invoke(CurrentZone);
+            ZoneChanged?.Invoke(CurrentZone);
         }
     
         public void ClearCurrentZone()
@@ -67,13 +67,13 @@ namespace Project.Scripts.Services
         public void SetHolder(Entity newHolder)
         {
             CurrentHolder = newHolder;
-            OnHolderChanged?.Invoke(CurrentHolder);
+            HolderChanged?.Invoke(CurrentHolder);
         }
 
         public void ClearHolder()
         {
             CurrentHolder = null;
-            OnHolderChanged?.Invoke(CurrentHolder);
+            HolderChanged?.Invoke(CurrentHolder);
         }
     }
 }

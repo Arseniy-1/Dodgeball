@@ -4,7 +4,7 @@ using Project.Scripts.Entities;
 using Project.Scripts.ObjectPool.Entity;
 using Project.Scripts.Services;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     public class EntityCreator
     {

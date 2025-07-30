@@ -42,13 +42,13 @@ namespace Project.Scripts.StateMachine.EnemyStates
             StateSwitcher.SwitchState<EnemyAttackState>();
         }
 
-        protected override void HandleBallZoneChanged(Collider zone)
+        protected override void OnBallZoneChanged(Collider zone)
         {
             if (zone != SquadZone)
                 StateSwitcher.SwitchState<EnemyDodgeReadyState>();
         }
 
-        protected override void HandleBallHolderChanged(Entity entity)
+        protected override void OnHolderChanged(Entity entity)
         {
             if (entity == null)
                 return;

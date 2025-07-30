@@ -11,10 +11,10 @@ namespace Project.Scripts.UI.Canvases
         public override void Initialize()
         {
             _mainCamera = Camera.main;
-            GameStatusService.Instance.OnHolderChanged += HandleHolderChanged;
+            GameStatusService.Instance.HolderChanged += OnHolderChanged;
         }
 
-        private void HandleHolderChanged(Entity entity)
+        private void OnHolderChanged(Entity entity)
         {
             if (entity is Player == false)
                 return;
@@ -60,7 +60,7 @@ namespace Project.Scripts.UI.Canvases
 
         private void Disable()
         {
-            GameStatusService.Instance.OnHolderChanged -= HandleHolderChanged;
+            GameStatusService.Instance.HolderChanged -= OnHolderChanged;
             ApplyButton.ApplyButtonClicked -= Disable;
         
             gameObject.SetActive(false);

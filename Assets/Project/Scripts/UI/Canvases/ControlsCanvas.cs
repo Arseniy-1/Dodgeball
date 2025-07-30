@@ -8,15 +8,15 @@ namespace Project.Scripts.UI.Canvases
 
         private void OnEnable()
         {
-            _exitButton.ExitButtonClicked += Disable;
+            _exitButton.ExitButtonClicked += OnExitButtonClicked;
         }
 
         private void OnDisable()
         {
-            _exitButton.ExitButtonClicked -= Disable;
+            _exitButton.ExitButtonClicked -= OnExitButtonClicked;
         }
 
-        private void Disable()
+        private void OnExitButtonClicked()
         {
             gameObject.SetActive(false);
         }

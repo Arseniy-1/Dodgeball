@@ -11,7 +11,7 @@ namespace Project.Scripts.Services.Ball
         private Rigidbody _rigidbody;
         private Vector3 _velocity;
     
-        public event Action OnCharged;
+        public event Action Charged;
     
         public bool IsCharged => _velocity.magnitude >= _dangerousSpeed;
     
@@ -23,7 +23,7 @@ namespace Project.Scripts.Services.Ball
         private void FixedUpdate()
         {
             _velocity = _rigidbody.velocity;
-            OnCharged?.Invoke();
+            Charged?.Invoke();
         }
     }
 }

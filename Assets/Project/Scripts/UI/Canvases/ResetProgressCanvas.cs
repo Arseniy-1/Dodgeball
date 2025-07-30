@@ -11,27 +11,27 @@ namespace Project.Scripts.UI.Canvases
     
         private void OnEnable()
         {
-            _exitButton.ExitButtonClicked += Disable;
-            _applyButton.ApplyButtonClicked += ResetProgress;
+            _exitButton.ExitButtonClicked += OnExitButtonClicked;
+            _applyButton.ApplyButtonClicked += OnApplyButtonClicked;
         }
 
         private void OnDisable()
         {
-            _exitButton.ExitButtonClicked -= Disable;
-            _applyButton.ApplyButtonClicked -= ResetProgress;
+            _exitButton.ExitButtonClicked -= OnExitButtonClicked;
+            _applyButton.ApplyButtonClicked -= OnApplyButtonClicked;
         }
 
-        private void Disable()
+        private void OnExitButtonClicked()
         {
             gameObject.SetActive(false);
         }   
     
-        private void ResetProgress()
+        private void OnApplyButtonClicked()
         {
             _saves.ResetProgress();
             YG2.SaveProgress();
         
-            Disable();
+            OnExitButtonClicked();
         }
     }
 }

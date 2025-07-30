@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     public class SquadDeathHandler
     {

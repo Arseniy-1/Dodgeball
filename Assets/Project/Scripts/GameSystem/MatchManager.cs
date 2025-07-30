@@ -6,9 +6,9 @@ using Project.Scripts.UpgradeFrame.BallUpdaters;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
-    public class Arena : MonoBehaviour
+    public class MatchManager : MonoBehaviour
     {
         [Header("Settings")]
         [SerializeField] private int _maxWinRankAmount = 40;

@@ -14,8 +14,8 @@ namespace Project.Scripts.Services.Ball
         private bool _isCharging = true;
         private float _chargeProgress;
 
-        public event Action<float, float, float> OnCharging;
-        public event Action OnThrown;
+        public event Action<float, float, float> Charging;
+        public event Action Thrown;
 
         public void Initialize(IThrowerStats throwerStats)
         {
@@ -45,7 +45,7 @@ namespace Project.Scripts.Services.Ball
                 return;
 
             ball.Rigidbody.AddForce(transform.forward * _currentForce, ForceMode.Force);
-            OnThrown?.Invoke();
+            Thrown?.Invoke();
         }
 
         private async UniTaskVoid ChargingCycle(CancellationToken cancellationToken)
@@ -75,7 +75,7 @@ namespace Project.Scripts.Services.Ball
 
                 _currentForce = Mathf.Lerp(_throwerStats.MinThrowForce, _throwerStats.MaxThrowForce, _chargeProgress);
 
-                OnCharging?.Invoke(_throwerStats.MinThrowForce, _throwerStats.MaxThrowForce, _currentForce);
+                Charging?.Invoke(_throwerStats.MinThrowForce, _throwerStats.MaxThrowForce, _currentForce);
 
                 await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
             }

@@ -20,8 +20,8 @@ namespace Project.Scripts.UI.Canvases
 
         protected void DisableButton() => _button.interactable = false;
 
-        protected void EnableButton() => _button.interactable = true;
-
         protected abstract void HandleButtonClick();
+
+        private void EnableButton() => _button.interactable = true;
     }
 }

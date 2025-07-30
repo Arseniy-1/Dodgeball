@@ -4,7 +4,7 @@ using Project.Scripts.Entities;
 using Project.Scripts.Services;
 using UnityEngine;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     public class Squad : MonoBehaviour
     {
@@ -23,9 +23,9 @@ namespace Project.Scripts.CompositionRootSystem
             foreach (var entity in _entities)
             {
                 if (entity is Enemy enemy)
-                    enemy.OnDestroyed -= HandleEntityDeath;
+                    enemy.Destroyed -= HandleEntityDeath;
                 else if (entity is Player player)
-                    player.OnDestroyed -= HandleEntityDeath;
+                    player.Destroyed -= HandleEntityDeath;
             }
         }
 
@@ -36,9 +36,9 @@ namespace Project.Scripts.CompositionRootSystem
             foreach (var entity in _entities)
             {
                 if (entity is Enemy enemy)
-                    enemy.OnDestroyed += HandleEntityDeath;
+                    enemy.Destroyed += HandleEntityDeath;
                 else if (entity is Player player)
-                    player.OnDestroyed += HandleEntityDeath;
+                    player.Destroyed += HandleEntityDeath;
             }
         }
 

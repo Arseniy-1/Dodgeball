@@ -11,10 +11,10 @@ namespace Project.Scripts.UI.Canvases
         public override void Initialize()
         {
             _mainCamera = Camera.main;
-            GameStatusService.Instance.OnHolderChanged += HandleHolderChanged;
+            GameStatusService.Instance.HolderChanged += OnHolderChanged;
         }
 
-        private void HandleHolderChanged(Entity entity)
+        private void OnHolderChanged(Entity entity)
         {
             if (entity is Enemy == false)
                 return;
@@ -34,8 +34,8 @@ namespace Project.Scripts.UI.Canvases
         
             UpdateSelectionCirclePosition(entity);
 
-            ApplyButton.ApplyButtonClicked += Disable;
-            GameStatusService.Instance.OnHolderChanged += CheckHolder;
+            ApplyButton.ApplyButtonClicked += OnApplyButtonClicked;
+            GameStatusService.Instance.HolderChanged += CheckHolder;
         }
 
         private void UpdateSelectionCirclePosition(Entity entity)
@@ -64,15 +64,15 @@ namespace Project.Scripts.UI.Canvases
         private void CheckHolder(Entity entity)
         {
             if (entity is Player)
-                Disable();
+                OnApplyButtonClicked();
         }
     
-        private void Disable()
+        private void OnApplyButtonClicked()
         {
             Time.timeScale = 1f;
-            GameStatusService.Instance.OnHolderChanged -= HandleHolderChanged;
-            GameStatusService.Instance.OnHolderChanged -= CheckHolder;
-            ApplyButton.ApplyButtonClicked -= Disable;
+            GameStatusService.Instance.HolderChanged -= OnHolderChanged;
+            GameStatusService.Instance.HolderChanged -= CheckHolder;
+            ApplyButton.ApplyButtonClicked -= OnApplyButtonClicked;
 
             gameObject.SetActive(false);
         }

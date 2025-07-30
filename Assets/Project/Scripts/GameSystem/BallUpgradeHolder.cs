@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Project.Scripts.UpgradeFrame.BallUpdaters;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     public class BallUpgradeHolder
     {

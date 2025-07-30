@@ -10,16 +10,16 @@ using Project.Scripts.Services;
 using UnityEngine;
 using YG;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
-    public class CompositionRoot : MonoBehaviour
+    public class GameInitializer : MonoBehaviour
     {
         [SerializeField] private List<Enemy> _enemyPrefabs;
         [SerializeField] private Player _playerPrefab;
 
         [SerializeField] private UIHandler _uiHandler;
         [SerializeField] private RewardService _rewardService;
-        [SerializeField] private EffectHandler _effectHandler;
+        [SerializeField] private EffectController _effectController;
         [SerializeField] private SavesSystem.Saves _saves;
         [SerializeField] private MapController _mapController;
 
@@ -34,7 +34,7 @@ namespace Project.Scripts.CompositionRootSystem
             _rankHolder.Initialize();
 
             _uiHandler.Initialize(_rewardService, _rankHolder);
-            _effectHandler.Initialize();
+            _effectController.Initialize();
 
             var playerSpawner = new PlayerSpawner(_playerPrefab);
             var enemySpawners = new List<EnemySpawner>();
@@ -78,26 +78,26 @@ namespace Project.Scripts.CompositionRootSystem
 
         private void OnDestroy()
         {
-            _effectHandler.Dispose();
+            _effectController.Dispose();
         }
 
         private void PrepareMap()
         {
             _mapController.CreateMap();
             GameStatusService.Instance.Initialize(_mapController.BallInstance);
-            _mapController.ArenaInstance.Initialize(_mapController.BallInstance);
+            _mapController.MatchManagerInstance.Initialize(_mapController.BallInstance);
         }
 
         private void StartGame()
         {
             MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
-            _mapController.ArenaInstance.GameOver += OnGameOver;
+            _mapController.MatchManagerInstance.GameOver += OnGameOver;
         }
 
 
         private void OnGameOver(int rankAmount)
         {
-            _mapController.ArenaInstance.GameOver -= OnGameOver;
+            _mapController.MatchManagerInstance.GameOver -= OnGameOver;
             _rankHolder.IncreaseRank(rankAmount);
             HandleGameOver().Forget();
         }
@@ -113,7 +113,7 @@ namespace Project.Scripts.CompositionRootSystem
         private void HandleRankCanvasClose()
         {
             _mapController.ClearEntities();
-            _mapController.ArenaInstance.Initialize(_mapController.BallInstance);
+            _mapController.MatchManagerInstance.Initialize(_mapController.BallInstance);
         }
 
         private void HandleRankRaised()

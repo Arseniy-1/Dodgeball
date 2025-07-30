@@ -4,10 +4,10 @@ using Project.Scripts.Services.EffectServiceSystem;
 using UnityEngine;
 using AudioSettings = Project.Scripts.Services.AudioServiceSystem.AudioSettings;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     [Serializable]
-    public class EffectHandler
+    public class EffectController
     {
         [SerializeField] private AudioSettings _audioSettings;
         [SerializeField] private EffectsSetting _effectsSetting;

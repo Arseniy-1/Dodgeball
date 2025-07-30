@@ -38,13 +38,13 @@ namespace Project.Scripts.Entities
         private void OnEnable()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-            Health.LostHealth += HandleLostHeathWrapper;
+            Health.LostHealth += OnLostHealth;
         }
 
         private void OnDisable()
         {
             _cancellationTokenSource.Cancel();
-            Health.LostHealth -= HandleLostHeathWrapper;
+            Health.LostHealth -= OnLostHealth;
         }
 
         protected virtual void Update()
@@ -130,7 +130,7 @@ namespace Project.Scripts.Entities
             StateMachine = new StateMaсhine(states);
         }
 
-        private void HandleLostHeathWrapper()
+        private void OnLostHealth()
         {
             HandleLostHealth(_cancellationTokenSource.Token).Forget();
         }

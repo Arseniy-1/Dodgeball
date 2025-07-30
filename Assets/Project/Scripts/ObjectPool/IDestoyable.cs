@@ -4,7 +4,7 @@ namespace Project.Scripts
 {
     public interface IDestoyable<T>
     {
-        public event Action<T> OnDestroyed;
+        public event Action<T> Destroyed;
 
         void Die();
     }
