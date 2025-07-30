@@ -36,15 +36,7 @@ namespace Project.Scripts.ObjectPool
 
             return template;
         }
-    
-        protected void CreateStartCount()
-        {
-            for (int i = 0; i < _startAmount; i++)
-            {
-                Create();
-            }
-        }
-
+        
         protected abstract T Create();
     }
 }
