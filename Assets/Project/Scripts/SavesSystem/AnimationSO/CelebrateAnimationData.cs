@@ -2,16 +2,16 @@
 using Project.Scripts.Services;
 using Sirenix.OdinInspector;
 
-namespace Project.Scripts.Saves.AnimationSO
+namespace Project.Scripts.SavesSystem.AnimationSO
 {
     [Serializable]
-    public struct PrepareAnimationData
+    public struct CelebrateAnimationData
     {
-        [HideLabel]
-        [HorizontalGroup]
-        public PrepareAnimations AnimationType;
-        
         [HideLabel] 
+        [HorizontalGroup]
+        public CelebrateAnimations AnimationType;
+        
+        [HideLabel]
         [HorizontalGroup]
         public string Name;
     }

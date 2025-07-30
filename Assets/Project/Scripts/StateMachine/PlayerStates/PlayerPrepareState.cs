@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Project.Scripts.Entities;
 using Project.Scripts.Services;
-using Project.Scripts.Services.EffectService;
+using Project.Scripts.Services.EffectServiceSystem;
 using Project.Scripts.StateMachine.EntityStates;
 using UnityEngine;
 

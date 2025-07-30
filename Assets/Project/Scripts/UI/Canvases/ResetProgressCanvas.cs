@@ -7,7 +7,7 @@ namespace Project.Scripts.UI.Canvases
     {
         [SerializeField] private ExitButton _exitButton;
         [SerializeField] private ApplyButton _applyButton;
-        [SerializeField] private Saves.Saves _saves;
+        [SerializeField] private SavesSystem.Saves _saves;
     
         private void OnEnable()
         {

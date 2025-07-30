@@ -2,7 +2,7 @@
 using Project.Scripts.Services;
 using Sirenix.OdinInspector;
 
-namespace Project.Scripts.Saves.AnimationSO
+namespace Project.Scripts.SavesSystem.AnimationSO
 {
     [Serializable]
     public struct DodgeAnimationData

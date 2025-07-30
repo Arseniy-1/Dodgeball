@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Project.Scripts.ObjectPool.Effects;
 using Sirenix.OdinInspector;
 
-namespace Project.Scripts.Services.EffectService
+namespace Project.Scripts.Services.EffectServiceSystem
 {
     [Serializable]
     public struct EffectData

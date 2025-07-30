@@ -4,7 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Project.Scripts.Services;
 using Project.Scripts.Services.AudioServiceSystem;
-using Project.Scripts.Services.EffectService;
+using Project.Scripts.Services.EffectServiceSystem;
 using Project.Scripts.StateMachine;
 using Project.Scripts.StateMachine.PlayerStates;
 using Sirenix.OdinInspector;

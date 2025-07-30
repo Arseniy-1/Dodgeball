@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Project.Scripts.Saves
+namespace Project.Scripts.SavesSystem
 {
     [Serializable]
     public class ProgressData

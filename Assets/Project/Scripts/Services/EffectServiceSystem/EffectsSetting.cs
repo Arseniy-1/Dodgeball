@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Project.Scripts.Services.EffectService
+namespace Project.Scripts.Services.EffectServiceSystem
 {
     [CreateAssetMenu(fileName = "EffectsSetting", menuName = "EffectsSystem/EffectsSetting")]
     public class EffectsSetting : ScriptableObject

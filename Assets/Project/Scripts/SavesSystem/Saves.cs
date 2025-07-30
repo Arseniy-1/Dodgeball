@@ -4,7 +4,7 @@ using Project.Scripts.Rank;
 using UnityEngine;
 using YG;
 
-namespace Project.Scripts.Saves
+namespace Project.Scripts.SavesSystem
 {
     [Serializable]
     [JsonObject(MemberSerialization.Fields)]

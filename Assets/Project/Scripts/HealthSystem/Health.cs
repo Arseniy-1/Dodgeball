@@ -2,7 +2,7 @@
 using Project.Scripts.Services;
 using Project.Scripts.Services.AudioServiceSystem;
 using Project.Scripts.Services.CameraShakeServiceSystem;
-using Project.Scripts.Services.EffectService;
+using Project.Scripts.Services.EffectServiceSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

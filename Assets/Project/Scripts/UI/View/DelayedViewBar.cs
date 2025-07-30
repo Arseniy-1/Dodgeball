@@ -10,10 +10,9 @@ namespace Project.Scripts.UI.View
 
         private void Update()
         {
-            if (_delayedBar.value > TargetFill)
-                _delayedBar.value = Mathf.MoveTowards(_delayedBar.value, TargetFill, Time.deltaTime * _delaySpeed);
-            else
-                _delayedBar.value = TargetFill;
+            _delayedBar.value = _delayedBar.value > TargetFill
+                ? Mathf.MoveTowards(_delayedBar.value, TargetFill, Time.deltaTime * _delaySpeed)
+                : TargetFill;
         }
 
         protected override void Reset()

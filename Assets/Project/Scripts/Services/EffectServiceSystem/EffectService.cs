@@ -8,7 +8,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Project.Scripts.Services.EffectService
+namespace Project.Scripts.Services.EffectServiceSystem
 {
     [Serializable]
     public class EffectService : IDisposable

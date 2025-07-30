@@ -1,6 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using Project.Scripts.Services.EffectService;
+using Project.Scripts.Services.EffectServiceSystem;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;

@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using Project.Scripts.Services;
 using Project.Scripts.Services.AudioServiceSystem;
-using Project.Scripts.Services.EffectService;
+using Project.Scripts.Services.EffectServiceSystem;
 using UnityEngine;
 
 namespace Project.Scripts.StateMachine.EntityStates

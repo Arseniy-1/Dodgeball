@@ -1,4 +1,4 @@
-﻿namespace Project.Scripts.Services.EffectService
+﻿namespace Project.Scripts.Services.EffectServiceSystem
 {
     public enum EffectID
     {

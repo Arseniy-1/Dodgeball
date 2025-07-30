@@ -1,4 +1,4 @@
-﻿using Project.Scripts.Services.EffectService;
+﻿using Project.Scripts.Services.EffectServiceSystem;
 using UnityEngine;
 
 namespace Project.Scripts.UpgradeFrame.BallUpdaters

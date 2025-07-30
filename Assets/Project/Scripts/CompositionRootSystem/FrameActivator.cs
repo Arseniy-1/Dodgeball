@@ -47,7 +47,7 @@ namespace Project.Scripts.CompositionRootSystem
             {
                 await ActivateFrame();
                 float delay = Random.Range(_minInterval, _maxInterval);
-                await UniTask.Delay((int)(delay * 1000), cancellationToken: _cancellationTokenSource.Token);
+                await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: _cancellationTokenSource.Token);
             }
         }
 

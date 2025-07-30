@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Project.Scripts.Services.EffectService;
+using Project.Scripts.Services.EffectServiceSystem;
 using Project.Scripts.UpgradeFrame;
 using Project.Scripts.UpgradeFrame.BallUpdaters;
 using UnityEngine;

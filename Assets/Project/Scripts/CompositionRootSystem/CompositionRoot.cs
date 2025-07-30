@@ -20,7 +20,7 @@ namespace Project.Scripts.CompositionRootSystem
         [SerializeField] private UIHandler _uiHandler;
         [SerializeField] private RewardService _rewardService;
         [SerializeField] private EffectHandler _effectHandler;
-        [SerializeField] private Saves.Saves _saves;
+        [SerializeField] private SavesSystem.Saves _saves;
         [SerializeField] private MapController _mapController;
 
         private bool _rewardRaised = false;
@@ -76,6 +76,11 @@ namespace Project.Scripts.CompositionRootSystem
             PrepareMap();
         }
 
+        private void OnDestroy()
+        {
+            _effectHandler.Dispose();
+        }
+
         private void PrepareMap()
         {
             _mapController.CreateMap();
@@ -86,13 +91,13 @@ namespace Project.Scripts.CompositionRootSystem
         private void StartGame()
         {
             MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
-            _mapController.ArenaInstance.GameOver += HandleGameOverWrapper;
+            _mapController.ArenaInstance.GameOver += OnGameOver;
         }
 
 
-        private void HandleGameOverWrapper(int rankAmount)
+        private void OnGameOver(int rankAmount)
         {
-            _mapController.ArenaInstance.GameOver -= HandleGameOverWrapper;
+            _mapController.ArenaInstance.GameOver -= OnGameOver;
             _rankHolder.IncreaseRank(rankAmount);
             HandleGameOver().Forget();
         }

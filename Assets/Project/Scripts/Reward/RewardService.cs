@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Project.Scripts.Saves.AnimationSO;
+using Project.Scripts.SavesSystem.AnimationSO;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

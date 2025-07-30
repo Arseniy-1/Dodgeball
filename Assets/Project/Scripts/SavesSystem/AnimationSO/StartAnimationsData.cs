@@ -1,7 +1,7 @@
 ﻿using Project.Scripts.Services;
 using UnityEngine;
 
-namespace Project.Scripts.Saves.AnimationSO
+namespace Project.Scripts.SavesSystem.AnimationSO
 {
     [CreateAssetMenu(fileName = "StartAnimations", menuName = "Data/StartAnimations", order = 51)]
     public class StartAnimationsData : ScriptableObject

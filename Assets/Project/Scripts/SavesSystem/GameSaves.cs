@@ -1,7 +1,7 @@
 ﻿using Assets.SimpleLocalization.Scripts;
 using Project.Scripts.Rank;
-using Project.Scripts.Saves;
-using Project.Scripts.Saves.AnimationSO;
+using Project.Scripts.SavesSystem;
+using Project.Scripts.SavesSystem.AnimationSO;
 using Project.Scripts.Settings;
 
 namespace YG

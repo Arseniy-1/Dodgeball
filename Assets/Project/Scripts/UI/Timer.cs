@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using TMPro;
 
@@ -17,12 +18,14 @@ namespace Project.Scripts.UI
 
         public async UniTaskVoid Start(CancellationToken token)
         {
+            int delay = 1000;
+            
             while (token.IsCancellationRequested == false)
             {
                 _totalSeconds++;
                 UpdateTimeDisplay();
             
-                await UniTask.Delay(1000, DelayType.DeltaTime, PlayerLoopTiming.Update, token);
+                await UniTask.Delay(TimeSpan.FromSeconds(delay), DelayType.DeltaTime, PlayerLoopTiming.Update, token);
             }
         }
 

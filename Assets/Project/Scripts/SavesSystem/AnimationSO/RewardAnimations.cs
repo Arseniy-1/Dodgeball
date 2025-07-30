@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Project.Scripts.Saves.AnimationSO
+namespace Project.Scripts.SavesSystem.AnimationSO
 {
     [CreateAssetMenu(fileName = "RewardAnimations", menuName = "Data/RewardAnimations")]
     public class RewardAnimations : ScriptableObject

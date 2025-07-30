@@ -1,7 +1,7 @@
 ﻿using Project.Scripts.Messages;
 using UnityEngine;
 
-namespace Project.Scripts.Services.EffectService
+namespace Project.Scripts.Services.EffectServiceSystem
 {
     public static class EffectExtensions
     {
