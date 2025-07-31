@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Project.Scripts.ObjectPool.Entity;
+using Project.Scripts.Entities;
+using Project.Scripts.ObjectPool;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -14,13 +15,13 @@ namespace Project.Scripts.GameSystem
         [SerializeField] private Ball _ballPrefab;
 
         private EntityCreator _entityCreator;
-        private PlayerSpawner _playerSpawner;
-        private List<EnemySpawner> _enemySpawners;
+        private Spawner<Player> _playerSpawner;
+        private List<Spawner<Enemy>> _enemySpawners;
 
         public void Initialize(
             EntityCreator entityCreator, 
-            PlayerSpawner playerSpawner, 
-            List<EnemySpawner> enemySpawners)
+            Spawner<Player> playerSpawner, 
+            List<Spawner<Enemy>> enemySpawners)
         {
             _entityCreator = entityCreator;
             _playerSpawner = playerSpawner;

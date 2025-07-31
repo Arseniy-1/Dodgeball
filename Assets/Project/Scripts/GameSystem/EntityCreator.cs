@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using Project.Scripts.Entities;
-using Project.Scripts.ObjectPool.Entity;
+using Project.Scripts.ObjectPool;
 using Project.Scripts.Services;
 
 namespace Project.Scripts.GameSystem
 {
     public class EntityCreator
     {
-        public void FillPlayerSquad(PlayerSpawner playerSpawner, Squad squad)
+        public void FillPlayerSquad(Spawner<Player> playerSpawner, Squad squad)
         {
             FillSquad(playerSpawner.Spawn, squad);
         }
 
-        public void FillEnemySquad(EnemySpawner enemySpawner, Squad squad)
+        public void FillEnemySquad(Spawner<Enemy> enemySpawner, Squad squad)
         {
             FillSquad(enemySpawner.Spawn, squad);
         }

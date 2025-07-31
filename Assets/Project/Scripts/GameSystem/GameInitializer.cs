@@ -3,9 +3,10 @@ using Assets.SimpleLocalization.Scripts;
 using Cysharp.Threading.Tasks;
 using Project.Scripts.Entities;
 using Project.Scripts.Messages;
-using Project.Scripts.ObjectPool.Entity;
+using Project.Scripts.ObjectPool;
 using Project.Scripts.Rank;
 using Project.Scripts.Reward;
+using Project.Scripts.SavesSystem;
 using Project.Scripts.Services;
 using UnityEngine;
 using YG;
@@ -20,7 +21,7 @@ namespace Project.Scripts.GameSystem
         [SerializeField] private UIHandler _uiHandler;
         [SerializeField] private RewardService _rewardService;
         [SerializeField] private EffectHolder _effectHolder;
-        [SerializeField] private SavesSystem.Saves _saves;
+        [SerializeField] private Saves _saves;
         [SerializeField] private MapFactory _mapFactory;
 
         private bool _rewardRaised = false;
@@ -36,12 +37,12 @@ namespace Project.Scripts.GameSystem
             _uiHandler.Initialize(_rewardService, _rankHolder);
             _effectHolder.Initialize();
 
-            var playerSpawner = new PlayerSpawner(_playerPrefab);
-            var enemySpawners = new List<EnemySpawner>();
+            var playerSpawner = new Spawner<Player>(_playerPrefab);
+            var enemySpawners = new List<Spawner<Enemy>>();
 
             for (int i = 0; i < _enemyPrefabs.Count; i++)
             {
-                EnemySpawner enemySpawner = new EnemySpawner(_enemyPrefabs[i]);
+                Spawner<Enemy> enemySpawner = new Spawner<Enemy>(_enemyPrefabs[i]);
                 enemySpawners.Add(enemySpawner);
             }
 

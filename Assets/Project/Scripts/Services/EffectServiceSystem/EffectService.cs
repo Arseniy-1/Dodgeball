@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Project.Scripts.Messages;
+using Project.Scripts.ObjectPool;
 using Project.Scripts.ObjectPool.Effects;
 using Sirenix.Serialization;
 using UniRx;
@@ -15,7 +16,7 @@ namespace Project.Scripts.Services.EffectServiceSystem
     {
         [OdinSerialize] private Dictionary<EffectID, EffectData> _effectsData;
 
-        private Dictionary<EffectID, List<EffectsSpawner>> _spawners;
+        private Dictionary<EffectID, List<Spawner<Effect>>> _spawners;
         private CompositeDisposable _compositeDisposable;
 
         public EffectService(Dictionary<EffectID, EffectData> effectsData)
@@ -35,15 +36,15 @@ namespace Project.Scripts.Services.EffectServiceSystem
             var poolHolder = new GameObject("EffectsPoolHolder");
             Object.DontDestroyOnLoad(poolHolder);
             
-            _spawners = new Dictionary<EffectID, List<EffectsSpawner>>();
+            _spawners = new Dictionary<EffectID, List<Spawner<Effect>>>();
 
             foreach (var pair in _effectsData)
             {
-                var spawners = new List<EffectsSpawner>();
+                var spawners = new List<Spawner<Effect>>();
                 
                 foreach (var effect in pair.Value.Effects)
                 {
-                    spawners.Add(new EffectsSpawner(effect, poolHolder.transform));
+                    spawners.Add(new Spawner<Effect>(effect, poolHolder.transform));
                 }
                 
                 _spawners[pair.Key] = spawners;

@@ -7,17 +7,19 @@ namespace Project.Scripts.ObjectPool
     [Serializable]
     public class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
     {
-        [field: SerializeField] protected int StartAmount { get; private set; } = 2;
+        [field: SerializeField] protected int StartAmount { get; private set; } = 0;
 
         protected T Prefab { get; private set; }
         protected Pool<T> Pool { get; private set; }
 
         private List<T> _spawned = new();
+        private Transform _parent;
 
-        protected Spawner(T prefab)
+        public Spawner(T prefab, Transform parent = null)
         {
             Prefab = prefab;
             Pool = new Pool<T>(prefab, StartAmount);
+            _parent = parent;
         }
 
         public void DisableSpawned()
@@ -34,6 +36,9 @@ namespace Project.Scripts.ObjectPool
 
             spawnedObject.Destroyed += OnSpawnedDestroyed;
             _spawned.Add(spawnedObject);
+            
+            if(_parent != null)
+                spawnedObject.transform.SetParent(_parent);
             
             return spawnedObject;
         }
