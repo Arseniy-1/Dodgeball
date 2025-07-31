@@ -6161,7 +6161,7 @@ GameObject:
   - component: {fileID: 389377432}
   - component: {fileID: 389377431}
   m_Layer: 0
-  m_Name: CompositionRoot
+  m_Name: GameInitializer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6197,7 +6197,7 @@ MonoBehaviour:
     _rewardButton: {fileID: 1960394464}
   _rewardService:
     _rewardAnimations: {fileID: 11400000, guid: c85e966d7e4c8d44a9563afe68d89113, type: 2}
-  _effectHandler:
+  _effectController:
     _audioSettings: {fileID: 11400000, guid: 06f54f93dab2c66409b8a6256dfb1a50, type: 2}
     _effectsSetting: {fileID: 11400000, guid: 0f6c396f961d5914fbf74725c2fa517e, type: 2}
   _saves: {fileID: 1847178381}

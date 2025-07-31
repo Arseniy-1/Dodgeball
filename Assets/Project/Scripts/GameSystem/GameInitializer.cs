@@ -19,9 +19,9 @@ namespace Project.Scripts.GameSystem
 
         [SerializeField] private UIHandler _uiHandler;
         [SerializeField] private RewardService _rewardService;
-        [SerializeField] private EffectController _effectController;
+        [SerializeField] private EffectHolder _effectHolder;
         [SerializeField] private SavesSystem.Saves _saves;
-        [SerializeField] private MapController _mapController;
+        [SerializeField] private MapFactory _mapFactory;
 
         private bool _rewardRaised = false;
         private RankHolder _rankHolder;
@@ -34,7 +34,7 @@ namespace Project.Scripts.GameSystem
             _rankHolder.Initialize();
 
             _uiHandler.Initialize(_rewardService, _rankHolder);
-            _effectController.Initialize();
+            _effectHolder.Initialize();
 
             var playerSpawner = new PlayerSpawner(_playerPrefab);
             var enemySpawners = new List<EnemySpawner>();
@@ -45,7 +45,7 @@ namespace Project.Scripts.GameSystem
                 enemySpawners.Add(enemySpawner);
             }
 
-            _mapController.Initialize(entityCreator, playerSpawner, enemySpawners);
+            _mapFactory.Initialize(entityCreator, playerSpawner, enemySpawners);
 
             LocalizationManager.Language = YG2.lang;
             YG2.lang = YG2.lang;
@@ -78,26 +78,26 @@ namespace Project.Scripts.GameSystem
 
         private void OnDestroy()
         {
-            _effectController.Dispose();
+            _effectHolder.Dispose();
         }
 
         private void PrepareMap()
         {
-            _mapController.CreateMap();
-            GameStatusService.Instance.Initialize(_mapController.BallInstance);
-            _mapController.MatchManagerInstance.Initialize(_mapController.BallInstance);
+            _mapFactory.CreateMap();
+            GameStatusService.Instance.Initialize(_mapFactory.BallInstance);
+            _mapFactory.MatchManagerInstance.Initialize(_mapFactory.BallInstance);
         }
 
         private void StartGame()
         {
             MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
-            _mapController.MatchManagerInstance.GameOver += OnGameOver;
+            _mapFactory.MatchManagerInstance.GameOver += OnGameOver;
         }
 
 
         private void OnGameOver(int rankAmount)
         {
-            _mapController.MatchManagerInstance.GameOver -= OnGameOver;
+            _mapFactory.MatchManagerInstance.GameOver -= OnGameOver;
             _rankHolder.IncreaseRank(rankAmount);
             HandleGameOver().Forget();
         }
@@ -112,8 +112,8 @@ namespace Project.Scripts.GameSystem
 
         private void HandleRankCanvasClose()
         {
-            _mapController.ClearEntities();
-            _mapController.MatchManagerInstance.Initialize(_mapController.BallInstance);
+            _mapFactory.ClearEntities();
+            _mapFactory.MatchManagerInstance.Initialize(_mapFactory.BallInstance);
         }
 
         private void HandleRankRaised()

@@ -1,34 +1,20 @@
-﻿using System.Collections.Generic;
-using Project.Scripts.Entities;
+﻿using Project.Scripts.Entities;
 using Project.Scripts.Messages;
-using Project.Scripts.Services;
 using UniRx;
 
 namespace Project.Scripts.StateMachine.EntityStates
 {
     public abstract class EntityPrepareState : IState
     {
-        private readonly AnimatorController _animatorController;
-        private readonly Entity _entity;
-        private readonly List<Entity> _teammates;
-        private readonly TargetScanner _targetScanner;
-        private readonly Rotator _rotator;
+        private readonly StateDataHolder _stateDataHolder;
     
         private CompositeDisposable _disposable;
 
         protected IStateSwitcher StateSwitcher;
 
-        protected EntityPrepareState(
-            Entity entity,
-            AnimatorController animatorController,
-            TargetScanner targetScanner,
-            List<Entity> teammates)
+        protected EntityPrepareState(StateDataHolder dataHolder)
         {
-            _entity = entity;
-            _animatorController = animatorController;
-            _targetScanner = targetScanner;
-            _teammates = teammates;
-            _rotator = new Rotator();
+            _stateDataHolder = dataHolder;
         }
 
         public void Initialize(IStateSwitcher stateSwitcher)
@@ -45,7 +31,7 @@ namespace Project.Scripts.StateMachine.EntityStates
                 .Subscribe(_ => HandleStartGame())
                 .AddTo(_disposable);
 
-            _animatorController.PrepareToBattle();
+            _stateDataHolder.AnimatorController.PrepareToBattle();
             LookToTarget();
         }
 
@@ -62,12 +48,12 @@ namespace Project.Scripts.StateMachine.EntityStates
     
         private void LookToTarget()
         {
-            Entity target = _targetScanner.Scan(_teammates);
+            Entity target = _stateDataHolder.TargetScanner.Scan(_stateDataHolder.Teammates);
         
             if (target == null) 
                 return;
 
-            _rotator.RotateToTarget(target.transform, _entity.transform);
+            _stateDataHolder.Rotator.RotateToTarget(target.transform, _stateDataHolder.Entity.transform);
         }
     }
 }

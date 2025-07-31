@@ -14,9 +14,9 @@ namespace Project.Scripts.Entities
     public class Enemy : Entity, IDestoyable<Enemy>
     {
         [SerializeField] private EnemyConfig _enemyConfig;
-    
+
         public event Action<Enemy> Destroyed;
-        
+
         public override void Celebrate()
         {
             StateMachine.SwitchState<EnemyCelebrateState>();
@@ -29,7 +29,7 @@ namespace Project.Scripts.Entities
             base.Die();
             Destroyed?.Invoke(this);
         }
-        
+
         [Button]
         protected override async UniTaskVoid HandleLostHealth(CancellationToken token)
         {
@@ -37,7 +37,7 @@ namespace Project.Scripts.Entities
             HealthCanvas.gameObject.SetActive(false);
             EffectID.Death.PlayEffect(transform);
             AudioID.Dead.PlayOneShot();
-        
+
             await AnimatorController.Death();
             await HideEntity(token);
 
@@ -46,19 +46,23 @@ namespace Project.Scripts.Entities
 
         protected override List<IState> CreateStates()
         {
+            var dataHolder = new StateDataHolder(this, CollisionHandler, Collider, SquadZone,
+                Rigidbody, AnimatorController, BallHolder, TargetScanner,
+                TargetProvider, Teammates, BallThrower, Mover, _enemyConfig, HitDetector);
+
             return new List<IState>
             {
-                new EnemyPrepareState(this, AnimatorController, TargetScanner, Teammates),
-                new EnemyCelebrateState(this, AnimatorController, BallHolder, BallThrower, CollisionHandler, Teammates),
-                new EnemyIdleState(this, AnimatorController, Ball, Mover, CollisionHandler, SquadZone, Collider, Rigidbody, _enemyConfig, Teammates),
-                new EnemyMoveState(this, AnimatorController, Teammates, _enemyConfig, CollisionHandler, SquadZone, BallHolder, Collider, Mover),
-                new EnemyDodgeReadyState(this, AnimatorController, Ball, Mover, SquadZone, Rigidbody, _enemyConfig),
-                new EnemyAttackState(this, CollisionHandler, Collider, Rigidbody, AnimatorController, BallHolder, TargetScanner, TargetProvider, Teammates, BallThrower, _enemyConfig),
-                new EnemyDodgeState(AnimatorController, CollisionHandler, HitDetector, Collider),
-                new EnemyDeathState(AnimatorController, CollisionHandler, Collider, BallHolder, BallThrower),
+                new EnemyPrepareState(dataHolder),
+                new EnemyCelebrateState(dataHolder),
+                new EnemyIdleState(dataHolder),
+                new EnemyMoveState(dataHolder),
+                new EnemyDodgeReadyState(dataHolder),
+                new EnemyAttackState(dataHolder),
+                new EnemyDodgeState(dataHolder),
+                new EnemyDeathState(dataHolder),
             };
         }
-        
+
         protected override EntityConfig GetConfig()
         {
             return _enemyConfig;

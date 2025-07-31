@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Project.Scripts.Entities;
-using Project.Scripts.Services;
-using Project.Scripts.Services.EffectServiceSystem;
+﻿using Project.Scripts.Services.EffectServiceSystem;
 using Project.Scripts.StateMachine.EntityStates;
 using UnityEngine;
 
@@ -11,18 +8,10 @@ namespace Project.Scripts.StateMachine.PlayerStates
     {
         private readonly Transform _playerTransform;
     
-        public PlayerPrepareState(
-            Player player,
-            AnimatorController animatorController,
-            TargetScanner targetScanner,
-            List<Entity> teammates)
-            : base(
-                player,
-                animatorController,
-                targetScanner,
-                teammates)
+        public PlayerPrepareState(StateDataHolder dataHolder) 
+            : base(dataHolder)
         {
-            _playerTransform = player.transform;
+            _playerTransform = dataHolder.Entity.transform;
         }
 
         public override void Exit()

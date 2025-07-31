@@ -1,44 +1,28 @@
-﻿using System.Collections.Generic;
-using Project.Scripts.Entities;
-using Project.Scripts.Services;
-using Project.Scripts.Services.Ball;
+﻿using Project.Scripts.Services;
 using Project.Scripts.StateMachine.EntityStates;
 
 namespace Project.Scripts.StateMachine.PlayerStates
 {
     public class PlayerCelebrateState : EntityCelebrateState
     {
-        private readonly PlayerInputController _inputController;
+        private readonly PlayerInputController _playerInputController;
     
-        public PlayerCelebrateState(
-            Player player,
-            AnimatorController animatorController,
-            BallHolder ballHolder,
-            BallThrower ballThrower,
-            CollisionHandler collisionHandler,
-            PlayerInputController playerInputController,
-            List<Entity> teammates)
-            : base(
-                player,
-                animatorController,
-                ballHolder,
-                ballThrower,
-                collisionHandler,
-                teammates)
+        public PlayerCelebrateState(StateDataHolder dataHolder, PlayerInputController playerInputController) 
+            : base(dataHolder)
         {
-            _inputController = playerInputController;
+            _playerInputController = playerInputController;
         }
 
         public override void Enter()
         {
             base.Enter();
-            _inputController.enabled = false;
+            _playerInputController.enabled = false;
         }
 
         public override void Exit()
         {
             base.Exit();
-            _inputController.enabled = true;
+            _playerInputController.enabled = true;
         }
     }
 }

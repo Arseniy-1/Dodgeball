@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Project.Scripts.Entities;
@@ -11,47 +10,15 @@ namespace Project.Scripts.StateMachine.EntityStates
 {
     public abstract class EntityIdleState : IState
     {
-        private readonly AnimatorController _animatorController;
-        private readonly Ball _ball;
-        private readonly Mover _mover;
-        private readonly CollisionHandler _collisionHandler;
-        private readonly Collider _collider;
-        private readonly Rigidbody _rigidbody;
-        private readonly AreaPointSelector _areaPointSelector;
-        private readonly Rotator _rotator;
-        private readonly Entity _entity;
-        private readonly EntityConfig _entityConfig;
-        private readonly Collider _squadZone;
-        private readonly List<Entity> _teammates;
+        private readonly StateDataHolder _stateDataHolder;
 
         private CancellationTokenSource _cancellationTokenSource;
 
         protected IStateSwitcher StateSwitcher;
 
-        protected EntityIdleState(
-            AnimatorController animatorController,
-            Ball ball,
-            Mover mover,
-            CollisionHandler collisionHandler,
-            Collider squadZone,
-            Collider collider,
-            Rigidbody rigidbody,
-            Entity entity,
-            EntityConfig entityConfig,
-            List<Entity> teammates)
+        protected EntityIdleState(StateDataHolder dataHolder)
         {
-            _animatorController = animatorController;
-            _ball = ball;
-            _mover = mover;
-            _collisionHandler = collisionHandler;
-            _squadZone = squadZone;
-            _collider = collider;
-            _rigidbody = rigidbody;
-            _entity = entity;
-            _entityConfig = entityConfig;
-            _teammates = teammates;
-            _areaPointSelector = new AreaPointSelector();
-            _rotator = new Rotator();
+            _stateDataHolder = dataHolder;
         }
 
         public virtual void Initialize(IStateSwitcher stateSwitcher)
@@ -63,11 +30,11 @@ namespace Project.Scripts.StateMachine.EntityStates
         {
             _cancellationTokenSource = new CancellationTokenSource();
 
-            _rigidbody.isKinematic = true;
-            _collisionHandler.enabled = false;
-            _collider.isTrigger = true;
+            _stateDataHolder.Rigidbody.isKinematic = true;
+            _stateDataHolder.CollisionHandler.enabled = false;
+            _stateDataHolder.Collider.isTrigger = true;
 
-            _animatorController.Idle();
+            _stateDataHolder.AnimatorController.Idle();
             RunIdleMovementLoop(_cancellationTokenSource.Token).Forget();
 
             HandleHolderChanged(_cancellationTokenSource.Token).Forget();
@@ -78,9 +45,9 @@ namespace Project.Scripts.StateMachine.EntityStates
         {
             _cancellationTokenSource.Cancel();
 
-            _rigidbody.isKinematic = false;
-            _collisionHandler.enabled = true;
-            _collider.isTrigger = false;
+            _stateDataHolder.Rigidbody.isKinematic = false;
+            _stateDataHolder.CollisionHandler.enabled = true;
+            _stateDataHolder.Collider.isTrigger = false;
         }
 
         public virtual void Update()
@@ -88,7 +55,7 @@ namespace Project.Scripts.StateMachine.EntityStates
             var ball = GameStatusService.Instance.CurrentBall;
             
             if (ball != null)
-                _rotator.RotateToTarget(ball.transform, _entity.transform);
+                _stateDataHolder.Rotator.RotateToTarget(ball.transform, _stateDataHolder.Entity.transform);
         }
 
         protected abstract void SwitchToMove();
@@ -99,7 +66,7 @@ namespace Project.Scripts.StateMachine.EntityStates
             if (entity == null)
                 return;
 
-            if (_teammates.Contains(entity) == false)
+            if (_stateDataHolder.Teammates.Contains(entity) == false)
                 SwitchToDodge();
         }
     
@@ -107,13 +74,13 @@ namespace Project.Scripts.StateMachine.EntityStates
         {
             while (token.IsCancellationRequested == false)
             {
-                float standTime = Random.Range(_entityConfig.IdleMinStandTime, _entityConfig.IdleMaxStandTime);
-                Vector3 target = _areaPointSelector.GetRandomPointInZone(_squadZone, _entity.transform.position);
+                float standTime = Random.Range(_stateDataHolder.EntityConfig.IdleMinStandTime, _stateDataHolder.EntityConfig.IdleMaxStandTime);
+                Vector3 target = _stateDataHolder.AreaPointSelector.GetRandomPointInZone(_stateDataHolder.SquadZone, _stateDataHolder.Entity.transform.position);
 
-                _animatorController.DodgeIdle();
-                await _mover.MoveTo(target, _entityConfig.WalkSpeed, token);
+                _stateDataHolder.AnimatorController.DodgeIdle();
+                await _stateDataHolder.Mover.MoveTo(target, _stateDataHolder.EntityConfig.WalkSpeed, token);
 
-                _animatorController.Idle();
+                _stateDataHolder.AnimatorController.Idle();
                 await UniTask.Delay(TimeSpan.FromSeconds(standTime), cancellationToken: token);
             }
         }
@@ -145,7 +112,7 @@ namespace Project.Scripts.StateMachine.EntityStates
         
             if (GameStatusService.Instance.IsBallFree)
             {
-                if (GameStatusService.Instance.CurrentZone == _squadZone)
+                if (GameStatusService.Instance.CurrentZone == _stateDataHolder.SquadZone)
                 {
                     SwitchToMove();
                 }

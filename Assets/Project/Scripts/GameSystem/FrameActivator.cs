@@ -58,16 +58,18 @@ namespace Project.Scripts.GameSystem
             
             var taskCompletionSource = new TaskCompletionSource<bool>();
             
+            frame.FrameHit += OnFrameHit;
+            frame.Activate(upgrade);
+            
+            await taskCompletionSource.Task;
+            
+            return;
+            
             void OnFrameHit(Frame _)
             {
                 frame.FrameHit -= OnFrameHit;
                 taskCompletionSource.SetResult(true);
             }
-
-            frame.FrameHit += OnFrameHit;
-            frame.Activate(upgrade);
-            
-            await taskCompletionSource.Task;
         }
     }
 }

@@ -1,4 +1,3 @@
-using Project.Scripts.Entities;
 using Project.Scripts.Services;
 using Project.Scripts.StateMachine.EntityStates;
 using UnityEngine;
@@ -8,26 +7,13 @@ namespace Project.Scripts.StateMachine.PlayerStates
     public class PlayerDodgeReadyState : EntityDodgeReadyState
     {
         private readonly PlayerInputController _playerInputController;
+        private readonly Collider _squadZone;
     
-        public PlayerDodgeReadyState(
-            Player player,
-            AnimatorController animatorController,
-            Ball ball,
-            Mover mover,
-            Collider squadZone,
-            Rigidbody rigidbody,
-            PlayerConfig playerConfig,
-            PlayerInputController playerInputController)
-            : base(
-                player,
-                animatorController,
-                ball,
-                mover,
-                squadZone,
-                rigidbody,
-                playerConfig)
+        public PlayerDodgeReadyState(StateDataHolder dataHolder, PlayerInputController playerInputController) 
+            : base(dataHolder)
         {
             _playerInputController = playerInputController;
+            _squadZone = dataHolder.SquadZone;
         }
 
         public override void Enter()
@@ -47,7 +33,7 @@ namespace Project.Scripts.StateMachine.PlayerStates
             if(GameStatusService.Instance.IsBallFree == false)
                 return;
         
-            if (zone == SquadZone)
+            if (zone == _squadZone)
                 StateSwitcher.SwitchState<PlayerMoveState>();
         }
      

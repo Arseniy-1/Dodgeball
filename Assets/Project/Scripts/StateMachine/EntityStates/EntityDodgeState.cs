@@ -1,32 +1,20 @@
 ﻿using System.Threading;
-using Project.Scripts.Services;
 using Project.Scripts.Services.AudioServiceSystem;
 using Project.Scripts.Services.EffectServiceSystem;
-using UnityEngine;
 
 namespace Project.Scripts.StateMachine.EntityStates
 {
     public abstract class EntityDodgeState : IState
     {
-        private readonly AnimatorController _animatorController;
-        private readonly CollisionHandler _collisionHandler;
-        private readonly HitDetector _hitDetector;
-        private readonly Collider _collider;
+        private readonly StateDataHolder _stateDataHolder;
 
         private CancellationTokenSource _cancellationTokenSource;
 
         protected IStateSwitcher StateSwitcher;
-    
-        protected EntityDodgeState(
-            AnimatorController animatorController,
-            CollisionHandler collisionHandler,
-            HitDetector hitDetector,
-            Collider collider)
+
+        protected EntityDodgeState(StateDataHolder dataHolder)
         {
-            _animatorController = animatorController;
-            _collisionHandler = collisionHandler;
-            _hitDetector = hitDetector;
-            _collider = collider;
+            _stateDataHolder = dataHolder;
         }
 
         public void Initialize(IStateSwitcher stateSwitcher)
@@ -37,52 +25,52 @@ namespace Project.Scripts.StateMachine.EntityStates
         public virtual void Enter()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-        
-            _hitDetector.enabled = true;
-            _hitDetector.BallHitDetected += HandleBallDodge;
-            
-            _collisionHandler.enabled = false;
-            _collider.isTrigger = true;
+
+            _stateDataHolder.HitDetector.enabled = true;
+            _stateDataHolder.HitDetector.BallHitDetected += HandleBallDodge;
+
+            _stateDataHolder.CollisionHandler.enabled = false;
+            _stateDataHolder.Collider.isTrigger = true;
             AudioID.Jump.PlayOneShot();
             Jump(_cancellationTokenSource.Token);
         }
 
         public virtual void Exit()
         {
-            if (_hitDetector!= null)
-                _hitDetector.enabled = false;
-        
-            _hitDetector.BallHitDetected -= HandleBallDodge;
+            if (_stateDataHolder.HitDetector != null)
+                _stateDataHolder.HitDetector.enabled = false;
 
-            if (_collider!= null)
-                _collisionHandler.enabled = true;
-        
-            if (_collider!= null)
-                _collider.isTrigger = false;
-        
+            _stateDataHolder.HitDetector.BallHitDetected -= HandleBallDodge;
+
+            if (_stateDataHolder.Collider != null)
+                _stateDataHolder.CollisionHandler.enabled = true;
+
+            if (_stateDataHolder.Collider != null)
+                _stateDataHolder.Collider.isTrigger = false;
+
             _cancellationTokenSource.Cancel();
         }
 
         public virtual void Update()
         {
         }
-    
+
         protected abstract void OnJumpFinished();
 
         private async void Jump(CancellationToken cancellationToken)
         {
-            await _animatorController.Dodge();
-        
-            if(cancellationToken.IsCancellationRequested)
+            await _stateDataHolder.AnimatorController.Dodge();
+
+            if (cancellationToken.IsCancellationRequested)
                 return;
-        
+
             OnJumpFinished();
         }
 
         private void HandleBallDodge()
         {
             AudioID.Dodge.PlayOneShot();
-            EffectID.Joy.PlayEffect(_collider.transform);
+            EffectID.Joy.PlayEffect(_stateDataHolder.Collider.transform);
         }
     }
 }

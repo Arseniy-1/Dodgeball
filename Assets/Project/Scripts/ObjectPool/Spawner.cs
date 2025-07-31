@@ -7,7 +7,7 @@ namespace Project.Scripts.ObjectPool
     [Serializable]
     public abstract class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
     {
-        [SerializeField] protected int StartAmount = 5;
+        [field: SerializeField] protected int StartAmount { get; private set; } = 5;
 
         protected T Prefab { get; private set; }
         protected Pool<T> Pool { get; private set; }

@@ -7,7 +7,7 @@ using AudioSettings = Project.Scripts.Services.AudioServiceSystem.AudioSettings;
 namespace Project.Scripts.GameSystem
 {
     [Serializable]
-    public class EffectController
+    public class EffectHolder
     {
         [SerializeField] private AudioSettings _audioSettings;
         [SerializeField] private EffectsSetting _effectsSetting;

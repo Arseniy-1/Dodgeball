@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 namespace Project.Scripts.GameSystem
 {
     [Serializable]
-    public class MapController
+    public class MapFactory
     {
         [SerializeField] private List<MatchManager> _arenaPrefabs;
         [SerializeField] private Ball _ballPrefab;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Project.Scripts.HealthSystem;
 using Project.Scripts.Services;
 using Project.Scripts.Services.Ball;
 using Project.Scripts.StateMachine;
@@ -18,12 +19,13 @@ namespace Project.Scripts.Entities
         [field: SerializeField] protected CollisionHandler CollisionHandler { get; private set; }
         [field: SerializeField] protected TargetScanner TargetScanner { get; private set; }
         [field: SerializeField] protected Mover Mover { get; private set; }
-        [field: SerializeField] protected HealthSystem.Health Health { get; private set; }
+        [field: SerializeField] protected Health Health { get; private set; }
         [field: SerializeField] protected List<Entity> Teammates { get; private set; }
         [field: SerializeField] protected Animator Animator { get; private set; }
         [field: SerializeField] protected HitDetector HitDetector { get; private set; }
         [field: SerializeField] protected HealthCanvas HealthCanvas { get; private set; }
         [field: SerializeField] protected Ball Ball { get; private set; }
+        [field: SerializeField] protected EntityConfig EntityConfig { get; private set; }
 
         protected TargetProvider TargetProvider { get; private set; } = new ();
         protected Collider SquadZone { get; private set; }

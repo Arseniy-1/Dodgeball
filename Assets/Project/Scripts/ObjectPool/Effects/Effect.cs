@@ -14,7 +14,7 @@ namespace Project.Scripts.ObjectPool.Effects
 
         public event Action<Effect> Destroyed;
 
-        private async void OnEnable()
+        private async UniTaskVoid OnEnable()
         {
             _cancellationToken = new CancellationTokenSource();
 

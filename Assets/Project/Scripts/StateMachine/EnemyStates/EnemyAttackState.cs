@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Project.Scripts.Entities;
-using Project.Scripts.Services;
-using Project.Scripts.Services.Ball;
 using Project.Scripts.StateMachine.EntityStates;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Project.Scripts.StateMachine.EnemyStates
@@ -17,30 +12,10 @@ namespace Project.Scripts.StateMachine.EnemyStates
 
         private CancellationTokenSource _attackCancelationTokenSource;
 
-        public EnemyAttackState(
-            Enemy enemy,
-            CollisionHandler collisionHandler, 
-            Collider collider, 
-            Rigidbody rigidbody,
-            AnimatorController animatorController,
-            BallHolder ballHolder,
-            TargetScanner targetScanner,
-            TargetProvider targetProvider,
-            List<Entity> teammates, 
-            BallThrower ballThrower, 
-            EnemyConfig enemyConfig) 
-            : base(
-                enemy, 
-                collisionHandler, 
-                collider, rigidbody,
-                animatorController, 
-                ballHolder,
-                targetScanner, 
-                targetProvider, 
-                teammates,
-                ballThrower)
+        public EnemyAttackState(StateDataHolder dataHolder) 
+            : base(dataHolder)
         {
-            _enemyConfig = enemyConfig;
+            _enemyConfig = (EnemyConfig)dataHolder.EntityConfig;
         }
 
         public override async void Enter()

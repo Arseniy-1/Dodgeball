@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Project.Scripts.Entities;
 using Project.Scripts.Services;
 using Project.Scripts.StateMachine.EntityStates;
 using UnityEngine;
@@ -11,27 +10,16 @@ namespace Project.Scripts.StateMachine.EnemyStates
 {
     public class EnemyDodgeReadyState : EntityDodgeReadyState
     {
+        private readonly StateDataHolder _stateDataHolder;
         private readonly EnemyConfig _enemyConfig;
 
         private CancellationTokenSource _jumpCancellationTokenSource;
 
-        public EnemyDodgeReadyState(
-            Enemy enemy,
-            AnimatorController animatorController,
-            Ball ball,
-            Mover mover,
-            Collider squadZone,
-            Rigidbody rigidbody,
-            EnemyConfig enemyConfig)
-            : base(enemy,
-                animatorController,
-                ball,
-                mover,
-                squadZone,
-                rigidbody,
-                enemyConfig)
+        public EnemyDodgeReadyState(StateDataHolder dataHolder) 
+            : base(dataHolder)
         {
-            _enemyConfig = enemyConfig;
+            _stateDataHolder = dataHolder;
+            _enemyConfig = (EnemyConfig)dataHolder.EntityConfig;
         }
 
         public override void Enter()
@@ -52,7 +40,7 @@ namespace Project.Scripts.StateMachine.EnemyStates
             if (GameStatusService.Instance.IsBallFree == false)
                 return;
 
-            if (zone == SquadZone)
+            if (zone == _stateDataHolder.SquadZone)
                 StateSwitcher.SwitchState<EnemyMoveState>();
         }
 

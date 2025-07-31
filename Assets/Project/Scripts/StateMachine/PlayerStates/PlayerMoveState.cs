@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using Project.Scripts.Entities;
-using Project.Scripts.Services;
-using Project.Scripts.Services.Ball;
 using Project.Scripts.StateMachine.EntityStates;
 using UnityEngine;
 
@@ -12,39 +10,22 @@ namespace Project.Scripts.StateMachine.PlayerStates
         private readonly Player _player;
         private readonly List<Entity> _teammates;
 
-        public PlayerMoveState(
-            Player player,
-            AnimatorController animatorController,
-            List<Entity> teammates,
-            PlayerConfig playerConfig,
-            CollisionHandler collisionHandler,
-            Collider squadZone,
-            BallHolder ballHolder,
-            Collider collider,
-            Mover mover)
-            : base(
-                player,
-                animatorController,
-                collisionHandler,
-                squadZone,
-                ballHolder,
-                collider,
-                playerConfig,
-                mover)
+        public PlayerMoveState(StateDataHolder dataHolder) 
+            : base(dataHolder)
         {
-            _player = player;
-            _teammates = teammates;
+            _player = (Player)dataHolder.Entity;
+            _teammates = dataHolder.Teammates;
         }
 
         protected override void OnBallDetected(Ball ball)
         {
-            BallHolder.EquipBall(ball, _player);
+            StateDataHolder.BallHolder.EquipBall(ball, _player);
             StateSwitcher.SwitchState<PlayerAttackState>();
         }
 
         protected override void OnBallZoneChanged(Collider zone)
         {
-            if (zone != SquadZone)
+            if (zone != StateDataHolder.SquadZone)
             {
                 StateSwitcher.SwitchState<PlayerDodgeReadyState>();
             }
@@ -56,13 +37,9 @@ namespace Project.Scripts.StateMachine.PlayerStates
                 return;
         
             if (_teammates.Contains(entity) == false)
-            {
                 StateSwitcher.SwitchState<PlayerDodgeReadyState>();
-            }
             else if (entity != _player)
-            {
                 StateSwitcher.SwitchState<PlayerIdleState>();
-            }
         }
     }
 }

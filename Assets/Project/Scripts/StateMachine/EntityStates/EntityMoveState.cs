@@ -1,46 +1,20 @@
 ﻿using System.Threading;
 using Project.Scripts.Entities;
 using Project.Scripts.Services;
-using Project.Scripts.Services.Ball;
 using UnityEngine;
 
 namespace Project.Scripts.StateMachine.EntityStates
 {
     public abstract class EntityMoveState : IState
     {
-        private readonly Entity _entity;
-        private readonly AnimatorController _animatorController;
-        private readonly CollisionHandler _collisionHandler;
-        private readonly Collider _collider;
-        private readonly Rotator _rotator;
-        private readonly EntityConfig _entityConfig;
-        private readonly Mover _mover;
-
-        protected readonly BallHolder BallHolder;
-        protected readonly Collider SquadZone;
-
         private CancellationTokenSource _cancellationTokenSource;
+
+        protected readonly StateDataHolder StateDataHolder;
         protected IStateSwitcher StateSwitcher;
 
-        protected EntityMoveState(
-            Entity entity,
-            AnimatorController animatorController,
-            CollisionHandler collisionHandler,
-            Collider squadZone,
-            BallHolder ballHolder,
-            Collider collider,
-            EntityConfig entityConfig,
-            Mover mover)
+        protected EntityMoveState(StateDataHolder dataHolder)
         {
-            _entity = entity;
-            _animatorController = animatorController;
-            _collisionHandler = collisionHandler;
-            SquadZone = squadZone;
-            BallHolder = ballHolder;
-            _collider = collider;
-            _entityConfig = entityConfig;
-            _mover = mover;
-            _rotator = new Rotator();
+            StateDataHolder = dataHolder;
         }
 
         public void Initialize(IStateSwitcher stateSwitcher)
@@ -54,34 +28,40 @@ namespace Project.Scripts.StateMachine.EntityStates
 
             GameStatusService.Instance.HolderChanged += OnHolderChanged;
             GameStatusService.Instance.ZoneChanged += OnBallZoneChanged;
-            _collisionHandler.BallDetected += OnBallDetected;
-        
-            _collisionHandler.enabled = true;
-            _collider.enabled = true;
-            _collider.isTrigger = false;
+            StateDataHolder.CollisionHandler.BallDetected += OnBallDetected;
 
-            _animatorController.Run();
+            StateDataHolder.CollisionHandler.enabled = true;
+            StateDataHolder.Collider.enabled = true;
+            StateDataHolder.Collider.isTrigger = false;
+
+            StateDataHolder.AnimatorController.Run();
         }
 
         public virtual void Exit()
         {
             _cancellationTokenSource.Cancel();
-        
+
             GameStatusService.Instance.HolderChanged -= OnHolderChanged;
             GameStatusService.Instance.ZoneChanged -= OnBallZoneChanged;
-            _collisionHandler.BallDetected -= OnBallDetected;
+            StateDataHolder.CollisionHandler.BallDetected -= OnBallDetected;
         }
 
         public virtual void Update()
         {
-            _rotator.RotateToTarget(GameStatusService.Instance.CurrentBall.transform, _entity.transform, _entityConfig.RotationSpeed);
-            _mover.FollowTarget(GameStatusService.Instance.CurrentBall.transform, _entityConfig.RunSpeed);
+            StateDataHolder.Rotator.RotateToTarget(
+                GameStatusService.Instance.CurrentBall.transform, 
+                StateDataHolder.Entity.transform,
+                StateDataHolder.EntityConfig.RotationSpeed);
+            
+            StateDataHolder.Mover.FollowTarget(
+                GameStatusService.Instance.CurrentBall.transform,
+                StateDataHolder.EntityConfig.RunSpeed);
         }
 
         protected abstract void OnBallDetected(Ball ball);
 
         protected abstract void OnBallZoneChanged(Collider zone);
-    
+
         protected abstract void OnHolderChanged(Entity entity);
     }
 }

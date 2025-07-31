@@ -8,13 +8,18 @@ namespace Project.Scripts.Services.AudioServiceSystem
     [Serializable]
     public struct AudioData
     {
-        [HideLabel]
-        [HorizontalGroup] public AudioID ID;
+        [field: SerializeField]
+        [field: HideLabel]
+        [field: HorizontalGroup] public AudioID ID { get; private set; }
        
-        [HideLabel]
-        [HorizontalGroup] public List<AudioClip> Clips;
+        [field: SerializeField]
+        [field: HideLabel]
+        [field: HorizontalGroup] public List<AudioClip> Clips{ get; private set; }
         
-        [Range(0f,1f)] public float Volume;
-        [MinMaxSlider(0f, 2f)] public Vector2 PitchRange;
+        [field: SerializeField]
+        [field: Range(0f,1f)] public float Volume{ get; private set; }
+        
+        [field: SerializeField]
+        [field: MinMaxSlider(0f, 2f)] public Vector2 PitchRange{ get; private set; }
     }
 }

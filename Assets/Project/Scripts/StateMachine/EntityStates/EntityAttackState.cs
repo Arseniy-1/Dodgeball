@@ -1,77 +1,41 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Project.Scripts.Entities;
-using Project.Scripts.Services;
 using Project.Scripts.Services.AudioServiceSystem;
-using Project.Scripts.Services.Ball;
-using UnityEngine;
 
 namespace Project.Scripts.StateMachine.EntityStates
 {
     public class EntityAttackState : IState
     {
-        private readonly Entity _entity;
-        private readonly AnimatorController _animatorController;
-        private readonly BallHolder _ballHolder;
-        private readonly TargetScanner _targetScanner;
-        private readonly List<Entity> _teammates;
-        private readonly BallThrower _ballThrower;
-        private readonly Rotator _rotator;
-        private readonly CollisionHandler _collisionHandler;
-        private readonly Collider _collider;
-        private readonly Rigidbody _rigidbody;
-
-        private readonly TargetProvider _targetProvider;
-
+        private readonly StateDataHolder _stateDataHolder;
+        
         private CancellationTokenSource _cancellationTokenSource;
 
         protected IStateSwitcher StateSwitcher;
 
-        protected EntityAttackState(
-            Entity entity,
-            CollisionHandler collisionHandler,
-            Collider collider,
-            Rigidbody rigidbody,
-            AnimatorController animatorController,
-            BallHolder ballHolder,
-            TargetScanner targetScanner,
-            TargetProvider targetProvider,
-            List<Entity> teammates,
-            BallThrower ballThrower)
+        protected EntityAttackState(StateDataHolder dataHolder)
         {
-            _entity = entity;
-            _collisionHandler = collisionHandler;
-            _collider = collider;
-            _rigidbody = rigidbody;
-            _animatorController = animatorController;
-            _ballHolder = ballHolder;
-            _targetScanner = targetScanner;
-            _targetProvider = targetProvider;
-            _teammates = teammates;
-            _ballThrower = ballThrower;
-
-            _rotator = new Rotator();
+            _stateDataHolder = dataHolder;
         }
 
         public virtual void Enter()
         {
             _cancellationTokenSource = new CancellationTokenSource();
 
-            _rigidbody.isKinematic = true;
-            _collisionHandler.enabled = false;
-            _collider.enabled = false;
+            _stateDataHolder.Rigidbody.isKinematic = true;
+            _stateDataHolder.CollisionHandler.enabled = false;
+            _stateDataHolder.Collider.enabled = false;
 
-            _animatorController.Idle();
+            _stateDataHolder.AnimatorController.Idle();
         }
 
         public virtual void Exit()
         {
             _cancellationTokenSource.Cancel();
 
-            _rigidbody.isKinematic = false;
-            _collisionHandler.enabled = true;
-            _collider.enabled = true;
+            _stateDataHolder.Rigidbody.isKinematic = false;
+            _stateDataHolder.CollisionHandler.enabled = true;
+            _stateDataHolder.Collider.enabled = true;
         }
 
         public void Initialize(IStateSwitcher stateSwitcher)
@@ -81,27 +45,29 @@ namespace Project.Scripts.StateMachine.EntityStates
 
         public virtual void Update()
         {
-            if (_targetProvider.Target != null)
+            if (_stateDataHolder.TargetProvider.Target != null)
             {
-                _rotator.RotateToTarget(_targetProvider.Target.transform, _entity.transform);
+                _stateDataHolder.Rotator.RotateToTarget(
+                    _stateDataHolder.TargetProvider.Target.transform,
+                    _stateDataHolder.Entity.transform);
             }
         }
 
         protected void StartAttack()
         {
-            _animatorController.PrepareAttack();
-            _ballThrower.StartCharging();
+            _stateDataHolder.AnimatorController.PrepareAttack();
+            _stateDataHolder.BallThrower.StartCharging();
         }
 
         protected UniTask ThrowBall()
         {
-            Ball ball = _ballHolder.LostBall();
-            _ballThrower.StopCharging();
-            _ballThrower.Throw(ball);
+            Ball ball = _stateDataHolder.BallHolder.LostBall();
+            _stateDataHolder.BallThrower.StopCharging();
+            _stateDataHolder.BallThrower.Throw(ball);
 
             AudioID.Attack.PlayOneShot();
 
-            return _animatorController.Attack();
+            return _stateDataHolder.AnimatorController.Attack();
         }
 
         protected async UniTask ApplyTarget()
@@ -111,16 +77,16 @@ namespace Project.Scripts.StateMachine.EntityStates
             if(_cancellationTokenSource.Token.IsCancellationRequested)
                 return;
             
-            _targetProvider.SelectTarget(target);
+            _stateDataHolder.TargetProvider.SelectTarget(target);
         }
 
         private async UniTask<Entity> FindTarget(CancellationToken token)
         {
-            Entity target = _targetScanner.Scan(_teammates);
+            Entity target = _stateDataHolder.TargetScanner.Scan(_stateDataHolder.Teammates);
 
             while (token.IsCancellationRequested == false && target == null)
             {
-                target = _targetScanner.Scan(_teammates);
+                target = _stateDataHolder.TargetScanner.Scan(_stateDataHolder.Teammates);
 
                 await UniTask.NextFrame(cancellationToken: token);
             }

@@ -55,10 +55,9 @@ namespace Project.Scripts.GameSystem
 
         private void HandleGameOver(bool isWin)
         {
-            int rankAmount = 
-                isWin ? 
-                Random.Range(_minWinRankAmount, _maxWinRankAmount) : 
-                Random.Range(_minLoseRankAmount, _maxLoseRankAmount);
+            int rankAmount = isWin 
+                    ? Random.Range(_minWinRankAmount, _maxWinRankAmount) 
+                    : Random.Range(_minLoseRankAmount, _maxLoseRankAmount);
             
             if (isWin)
             {

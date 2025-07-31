@@ -1,21 +1,11 @@
-﻿using Project.Scripts.Services;
-using Project.Scripts.StateMachine.EntityStates;
-using UnityEngine;
+﻿using Project.Scripts.StateMachine.EntityStates;
 
 namespace Project.Scripts.StateMachine.PlayerStates
 {
     public class PlayerDodgeState : EntityDodgeState
     {
-        public PlayerDodgeState(
-            AnimatorController animatorController,
-            CollisionHandler collisionHandler,
-            HitDetector hitDetector,
-            Collider collider)
-            : base(
-                animatorController,
-                collisionHandler,
-                hitDetector,
-                collider)
+        public PlayerDodgeState(StateDataHolder dataHolder) 
+            : base(dataHolder)
         {
         }
 
