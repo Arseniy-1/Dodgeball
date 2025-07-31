@@ -4,7 +4,9 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Project.Scripts.HealthSystem;
 using Project.Scripts.Services;
+using Project.Scripts.Services.AudioServiceSystem;
 using Project.Scripts.Services.Ball;
+using Project.Scripts.Services.EffectServiceSystem;
 using Project.Scripts.StateMachine;
 using Project.Scripts.UI.Canvases;
 using Sirenix.OdinInspector;
@@ -63,7 +65,7 @@ namespace Project.Scripts.Entities
             Ball = ball;
             Health.Initialize(CollisionHandler);
 
-            BallThrower.Initialize(GetConfig());
+            BallThrower.Initialize(EntityConfig);
             
             if (Animator != null)
                 AnimatorController = new AnimatorController(Animator);
@@ -102,14 +104,25 @@ namespace Project.Scripts.Entities
             StateMachine.Dispose();
             AnimatorController.Dispose();
             Health.Reset();
-        }   
-    
-        protected abstract UniTaskVoid HandleLostHealth(CancellationToken token);
+        }
 
         protected abstract List<IState> CreateStates(); 
-        protected abstract EntityConfig GetConfig(); 
+        protected abstract void SwitchToDeathState(); 
+        
+        private async UniTaskVoid HandleLostHealth(CancellationToken token)
+        {
+            SwitchToDeathState();
+            HealthCanvas.gameObject.SetActive(false);
+            EffectID.Death.PlayEffect(transform);
+            AudioID.Dead.PlayOneShot();
+
+            await AnimatorController.Death();
+            await HideEntity(token);
+
+            Die();
+        }
     
-        protected async UniTask HideEntity(CancellationToken token)
+        private async UniTask HideEntity(CancellationToken token)
         {
             float duration = 1.5f;
             float elapsed = 0f;

@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using Project.Scripts.ObjectPool.Effects;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Project.Scripts.Services.EffectServiceSystem
 {
     [Serializable]
     public struct EffectData
     {
-        [HideLabel]
-        [HorizontalGroup] public EffectID ID;
+        [field: SerializeField]
+        [field: HideLabel]
+        [field: HorizontalGroup] public EffectID ID { get; private set; }
 
-        [HideLabel] 
-        [HorizontalGroup] public List<Effect> Effects;
+        [field: SerializeField]
+        [field: HideLabel] 
+        [field: HorizontalGroup] public List<Effect> Effects { get; private set; }
     }
 }

@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Project.Scripts.ObjectPool
 {
     [Serializable]
-    public abstract class Pool<T> where T : MonoBehaviour
+    public class Pool<T> where T : MonoBehaviour
     {
-        private int _startAmount;
+        private int _startCount;
 
         protected T Prefab { get; private set; }
         protected Stack<T> Stack { get; private set; } = new ();
 
-        protected Pool(T prefab, int startAmount)
+        public Pool(T prefab, int startCount)
         {
             Prefab = prefab;
-            _startAmount = startAmount;
+            _startCount = startCount;
+
+            CreateStartCount();
         }
 
         public void Release(T template)
@@ -36,7 +39,21 @@ namespace Project.Scripts.ObjectPool
 
             return template;
         }
+
+        protected T Create()
+        {
+            var enemy = Object.Instantiate(Prefab);
+            enemy.gameObject.SetActive(false);
+
+            return enemy;
+        }
         
-        protected abstract T Create();
+        private void CreateStartCount()
+        {
+            for (int i = 0; i < _startCount; i++)
+            {
+                Create();
+            }
+        }
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Project.Scripts.ObjectPool
 {
     [Serializable]
-    public abstract class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
+    public class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
     {
-        [field: SerializeField] protected int StartAmount { get; private set; } = 5;
+        [field: SerializeField] protected int StartAmount { get; private set; } = 2;
 
         protected T Prefab { get; private set; }
         protected Pool<T> Pool { get; private set; }
@@ -17,10 +17,8 @@ namespace Project.Scripts.ObjectPool
         protected Spawner(T prefab)
         {
             Prefab = prefab;
-            Pool = CreatePool();
+            Pool = new Pool<T>(prefab, StartAmount);
         }
-
-        protected abstract Pool<T> CreatePool();
 
         public void DisableSpawned()
         {
@@ -36,7 +34,7 @@ namespace Project.Scripts.ObjectPool
 
             spawnedObject.Destroyed += OnSpawnedDestroyed;
             _spawned.Add(spawnedObject);
-
+            
             return spawnedObject;
         }
 

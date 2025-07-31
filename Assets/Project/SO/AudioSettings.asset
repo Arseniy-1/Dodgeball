@@ -13,18 +13,91 @@ MonoBehaviour:
   m_Name: AudioSettings
   m_EditorClassIdentifier: 
   _audioData:
-  - Volume: 0.542
-  - Volume: 0.318
-  - Volume: 0.435
-  - Volume: 0.266
-  - Volume: 0.435
-  - Volume: 0.237
-  - Volume: 0.5
-  - Volume: 0.5
-  - Volume: 0.5
-  - Volume: 0.5
-  - Volume: 0.5
-  - Volume: 0.5
-  - Volume: 0.5
-  - Volume: 0.5
-  - Volume: 0.5
+  - <ID>k__BackingField: 1
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: 2e0dccecbf4834202833e6a134209a5f, type: 3}
+    <Volume>k__BackingField: 0.542
+    <PitchRange>k__BackingField: {x: 0.9983919, y: 0.9983919}
+  - <ID>k__BackingField: 7
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: 0dc05ad3023cc4154ad83a5db608fdbe, type: 3}
+    - {fileID: 8300000, guid: 2c9fefe00a4f04846a5998eb055ab38a, type: 3}
+    - {fileID: 8300000, guid: 53e2c695ba3f644ad913da2ec7a7431a, type: 3}
+    <Volume>k__BackingField: 0.318
+    <PitchRange>k__BackingField: {x: 0.87893414, y: 1.274064}
+  - <ID>k__BackingField: 2
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: 7215d80e7d69146bf9d71617855e7b4b, type: 3}
+    - {fileID: 8300000, guid: 1e709014bc4cb431a81bb6bdd40842e5, type: 3}
+    - {fileID: 8300000, guid: 43a280bbb27ab44b19a7b31b005a6c6b, type: 3}
+    - {fileID: 8300000, guid: 8220ab39fbc014b3abc77337fce9b7ba, type: 3}
+    - {fileID: 8300000, guid: f41f744abb5314bf08930e984fa57661, type: 3}
+    <Volume>k__BackingField: 0.435
+    <PitchRange>k__BackingField: {x: 1.007581, y: 1.007581}
+  - <ID>k__BackingField: 4
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: acb35e321c246433188565a3095c1aae, type: 3}
+    - {fileID: 8300000, guid: 52a9204603f7c4235a90df432eba8dc0, type: 3}
+    - {fileID: 8300000, guid: 524ec9b7a01ce4e6cbd0b06747254b5c, type: 3}
+    - {fileID: 8300000, guid: 8d6b0832f53674860b4e05d1ccd48cc0, type: 3}
+    - {fileID: 8300000, guid: da3c93b87cd7549cf81c44b6c8648617, type: 3}
+    <Volume>k__BackingField: 0.266
+    <PitchRange>k__BackingField: {x: 0.9432576, y: 1.1637951}
+  - <ID>k__BackingField: 6
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: e79f75a5e0fca455cab0744df6da205c, type: 3}
+    - {fileID: 8300000, guid: 90451f6f9a7e34cd19b62bef65f8a796, type: 3}
+    <Volume>k__BackingField: 0.435
+    <PitchRange>k__BackingField: {x: 0.96021223, y: 1.1299735}
+  - <ID>k__BackingField: 3
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: 6b822defcca6b42d09b056e719d49371, type: 3}
+    - {fileID: 8300000, guid: 6a602f228d0e44ac598e838e10e3050e, type: 3}
+    - {fileID: 8300000, guid: 3bd01136cd94d4fc0b06219c54bf436f, type: 3}
+    - {fileID: 8300000, guid: 0c2279698d5e549f4ba7b233963d11bf, type: 3}
+    <Volume>k__BackingField: 0.237
+    <PitchRange>k__BackingField: {x: 1.007581, y: 1.0259591}
+  - <ID>k__BackingField: 0
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: 81a06480f215c484fbde7312575efa4e, type: 3}
+    <Volume>k__BackingField: 0.5
+    <PitchRange>k__BackingField: {x: 0.96754414, y: 1.0391005}
+  - <ID>k__BackingField: 0
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: 07ec50bf4ed914a2f8e4c1ac09777d7a, type: 3}
+    <Volume>k__BackingField: 0.5
+    <PitchRange>k__BackingField: {x: 1.0026525, y: 1.0026525}
+  - <ID>k__BackingField: 9
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: ef26659d15c6646d0a8116937f04a938, type: 3}
+    <Volume>k__BackingField: 0.5
+    <PitchRange>k__BackingField: {x: 1.0238727, y: 1.0238727}
+  - <ID>k__BackingField: 10
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: 996836cf4c8a64266bfdacf5d6cd8dcf, type: 3}
+    <Volume>k__BackingField: 0.5
+    <PitchRange>k__BackingField: {x: 1.066313, y: 1.066313}
+  - <ID>k__BackingField: 11
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: d523db420e67a4bdaaed1ce6cbf07579, type: 3}
+    <Volume>k__BackingField: 0.5
+    <PitchRange>k__BackingField: {x: 1.0026525, y: 1.0026525}
+  - <ID>k__BackingField: 12
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: 79b9635c8983841e2af90a88c9d98481, type: 3}
+    <Volume>k__BackingField: 0.5
+    <PitchRange>k__BackingField: {x: 1.0026525, y: 1.0026525}
+  - <ID>k__BackingField: 13
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: 996836cf4c8a64266bfdacf5d6cd8dcf, type: 3}
+    <Volume>k__BackingField: 0.5
+    <PitchRange>k__BackingField: {x: 1.0450928, y: 1.0450928}
+  - <ID>k__BackingField: 14
+    <Clips>k__BackingField: []
+    <Volume>k__BackingField: 0.5
+    <PitchRange>k__BackingField: {x: 1.0026525, y: 1.0026525}
+  - <ID>k__BackingField: 15
+    <Clips>k__BackingField:
+    - {fileID: 8300000, guid: b8086ab967945467bb06d64b00948604, type: 3}
+    <Volume>k__BackingField: 0.5
+    <PitchRange>k__BackingField: {x: 1.0132626, y: 1.0132626}

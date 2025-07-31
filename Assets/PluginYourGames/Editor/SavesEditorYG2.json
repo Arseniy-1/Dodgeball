@@ -7,7 +7,7 @@
     false,
     false
   ],
-  "idSave": 687,
+  "idSave": 699,
   "StartAnimationsData": {
     "DodgeAnimations": [
       1,
@@ -29,8 +29,7 @@
   "AnimationsHolder": {
     "DodgeAnimations": [
       1,
-      0,
-      2
+      0
     ],
     "CelebrateAnimations": [
       0
@@ -44,8 +43,7 @@
     ],
     "DodgeAnimationsHash": [
       -1401434927,
-      111242775,
-      1879438014
+      111242775
     ],
     "CelebrateAnimationsHash": [
       1684810025
@@ -64,14 +62,14 @@
     "IsCameraShakeEnabled": false
   },
   "ProgressData": {
-    "CurrentRank": 2,
-    "CurrentRankAmount": 29,
+    "CurrentRank": 0,
+    "CurrentRankAmount": 0,
     "PreviousRankAmount": 0,
     "IsFirstSession": false
   },
   "RankHolder": {
-    "CurrentRank": 2,
-    "CurrentAmount": 29,
+    "CurrentRank": 0,
+    "CurrentAmount": 0,
     "PreviousAmount": 0,
     "MaxRankAmount": 100
   }

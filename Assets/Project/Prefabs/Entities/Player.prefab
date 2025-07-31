@@ -166,8 +166,8 @@ MonoBehaviour:
   <HitDetector>k__BackingField: {fileID: 2493397008812981593}
   <HealthCanvas>k__BackingField: {fileID: 8911252057284938444}
   <Ball>k__BackingField: {fileID: 0}
+  <EntityConfig>k__BackingField: {fileID: 11400000, guid: 5dfc860117b55e241b2d86868264e357, type: 2}
   _playerInputController: {fileID: 4030301884747883651}
-  _playerConfig: {fileID: 11400000, guid: 5dfc860117b55e241b2d86868264e357, type: 2}
 --- !u!114 &2967383579765363493
 MonoBehaviour:
   m_ObjectHideFlags: 0

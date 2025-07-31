@@ -10,10 +10,5 @@ namespace Project.Scripts.ObjectPool.Entity
             : base(enemyPrefab)
         {
         }
-        
-        protected override Pool<Enemy> CreatePool()
-        {
-            return new EnemyPool(Prefab, StartAmount);
-        }
     }
 }
