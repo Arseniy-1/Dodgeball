@@ -8,13 +8,13 @@ namespace Project.Scripts.UI.Canvases
 
         private void OnEnable()
         {
-            _exitButton.ExitButtonClicked += Disable;
+            _exitButton.ButtonClicked += Disable;
             Time.timeScale = 0;
         }
 
         private void OnDisable()
         {
-            _exitButton.ExitButtonClicked -= Disable;
+            _exitButton.ButtonClicked -= Disable;
             Time.timeScale = 1;
         }
 

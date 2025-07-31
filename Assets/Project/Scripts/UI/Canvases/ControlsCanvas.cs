@@ -8,12 +8,12 @@ namespace Project.Scripts.UI.Canvases
 
         private void OnEnable()
         {
-            _exitButton.ExitButtonClicked += OnExitButtonClicked;
+            _exitButton.ButtonClicked += OnExitButtonClicked;
         }
 
         private void OnDisable()
         {
-            _exitButton.ExitButtonClicked -= OnExitButtonClicked;
+            _exitButton.ButtonClicked -= OnExitButtonClicked;
         }
 
         private void OnExitButtonClicked()

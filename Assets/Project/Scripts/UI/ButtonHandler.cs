@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Project.Scripts.Services.AudioServiceSystem;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Project.Scripts.UI
@@ -6,7 +8,10 @@ namespace Project.Scripts.UI
     public abstract class ButtonHandler : MonoBehaviour
     {
         [SerializeField] private Button _button;
-
+        [SerializeField] private AudioID _sound;
+        
+        public event Action ButtonClicked;
+        
         private void OnEnable()
         {
             _button.onClick.AddListener(HandleButtonClick);
@@ -17,6 +22,10 @@ namespace Project.Scripts.UI
             _button.onClick.RemoveListener(HandleButtonClick);
         }
 
-        protected abstract void HandleButtonClick();
+        protected virtual void HandleButtonClick()
+        {
+            ButtonClicked?.Invoke();
+            _sound.PlayOneShot();
+        }
     }
 }

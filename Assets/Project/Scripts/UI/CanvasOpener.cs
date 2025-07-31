@@ -1,5 +1,4 @@
-﻿using Project.Scripts.Services.AudioServiceSystem;
-using Project.Scripts.UI.Canvases;
+﻿using Project.Scripts.UI.Canvases;
 using UnityEngine;
 
 namespace Project.Scripts.UI
@@ -10,8 +9,8 @@ namespace Project.Scripts.UI
     
         protected override void HandleButtonClick()
         {
+            base.HandleButtonClick();
             _canvas.gameObject.SetActive(true);
-            AudioID.UISoft.PlayOneShot();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Project.Scripts.UI.Canvases
         
             UpdateSelectionCirclePosition(entity);
 
-            ApplyButton.ApplyButtonClicked += OnApplyButtonClicked;
+            ApplyButton.ButtonClicked += OnApplyButtonClicked;
             GameStatusService.Instance.HolderChanged += CheckHolder;
         }
 
@@ -72,7 +72,7 @@ namespace Project.Scripts.UI.Canvases
             Time.timeScale = 1f;
             GameStatusService.Instance.HolderChanged -= OnHolderChanged;
             GameStatusService.Instance.HolderChanged -= CheckHolder;
-            ApplyButton.ApplyButtonClicked -= OnApplyButtonClicked;
+            ApplyButton.ButtonClicked -= OnApplyButtonClicked;
 
             gameObject.SetActive(false);
         }

@@ -14,7 +14,7 @@ namespace Project.Scripts.UI.Canvases
     
         private void OnEnable()
         {
-            _exitButton.ExitButtonClicked += OnExitButtonClicked;
+            _exitButton.ButtonClicked += OnExitButtonClicked;
         
             foreach (var languageButton in _lanquageButtons)
             {
@@ -24,7 +24,7 @@ namespace Project.Scripts.UI.Canvases
 
         private void OnDisable()
         {
-            _exitButton.ExitButtonClicked -= OnExitButtonClicked;
+            _exitButton.ButtonClicked -= OnExitButtonClicked;
         
             foreach (var languageButton in _lanquageButtons)
             {

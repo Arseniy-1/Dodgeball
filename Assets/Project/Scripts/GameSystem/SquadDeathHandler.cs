@@ -1,49 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Project.Scripts.Entities;
+using Project.Scripts.Messages;
+using Project.Scripts.Services.EffectServiceSystem;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Project.Scripts.GameSystem
 {
     public class SquadDeathHandler
     {
         private readonly List<Squad> _allSquads;
-        private readonly List<Squad> _deadSquads = new ();
-        
-        private Action<bool> _gameOverCallback;
+        private readonly List<Squad> _deadSquads = new();
 
         public SquadDeathHandler(List<Squad> squads)
         {
             _allSquads = squads;
-        }
-
-        public void Initialize(Action<bool> gameOverCallback)
-        {
-            _gameOverCallback = gameOverCallback;
             
             foreach (var squad in _allSquads)
-            {
-                squad.LostPlayers += OnSquadDeath;
-            }
+                squad.LostPlayers += OnLostPlayers;
         }
 
-        private void OnSquadDeath(Squad squad)
+        private void OnLostPlayers(Squad squad)
         {
-            squad.LostPlayers -= OnSquadDeath;
+            squad.LostPlayers -= OnLostPlayers;
             _deadSquads.Add(squad);
 
-            bool isPlayerWin = _deadSquads.Count == _allSquads.Count - 1;
-            _gameOverCallback?.Invoke(isPlayerWin);
+            if (_deadSquads.Count != _allSquads.Count - 1)
+                return;
+
             NotifyWinners();
         }
-        
+
         private void NotifyWinners()
         {
-            var winners = _allSquads.Except(_deadSquads);
+            List<Squad> winners = _allSquads.Except(_deadSquads).ToList();
+            bool isPlayerWin = winners[0].SquadType == typeof(Player);
+
+            HandleGameOver(isPlayerWin, winners[0].transform);
 
             foreach (var squad in winners)
-            {
                 squad.Celebrate();
-            }
+        }
+
+        private void HandleGameOver(bool isWin, Transform transform)
+        {
+            if (isWin)
+                EffectID.Confetti.PlayEffect(transform);
+
+            MessageBrokerHolder.GameActions.Publish(new M_GameOver(isWin));
         }
     }
 }

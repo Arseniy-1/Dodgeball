@@ -32,7 +32,7 @@ namespace Project.Scripts.UI.Canvases
         
             UpdateSelectionCirclePosition(entity);
 
-            ApplyButton.ApplyButtonClicked += Disable;
+            ApplyButton.ButtonClicked += Disable;
         }
 
         private void UpdateSelectionCirclePosition(Entity entity)
@@ -61,7 +61,7 @@ namespace Project.Scripts.UI.Canvases
         private void Disable()
         {
             GameStatusService.Instance.HolderChanged -= OnHolderChanged;
-            ApplyButton.ApplyButtonClicked -= Disable;
+            ApplyButton.ButtonClicked -= Disable;
         
             gameObject.SetActive(false);
         }
