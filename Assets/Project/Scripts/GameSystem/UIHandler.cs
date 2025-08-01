@@ -9,7 +9,7 @@ using Project.Scripts.UI.View;
 using UnityEngine;
 using YG;
 
-namespace Project.Scripts.GameSystem
+namespace Project.Scripts.CompositionRootSystem
 {
     [Serializable]
     public class UIHandler
@@ -22,6 +22,7 @@ namespace Project.Scripts.GameSystem
         [SerializeField] private UserInfoView _userInfoView;
         [SerializeField] private RewardButton _rewardButton;
 
+        public event Action StartButtonPressed;
         public event Action RankCanvasClosed;
 
         public void Initialize(RewardService rewardService, RankHolder rankHolder)
@@ -87,6 +88,8 @@ namespace Project.Scripts.GameSystem
             _gameCanvas.gameObject.SetActive(true);
 
             MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
+
+            StartButtonPressed?.Invoke();
         }
 
         private void ShowReward()
