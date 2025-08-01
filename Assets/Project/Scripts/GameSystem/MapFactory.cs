@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 namespace Project.Scripts.GameSystem
 {
     [Serializable]
-    public class MapController
+    public class MapFactory
     {
         [SerializeField] private List<Arena> _arenaPrefabs;
         [SerializeField] private Ball _ballPrefab;
@@ -73,7 +73,6 @@ namespace Project.Scripts.GameSystem
                 }
             }
         }
-
 
         public void ClearEntities()
         {

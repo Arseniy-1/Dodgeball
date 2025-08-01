@@ -18,7 +18,31 @@ namespace Project.Scripts.GameSystem
         
         public List<Transform> SpawnPoints => _spawnPoints;
         public Collider SquadZone => _squadZone;
-        public Type SquadType => _entities[0].GetType();
+        
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.TryGetComponent(out Ball ball))
+            {
+                if (ball.Rigidbody.isKinematic)
+                    return;
+
+                GameStatusService.Instance.ClearCurrentZone();
+            }
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.TryGetComponent(out Ball ball))
+            {
+                if (ball.Rigidbody.isKinematic)
+                    return;
+
+                if (GameStatusService.Instance.CurrentZone != null)
+                    return;
+
+                GameStatusService.Instance.SetCurrentZone(_squadZone);
+            }
+        }
         
         private void OnDestroy()
         {
@@ -49,31 +73,6 @@ namespace Project.Scripts.GameSystem
             foreach (var entity in _entities)
             {
                 entity.Celebrate();
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.TryGetComponent(out Ball ball))
-            {
-                if (ball.Rigidbody.isKinematic)
-                    return;
-
-                GameStatusService.Instance.ClearCurrentZone();
-            }
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            if (other.TryGetComponent(out Ball ball))
-            {
-                if (ball.Rigidbody.isKinematic)
-                    return;
-
-                if (GameStatusService.Instance.CurrentZone != null)
-                    return;
-
-                GameStatusService.Instance.SetCurrentZone(_squadZone);
             }
         }
 

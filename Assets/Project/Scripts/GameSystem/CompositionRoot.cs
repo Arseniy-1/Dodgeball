@@ -23,8 +23,8 @@ namespace Project.Scripts.GameSystem
         [SerializeField] private RewardService _rewardService;
         [SerializeField] private EffectHolder _effectHandler;
         [SerializeField] private Saves _saves;
-        [SerializeField] private MapController _mapController;
-        
+        [SerializeField] private MapFactory _mapFactory;
+
         [SerializeField] private int _maxWinRankAmount = 40;
         [SerializeField] private int _minWinRankAmount = 15;
         [SerializeField] private int _maxLoseRankAmount = 10;
@@ -54,7 +54,7 @@ namespace Project.Scripts.GameSystem
                 enemySpawners.Add(enemySpawner);
             }
 
-            _mapController.Initialize(entityCreator, playerSpawner, enemySpawners);
+            _mapFactory.Initialize(entityCreator, playerSpawner, enemySpawners);
 
             LocalizationManager.Language = YG2.lang;
             YG2.lang = YG2.lang;
@@ -67,7 +67,7 @@ namespace Project.Scripts.GameSystem
                 .Receive<M_GameOver>()
                 .Subscribe(message => HandleGameOverWrapper(message.IsPlayerWin))
                 .AddTo(_disposable);
-            
+
             _uiHandler.StartButtonPressed += StartGame;
             _uiHandler.RankCanvasClosed += HandleRankCanvasClose;
             _rankHolder.RankRaised += HandleRankRaised;
@@ -77,7 +77,7 @@ namespace Project.Scripts.GameSystem
         private void OnDisable()
         {
             _disposable.Dispose();
-            
+
             _uiHandler.StartButtonPressed -= StartGame;
             _uiHandler.RankCanvasClosed -= HandleRankCanvasClose;
             _rankHolder.RankRaised -= HandleRankRaised;
@@ -88,15 +88,15 @@ namespace Project.Scripts.GameSystem
         {
             _saves.Initialize(_rankHolder);
             _uiHandler.Start();
-            
+
             PrepareMap();
         }
 
         private void PrepareMap()
         {
-            _mapController.CreateMap();
-            GameStatusService.Instance.Initialize(_mapController.BallInstance);
-            _mapController.ArenaInstance.Initialize(_mapController.BallInstance);
+            _mapFactory.CreateMap();
+            GameStatusService.Instance.Initialize(_mapFactory.BallInstance);
+            _mapFactory.ArenaInstance.Initialize(_mapFactory.BallInstance);
         }
 
         private void StartGame()
@@ -104,14 +104,13 @@ namespace Project.Scripts.GameSystem
             MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
         }
 
-
         private void HandleGameOverWrapper(bool isWin)
         {
-            int rankAmount = 
-                isWin ? 
-                    Random.Range(_minWinRankAmount, _maxWinRankAmount) : 
-                    Random.Range(_minLoseRankAmount, _maxLoseRankAmount);
-            
+            int rankAmount =
+                isWin
+                    ? Random.Range(_minWinRankAmount, _maxWinRankAmount)
+                    : Random.Range(_minLoseRankAmount, _maxLoseRankAmount);
+
             _rankHolder.IncreaseRank(rankAmount);
             HandleGameOver().Forget();
         }
@@ -126,8 +125,8 @@ namespace Project.Scripts.GameSystem
 
         private void HandleRankCanvasClose()
         {
-            _mapController.ClearEntities();
-            _mapController.ArenaInstance.Initialize(_mapController.BallInstance);
+            _mapFactory.ClearEntities();
+            _mapFactory.ArenaInstance.Initialize(_mapFactory.BallInstance);
         }
 
         private void HandleRankRaised()

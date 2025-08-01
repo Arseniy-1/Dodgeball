@@ -1,4 +1,4 @@
-﻿using Project.Scripts.Rank;
+﻿    using Project.Scripts.Rank;
 using TMPro;
 using UnityEngine;
 using YG;

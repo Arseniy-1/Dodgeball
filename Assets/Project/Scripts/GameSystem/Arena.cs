@@ -17,7 +17,6 @@ namespace Project.Scripts.GameSystem
         [SerializeField] private BallUpgraderFabric _ballUpgraderFabric;
         [SerializeField] private List<Frame> _frames;
 
-        private SquadDeathHandler _deathHandler;
         private BallUpgradeHolder _ballUpgradeHolder;
         private FrameActivator _frameActivator;
 
@@ -25,7 +24,7 @@ namespace Project.Scripts.GameSystem
 
         private void Awake()
         {
-            _deathHandler = new SquadDeathHandler(_squads);
+            new SquadDeathHandler(_squads);
             _ballUpgradeHolder = new BallUpgradeHolder(_ballUpgraderFabric);
             _frameActivator = new FrameActivator(_frames, _minInactiveInterval, _maxInactiveInterval);
         }

@@ -14,7 +14,7 @@ namespace Project.Scripts.GameSystem
         private readonly List<Frame> _frames;
         private readonly float _minInterval;
         private readonly float _maxInterval;
-        
+
         private CancellationTokenSource _cancellationTokenSource;
         private List<BallUpgrade> _currentUpgraders;
 
@@ -33,9 +33,9 @@ namespace Project.Scripts.GameSystem
         public void Activate()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-            ActivateFramesLoop().Forget(); 
+            ActivateFramesLoop().Forget();
         }
-        
+
         public void Dispose()
         {
             _cancellationTokenSource.Cancel();
@@ -55,16 +55,16 @@ namespace Project.Scripts.GameSystem
         {
             var frame = _frames[Random.Range(0, _frames.Count)];
             var upgrade = _currentUpgraders[Random.Range(0, _currentUpgraders.Count)];
-            
+
             var taskCompletionSource = new TaskCompletionSource<bool>();
-            
+
             frame.FrameHit += OnFrameHit;
             frame.Activate(upgrade);
-            
+
             await taskCompletionSource.Task;
-            
+
             return;
-            
+
             void OnFrameHit(Frame _)
             {
                 frame.FrameHit -= OnFrameHit;
