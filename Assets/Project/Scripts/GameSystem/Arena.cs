@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Project.Scripts.GameSystem
 {
-    public class MatchManager : MonoBehaviour
+    public class Arena : MonoBehaviour
     {
         [SerializeField] private float _minInactiveInterval = 1f;
         [SerializeField] private float _maxInactiveInterval = 3f;
