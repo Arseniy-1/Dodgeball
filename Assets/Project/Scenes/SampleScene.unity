@@ -4295,6 +4295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 213209394}
+  _sound: 0
 --- !u!114 &213209394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4830,6 +4831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 261571743}
+  _sound: 0
   _canvas: {fileID: 1590491958}
 --- !u!114 &261571743
 MonoBehaviour:
@@ -5609,6 +5611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 310348884}
+  _sound: 0
   _languageData: {fileID: 11400000, guid: aa8e1aac7be42fc488e0214a05a0e5e2, type: 2}
   _name: {fileID: 466673053}
   _view: {fileID: 230826623}
@@ -5747,6 +5750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 328597758}
+  _sound: 0
 --- !u!114 &328597758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5965,6 +5969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 345489355}
+  _sound: 0
   _enabledSprite: {fileID: 21300000, guid: f6de2a7823f2e4282b6a118ee77c977e, type: 3}
   _disabledSprite: {fileID: 21300000, guid: ee11ffab5f5834249acccb6421d234d7, type: 3}
   _view: {fileID: 1862518576}
@@ -6159,15 +6164,30 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 389377432}
-  - component: {fileID: 389377431}
+  - component: {fileID: 389377433}
   m_Layer: 0
-  m_Name: GameInitializer
+  m_Name: CompositionRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &389377431
+--- !u!4 &389377432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389377430}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &389377433
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6176,7 +6196,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 389377430}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5698704cf1447958729138ca90fe077, type: 3}
+  m_Script: {fileID: 11500000, guid: 69fc5ca0f1414a79bb728043348cd844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrefabs:
@@ -6197,29 +6217,18 @@ MonoBehaviour:
     _rewardButton: {fileID: 1960394464}
   _rewardService:
     _rewardAnimations: {fileID: 11400000, guid: c85e966d7e4c8d44a9563afe68d89113, type: 2}
-  _effectController:
+  _effectHandler:
     _audioSettings: {fileID: 11400000, guid: 06f54f93dab2c66409b8a6256dfb1a50, type: 2}
     _effectsSetting: {fileID: 11400000, guid: 0f6c396f961d5914fbf74725c2fa517e, type: 2}
   _saves: {fileID: 1847178381}
-  _mapController:
+  _mapFactory:
     _arenaPrefabs:
-    - {fileID: 321840916095219561, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
+    - {fileID: 1075955453385602588, guid: 3348639791bc3f541b4a642b4aa3e40a, type: 3}
     _ballPrefab: {fileID: 5921492481527234488, guid: 9deab7718edd8e2409452dc72aaa7ac9, type: 3}
---- !u!4 &389377432
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 389377430}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  _maxWinRankAmount: 40
+  _minWinRankAmount: 15
+  _maxLoseRankAmount: 10
+  _minLoseRankAmount: 3
 --- !u!1 &399548412 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7206733566222453188, guid: e5cbb938042ba43588aae41d8dc911e1, type: 3}
@@ -6750,6 +6759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 473749889}
+  _sound: 0
 --- !u!1 &486840228
 GameObject:
   m_ObjectHideFlags: 0
@@ -8143,6 +8153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 559970372}
+  _sound: 0
   _canvas: {fileID: 237879547}
 --- !u!114 &559970372
 MonoBehaviour:
@@ -9705,6 +9716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 713045190}
+  _sound: 0
   _canvas: {fileID: 1590491958}
 --- !u!114 &713045190
 MonoBehaviour:
@@ -10062,6 +10074,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 739583933}
+  _sound: 0
   _languageData: {fileID: 11400000, guid: 88a123affcf128e428d2ea2ffa605206, type: 2}
   _name: {fileID: 788845638}
   _view: {fileID: 416406182}
@@ -11368,6 +11381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 845303599}
+  _sound: 0
 --- !u!1 &846775096
 GameObject:
   m_ObjectHideFlags: 0
@@ -11579,6 +11593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 854509648}
+  _sound: 0
   _languageData: {fileID: 11400000, guid: 88a123affcf128e428d2ea2ffa605206, type: 2}
   _name: {fileID: 291279687}
   _view: {fileID: 1613466039}
@@ -11800,6 +11815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 861649071}
+  _sound: 0
   _enabledSprite: {fileID: 21300000, guid: 901d64fc6ad9d44799c2ad0fd4f182d2, type: 3}
   _disabledSprite: {fileID: 21300000, guid: 78757b0623f3b4309b7cc69c4769ae37, type: 3}
   _view: {fileID: 514459065}
@@ -12544,6 +12560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 929733990}
+  _sound: 0
   _enabledSprite: {fileID: 21300000, guid: eb165af05aa2e4ab2bcad217611774b8, type: 3}
   _disabledSprite: {fileID: 21300000, guid: b1f42bbbfffc44202b66381ab8b622ee, type: 3}
   _view: {fileID: 2074370774}
@@ -13294,6 +13311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1101095290}
+  _sound: 0
 --- !u!114 &1101095290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15014,6 +15032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1209860188}
+  _sound: 0
   _canvas: {fileID: 1286219419}
 --- !u!1 &1237911344
 GameObject:
@@ -15664,6 +15683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1328722777}
+  _sound: 0
   _canvas: {fileID: 1190458260}
 --- !u!114 &1328722777 stripped
 MonoBehaviour:
@@ -16049,6 +16069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1385162344}
+  _sound: 0
 --- !u!114 &1385162344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16311,6 +16332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1421346257}
+  _sound: 0
   _languageData: {fileID: 11400000, guid: 1fcb181846eb0f8479e0876a461007f4, type: 2}
   _name: {fileID: 1946363718}
   _view: {fileID: 533764409}
@@ -16773,6 +16795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1518481496}
+  _sound: 0
   _languageData: {fileID: 11400000, guid: 1fcb181846eb0f8479e0876a461007f4, type: 2}
   _name: {fileID: 486840230}
   _view: {fileID: 884157059}
@@ -16994,6 +17017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1531352176}
+  _sound: 0
   _canvas: {fileID: 1355440453}
 --- !u!1 &1544241810
 GameObject:
@@ -17205,6 +17229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1545370157}
+  _sound: 0
   _canvas: {fileID: 1808849921}
 --- !u!1001 &1558067024
 PrefabInstance:
@@ -19043,6 +19068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1753575236}
+  _sound: 0
 --- !u!114 &1753575236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20890,6 +20916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1893410938}
+  _sound: 0
   _languageData: {fileID: 11400000, guid: aa8e1aac7be42fc488e0214a05a0e5e2, type: 2}
   _name: {fileID: 90723622}
   _view: {fileID: 967968136}
@@ -21418,6 +21445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1927716992}
+  _sound: 0
   _canvas: {fileID: 1190458260}
 --- !u!1 &1933468773
 GameObject:
@@ -21583,6 +21611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1935096764}
+  _sound: 0
   _canvas: {fileID: 237879547}
 --- !u!1 &1941119970
 GameObject:
@@ -21920,6 +21949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 1960394461}
+  _sound: 0
 --- !u!1 &1961667586
 GameObject:
   m_ObjectHideFlags: 0
@@ -23711,6 +23741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 2093522596}
+  _sound: 0
 --- !u!114 &2093522596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24331,6 +24362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 2132913163}
+  _sound: 0
 --- !u!114 &2132913163
 MonoBehaviour:
   m_ObjectHideFlags: 0
