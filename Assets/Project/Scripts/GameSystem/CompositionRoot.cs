@@ -88,7 +88,6 @@ namespace Project.Scripts.GameSystem
         {
             _saves.Initialize(_rankHolder);
             _uiHandler.Start();
-
             PrepareMap();
         }
 
@@ -120,13 +119,17 @@ namespace Project.Scripts.GameSystem
             await _uiHandler.GameOver();
 
             if (_rewardRaised)
+            {
                 _uiHandler.GiveReward();
+                _rewardRaised = false;   
+            }
         }
 
         private void HandleRankCanvasClose()
         {
             _mapFactory.ClearEntities();
             _mapFactory.ArenaInstance.Initialize(_mapFactory.BallInstance);
+            PrepareMap();
         }
 
         private void HandleRankRaised()

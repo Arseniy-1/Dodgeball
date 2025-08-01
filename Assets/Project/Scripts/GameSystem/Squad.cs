@@ -49,9 +49,9 @@ namespace Project.Scripts.GameSystem
             foreach (var entity in _entities)
             {
                 if (entity is Enemy enemy)
-                    enemy.Destroyed -= HandleEntityDeath;
+                    enemy.Destroyed -= OnDestroyed;
                 else if (entity is Player player)
-                    player.Destroyed -= HandleEntityDeath;
+                    player.Destroyed -= OnDestroyed;
             }
         }
 
@@ -62,9 +62,9 @@ namespace Project.Scripts.GameSystem
             foreach (var entity in _entities)
             {
                 if (entity is Enemy enemy)
-                    enemy.Destroyed += HandleEntityDeath;
+                    enemy.Destroyed += OnDestroyed;
                 else if (entity is Player player)
-                    player.Destroyed += HandleEntityDeath;
+                    player.Destroyed += OnDestroyed;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Project.Scripts.GameSystem
             }
         }
 
-        private void HandleEntityDeath(Entity entity)
+        private void OnDestroyed(Entity entity)
         {
             if (_entities.Contains(entity))
                 _entities.Remove(entity);

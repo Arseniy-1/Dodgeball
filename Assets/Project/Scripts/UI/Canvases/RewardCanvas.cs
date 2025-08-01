@@ -121,13 +121,13 @@ namespace Project.Scripts.UI.Canvases
             }
         
             YG2.SaveProgress();
-            _playerInputController.ActionButtonCanceled += CloseWindow;
+            _playerInputController.ActionButtonCanceled += OnActionButtonCanceled;
         }
 
-        private void CloseWindow()
+        private void OnActionButtonCanceled()
         {
             AudioID.RewardCompleted.PlayOneShot();
-            _playerInputController.ActionButtonCanceled -= CloseWindow;
+            _playerInputController.ActionButtonCanceled -= OnActionButtonCanceled;
             _rewardModelWrap.Disable();
             gameObject.SetActive(false);
         

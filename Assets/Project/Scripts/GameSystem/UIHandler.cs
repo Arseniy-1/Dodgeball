@@ -58,7 +58,7 @@ namespace Project.Scripts.GameSystem
             _startGameCanvas.gameObject.SetActive(false);
             _rewardCanvas.gameObject.SetActive(true);
 
-            _rewardCanvas.RewardCanvasClosed += HandleRewardCanvasClosed;
+            _rewardCanvas.RewardCanvasClosed += OnRewardCanvasClosed;
         }
         
         public async UniTask GameOver()
@@ -99,9 +99,9 @@ namespace Project.Scripts.GameSystem
             YG2.RewardedAdvShow(id, GiveReward);
         }
 
-        private void HandleRewardCanvasClosed()
+        private void OnRewardCanvasClosed()
         {
-            _rewardCanvas.RewardCanvasClosed -= HandleRewardCanvasClosed;
+            _rewardCanvas.RewardCanvasClosed -= OnRewardCanvasClosed;
             
             _rewardCanvas.gameObject.SetActive(false);
             _startGameCanvas.gameObject.SetActive(true);
