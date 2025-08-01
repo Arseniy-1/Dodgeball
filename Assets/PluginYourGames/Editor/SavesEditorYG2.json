@@ -7,7 +7,7 @@
     false,
     false
   ],
-  "idSave": 701,
+  "idSave": 706,
   "StartAnimationsData": {
     "DodgeAnimations": [
       1,
@@ -63,14 +63,14 @@
   },
   "ProgressData": {
     "CurrentRank": 0,
-    "CurrentRankAmount": 0,
-    "PreviousRankAmount": 0,
+    "CurrentRankAmount": 41,
+    "PreviousRankAmount": 33,
     "IsFirstSession": false
   },
   "RankHolder": {
     "CurrentRank": 0,
-    "CurrentAmount": 0,
-    "PreviousAmount": 0,
+    "CurrentAmount": 41,
+    "PreviousAmount": 33,
     "MaxRankAmount": 100
   }
 }

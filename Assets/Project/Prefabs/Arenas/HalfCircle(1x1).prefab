@@ -693,10 +693,7 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 8604a5cd095b0ab4685261cd9e4c324a, type: 2}
-    - {fileID: 11400000, guid: 54dec3773964eb6419c6c2fa3ee03137, type: 2}
-    - {fileID: 11400000, guid: 74724d2fcc6a400429ba83ad3d82fd1c, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -704,7 +701,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: _ballUpgradeInfo
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.Type, mscorlib],[BallUpgradeInfo,
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.Type, mscorlib],[Project.Scripts.UpgradeFrame.BallUpdaters.BallUpgradeInfo,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
@@ -715,61 +712,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 7
-      Data: 2|System.RuntimeType, mscorlib
-    - Name: 
-      Entry: 1
-      Data: ChargeBallUpgrader, Assembly-CSharp
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: $v
-      Entry: 10
       Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 7
-      Data: 3|System.RuntimeType, mscorlib
-    - Name: 
-      Entry: 1
-      Data: ElectroBallUpgrader, Assembly-CSharp
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: $v
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 7
-      Data: 4|System.RuntimeType, mscorlib
-    - Name: 
-      Entry: 1
-      Data: PoisonBallUpgrader, Assembly-CSharp
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: $v
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -1848,7 +1791,7 @@ GameObject:
   - component: {fileID: 3544172604282239774}
   - component: {fileID: 2671004699659490241}
   - component: {fileID: 2742356445237141628}
-  - component: {fileID: 321840916095219561}
+  - component: {fileID: 6615253268403008593}
   m_Layer: 6
   m_Name: HalfCircle(1x1)
   m_TagString: Untagged
@@ -1930,7 +1873,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &321840916095219561
+--- !u!114 &6615253268403008593
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1939,18 +1882,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6290358059016330665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac9a1b7a40534d49bb75d275671fb3fc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c1869f9e03d40028a9338b8a067c38f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _squads:
-  - {fileID: 5677860096020734345}
-  - {fileID: 1092857406522612040}
-  _ballPosition: {fileID: 2418734096176336072}
-  _ballUpgraderFabric: {fileID: 4255509474837757483}
-  _frames:
-  - {fileID: 6027190835173568754}
-  _minInactiveInterval: 3
-  _maxInactiveInterval: 6
+  _minInactiveInterval: 1
+  _maxInactiveInterval: 3
+  _squads: []
+  _ballPosition: {fileID: 0}
+  _ballUpgraderFabric: {fileID: 0}
+  _frames: []
 --- !u!1 &6321924411649089773
 GameObject:
   m_ObjectHideFlags: 0
@@ -2999,17 +2939,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6027190835173568754 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 912087149886215283, guid: c6124a49b7170ac41a4fc23accba9055, type: 3}
-  m_PrefabInstance: {fileID: 6848990213220869249}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 522b08b76b194acc8c2c04c5babd4fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8581236369587865355

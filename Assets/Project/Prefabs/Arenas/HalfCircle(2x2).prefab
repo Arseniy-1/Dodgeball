@@ -1912,7 +1912,7 @@ GameObject:
   - component: {fileID: 3544172604282239774}
   - component: {fileID: 2671004699659490241}
   - component: {fileID: 2742356445237141628}
-  - component: {fileID: 321840916095219561}
+  - component: {fileID: 1075955453385602588}
   m_Layer: 6
   m_Name: HalfCircle(2x2)
   m_TagString: Untagged
@@ -1994,7 +1994,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &321840916095219561
+--- !u!114 &1075955453385602588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2003,9 +2003,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6290358059016330665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac9a1b7a40534d49bb75d275671fb3fc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c1869f9e03d40028a9338b8a067c38f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _minInactiveInterval: 1
+  _maxInactiveInterval: 3
   _squads:
   - {fileID: 5677860096020734345}
   - {fileID: 1092857406522612040}
@@ -2013,8 +2015,6 @@ MonoBehaviour:
   _ballUpgraderFabric: {fileID: 4255509474837757483}
   _frames:
   - {fileID: 6027190835173568754}
-  _minInactiveInterval: 3
-  _maxInactiveInterval: 6
 --- !u!1 &6321924411649089773
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Project.Scripts.ObjectPool.Effects
+namespace Project.Scripts.ObjectPool
 {
     public class Effect : MonoBehaviour, IDestoyable<Effect>
     {
@@ -14,21 +14,14 @@ namespace Project.Scripts.ObjectPool.Effects
 
         public event Action<Effect> Destroyed;
 
-        private async UniTaskVoid OnEnable()
+        private void OnEnable()
         {
             _cancellationToken = new CancellationTokenSource();
 
             foreach (var particle in _particles)
                 particle.Play();
 
-            try
-            {
-                await WaitForAllParticlesAsync(_cancellationToken.Token);
-                Die();
-            }
-            catch (OperationCanceledException)
-            {
-            }
+            WatchParticles().Forget();
         }
 
         private void OnDisable()
@@ -44,6 +37,12 @@ namespace Project.Scripts.ObjectPool.Effects
             Destroyed?.Invoke(this);
         }
 
+        private async UniTaskVoid WatchParticles()
+        {
+            await WaitForAllParticlesAsync(_cancellationToken.Token);
+            Die();
+        }
+            
         private async UniTask WaitForAllParticlesAsync(CancellationToken cancellationToken)
         {
             var tasks = new List<UniTask>();

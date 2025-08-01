@@ -1,7 +1,6 @@
-using Project.Scripts.Services.Ball;
 using UnityEngine;
 
-namespace Project.Scripts
+namespace Project.Scripts.Services.Ball
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(Chargeable))]

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Project.Scripts.Messages;
 using Project.Scripts.ObjectPool;
-using Project.Scripts.ObjectPool.Effects;
 using Sirenix.Serialization;
 using UniRx;
 using UnityEngine;

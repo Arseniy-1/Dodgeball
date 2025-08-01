@@ -39,7 +39,7 @@ namespace Project.Scripts.Services.Ball
                 _cancellationTokenSource.Cancel();
         }
 
-        public void Throw(Scripts.Ball ball)
+        public void Throw(Ball ball)
         {
             if (ball == null)
                 return;

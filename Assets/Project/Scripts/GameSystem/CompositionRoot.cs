@@ -2,17 +2,17 @@
 using Assets.SimpleLocalization.Scripts;
 using Cysharp.Threading.Tasks;
 using Project.Scripts.Entities;
-using Project.Scripts.GameSystem;
 using Project.Scripts.Messages;
 using Project.Scripts.ObjectPool;
 using Project.Scripts.Rank;
 using Project.Scripts.Reward;
 using Project.Scripts.SavesSystem;
 using Project.Scripts.Services;
+using UniRx;
 using UnityEngine;
 using YG;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     public class CompositionRoot : MonoBehaviour
     {
@@ -24,9 +24,15 @@ namespace Project.Scripts.CompositionRootSystem
         [SerializeField] private EffectHolder _effectHandler;
         [SerializeField] private Saves _saves;
         [SerializeField] private MapController _mapController;
+        
+        [SerializeField] private int _maxWinRankAmount = 40;
+        [SerializeField] private int _minWinRankAmount = 15;
+        [SerializeField] private int _maxLoseRankAmount = 10;
+        [SerializeField] private int _minLoseRankAmount = 3;
 
         private bool _rewardRaised = false;
         private RankHolder _rankHolder;
+        private CompositeDisposable _disposable;
 
         private void Awake()
         {
@@ -34,6 +40,7 @@ namespace Project.Scripts.CompositionRootSystem
             _rewardService.Initialize();
             _rankHolder = new RankHolder();
             _rankHolder.Initialize();
+            _disposable = new();
 
             _uiHandler.Initialize(_rewardService, _rankHolder);
             _effectHandler.Initialize();
@@ -56,6 +63,11 @@ namespace Project.Scripts.CompositionRootSystem
 
         private void OnEnable()
         {
+            MessageBrokerHolder.GameActions
+                .Receive<M_GameOver>()
+                .Subscribe(message => HandleGameOverWrapper(message.IsPlayerWin))
+                .AddTo(_disposable);
+            
             _uiHandler.StartButtonPressed += StartGame;
             _uiHandler.RankCanvasClosed += HandleRankCanvasClose;
             _rankHolder.RankRaised += HandleRankRaised;
@@ -64,6 +76,8 @@ namespace Project.Scripts.CompositionRootSystem
 
         private void OnDisable()
         {
+            _disposable.Dispose();
+            
             _uiHandler.StartButtonPressed -= StartGame;
             _uiHandler.RankCanvasClosed -= HandleRankCanvasClose;
             _rankHolder.RankRaised -= HandleRankRaised;
@@ -88,13 +102,16 @@ namespace Project.Scripts.CompositionRootSystem
         private void StartGame()
         {
             MessageBrokerHolder.GameActions.Publish(new M_GameStarted());
-            _mapController.ArenaInstance.GameOver += HandleGameOverWrapper;
         }
 
 
-        private void HandleGameOverWrapper(int rankAmount)
+        private void HandleGameOverWrapper(bool isWin)
         {
-            _mapController.ArenaInstance.GameOver -= HandleGameOverWrapper;
+            int rankAmount = 
+                isWin ? 
+                    Random.Range(_minWinRankAmount, _maxWinRankAmount) : 
+                    Random.Range(_minLoseRankAmount, _maxLoseRankAmount);
+            
             _rankHolder.IncreaseRank(rankAmount);
             HandleGameOver().Forget();
         }

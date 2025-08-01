@@ -1,30 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Project.Scripts.GameSystem;
+using Project.Scripts.Messages;
+using Project.Scripts.Services.EffectServiceSystem;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     public class SquadDeathHandler
     {
         private readonly List<Squad> _allSquads;
         private readonly List<Squad> _deadSquads = new ();
         
-        private Action<bool> _gameOverCallback;
-
         public SquadDeathHandler(List<Squad> squads)
         {
             _allSquads = squads;
-        }
 
-        public void Initialize(Action<bool> gameOverCallback)
-        {
-            _gameOverCallback = gameOverCallback;
-            
             foreach (var squad in _allSquads)
-            {
                 squad.LostPlayers += OnSquadDeath;
-            }
         }
 
         private void OnSquadDeath(Squad squad)
@@ -33,8 +24,9 @@ namespace Project.Scripts.CompositionRootSystem
             _deadSquads.Add(squad);
 
             bool isPlayerWin = _deadSquads.Count == _allSquads.Count - 1;
-            _gameOverCallback?.Invoke(isPlayerWin);
+            
             NotifyWinners();
+            HandleGameOver(isPlayerWin);
         }
         
         private void NotifyWinners()
@@ -45,6 +37,16 @@ namespace Project.Scripts.CompositionRootSystem
             {
                 squad.Celebrate();
             }
+        }
+        
+        private void HandleGameOver(bool isWin)
+        {
+            if (isWin)
+            {
+                EffectID.Confetti.PlayEffect(_allSquads[0].transform);
+            }
+            
+            MessageBrokerHolder.GameActions.Publish(new M_GameOver(isWin));
         }
     }
 }

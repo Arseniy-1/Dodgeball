@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Project.Scripts.Entities;
 using Project.Scripts.Services.AudioServiceSystem;
+using Project.Scripts.Services.Ball;
 
 namespace Project.Scripts.StateMachine.EntityStates
 {

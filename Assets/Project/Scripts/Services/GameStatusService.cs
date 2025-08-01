@@ -8,7 +8,7 @@ namespace Project.Scripts.Services
     {
         private static GameStatusService _instance;
 
-        private Scripts.Ball _ball;
+        private Ball.Ball _ball;
         private Entity _currentHolder;
         private Collider _currentZone;
    
@@ -20,7 +20,7 @@ namespace Project.Scripts.Services
         public event Action<Collider> ZoneChanged;
 
         public static GameStatusService Instance => _instance ??= new GameStatusService();
-        public Scripts.Ball CurrentBall => _ball;
+        public Ball.Ball CurrentBall => _ball;
         public bool IsBallFree => _ball.Chargeable.IsCharged == false && _currentHolder == null;
 
         public Entity CurrentHolder
@@ -47,7 +47,7 @@ namespace Project.Scripts.Services
             }
         }
         
-        public void Initialize(Scripts.Ball ball)
+        public void Initialize(Ball.Ball ball)
         {
             ClearHolder();
             _ball = ball;

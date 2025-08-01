@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Project.Scripts.Entities;
-using Project.Scripts.GameSystem;
 using Project.Scripts.ObjectPool;
+using Project.Scripts.Services.Ball;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     [Serializable]
     public class MapController

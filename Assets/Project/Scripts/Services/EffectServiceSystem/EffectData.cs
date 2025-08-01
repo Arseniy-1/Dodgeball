@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Project.Scripts.ObjectPool.Effects;
+using Project.Scripts.ObjectPool;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

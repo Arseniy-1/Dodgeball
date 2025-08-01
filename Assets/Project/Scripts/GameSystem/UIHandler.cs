@@ -9,7 +9,7 @@ using Project.Scripts.UI.View;
 using UnityEngine;
 using YG;
 
-namespace Project.Scripts.CompositionRootSystem
+namespace Project.Scripts.GameSystem
 {
     [Serializable]
     public class UIHandler

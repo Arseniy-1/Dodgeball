@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using YG;
@@ -6,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Project.Scripts.Services
 {
-    public class AnimatorController
+    public class AnimatorController : IDisposable
     {
         private readonly Animator _animator;
         private readonly CancellationTokenSource _cancellationTokenSource;

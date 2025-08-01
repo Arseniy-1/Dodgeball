@@ -31,7 +31,7 @@ namespace Project.Scripts.Services.CameraShakeServiceSystem
 
         private void OnDisable()
         {
-            _disposable?.Clear();
+            _disposable.Dispose();
             _shakeTween?.Kill();
         }
 

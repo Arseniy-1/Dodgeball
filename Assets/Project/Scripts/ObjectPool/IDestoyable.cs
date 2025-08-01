@@ -1,6 +1,6 @@
 using System;
 
-namespace Project.Scripts
+namespace Project.Scripts.ObjectPool
 {
     public interface IDestoyable<T>
     {

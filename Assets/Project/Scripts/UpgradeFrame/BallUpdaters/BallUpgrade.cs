@@ -1,4 +1,6 @@
-﻿namespace Project.Scripts.UpgradeFrame.BallUpdaters
+﻿using Project.Scripts.Services.Ball;
+
+namespace Project.Scripts.UpgradeFrame.BallUpdaters
 {
     public abstract class BallUpgrade
     {

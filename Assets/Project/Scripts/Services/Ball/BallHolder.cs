@@ -5,10 +5,10 @@ namespace Project.Scripts.Services.Ball
 {
     public class BallHolder : MonoBehaviour
     {
-        [SerializeField] private Scripts.Ball _ball;
+        [SerializeField] private Ball _ball;
         [SerializeField] private Transform _hand;
 
-        public Scripts.Ball LostBall()
+        public Ball LostBall()
         {
             if (_ball != null)
             {
@@ -18,13 +18,13 @@ namespace Project.Scripts.Services.Ball
                 GameStatusService.Instance.ClearHolder();
             }
 
-            Scripts.Ball returnedBall = _ball;
+            Ball returnedBall = _ball;
             _ball = null;
         
             return returnedBall;
         }
 
-        public void EquipBall(Scripts.Ball ball, Entity owner)
+        public void EquipBall(Ball ball, Entity owner)
         {
             GameStatusService.Instance.SetHolder(owner);   
         
