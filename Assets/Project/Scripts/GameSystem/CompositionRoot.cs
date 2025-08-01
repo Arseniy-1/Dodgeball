@@ -106,88 +106,16 @@ namespace Project.Scripts.Arena
                 _rankViewCanvas);
         }
 
-        public void HandleFirstSession()
-        {
-            if (YG2.saves.ProgressData.IsFirstSession)
-            {
-                YG2.saves.ProgressData.IsFirstSession = false;
-                YG2.SaveProgress();
-                _tutorialCanvas.gameObject.SetActive(true);
-            }
-            else
-            {
-                _tutorialCanvas.gameObject.SetActive(false);
-            }
-        }
-
         private void OnEnable() => _gameFlowController.Enable();
         private void OnDisable() => _gameFlowController.Disable();
         private void Start() => _gameFlowController.StartGame();
     }
+    
 
-
-    public class GameInitializer
-    {
-        private readonly RankHolder _rankHolder;
-        private readonly Saves _saves;
-        private readonly StartGameCanvas _startGameCanvas;
-        private readonly RankViewCanvas _rankViewCanvas;
-        private readonly UserInfoView _userInfoView;
-        private readonly RewardCanvas _rewardCanvas;
-        private readonly GameUICanvas _gameCanvas;
-        private readonly TutorialCanvas _tutorialCanvas;
-
-        public GameInitializer(
-            RankHolder rankHolder,
-            Saves saves,
-            StartGameCanvas startGameCanvas,
-            RankViewCanvas rankViewCanvas,
-            UserInfoView userInfoView,
-            RewardCanvas rewardCanvas,
-            GameUICanvas gameCanvas,
-            TutorialCanvas tutorialCanvas)
-        {
-            _rankHolder = rankHolder;
-            _saves = saves;
-            _startGameCanvas = startGameCanvas;
-            _rankViewCanvas = rankViewCanvas;
-            _userInfoView = userInfoView;
-            _rewardCanvas = rewardCanvas;
-            _gameCanvas = gameCanvas;
-            _tutorialCanvas = tutorialCanvas;
-        }
-
-        public void Initialize()
-        {
-            _rankHolder.Initialize();
-            _rankViewCanvas.Initialize(_rankHolder);
-            _userInfoView.Initialize(_rankHolder);
-            _rewardCanvas.Initialize(_rewardService);
-            _saves.Initialize(_rankHolder);
-            
-            LocalizationManager.Language = YG2.lang;
-            YG2.SwitchLanguage(YG2.lang);
-        }
-
-        public void HandleFirstSession()
-        {
-            if (YG2.saves.ProgressData.IsFirstSession)
-            {
-                YG2.saves.ProgressData.IsFirstSession = false;
-                YG2.SaveProgress();
-                _tutorialCanvas.gameObject.SetActive(true);
-            }
-            else
-            {
-                _tutorialCanvas.gameObject.SetActive(false);
-            }
-        }
-    }
-
-    public class GameFlowController
+      public class GameFlowController
     {
         private readonly EntitySpawner _entitySpawner;
-        private readonly GameInitializer _gameInitializer;
+        private readonly CompositionRoot _compositionRoot;
         private readonly RewardController _rewardController;
         private readonly RankHolder _rankHolder;
         private readonly GameUICanvas _gameCanvas;
@@ -196,7 +124,7 @@ namespace Project.Scripts.Arena
 
         public GameFlowController(
             EntitySpawner entitySpawner,
-            GameInitializer gameInitializer,
+            CompositionRoot compositionRoot,
             RewardController rewardController,
             RankHolder rankHolder,
             GameUICanvas gameCanvas,
@@ -204,7 +132,7 @@ namespace Project.Scripts.Arena
             RankViewCanvas rankViewCanvas)
         {
             _entitySpawner = entitySpawner;
-            _gameInitializer = gameInitializer;
+            _compositionRoot = compositionRoot;
             _rewardController = rewardController;
             _rankHolder = rankHolder;
             _gameCanvas = gameCanvas;
@@ -228,7 +156,7 @@ namespace Project.Scripts.Arena
 
         public void StartGame()
         {
-            _gameInitializer.HandleFirstSession();
+            HandleFirstSession();
             _entitySpawner.SetupNewGame();
             _startGameCanvas.gameObject.SetActive(false);
             _gameCanvas.gameObject.SetActive(true);
@@ -248,6 +176,20 @@ namespace Project.Scripts.Arena
             _gameCanvas.gameObject.SetActive(false);
             _rankHolder.IncreaseRank(rankAmount);
             ProcessGameOver().Forget();
+        }
+        
+        private void HandleFirstSession()
+        {
+            if (YG2.saves.ProgressData.IsFirstSession)
+            {
+                YG2.saves.ProgressData.IsFirstSession = false;
+                YG2.SaveProgress();
+                _tutorialCanvas.gameObject.SetActive(true);
+            }
+            else
+            {
+                _tutorialCanvas.gameObject.SetActive(false);
+            }
         }
 
         private async UniTaskVoid ProcessGameOver()
