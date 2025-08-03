@@ -14,7 +14,7 @@ using YG;
 
 namespace Project.Scripts.GameSystem
 {
-    public class CompositionRoot : MonoBehaviour
+    public class MatchManager : MonoBehaviour
     {
         [SerializeField] private List<Enemy> _enemyPrefabs;
         [SerializeField] private Player _playerPrefab;
@@ -70,7 +70,7 @@ namespace Project.Scripts.GameSystem
 
             _uiHandler.StartButtonPressed += StartGame;
             _uiHandler.RankCanvasClosed += HandleRankCanvasClose;
-            _rankHolder.RankRaised += HandleRankRaised;
+            _rankHolder.RankRaised += OnRankRaised;
             _uiHandler.Enable();
         }
 
@@ -80,7 +80,7 @@ namespace Project.Scripts.GameSystem
 
             _uiHandler.StartButtonPressed -= StartGame;
             _uiHandler.RankCanvasClosed -= HandleRankCanvasClose;
-            _rankHolder.RankRaised -= HandleRankRaised;
+            _rankHolder.RankRaised -= OnRankRaised;
             _uiHandler.Disable();
         }
 
@@ -132,7 +132,7 @@ namespace Project.Scripts.GameSystem
             PrepareMap();
         }
 
-        private void HandleRankRaised()
+        private void OnRankRaised()
         {
             _rewardRaised = true;
         }

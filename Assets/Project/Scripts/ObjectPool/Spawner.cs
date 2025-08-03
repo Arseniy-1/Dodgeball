@@ -34,7 +34,7 @@ namespace Project.Scripts.ObjectPool
         {
             T spawnedObject = Pool.Get();
 
-            spawnedObject.Destroyed += OnSpawnedDestroyed;
+            spawnedObject.Destroyed += OnDestroyed;
             _spawned.Add(spawnedObject);
             
             if(_parent != null)
@@ -43,9 +43,9 @@ namespace Project.Scripts.ObjectPool
             return spawnedObject;
         }
 
-        protected void OnSpawnedDestroyed(T spawnableObject)
+        protected void OnDestroyed(T spawnableObject)
         {
-            spawnableObject.Destroyed -= OnSpawnedDestroyed;
+            spawnableObject.Destroyed -= OnDestroyed;
             _spawned.Remove(spawnableObject);
 
             Pool.Release(spawnableObject);

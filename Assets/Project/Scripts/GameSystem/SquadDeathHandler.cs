@@ -16,12 +16,12 @@ namespace Project.Scripts.GameSystem
             _allSquads = squads;
 
             foreach (var squad in _allSquads)
-                squad.LostPlayers += OnSquadDeath;
+                squad.LostPlayers += OnLostPlayer;
         }
 
-        private void OnSquadDeath(Squad squad)
+        private void OnLostPlayer(Squad squad)
         {
-            squad.LostPlayers -= OnSquadDeath;
+            squad.LostPlayers -= OnLostPlayer;
             _deadSquads.Add(squad);
 
             bool isPlayerWin = _deadSquads.Count == _allSquads.Count - 1;
