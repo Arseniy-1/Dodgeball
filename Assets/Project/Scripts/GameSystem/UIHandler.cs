@@ -36,16 +36,16 @@ namespace Project.Scripts.GameSystem
 
         public void Enable()
         {
-            _startGameCanvas.StartGameButtonPressed += StartGame;
-            _rankViewCanvas.RewardViewClosed += HandleRankCanvasClose;
-            _rewardButton.RewardButtonClicked += ShowReward;
+            _startGameCanvas.StartGameButtonPressed += OnStartGameButtonPressed;
+            _rankViewCanvas.RewardViewClosed += OnRewardViewClosed;
+            _rewardButton.ButtonClicked += OnRewardButtonClicked;
         }
 
         public void Disable()
         {
-            _startGameCanvas.StartGameButtonPressed -= StartGame;
-            _rankViewCanvas.RewardViewClosed -= HandleRankCanvasClose;
-            _rewardButton.RewardButtonClicked -= ShowReward;
+            _startGameCanvas.StartGameButtonPressed -= OnStartGameButtonPressed;
+            _rankViewCanvas.RewardViewClosed -= OnRewardViewClosed;
+            _rewardButton.ButtonClicked -= OnRewardButtonClicked;
         }
 
         public void Start()
@@ -72,7 +72,7 @@ namespace Project.Scripts.GameSystem
             _rankViewCanvas.gameObject.SetActive(false);
         }
         
-        private void StartGame()
+        private void OnStartGameButtonPressed()
         {
             _tutorialCanvas.gameObject.SetActive(false);
 
@@ -92,7 +92,7 @@ namespace Project.Scripts.GameSystem
             StartButtonPressed?.Invoke();
         }
 
-        private void ShowReward()
+        private void OnRewardButtonClicked()
         {
             string id = "coin";
 
@@ -107,7 +107,7 @@ namespace Project.Scripts.GameSystem
             _startGameCanvas.gameObject.SetActive(true);
         }
 
-        private void HandleRankCanvasClose()
+        private void OnRewardViewClosed()
         {
             _rankViewCanvas.gameObject.SetActive(false);
             _startGameCanvas.gameObject.SetActive(true);

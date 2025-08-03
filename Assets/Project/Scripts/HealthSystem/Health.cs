@@ -26,7 +26,7 @@ namespace Project.Scripts.HealthSystem
         public void Initialize(CollisionHandler collisionHandler)
         {
             _collisionHandler = collisionHandler;
-            _collisionHandler.DamageTaken += TakeDamage;
+            _collisionHandler.DamageTaken += OnDamageTaken;
         }
 
         [Button]
@@ -68,7 +68,12 @@ namespace Project.Scripts.HealthSystem
         public void Reset()
         {
             _currentHealthPoint = _maxHealth;
-            _collisionHandler.DamageTaken -= TakeDamage;
+            _collisionHandler.DamageTaken -= OnDamageTaken;
+        }
+
+        private void OnDamageTaken(int amount)
+        {
+            TakeDamage(amount);
         }
     }
 }

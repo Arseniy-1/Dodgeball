@@ -27,7 +27,7 @@ namespace Project.Scripts.StateMachine.EntityStates
             _cancellationTokenSource = new CancellationTokenSource();
 
             _stateDataHolder.HitDetector.enabled = true;
-            _stateDataHolder.HitDetector.BallHitDetected += HandleBallDodge;
+            _stateDataHolder.HitDetector.BallHitDetected += OnBallHitDetected;
 
             _stateDataHolder.CollisionHandler.enabled = false;
             _stateDataHolder.Collider.isTrigger = true;
@@ -40,7 +40,7 @@ namespace Project.Scripts.StateMachine.EntityStates
             if (_stateDataHolder.HitDetector != null)
                 _stateDataHolder.HitDetector.enabled = false;
 
-            _stateDataHolder.HitDetector.BallHitDetected -= HandleBallDodge;
+            _stateDataHolder.HitDetector.BallHitDetected -= OnBallHitDetected;
 
             if (_stateDataHolder.Collider != null)
                 _stateDataHolder.CollisionHandler.enabled = true;
@@ -67,7 +67,7 @@ namespace Project.Scripts.StateMachine.EntityStates
             OnJumpFinished();
         }
 
-        private void HandleBallDodge()
+        private void OnBallHitDetected()
         {
             AudioID.Dodge.PlayOneShot();
             EffectID.Joy.PlayEffect(_stateDataHolder.Collider.transform);

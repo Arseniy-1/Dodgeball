@@ -14,15 +14,15 @@ namespace Project.Scripts.Services.Ball
 
         private void OnEnable()
         {
-            _ballThrower.Charging += Show;
-            _ballThrower.Thrown += HideView;
+            _ballThrower.Charging += OnCharging;
+            _ballThrower.Thrown += OnThrown;
             HideView();
         }
 
         private void OnDisable()
         {
-            _ballThrower.Charging -= Show;
-            _ballThrower.Thrown -= HideView;
+            _ballThrower.Charging -= OnCharging;
+            _ballThrower.Thrown -= OnThrown;
         }
 
         private void Show(float minForce, float maxForce, float currentForce)
@@ -40,6 +40,16 @@ namespace Project.Scripts.Services.Ball
         {
             _chargeFill.enabled = false;
             _chargeBackground.enabled = false;
+        }
+
+        private void OnCharging(float minForce, float maxForce, float currentForce)
+        {
+            Show(minForce, maxForce, currentForce);
+        }
+        
+        private void OnThrown()
+        {
+            HideView();
         }
     }
 }

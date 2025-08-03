@@ -1,6 +1,5 @@
 ﻿using System;
 using Assets.SimpleLocalization.Scripts;
-using Project.Scripts.Services.AudioServiceSystem;
 using Project.Scripts.UI;
 using TMPro;
 using UnityEngine;
@@ -30,8 +29,8 @@ namespace Project.Scripts.Settings
     
         protected override void HandleButtonClick()
         {
+            base.HandleButtonClick();
             ButtonClicked?.Invoke(_languageData.Language);
-            AudioID.UISolid.PlayOneShot();
         }
     }
 }
