@@ -7,7 +7,12 @@ namespace Project.Scripts.UI.View
     {
         [SerializeField] private TextMeshProUGUI _textView;
 
-        protected void OnValueChanged(int current, int max)
+        public void UpdateView(int current, int max)
+        {
+            OnValueChanged(current, max);
+        }
+        
+        private void OnValueChanged(int current, int max)
         {
             if (current >= max)
                 current = 0;

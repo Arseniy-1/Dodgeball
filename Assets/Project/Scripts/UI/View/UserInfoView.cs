@@ -12,25 +12,26 @@ namespace Project.Scripts.UI.View
         [SerializeField] private TextMeshProUGUI _userName;
         [SerializeField] private LanguageYG _languageTranslator;
 
-        [SerializeField] private RankAmountBar _rankAmountBar;
-        [SerializeField] private RankAmountTextView _rankAmountTextView;
-
+        [SerializeField] private ViewBar _viewBar;
+        [SerializeField] private TextView _textView;
+        
         private RankHolder _rankHolder;
-
+        
         private void OnDestroy()
         {
+            _rankHolder.RankAmountChanged -= OnValueChanged;
             _rankHolder.RankRaised -= OnRankRaised;
         }
 
         public void Initialize(RankHolder rankHolder)
         {
             _rankHolder = rankHolder;
-
+            _rankHolder.RankAmountChanged += OnValueChanged;
+            OnValueChanged(_rankHolder.CurrentAmount, _rankHolder.MaxRankAmount);
+            
             OnRankRaised();
 
             _rankHolder.RankRaised += OnRankRaised;
-            _rankAmountBar.Initialize(_rankHolder);
-            _rankAmountTextView.Initialize(_rankHolder);
         
             if (YG2.player.auth)
             {
@@ -42,6 +43,12 @@ namespace Project.Scripts.UI.View
         private void OnRankRaised()
         {
             _currentRank.text = _rankHolder.CurrentRank.ToString();
+        }
+        
+        private void OnValueChanged(int current, int max)
+        {
+            _viewBar.UpdateView(current, max);
+            _textView.UpdateView(current, max);
         }
     }
 }

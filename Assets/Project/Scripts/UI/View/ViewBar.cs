@@ -3,12 +3,17 @@ using UnityEngine.UI;
 
 namespace Project.Scripts.UI.View
 {
-    public abstract class ViewBar : MonoBehaviour
+    public class ViewBar : MonoBehaviour
     {
         [SerializeField] private Slider _bar;
 
         protected float TargetFill { get; private set; }
 
+        public void UpdateView(int current, int max)
+        {
+            OnValueChanged(current, max);
+        }
+        
         protected void OnValueChanged(int current, int max)
         {
             if (current >= max)
