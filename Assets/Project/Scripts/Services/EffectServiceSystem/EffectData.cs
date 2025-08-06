@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Project.Scripts.Services.EffectServiceSystem
 {
     [Serializable]
-    public struct EffectData
+    public struct EffectData : ISettingData<EffectID>
     {
         [field: SerializeField]
         [field: HideLabel]

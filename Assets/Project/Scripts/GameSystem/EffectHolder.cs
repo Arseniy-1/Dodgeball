@@ -10,7 +10,7 @@ namespace Project.Scripts.GameSystem
     public class EffectHolder
     {
         [SerializeField] private AudioSettings _audioSettings;
-        [SerializeField] private EffectsSetting _effectsSetting;
+        [SerializeField] private EffectsSettings _effectsSetting;
 
         private EffectService _effectService;
         private AudioService _audioService;

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Project.Scripts.Services.AudioServiceSystem
 {
     [Serializable]
-    public struct AudioData
+    public struct AudioData : ISettingData<AudioID>
     {
         [field: SerializeField]
         [field: HideLabel]

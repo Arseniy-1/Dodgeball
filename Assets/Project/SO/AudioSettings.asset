@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 621fb410b9464b7fb704b018335260b0, type: 3}
   m_Name: AudioSettings
   m_EditorClassIdentifier: 
-  _audioData:
+  _effectData:
   - <ID>k__BackingField: 1
     <Clips>k__BackingField:
     - {fileID: 8300000, guid: 2e0dccecbf4834202833e6a134209a5f, type: 3}
