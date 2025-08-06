@@ -62,11 +62,6 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 81a06480f215c484fbde7312575efa4e, type: 3}
     <Volume>k__BackingField: 0.5
     <PitchRange>k__BackingField: {x: 0.96754414, y: 1.0391005}
-  - <ID>k__BackingField: 0
-    <Clips>k__BackingField:
-    - {fileID: 8300000, guid: 07ec50bf4ed914a2f8e4c1ac09777d7a, type: 3}
-    <Volume>k__BackingField: 0.5
-    <PitchRange>k__BackingField: {x: 1.0026525, y: 1.0026525}
   - <ID>k__BackingField: 9
     <Clips>k__BackingField:
     - {fileID: 8300000, guid: ef26659d15c6646d0a8116937f04a938, type: 3}

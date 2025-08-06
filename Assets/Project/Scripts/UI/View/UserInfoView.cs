@@ -1,4 +1,4 @@
-﻿    using Project.Scripts.Rank;
+﻿using Project.Scripts.Rank;
 using TMPro;
 using UnityEngine;
 using YG;
@@ -19,15 +19,15 @@ namespace Project.Scripts.UI.View
         
         private void OnDestroy()
         {
-            _rankHolder.RankAmountChanged -= OnValueChanged;
+            _rankHolder.RankAmountChanged -= OnRankAmountChanged;
             _rankHolder.RankRaised -= OnRankRaised;
         }
 
         public void Initialize(RankHolder rankHolder)
         {
             _rankHolder = rankHolder;
-            _rankHolder.RankAmountChanged += OnValueChanged;
-            OnValueChanged(_rankHolder.CurrentAmount, _rankHolder.MaxRankAmount);
+            _rankHolder.RankAmountChanged += OnRankAmountChanged;
+            OnRankAmountChanged(_rankHolder.CurrentAmount, _rankHolder.MaxRankAmount);
             
             OnRankRaised();
 
@@ -45,7 +45,7 @@ namespace Project.Scripts.UI.View
             _currentRank.text = _rankHolder.CurrentRank.ToString();
         }
         
-        private void OnValueChanged(int current, int max)
+        private void OnRankAmountChanged(int current, int max)
         {
             _viewBar.UpdateView(current, max);
             _textView.UpdateView(current, max);

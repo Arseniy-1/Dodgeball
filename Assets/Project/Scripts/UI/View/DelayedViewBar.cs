@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Project.Scripts.UI.View
 {
-    public abstract class DelayedViewBar : ViewBar
+    public class DelayedViewBar : ViewBar
     {
         [SerializeField] private Slider _delayedBar;
         [SerializeField] private float _delaySpeed = 2f;

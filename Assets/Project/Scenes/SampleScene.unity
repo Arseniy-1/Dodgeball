@@ -347,10 +347,10 @@ PrefabInstance:
       addedObject: {fileID: 1373820079}
     - targetCorrespondingSourceObject: {fileID: 7206733564972627524, guid: e5cbb938042ba43588aae41d8dc911e1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1105597949}
+      addedObject: {fileID: 1105597952}
     - targetCorrespondingSourceObject: {fileID: 7206733566222453188, guid: e5cbb938042ba43588aae41d8dc911e1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 399548416}
+      addedObject: {fileID: 399548419}
     - targetCorrespondingSourceObject: {fileID: 7206733566028833732, guid: e5cbb938042ba43588aae41d8dc911e1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1110357410}
@@ -6245,7 +6245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &399548416
+--- !u!114 &399548419
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6254,7 +6254,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 399548412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9f89062e3641cfb5407ce48ddb4d85, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b54673f7f034dfd8dd56bf13248a45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _textView: {fileID: 399548414}
@@ -13415,7 +13415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1105597949
+--- !u!114 &1105597952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13424,7 +13424,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1105597944}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e038f205a5c64539b5ea6fe53eb39267, type: 3}
+  m_Script: {fileID: 11500000, guid: 1120f2e763874931beb78aa8c4dcd29f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _bar: {fileID: 1105597946}
@@ -16014,8 +16014,8 @@ MonoBehaviour:
   _currentRank: {fileID: 808069381}
   _userName: {fileID: 1110357407}
   _languageTranslator: {fileID: 1110357410}
-  _rankAmountBar: {fileID: 1105597949}
-  _rankAmountTextView: {fileID: 399548416}
+  _viewBar: {fileID: 1105597952}
+  _textView: {fileID: 399548419}
 --- !u!1 &1385162341
 GameObject:
   m_ObjectHideFlags: 0
