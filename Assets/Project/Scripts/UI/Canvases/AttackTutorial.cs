@@ -40,6 +40,7 @@ namespace Project.Scripts.UI.Canvases
             if (entity == null || _mainCamera == null) 
             {
                 SelectionCircle.gameObject.SetActive(false);
+                
                 return;
             }
 

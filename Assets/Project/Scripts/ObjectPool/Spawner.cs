@@ -7,13 +7,13 @@ namespace Project.Scripts.ObjectPool
     [Serializable]
     public class Spawner<T> where T : MonoBehaviour, IDestoyable<T>
     {
-        [field: SerializeField] protected int StartAmount { get; private set; } = 0;
-
         protected T Prefab { get; private set; }
         protected Pool<T> Pool { get; private set; }
 
         private List<T> _spawned = new();
         private Transform _parent;
+        
+        [field: SerializeField] protected int StartAmount { get; private set; } = 0;
 
         public Spawner(T prefab, Transform parent = null)
         {

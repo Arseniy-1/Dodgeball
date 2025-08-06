@@ -5,24 +5,7 @@ using Project.Scripts.Services.Ball;
 using UnityEngine;
 
 public class StateDataHolder
-{
-    public Entity Entity { get; private set; }
-    public CollisionHandler CollisionHandler { get; private set; }
-    public Collider Collider { get; private set; }
-    public Collider SquadZone { get; private set; }
-    public Rigidbody Rigidbody { get; private set; }
-    public AnimatorController AnimatorController { get; private set; }
-    public BallHolder BallHolder { get; private set; }
-    public TargetScanner TargetScanner { get; private set; }
-    public TargetProvider TargetProvider { get; private set; }
-    public List<Entity> Teammates { get; private set; }
-    public BallThrower BallThrower { get; private set; }
-    public Mover Mover { get; private set; }
-    public EntityConfig EntityConfig { get; private set; }
-    public HitDetector HitDetector { get; private set; }
-    public Rotator Rotator { get; private set; }
-    public AreaPointSelector AreaPointSelector { get; private set; }
-
+{ 
     public StateDataHolder(
         Entity entity,
         CollisionHandler collisionHandler,
@@ -56,4 +39,21 @@ public class StateDataHolder
         Rotator = new Rotator();
         AreaPointSelector = new AreaPointSelector();
     }
+    
+    public Entity Entity { get; private set; }
+    public CollisionHandler CollisionHandler { get; private set; }
+    public Collider Collider { get; private set; }
+    public Collider SquadZone { get; private set; }
+    public Rigidbody Rigidbody { get; private set; }
+    public AnimatorController AnimatorController { get; private set; }
+    public BallHolder BallHolder { get; private set; }
+    public TargetScanner TargetScanner { get; private set; }
+    public TargetProvider TargetProvider { get; private set; }
+    public List<Entity> Teammates { get; private set; }
+    public BallThrower BallThrower { get; private set; }
+    public Mover Mover { get; private set; }
+    public EntityConfig EntityConfig { get; private set; }
+    public HitDetector HitDetector { get; private set; }
+    public Rotator Rotator { get; private set; }
+    public AreaPointSelector AreaPointSelector { get; private set; }
 }

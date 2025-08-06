@@ -16,6 +16,10 @@ namespace Project.Scripts.Entities
 {
     public abstract class Entity : MonoBehaviour
     {
+        
+        private CancellationTokenSource _cancellationTokenSource;
+        private List<IState> _states = new ();
+
         [field: SerializeField] protected BallThrower BallThrower { get; private set; }
         [field: SerializeField] protected BallHolder BallHolder { get; private set; }
         [field: SerializeField] protected CollisionHandler CollisionHandler { get; private set; }
@@ -26,7 +30,6 @@ namespace Project.Scripts.Entities
         [field: SerializeField] protected Animator Animator { get; private set; }
         [field: SerializeField] protected HitDetector HitDetector { get; private set; }
         [field: SerializeField] protected HealthCanvas HealthCanvas { get; private set; }
-        [field: SerializeField] protected Ball Ball { get; private set; }
         [field: SerializeField] protected EntityConfig EntityConfig { get; private set; }
 
         protected TargetProvider TargetProvider { get; private set; } = new ();
@@ -35,9 +38,6 @@ namespace Project.Scripts.Entities
         protected Rigidbody Rigidbody { get; private set; }
         protected AnimatorController AnimatorController { get; private set; }
         protected StateMaсhine StateMachine { get; private set; }
-
-        private CancellationTokenSource _cancellationTokenSource;
-        private List<IState> _states = new ();
         
         private void OnEnable()
         {
@@ -56,13 +56,12 @@ namespace Project.Scripts.Entities
             StateMachine.Update();
         }
         
-        public void Initialize(Collider squadZone, List<Entity> teammates, Ball ball)
+        public void Initialize(Collider squadZone, List<Entity> teammates)
         {
             Collider = GetComponent<Collider>();
             Rigidbody = GetComponent<Rigidbody>();
             SquadZone = squadZone;
             Teammates = teammates;
-            Ball = ball;
             Health.Initialize(CollisionHandler);
 
             BallThrower.Initialize(EntityConfig);

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Project.Scripts.Entities;
 using Project.Scripts.ObjectPool;
-using Project.Scripts.Services;
 
 namespace Project.Scripts.GameSystem
 {
@@ -30,7 +29,7 @@ namespace Project.Scripts.GameSystem
             }
 
             foreach (var entity in entities)
-                entity.Initialize(squad.SquadZone, entities, GameStatusService.Instance.CurrentBall);
+                entity.Initialize(squad.SquadZone, entities);
 
             squad.Initialize(entities);
         }
