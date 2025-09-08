@@ -30,7 +30,7 @@
 
 <p align="center">
   <a href="https://youtu.be/-dSS3rAjmQ8="_blank">
-    <img src="https://youtu.be/-dSS3rAjmQ8" width="640" alt="Gameplay Preview"/>
+    <img src="https://i9.ytimg.com/vi_webp/-dSS3rAjmQ8/mq1.webp?sqp=CKj2-8UG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGDcgYyhlMA8=&rs=AOn4CLA46Iks7M_POJElO3Q1QW3n6BJ1nw" width="640" alt="Gameplay Preview"/>
   </a>
 </p>
 </div>
