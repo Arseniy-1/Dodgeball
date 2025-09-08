@@ -5,12 +5,12 @@
 
 [![Unity](https://img.shields.io/badge/Unity-2022.3.17f1-black?style=for-the-badge&logo=unity)](https://unity.com/)
 [![C#](https://img.shields.io/badge/C%23-10.0-blue?style=for-the-badge&logo=csharp)](https://docs.microsoft.com/en-us/dotnet/csharp/)
-[![Entitas](https://img.shields.io/badge/Entitas-ECS-green?style=for-the-badge)](https://github.com/sschmid/Entitas-CSharp)
-[![Zenject](https://img.shields.io/badge/Zenject-DI-orange?style=for-the-badge)](https://github.com/modesttree/Zenject)
+[![UniTask](https://img.shields.io/badge/Entitas-ECS-green?style=for-the-badge)](https://github.com/Cysharp/UniTask.git)
+[![UniRx](https://img.shields.io/badge/Zenject-DI-orange?style=for-the-badge)](https://github.com/neuecc/UniRx.git)
 
-### 🎮 [Play here on Itch.io](https://stoneprophet.itch.io/gemtd) 
+### 🎮 [Play here on YandexGames](https://yandex.ru/games/app/420766?lang=ru) 
 
-*Исходный код tower defense игры, построенной на Entity Component System (Entitas) с использованием MVP паттерна для UI и Dependency Injection*
+*Исходный код гипеказуальной про высшибалы игры, построенной на асинхронном и реактивном программировании с использованием MVP паттерна.
 
 </div>
 
@@ -30,7 +30,7 @@
 
 <p align="center">
   <a href="https://youtu.be/V91p_w_yB-k" target="_blank">
-    <img src="https://img.youtube.com/vi/V91p_w_yB-k/maxresdefault.jpg" width="640" alt="Gameplay Preview"/>
+    <img src="https://youtu.be/-dSS3rAjmQ8" width="640" alt="Gameplay Preview"/>
   </a>
 </p>
 
